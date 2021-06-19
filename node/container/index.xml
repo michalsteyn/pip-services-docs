@@ -1,0 +1,147 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Container module</title>
+    <link>/node/container/</link>
+    <description>Recent content in Container module on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/node/container/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Node: Build</title>
+      <link>/node/container/build/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/container/build/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;defaultcontainerfactorydefault_container_factory&#34;&gt;&lt;a href=&#34;default_container_factory&#34;&gt;DefaultContainerFactory&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Creates default container components (loggers, counters, caches, locks, etc.) based on their descriptors.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: Config</title>
+      <link>/node/container/config/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/container/config/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;componentconfigcomponent_config&#34;&gt;&lt;a href=&#34;component_config&#34;&gt;ComponentConfig&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Class used to configure a component residing inside a container.&lt;/p&gt;
+&lt;h4 id=&#34;containerconfigcontainer_config&#34;&gt;&lt;a href=&#34;container_config&#34;&gt;ContainerConfig&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Class used to create a container configuration as a list of component configurations.&lt;/p&gt;
+&lt;h4 id=&#34;containerconfigreadercontainer_config_reader&#34;&gt;&lt;a href=&#34;container_config_reader&#34;&gt;ContainerConfigReader&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Class used to read a container’s configuration from a JSON or YAML file.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: Containers</title>
+      <link>/node/container/containers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/container/containers/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;lifecycle&#34;&gt;Lifecycle&lt;/h3&gt;
+&lt;br&gt;
+&lt;p&gt;1 . Configuration&lt;/p&gt;
+&lt;p&gt;External configurations (stored as YAML or JSON) are passed to the container and define the structure of objects that need to be recreated in the container.  &lt;br&gt;
+Objects can be defined in two ways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;using descriptors (using those registered factories can recreate the object)&lt;/li&gt;
+&lt;li&gt;using hard-coded types (objects are recreated directly, based on their type, bypassing
+factories).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each object can store various configurations.&lt;br&gt;
+&lt;br&gt;
+2. Object creation&lt;/p&gt;
+&lt;p&gt;Then, the container recreates the objects and, if they implement the IConfigurable interface, passes them their configurations.&lt;/p&gt;
+&lt;p&gt;Once the objects of a container are configured, if they implement the &lt;a href=&#34;../../commons/refer/ireferencable&#34;&gt;IReferencable interface&lt;/a&gt;, they are passed a set of references for recreating links between objects in the container. If the objects implement the &lt;a href=&#34;../../commons/run/iopenable&#34;&gt;IOpenable interface&lt;/a&gt;, the &lt;strong&gt;open()&lt;/strong&gt; method is called and they   start to work. &lt;br&gt;
+&lt;br&gt;
+3 . Start&lt;/p&gt;
+&lt;p&gt;The container creates all connections to the different services and the objects and the container start running.
+Then, the objects carry out their tasks.
+&lt;br&gt;&lt;br&gt;
+4. Closure&lt;/p&gt;
+&lt;p&gt;When the container starts to close, the objects that implement the &lt;a href=&#34;../../commons/run/iclosable&#34;&gt;IClosable interface&lt;/a&gt; are closed via their &lt;strong&gt;close()&lt;/strong&gt; method (which should make them stop working and disconnect from other services).  &lt;br&gt;
+After this, those objects that implement the &lt;a href=&#34;../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable interface&lt;/a&gt; delete various links between objects. &lt;br&gt;
+Finally, the contains destroys all objects and turns off.  &lt;br&gt;
+&lt;br&gt;&lt;/p&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;containercontainer&#34;&gt;&lt;a href=&#34;container&#34;&gt;Container&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Inversion of control (IoC) container that creates components and manages their lifecycle.&lt;/p&gt;
+&lt;p&gt;The container is driven by a configuration, that is usually stored in a JSON or YAML file.
+This configuration contains a list of components identified by type or locator, followed
+by the component&amp;rsquo;s configuration.&lt;/p&gt;
+&lt;h4 id=&#34;processcontainerprocess_container&#34;&gt;&lt;a href=&#34;process_container&#34;&gt;ProcessContainer&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Inversion of control (IoC) container that runs as a system process.
+It processes command line arguments, and handles unhandled exceptions and Ctrl-C signals
+in order to shutdown the container properly.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: Refer</title>
+      <link>/node/container/refer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/container/refer/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;buildreferencesdecoratorbuild_references_decorator&#34;&gt;&lt;a href=&#34;build_references_decorator&#34;&gt;BuildReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;References decorator that automatically creates missing components using
+available component factories upon component retrival.&lt;/p&gt;
+&lt;h4 id=&#34;linkreferencesdecoratorlink_references_decorator&#34;&gt;&lt;a href=&#34;link_references_decorator&#34;&gt;LinkReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;References decorator that automatically sets references to newly added components&lt;/p&gt;
+&lt;h4 id=&#34;managedreferencesmanaged_references&#34;&gt;&lt;a href=&#34;managed_references&#34;&gt;ManagedReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Managed references that in addition to keeping and locating references can also
+manage their lifecycle:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Auto-creation of missing component using available factories&lt;/li&gt;
+&lt;li&gt;Auto-linking newly added components&lt;/li&gt;
+&lt;li&gt;Auto-opening newly added components&lt;/li&gt;
+&lt;li&gt;Auto-closing removed components&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;referencesdecoratorreferences_decorator&#34;&gt;&lt;a href=&#34;references_decorator&#34;&gt;ReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Chainable decorator for IReferences that allows to inject additional capabilities
+such as automatic component creation, automatic registration and opening.&lt;/p&gt;
+&lt;h4 id=&#34;runreferencesdecoratorrun_references_decorator&#34;&gt;&lt;a href=&#34;run_references_decorator&#34;&gt;RunReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;References decorator that automatically opens to newly added components&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

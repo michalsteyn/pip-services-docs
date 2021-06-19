@@ -1,0 +1,289 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Containers</title>
+    <link>/golang/container/containers/</link>
+    <description>Recent content in Containers on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/container/containers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: Container</title>
+      <link>/golang/container/containers/container/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/container/containers/container/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Container class allows you to create an inversion of control (IoC) container that creates components and manages their lifecycle.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The container is driven by configuration, which is usually stored in a JSON or YAML file.&lt;/li&gt;
+&lt;li&gt;The configuration contains a list of components identified by their type or locator, followed by their configuration.&lt;/li&gt;
+&lt;li&gt;On start, a container performs the following actions:
+&lt;ul&gt;
+&lt;li&gt;Creates components using their types or calls registered factories to create them using their locators.&lt;/li&gt;
+&lt;li&gt;Configures components that implement &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable interface&lt;/a&gt; and passes them their configuration parameters.&lt;/li&gt;
+&lt;li&gt;Sets references to components that implement &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable interface&lt;/a&gt; and passes them references of all components in the container.&lt;/li&gt;
+&lt;li&gt;Opens components that implement &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable interface&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;On stop, a container reverses the orden of its actions:
+&lt;ul&gt;
+&lt;li&gt;Closes components that implement &lt;a href=&#34;../../../commons/run/iclosable&#34;&gt;IClosable interface&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Unsets references in components that implement &lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable interface&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Destroys components in the container.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: context (container or process) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: human-readable description of the context&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;properties&lt;/strong&gt;: section of additional descriptive properties
+&lt;ul&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newcontainer&#34;&gt;NewContainer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the container.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewContainer(name string, description string) &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) container&amp;rsquo;s name (accessible via ContextInfo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: string - (optional) container&amp;rsquo;s description (accessible via ContextInfo)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;newemptycontainer&#34;&gt;NewEmptyContainer&lt;/h4&gt;
+&lt;p&gt;Creates a new empty instance of the container.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewEmptyContainer() &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;inheritcontainer&#34;&gt;InheritContainer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the container inherit from reference.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritContainer(name string, description string, referenceable &lt;a href=&#34;../refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a container name (accessible via ContextInfo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: string - a container description (accessible via ContextInfo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;referenceable&lt;/strong&gt;: &lt;a href=&#34;../refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt; - referenceble object for inherit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;config&#34;&gt;config&lt;/h4&gt;
+&lt;p&gt;Configuration of the container&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../config/container_config&#34;&gt;ContainerConfig&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;references&#34;&gt;references&lt;/h4&gt;
+&lt;p&gt;Container&amp;rsquo;s references&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../refer/container_references&#34;&gt;ContainerReferences&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;logger&#34;&gt;logger&lt;/h4&gt;
+&lt;p&gt;Logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;info&#34;&gt;info&lt;/h4&gt;
+&lt;p&gt;Container&amp;rsquo;s information.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;info&lt;/strong&gt;: &lt;a href=&#34;../../../components/info/context_info&#34;&gt;ContextInfo&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;factories&#34;&gt;factories&lt;/h4&gt;
+&lt;p&gt;Default factories.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;factories&lt;/strong&gt;: &lt;a href=&#34;../../build/default_container_factory&#34;&gt;DefaultContainerFactory&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;addfactory&#34;&gt;AddFactory&lt;/h4&gt;
+&lt;p&gt;Adds a factory to the container. The factory is used to create components       &lt;br&gt;
+added to the container by their locators (descriptors).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;) AddFactory(factory &lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;factory&lt;/strong&gt;: &lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt; - component factory to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;) Close(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - returns error if not closed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;) Configure(conf &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;conf&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;) Open(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - returns error if not opened&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readconfigfromfile&#34;&gt;ReadConfigFromFile&lt;/h4&gt;
+&lt;p&gt;Reads the container&amp;rsquo;s configuration from a JSON or YAML file and parameterizes it with the given values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Container&lt;/a&gt;) ReadConfigFromFile(correlationId string, path string, parameters &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: string - path to the configuration file&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters or nil to skip parameterization.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - returns error if not readed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;======= config.yaml ========&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;mygroup:mycomponent1:default:default:1.0&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;param1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;param2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;ABC&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;mycomponent2,mypackage&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;param1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;321&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;param2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;XYZ&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;============================&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewEmptyContainer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;AddFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;newMyComponentFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+  
+&lt;span style=&#34;color:#75af00&#34;&gt;parameters&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewConfigParamsFromValue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;process&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;env&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ReadConfigFromFile&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;./config/config.yml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+  
+&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;fmt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Printf&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Container is opened&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Close&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;fmt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Printf&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Container is closed&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iconfigurable-interfacecommonsconfigiconfigurable&#34;&gt;&lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable interface&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferenceable-interfacecommonsreferireferenceable&#34;&gt;&lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable interface&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iunreferenceable-interfacecommonsreferiunreferenceable&#34;&gt;&lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable interface&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iopenable-interfacecommonsruniopenable&#34;&gt;&lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable interface&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: ProcessContainer</title>
+      <link>/golang/container/containers/process_container/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/container/containers/process_container/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../container&#34;&gt;Container&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ProcessContainer class allows you to create an inversion of control (IoC) container that runs as a system process.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It processes command line arguments and handles unhandled exceptions and Ctrl-C signal to shutdown the container properly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;command-line-arguments&#34;&gt;Command line arguments&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ndash;config / -c&lt;/strong&gt;            path to a JSON or YAML file with the container&amp;rsquo;s configuration (default: &amp;ldquo;./config/config.yml&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ndash;param / &amp;ndash;params / -p&lt;/strong&gt;   configuration parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ndash;help / -h&lt;/strong&gt;              prints the container usage help&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newprocesscontainer&#34;&gt;NewProcessContainer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the container.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewProcessContainer(name string, description string) &lt;a href=&#34;&#34;&gt;*ProcessContainer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) container&amp;rsquo;s name (accessible via ContextInfo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: string - (optional) container&amp;rsquo;s description (accessible via ContextInfo)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;newemptyprocesscontainer&#34;&gt;NewEmptyProcessContainer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the container.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewEmptyProcessContainer() &lt;a href=&#34;&#34;&gt;*ProcessContainer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) container&amp;rsquo;s name (accessible via ContextInfo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: string - (optional) container&amp;rsquo;s description (accessible via ContextInfo)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;configpath&#34;&gt;configPath&lt;/h4&gt;
+&lt;p&gt;Path to the configuration file.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;configPath&lt;/strong&gt;: string = &amp;ldquo;./config/config.yml&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;run&#34;&gt;Run&lt;/h4&gt;
+&lt;p&gt;Runs the container by instantiating and running components inside the container.&lt;/p&gt;
+&lt;p&gt;It reads the container configuration, and creates, configures, references and opens components.
+On process exit; it closes, unreferences and destroys components in order to shutdown properly.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *ProcessContainer) Run(args []string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: string[] - command line arguments&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewEmptyProcessContainer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;AddFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewMyComponentFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+  
+&lt;span style=&#34;color:#75af00&#34;&gt;container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Run&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;process&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;containercontainer&#34;&gt;&lt;a href=&#34;../container&#34;&gt;Container&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

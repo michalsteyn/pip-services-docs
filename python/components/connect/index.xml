@@ -1,0 +1,817 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Connect</title>
+    <link>/python/components/connect/</link>
+    <description>Recent content in Connect on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/components/connect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: CompositeConnectionResolver</title>
+      <link>/python/components/connect/composite_connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/composite_connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeConnectionResolver class allows you to resolve connection and credential parameters, validate them and generate connection options.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: communication protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) a key to retrieve the credentials from &lt;a href=&#34;../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: user name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) Credential stores to resolve credentials &lt;a href=&#34;../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_options&#34;&gt;_options&lt;/h4&gt;
+&lt;p&gt;The connection options&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_connection_resolver&#34;&gt;_connection_resolver&lt;/h4&gt;
+&lt;p&gt;The connections resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_connection_resolver&lt;/strong&gt;: &lt;a href=&#34;../connection_resolver&#34;&gt;ConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_credential_resolver&#34;&gt;_credential_resolver&lt;/h4&gt;
+&lt;p&gt;The credentials resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_credential_resolver&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_resolver&#34;&gt;CredentialResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_cluster_supported&#34;&gt;_cluster_supported&lt;/h4&gt;
+&lt;p&gt;The cluster support (multiple connections)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_cluster_supported&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_default_protocol&#34;&gt;_default_protocol&lt;/h4&gt;
+&lt;p&gt;The default protocol&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_default_protocol&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_default_port&#34;&gt;_default_port&lt;/h4&gt;
+&lt;p&gt;The default port&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_default_port&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_supported_protocols&#34;&gt;_supported_protocols&lt;/h4&gt;
+&lt;p&gt;The list of supported protocols&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_supported_protocols&lt;/strong&gt;: List[str]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;compose&#34;&gt;compose&lt;/h4&gt;
+&lt;p&gt;Composes Composite connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;compose(correlation_id: Optional[str], connections: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;], credential: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;, parameters: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - optional parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - resolved options or error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_compose_options&#34;&gt;_compose_options&lt;/h4&gt;
+&lt;p&gt;A composite of several merger options&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_compose_options(connections: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;], credential: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;, parameters: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - optional parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - resolved options or error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_finalize_options&#34;&gt;_finalize_options&lt;/h4&gt;
+&lt;p&gt;Finalize merged options.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_finalize_options(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - options: connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - finalized connection options&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_merge_connection&#34;&gt;_merge_connection&lt;/h4&gt;
+&lt;p&gt;Merges connection options with connection parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_merge_connection(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, connection: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - connection parameters to be merged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - merged connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_merge_credential&#34;&gt;_merge_credential&lt;/h4&gt;
+&lt;p&gt;Merges connection options with credential parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_merge_credential(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, credential: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters to be merged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - merged connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_merge_optional&#34;&gt;_merge_optional&lt;/h4&gt;
+&lt;p&gt;Merges connection options with optional parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_merge_optional(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, parameters: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - optional parameters to be merged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - merged connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve&#34;&gt;resolve&lt;/h4&gt;
+&lt;p&gt;Resolves connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve(correlation_id: Optional[str]): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - resolved options or error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_validate_connection&#34;&gt;_validate_connection&lt;/h4&gt;
+&lt;p&gt;Validates connection parameters.
+Throws error if validation failed.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_validate_connection(correlation_id: Optional[str], connection: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - connection parameters to be validated&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_validate_credential&#34;&gt;_validate_credential&lt;/h4&gt;
+&lt;p&gt;Validates credential parameters.
+This method can be overriden in child classes.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_validate_credential(correlation_id: Optional[str], credential: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters to be validated&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ConnectionParams</title>
+      <link>/python/components/connect/connection_params/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/connection_params/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionParams class allows you to create connection parameters used to connect to external services.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Usually, connection parameters are used together with credential parameters, but are stored
+separately from these more protected and sensitive values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: key to retrieve parameters from discovery service&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: connection protocol like http, https, tcp, udp&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to standard parameters ConnectionParams may contain any number of custom parameters.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new connection parameters and fills it with values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ConnectionParams(map: Any = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;map&lt;/strong&gt;: Any - (optional) an object to be converted into key-value pairs to initialize this connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_discovery_key&#34;&gt;get_discovery_key&lt;/h4&gt;
+&lt;p&gt;Gets the key to retrieve this connection from DiscoveryService.
+If this key is None, then all parameters are already present.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_discovery_key(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - resolved options or error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_host&#34;&gt;get_host&lt;/h4&gt;
+&lt;p&gt;Gets the host name or IP address.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_host(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the host name or IP address.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_port&#34;&gt;get_port&lt;/h4&gt;
+&lt;p&gt;Gets the port number.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_port(): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - the port number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_port_with_default&#34;&gt;get_port_with_default&lt;/h4&gt;
+&lt;p&gt;Gets the port number with default value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_port_with_default(default_port: int): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;default_port&lt;/strong&gt;: int - a default port number.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - the port number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_protocol&#34;&gt;get_protocol&lt;/h4&gt;
+&lt;p&gt;Gets the connection protocol.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_protocol(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the connection protocol or the default value if it&amp;rsquo;s not set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_protocol_with_default&#34;&gt;get_protocol_with_default&lt;/h4&gt;
+&lt;p&gt;Gets the connection protocol with default value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_protocol_with_default(default_value: str = None): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;default_value&lt;/strong&gt;: str - (optional) the default protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the connection protocol or the default value if it&amp;rsquo;s not set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_uri&#34;&gt;get_uri&lt;/h4&gt;
+&lt;p&gt;Gets the resource URI or connection string. Usually it includes all connection parameters in it.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_uri(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the resource URI or connection string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_discovery_key&#34;&gt;set_discovery_key&lt;/h4&gt;
+&lt;p&gt;Sets the key to retrieve these parameters from DiscoveryService.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_discovery_key(value: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a new key to retrieve connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_host&#34;&gt;set_host&lt;/h4&gt;
+&lt;p&gt;Sets the host name or IP address.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_host(value: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a new host name or IP address.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_port&#34;&gt;set_port&lt;/h4&gt;
+&lt;p&gt;Sets the port number.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_port(value: int)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: int - a new port number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_protocol&#34;&gt;set_protocol&lt;/h4&gt;
+&lt;p&gt;Sets the connection protocol.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_protocol(value: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a new connection protocol.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_uri&#34;&gt;set_uri&lt;/h4&gt;
+&lt;p&gt;Sets the resource URI or connection string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_uri(value: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a new resource URI or connection string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;use_discovery&#34;&gt;use_discovery&lt;/h4&gt;
+&lt;p&gt;Checks if these connection parameters shall be retrieved from DiscoveryService.
+The connection parameters are redirected to DiscoveryService when discovery_key parameter is set.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;use_discovery(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if connection shall be retrieved from DiscoveryService&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;from_config&#34;&gt;from_config&lt;/h4&gt;
+&lt;p&gt;Retrieves a single ConnectionParams from configuration parameters
+from &amp;ldquo;connection&amp;rdquo; section. If &amp;ldquo;connections&amp;rdquo; section is present instead,
+then it returns only the first connection element.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_config(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - ConnectionParams, containing a section named &amp;ldquo;connection(s)&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; - the generated ConnectionParams object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;from_string&#34;&gt;from_string&lt;/h4&gt;
+&lt;p&gt;Creates a new ConnectionParams object filled with key-value pairs serialized as a string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_string(line: str): &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;line&lt;/strong&gt;: string - a string with serialized key-value pairs as &lt;strong&gt;&amp;ldquo;key1=value1;key2=value2;&amp;hellip;&amp;quot;&lt;/strong&gt;
+Example: &lt;strong&gt;&amp;ldquo;Key1=123;Key2=ABC;Key3=2016-09-16T00:00:00.00Z&amp;rdquo;&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; - a new ConnectionParams object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;from_tuples&#34;&gt;from_tuples&lt;/h4&gt;
+&lt;p&gt;Creates a new ConnectionParams object filled with provided key-value pairs called tuples.
+Tuples parameters contain a sequence of key1, value1, key2, value2, &amp;hellip; pairs.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_tuples(*tuples: Any): &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;tuples&lt;/strong&gt;: Any - the tuples to fill a new ConnectionParams object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; - a new ConnectionParams object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;many_from_config&#34;&gt;many_from_config&lt;/h4&gt;
+&lt;p&gt;Retrieves all ConnectionParams from configuration parameters
+from &amp;ldquo;connections&amp;rdquo; section. If &amp;ldquo;connection&amp;rdquo; section is present instead,
+then it returns a list with only one ConnectionParams.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; many_from_config(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): List[&lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - a configuration parameters to retrieve connections&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;] - a list of retrieved ConnectionParams&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConnectionParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;from_tuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;10.1.1.100&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;cluster&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycluster&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;host&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_host&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;                              &lt;span style=&#34;color:#75715e&#34;&gt;# Result: &amp;#34;10.1.1.100&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;port&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_port&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;                              &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 8080&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;cluster&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_as_nullable_string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;cluster&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Result: &amp;#34;mycluster&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;configparamscommonsconfigconfig_params&#34;&gt;&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;credentialparamsauthcredential_params&#34;&gt;&lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;connectionresolverconnection_resolver&#34;&gt;&lt;a href=&#34;../connection_resolver&#34;&gt;ConnectionResolver&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ConnectionResolver</title>
+      <link>/python/components/connect/connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionResolver class is used to retrieve component connections.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If the connections are configured to be retrieved from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;, the connection resolver will automatically locate &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; in component references and retrieve the connections from there using the discovery_key parameter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : other connection parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;connections&lt;/strong&gt;:  alternative to connection&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[connection params 1]&lt;/strong&gt;: first connection parameters
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; :  connection parameters for key 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[connection params N]&lt;/strong&gt;: Nth connection parameters
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : connection parameters for key N&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ConnectionResolver(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; = None, references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - (optional) component configuration parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - (optional) component references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;add&#34;&gt;add&lt;/h4&gt;
+&lt;p&gt;Adds a new connection to component connections&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;add(connection: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - new connection parameters to be added&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_all&#34;&gt;get_all&lt;/h4&gt;
+&lt;p&gt;Gets all connections configured in component configuration.
+Redirect to Discovery services is not done at this point.
+If you need fully fleshed connection use &lt;strong&gt;resolve&lt;/strong&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_all(): List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - a list with connection parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;register&lt;/h4&gt;
+&lt;p&gt;Registers the given connection in all referenced discovery services.
+This method can be used for dynamic service discovery.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;register(correlation_id: Optional[str], connection: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a connection to register.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve&#34;&gt;resolve&lt;/h4&gt;
+&lt;p&gt;Resolves a single component connection. If connections are configured to be retrieved
+from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; and resolves the connection there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve(correlation_id: Optional[str]): Optional[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Optional[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - resolved connection parameters or None if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve_all&#34;&gt;resolve_all&lt;/h4&gt;
+&lt;p&gt;Resolves all component connection. If connections are configured to be retrieved
+from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; and resolves the connection there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve_all(correlation_id: Optional[str]): List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - a list of resolved connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;from_tuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;10.1.1.100&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConnectionResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;resolve&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;connectionparamsconnection_params&#34;&gt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ConnectionUtils</title>
+      <link>/python/components/connect/connection_utils/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/connection_utils/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionUtils class provides a set of utility functions used to process connection parameters.&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;compose_uri&#34;&gt;compose_uri&lt;/h4&gt;
+&lt;p&gt;Composes URI from config parameters.
+The result URI will be in the following form:
+&lt;em&gt;protocol://username@password@host1:port1,host2:port2,&amp;hellip;?param1=abc&amp;amp;param2=xyz&amp;amp;&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; compose_uri(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, default_protocol: str, default_port: int): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;default_protocol&lt;/strong&gt;: str - a default protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;default_port&lt;/strong&gt;: int - a default port&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - a composed URI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;concat&#34;&gt;concat&lt;/h4&gt;
+&lt;p&gt;Concatinates two options by combining duplicated properties into comma-separated list&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; concat(options1: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, options2: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, *keys: str): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options1&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - first options to merge&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options2&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - second options to merge&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: str - when defined, it limits only to specific keys&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - new connection parameters to be added&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;exclude&#34;&gt;exclude&lt;/h4&gt;
+&lt;p&gt;Excludes specified keys from the config parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; exclude(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, *keys: str): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be processed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: str - a list of keys to be excluded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - a processed config parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;include&#34;&gt;include&lt;/h4&gt;
+&lt;p&gt;Includes specified keys from the config parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; include(options: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, *keys: str): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be processed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: str - a list of keys to be included.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - a processed config parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;parse_uri&#34;&gt;parse_uri&lt;/h4&gt;
+&lt;p&gt;Parses URI into config parameters.
+The URI shall be in the following form:
+&lt;code&gt;protocol://username@password@host1:port1,host2:port2,...?param1=abc&amp;amp;param2=xyz&amp;amp;...&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; parse_uri(uri: str, default_protocol: str, default_port: str): &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: str - the URI to be parsed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;default_protocol&lt;/strong&gt;: str - a default protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;default_port&lt;/strong&gt;: str - a default port&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - a configuration parameters with URI elements&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: DefaultDiscoveryFactory</title>
+      <link>/python/components/connect/default_discovery_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/default_discovery_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultDiscoveryFactory class allows you to create an instance of &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt; to create &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; components based on their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create a new instance of factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DefaultDiscoveryFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;memorydiscoverymemory_discovery&#34;&gt;&lt;a href=&#34;../memory_discovery&#34;&gt;MemoryDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: IDiscovery</title>
+      <link>/python/components/connect/idiscovery/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/idiscovery/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IDiscovery interface is used to create discovery services which are used to store and resolve connection parameters used to connect to external services.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;register&#34;&gt;register&lt;/h4&gt;
+&lt;p&gt;Registers connection parameters into the discovery service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;register(correlation_id: Optional[str], key: str, connection: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;): &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a key to uniquely identify the connection parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a connection to be registered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - the registered connection parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve_all&#34;&gt;resolve_all&lt;/h4&gt;
+&lt;p&gt;Resolves all connection parameters by their key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve_all(correlation_id: Optional[str], key: str): List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a key to uniquely identify the connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - a list with resolved connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve_one&#34;&gt;resolve_one&lt;/h4&gt;
+&lt;p&gt;Resolves a single connection parameters by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve_one(correlation_id: Optional[str], key: str): &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a key to uniquely identify the connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a resolved connection.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MemoryDiscovery</title>
+      <link>/python/components/connect/memory_discovery/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/connect/memory_discovery/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MemoryDiscovery class allows you to create discovery services that keep connections in memory.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[connection key 1]&lt;/strong&gt;:&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : connection parameters for key 1&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[connection key 2]&lt;/strong&gt;:&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : connection parameters for key N&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of discovery service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MemoryDiscovery(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - (optional) configuration with connection parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;read_connections&#34;&gt;read_connections&lt;/h4&gt;
+&lt;p&gt;Reads connections from configuration parameters.
+Each section represents an individual Connection params&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;read_connections(connections: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be read&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;register&lt;/h4&gt;
+&lt;p&gt;Registers connection parameters into the discovery service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;register(correlation_id: Optional[str], key: str, connection: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;): &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a key to uniquely identify the connection parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a connection to be registered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - the registered connection parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve_all&#34;&gt;resolve_all&lt;/h4&gt;
+&lt;p&gt;Resolves all connection parameters by their key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve_all(correlation_id: Optional[str], key: str): List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a key to uniquely identify the connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - a list with resolved connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve_one&#34;&gt;resolve_one&lt;/h4&gt;
+&lt;p&gt;Resolves a single connection parameters by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resolve_one(correlation_id: Optional[str], key: str): &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a key to uniquely identify the connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a resolved connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;from_tuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;10.1.1.100&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key2.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;10.1.1.100&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key2.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8082&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;discovery&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MemoryDiscovery&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;discovery&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;read_connections&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;discovery&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;resolve&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;connectionparamsconnection_params&#34;&gt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

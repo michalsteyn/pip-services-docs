@@ -1,0 +1,828 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Count</title>
+    <link>/node/components/count/</link>
+    <description>Recent content in Count on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/node/components/count/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Node: CachedCounters</title>
+      <link>/node/components/count/cached_counters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/cached_counters/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;,
+&lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CachedCounters class allows you to create performace counters that measure and store those values in memory.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Child classes can implement saving of the counters into various different destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: interval in milliseconds to save current counters measurements (default: 5 mins)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reset_timeout&lt;/strong&gt;: timeout in milliseconds to reset the counters. 0 disables the reset (default: 0)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new CachedCounters object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_interval&#34;&gt;_interval&lt;/h4&gt;
+&lt;p&gt;Default time interval.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_interval&lt;/strong&gt; = 300000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_cache&#34;&gt;_cache&lt;/h4&gt;
+&lt;p&gt;A dictionary containing the cached values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_cache&lt;/strong&gt;: { [id: string]: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_updated&#34;&gt;_updated&lt;/h4&gt;
+&lt;p&gt;A boolean value that indicates whether the counter has been updated or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_updated&lt;/strong&gt;: boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_lastdumptime&#34;&gt;_lastDumpTime&lt;/h4&gt;
+&lt;p&gt;Time of the last dump.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_lastDumpTime&lt;/strong&gt;: Date&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_lastresettime&#34;&gt;_lastResetTime&lt;/h4&gt;
+&lt;p&gt;Last time when was reset timer&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_lastResetTime&lt;/strong&gt;: Date&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_resettimeout&#34;&gt;_resetTimeout&lt;/h4&gt;
+&lt;p&gt;Timeout to reset timer&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_resetTimeout&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
+&lt;p&gt;Begins measurement of execution time interval.
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; beginTiming(name: string): &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears (resets) a counter specified by its name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; clear(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name to clear.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clearall&#34;&gt;clearAll&lt;/h4&gt;
+&lt;p&gt;Clears (resets) all counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; clearAll(): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;dump&#34;&gt;dump&lt;/h4&gt;
+&lt;p&gt;Dumps (saves) the current values of counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; dump(): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;p&gt;Ends measurement of execution elapsed time and updates specified counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; endTiming(name: string, elapsed: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;elapsed&lt;/strong&gt;: number - execution elapsed time in milliseconds to update the counter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get&#34;&gt;get&lt;/h4&gt;
+&lt;p&gt;Gets a counter specified by its name.
+It counter does not exist or its type doesn&amp;rsquo;t match the specified type
+it creates a new one.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; get(name: string, typ: &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt;): &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name to retrieve.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;typ&lt;/strong&gt;: &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt; - a counter type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt; - an existing or newly created counter of the specified type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getall&#34;&gt;getAll&lt;/h4&gt;
+&lt;p&gt;Gets all captured counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getAll(): &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;[]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;[] - a list with counters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getinterval&#34;&gt;getInterval&lt;/h4&gt;
+&lt;p&gt;Gets the counters dump/save interval.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getInterval(): number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: number - the interval in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
+&lt;p&gt;Increments counter by given value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; increment(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to add to the counter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;incrementone&#34;&gt;incrementOne&lt;/h4&gt;
+&lt;p&gt;Increments counter by 1.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; incrementOne(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;last&#34;&gt;last&lt;/h4&gt;
+&lt;p&gt;Records the last calculated measurement value.
+Usually this method is used by metrics calculated externally.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; last(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Last type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a last value to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setinterval&#34;&gt;setInterval&lt;/h4&gt;
+&lt;p&gt;Sets the counters dump/save interval.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setInterval(value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a new interval in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;stats&#34;&gt;stats&lt;/h4&gt;
+&lt;p&gt;Calculates min/average/max statistics based on the current and previous values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; stats(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Statistics type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to update statistics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestamp&#34;&gt;timestamp&lt;/h4&gt;
+&lt;p&gt;Records the given timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; timestamp(name: string, value: Date): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Date - a timestamp to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestampnow&#34;&gt;timestampNow&lt;/h4&gt;
+&lt;p&gt;Records the current time as a timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; timestampNow(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;update&#34;&gt;update&lt;/h4&gt;
+&lt;p&gt;Makes counter measurements as updated and dumps them when timeout expires.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; update()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;abstract-methods&#34;&gt;Abstract methods&lt;/h3&gt;
+&lt;h4 id=&#34;save&#34;&gt;save&lt;/h4&gt;
+&lt;p&gt;Saves the current counters measurements.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected abstract&lt;/code&gt; save(counters: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;counters&lt;/strong&gt;: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;[] - current counters measurements to be saved.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: CompositeCounters</title>
+      <link>/node/components/count/composite_counters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/composite_counters/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;,
+&lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeCounters allows you to aggregate all counters from different component references into a single one.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It allows to capture metrics and conveniently send them to multiple destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
+&lt;p&gt;A list containig the aggregated counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;[] = []&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
+&lt;p&gt;Begins measurement of execution time interval.
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; beginTiming(name: string): &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;p&gt;Ends measurement of execution elapsed time and updates specified counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; endTiming(name: string, elapsed: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;elapsed&lt;/strong&gt;: number - execution elapsed time in milliseconds to update the counter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
+&lt;p&gt;Increments counter by given value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; increment(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to add to the counter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;incrementone&#34;&gt;incrementOne&lt;/h4&gt;
+&lt;p&gt;Increments counter by 1.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; incrementOne(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;last&#34;&gt;last&lt;/h4&gt;
+&lt;p&gt;Records the last calculated measurement value.
+Usually this method is used by metrics calculated externally.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; last(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Last type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - last value to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setReferences(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;stats&#34;&gt;stats&lt;/h4&gt;
+&lt;p&gt;Calculates min/average/max statistics based on the current and previous values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; stats(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Statistics type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to update statistics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestamp&#34;&gt;timestamp&lt;/h4&gt;
+&lt;p&gt;Records the given timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; timestamp(name: string, value: Date)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Date - a timestamp to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestampnow&#34;&gt;timestampNow&lt;/h4&gt;
+&lt;p&gt;Records the current time as a timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; timestampNow(name: string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;CompositeCounters&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeCounters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;myMethod&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.calls&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icountersicounters&#34;&gt;&lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: Counter</title>
+      <link>/node/components/count/counter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/counter/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Counter class allows you to create data objects used to store the measurements of performance counters.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This object is used by &lt;a href=&#34;../cached_counters&#34;&gt;CachedCounters&lt;/a&gt; to store counters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a instance of the data object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(name: string = null, type: &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt; = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt; - a counter type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;last&#34;&gt;last&lt;/h4&gt;
+&lt;p&gt;The last recorded value&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;last&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;count&#34;&gt;count&lt;/h4&gt;
+&lt;p&gt;The total count&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;count&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;min&#34;&gt;min&lt;/h4&gt;
+&lt;p&gt;The minimum value&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;min&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;max&#34;&gt;max&lt;/h4&gt;
+&lt;p&gt;The maximum value&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;max&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;average&#34;&gt;average&lt;/h4&gt;
+&lt;p&gt;The average value&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;average&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;time&#34;&gt;time&lt;/h4&gt;
+&lt;p&gt;The recorded timestamp&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;time&lt;/strong&gt;: Date&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;name&#34;&gt;name&lt;/h4&gt;
+&lt;p&gt;The counter&amp;rsquo;s unique name&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;name&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;type&#34;&gt;type&lt;/h4&gt;
+&lt;p&gt;The counter type that defines the measurement algorithm&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;type&lt;/strong&gt;: &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: CounterTiming</title>
+      <link>/node/components/count/counter_timing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/counter_timing/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CounterTiming class allows you to create callback objects that are returned by &lt;a href=&#34;../icounters/#begintiming&#34;&gt;ICounters.beginTiming&lt;/a&gt; to end the timing of execution blocks and update the associated counters.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructo(counter: string = null, callback: &lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt; = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;counter&lt;/strong&gt;: string - an associated counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;callback&lt;/strong&gt;: &lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt; - a callback that shall be called when end_timing is called.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
+&lt;p&gt;A list containing different counters&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;[] = []&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;p&gt;Ends timing of an execution block, calculates elapsed time and updates the associated counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; endTiming(): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: CounterType</title>
+      <link>/node/components/count/counter_type/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/counter_type/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CounterType class enumerates the types of counters that measure different types of metrics.&lt;/p&gt;
+&lt;h3 id=&#34;enumeration-members&#34;&gt;Enumeration members&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Interval&lt;/strong&gt; = 0 - Counters that measure execution time intervals&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LastValue&lt;/strong&gt; = 1 - Counters that keeps the latest measured value&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statistics&lt;/strong&gt; = 2 - Counters that measure min/average/max statistics&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Timestamp&lt;/strong&gt; = 3 - Counter that record timestamps&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Increment&lt;/strong&gt; = 4 - Counter that increment counters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: DefaultCountersFactory</title>
+      <link>/node/components/count/default_counters_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/default_counters_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultCountersFactory class allows you to create a factory that builds &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt; components based on their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nullcounterscountnull_counters&#34;&gt;&lt;a href=&#34;../../count/null_counters&#34;&gt;NullCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;logcounterscountlog_counters&#34;&gt;&lt;a href=&#34;../../count/log_counters&#34;&gt;LogCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositecounterscountcomposite_counters&#34;&gt;&lt;a href=&#34;../../count/composite_counters&#34;&gt;CompositeCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ICounters</title>
+      <link>/node/components/count/icounters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/icounters/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ICounters interface defines the methods for performance counters that measure execution metrics.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The performance counters measure how code is performing; that is, how fast or slow is, how many transactions were performed, how many objects were stored, what was the latest transaction time and so on.&lt;/li&gt;
+&lt;li&gt;They are critical to monitor and improve performance, scalability and reliability of code in production.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
+&lt;p&gt;Begins measurement of execution time interval.
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;beginTiming(name: string): &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt;: void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
+&lt;p&gt;Increments counter by a given value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;increment(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to add to the counter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;incrementone&#34;&gt;incrementOne&lt;/h4&gt;
+&lt;p&gt;Increments counter by 1.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;incrementOne(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;last&#34;&gt;last&lt;/h4&gt;
+&lt;p&gt;Records the last calculated measurement value.
+Usually this method is used by metrics calculated externally.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;last(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Last type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a last value to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;stats&#34;&gt;stats&lt;/h4&gt;
+&lt;p&gt;Calculates min/average/max statistics based on the current and previous values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;stats(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Statistics type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to update statistics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestamp&#34;&gt;timestamp&lt;/h4&gt;
+&lt;p&gt;Records the given timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;timestamp(name: string, value: Date): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Date - a timestamp to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestampnow&#34;&gt;timestampNow&lt;/h4&gt;
+&lt;p&gt;Records the current time as a timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;timestampNow(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ICounterTimingCallback</title>
+      <link>/node/components/count/icounter_timing_callback/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/icounter_timing_callback/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ICounterTimingCallback interface defines the method used for a callback to end the measurement of the execution elapsed time.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;p&gt;Ends measurement of execution elapsed time and updates specified counter.
+See also &lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;endTiming(name: string, elapsed: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;elapsed&lt;/strong&gt;: number - execution elapsed time in milliseconds to update the counter.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: LogCounters</title>
+      <link>/node/components/count/log_counters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/log_counters/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../cached_counters&#34;&gt;CachedCounters&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LogCounters allows you to create performance counters that periodically dump counters&#39; measurements to logger.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: interval in milliseconds to save current counters measurements (default: 5 mins)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reset_timeout&lt;/strong&gt;: timeout in milliseconds to reset the counters. 0 disables the reset (default: 0)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - &lt;a href=&#34;../../log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to dump the captured counters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;save&#34;&gt;save&lt;/h4&gt;
+&lt;p&gt;Saves the current counters measurements.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; save(counters: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;counters&lt;/strong&gt;: &lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;[] - current counters measurements to be saved.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setReferences(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;LogCounters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;References&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;logger&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;console&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ConsoleLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.calls&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;dump&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;countercounter&#34;&gt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;cachedcounterscached_counters&#34;&gt;&lt;a href=&#34;../cached_counters&#34;&gt;CachedCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositeloggerlogcomposite_logger&#34;&gt;&lt;a href=&#34;../../log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: NullCounters</title>
+      <link>/node/components/count/null_counters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/components/count/null_counters/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NullCounters class allows you to create dummy performance counters.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It can be used in testing or in situations when a counter is required but must be disabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
+&lt;p&gt;Begins measurement of execution time interval.
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; beginTiming(name: string): &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt;: void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
+&lt;p&gt;Increments counter by given value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; increment(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to add to the counter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;incrementone&#34;&gt;incrementOne&lt;/h4&gt;
+&lt;p&gt;Increments counter by 1.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; incrementOne(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Increment type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;last&#34;&gt;last&lt;/h4&gt;
+&lt;p&gt;Records the last calculated measurement value.
+Usually this method is used by metrics calculated externally.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; last(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Last type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a last value to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;stats&#34;&gt;stats&lt;/h4&gt;
+&lt;p&gt;Calculates min/average/max statistics based on the current and previous values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; stats(name: string, value: number): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Statistics type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: number - a value to update statistics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestamp&#34;&gt;timestamp&lt;/h4&gt;
+&lt;p&gt;Records the given timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; timestamp(name: string, value: Date): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Date - a timestamp to record.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;timestampnow&#34;&gt;timestampNow&lt;/h4&gt;
+&lt;p&gt;Records the current time as a timestamp.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt;  timestampNow(name: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Timestamp type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,730 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Reflect</title>
+    <link>/python/commons/reflect/</link>
+    <description>Recent content in Reflect on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/commons/reflect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: MethodReflector</title>
+      <link>/python/commons/reflect/method_reflector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/method_reflector/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MethodReflector class allows you to examine an object&amp;rsquo;s methods (method instrospection) and to invoke them dynamically.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This class has symmetric implementation across all languages supported by the Pip.Services toolkit and it is used to support dynamic data processing. Moreover, because all languages have different casing and case sensitivity rules, this class treats all method names as case insensitive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_method_names&#34;&gt;get_method_names&lt;/h4&gt;
+&lt;p&gt;Gets names of all methods implemented in specified object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_method_names(obj: Any): List[str]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an objec to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[str] - a list with method names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;has_method&#34;&gt;has_method&lt;/h4&gt;
+&lt;p&gt;Checks if object has a method with specified name..&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; has_method(obj: Any, name: str): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the method to check.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the object has the method and false if it doesn&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;invoke_method&#34;&gt;invoke_method&lt;/h4&gt;
+&lt;p&gt;Invokes an object method by its name with specified parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; invoke_method(obj: Any, name: str, args: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to invoke.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str -a name of the method to invoke.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: Any - a list of method arguments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the result of the method invocation or None if method returns None.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;methods&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MethodReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_method_names&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;MethodReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;has_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myMethod&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;MethodReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;invoke_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myMethod&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ObjectReader</title>
+      <link>/python/commons/reflect/object_reader/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/object_reader/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ObjectReader class allows you to examine the properties of an object (property instrospection) and to dynamically read them.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In contrast to &lt;a href=&#34;../property_reflector&#34;&gt;PropertyReflector&lt;/a&gt; which only introspects regular objects, this ObjectReader is also able to handle maps and arrays.&lt;/li&gt;
+&lt;li&gt;For maps, properties are key-pairs identified by string keys.&lt;/li&gt;
+&lt;li&gt;For arrays, properties are elements identified by integer index.&lt;/li&gt;
+&lt;li&gt;This class has a symmetric implementation across all languages supported by the Pip.Services toolkit and it is used to support dynamic data processing.&lt;/li&gt;
+&lt;li&gt;Because all languages have different casing and case sensitivity rules, this ObjectReader treats all property names as case insensitive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_properties&#34;&gt;get_properties&lt;/h4&gt;
+&lt;p&gt;Get values of all properties in specified object
+and returns them as a map.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+Returned properties correspondently are object properties,
+map key-pairs or array elements with their indexes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_properties(obj: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to get properties from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - a map, containing the names of the object&amp;rsquo;s properties and their values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_property&#34;&gt;get_property&lt;/h4&gt;
+&lt;p&gt;Gets value of object property specified by its name.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+The property name correspondently must be object property,
+map key or array index.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_property(obj: Any, name: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to read property from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to get.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the property value or None if property doesn&amp;rsquo;t exist or introspection failed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_property_names&#34;&gt;get_property_names&lt;/h4&gt;
+&lt;p&gt;Gets names of all properties implemented in specified object.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+Returned property name correspondently are object properties,
+map keys or array indexes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_property_names(obj: Any): List[str]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an objec to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[str] - a list with property names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_value&#34;&gt;get_value&lt;/h4&gt;
+&lt;p&gt;Gets a real object value.
+If object is a wrapper, it unwraps the value behind it.
+Otherwise it returns the same object value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_value(obj: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to unwrap..&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - an actual (unwrapped) object value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;has_property&#34;&gt;has_property&lt;/h4&gt;
+&lt;p&gt;Checks if object has a property with specified name.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+The property name correspondently must be object property,
+map key or array index.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; has_property(obj: Any, name: str): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to check.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the object has the property and false if it doesn&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+&lt;span style=&#34;color:#111&#34;&gt;mybj&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;properties&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ObjectReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_property_names&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;has_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myProperty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PropertyReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myProperty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;myMap&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;key1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;key2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;has_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myMap&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ObjectReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myMap&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;myArray&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;has_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myArrat&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ObjectReader&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;propertyreflectorproperty_reflector&#34;&gt;&lt;a href=&#34;../property_reflector&#34;&gt;PropertyReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ObjectWriter</title>
+      <link>/python/commons/reflect/object_writer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/object_writer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ObjectWriter class allows you to dynamically set the properties of an object.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In contrast to &lt;a href=&#34;../property_reflector&#34;&gt;PropertyReflector&lt;/a&gt; which only introspects regular objects, the ObjectWriter class is also able to handle maps and arrays.&lt;/li&gt;
+&lt;li&gt;For maps, properties are key-pairs identified by string keys,&lt;/li&gt;
+&lt;li&gt;For arrays, properties are elements identified by integer index.&lt;/li&gt;
+&lt;li&gt;This class has symmetric implementation across all languages supported by the Pip.Services toolkit and it is used to support dynamic data processing.&lt;/li&gt;
+&lt;li&gt;Because all languages have different casing and case sensitivity rules, the ObjectWriter class treats all property names as case insensitive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;set_properties&#34;&gt;set_properties&lt;/h4&gt;
+&lt;p&gt;Sets values of some (all) object properties.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+Property values correspondently are object properties,
+map key-pairs or array elements with their indexes.&lt;/p&gt;
+&lt;p&gt;If some properties do not exist or introspection fails
+they are just silently skipped and no errors thrown.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; set_properties(obj: Any, values: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to write properties to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: Any - a map, containing property names and their values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_property&#34;&gt;set_property&lt;/h4&gt;
+&lt;p&gt;Sets value of object property specified by its name.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+The property name correspondently must be object property,
+map key or array index.&lt;/p&gt;
+&lt;p&gt;If the property does not exist or introspection fails
+this method doesn&amp;rsquo;t do anything and doesn&amp;rsquo;t throw any errors.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; set_property(obj: Any, name: str, value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to write property to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a new value for the property to set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectWriter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myProperty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;myMap&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;key1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;key2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectWriter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myMap&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XYZ&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;myArray&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectWriter&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myArray&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;propertyreflectorproperty_reflector&#34;&gt;&lt;a href=&#34;../property_reflector&#34;&gt;PropertyReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: PropertyReflector</title>
+      <link>/python/commons/reflect/property_reflector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/property_reflector/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PropertyReflector class allows you to examine an object&amp;rsquo;s properties and to dynamically get and set their values.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This class has symmetric implementation across all languages supported by the Pip.Services toolkit and it is used to support dynamic data processing.&lt;/li&gt;
+&lt;li&gt;Because all languages have different casing and case sensitivity rules, the PropertyReflector class treats all property names as case insensitive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_properties&#34;&gt;get_properties&lt;/h4&gt;
+&lt;p&gt;Get values of all properties in specified object
+and returns them as a map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_properties(obj: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to get properties from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - a map, containing the names of the object&amp;rsquo;s properties and their values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_property&#34;&gt;get_property&lt;/h4&gt;
+&lt;p&gt;Gets value of object property specified by its name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; getProperty(obj: Any, name: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to read a property from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - the name of the property to get.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the property value or None if property doesn&amp;rsquo;t exist or introspection failed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_property_names&#34;&gt;get_property_names&lt;/h4&gt;
+&lt;p&gt;Gets names of all properties implemented in the specified object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_property_names(obj: Any): List[str]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an objec to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[str] - a list with property names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;has_property&#34;&gt;has_property&lt;/h4&gt;
+&lt;p&gt;Checks if object has a property with a specified name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; has_property(obj: Any, name: str): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to check.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the object has the property and false if it doesn&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_properties&#34;&gt;set_properties&lt;/h4&gt;
+&lt;p&gt;Sets values of some (all) object properties.&lt;/p&gt;
+&lt;p&gt;If some properties do not exist or introspection fails
+they are just silently skipped and no errors thrown.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; set_properties(obj: Any, values: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to write properties to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: Any - a map, containing property names and their values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_property&#34;&gt;set_property&lt;/h4&gt;
+&lt;p&gt;Sets value of object property specified by its name.&lt;/p&gt;
+&lt;p&gt;If the property does not exist or introspection fails
+this method doesn&amp;rsquo;t do anything and doesn&amp;rsquo;t throw any errors.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; set_property(obj: Any, name: str, value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to write property to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a new value for the property to set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;properties&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PropertyReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_property_names&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;PropertyReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;has_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myProperty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PropertyReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myProperty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;PropertyReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myProperty&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: RecursiveObjectReader</title>
+      <link>/python/commons/reflect/recursive_object_reader/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/recursive_object_reader/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RecursiveObjectReader class allows you to examine the properties of an object (property instrospection) and to dynamically read them recursively using &amp;ldquo;dot&amp;rdquo; notation (e.g property.property.method).&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is similar to &lt;a href=&#34;../object_reader&#34;&gt;ObjectReader&lt;/a&gt; but reads properties recursively through the entire object graph.&lt;/li&gt;
+&lt;li&gt;Nested property names are defined using dot notation as &amp;ldquo;object.subobject.property&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_properties&#34;&gt;get_properties&lt;/h4&gt;
+&lt;p&gt;Gets values of all properties in specified object and its subobjects
+and returns them as a map.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+Returned properties correspondently are object properties,
+map key-pairs or array elements with their indexes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_properties(obj: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to get properties from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - a map, containing the names of the object&amp;rsquo;s properties and their values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_property&#34;&gt;get_property&lt;/h4&gt;
+&lt;p&gt;Recursively gets value of object or its subobjects property specified by its name.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+The property name correspondently must be object property,
+map key or array index.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_property(obj: Any, name: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to read property from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to get.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the property value or None if property doesn&amp;rsquo;t exist or introspection failed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_property_names&#34;&gt;get_property_names&lt;/h4&gt;
+&lt;p&gt;Recursively gets names of all properties implemented in specified object and its subobjects.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+Returned property name correspondently are object properties,
+map keys or array indexes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_property_names(obj: Any): List[str]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an objec to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[str] - a list with property names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;has_property&#34;&gt;has_property&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; has_property(obj: Any, name: str): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to introspect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a name of the property to check.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the object has the property and false if it doesn&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;propertyreflectorproperty_reflector&#34;&gt;&lt;a href=&#34;../property_reflector&#34;&gt;PropertyReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;objectreaderobject_reader&#34;&gt;&lt;a href=&#34;../object_reader&#34;&gt;ObjectReader&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: RecursiveObjectWriter</title>
+      <link>/python/commons/reflect/recursive_object_writer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/recursive_object_writer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RecursiveObjectWriter class allows you to dynamically set the properties of an object and to copy them to another object recursively using dot notation.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is similar to &lt;a href=&#34;../object_writer&#34;&gt;ObjectWriter&lt;/a&gt; but writes properties recursively through the entire object graph.&lt;/li&gt;
+&lt;li&gt;Nested property names are defined using dot notation as &amp;ldquo;object.subobject.property&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;copy_properties&#34;&gt;copy_properties&lt;/h4&gt;
+&lt;p&gt;Copies content of one object to another object
+by recursively reading all properties from source object
+and then recursively writing them to destination object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; copy_properties(dest: Any, src: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dest&lt;/strong&gt;: Any - a destination object to write properties to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;src&lt;/strong&gt;: Any - a source object to read properties from&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_properties&#34;&gt;set_properties&lt;/h4&gt;
+&lt;p&gt;Recursively sets values of some (all) object and its subobjects properties.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+Property values correspondently are object properties,
+map key-pairs or array elements with their indexes.&lt;/p&gt;
+&lt;p&gt;If some properties do not exist or introspection fails,
+they are just silently skipped and no errors thrown.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; set_properties(obj: Any, values: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to write properties to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: Any - a map, containing property names and their values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_property&#34;&gt;set_property&lt;/h4&gt;
+&lt;p&gt;Recursively sets value of object and its subobjects property specified by its name.&lt;/p&gt;
+&lt;p&gt;The object can be a user defined object, map or array.
+The property name correspondently must be object property,
+map key or array index.&lt;/p&gt;
+&lt;p&gt;If the property does not exist or introspection fails
+this method doesn&amp;rsquo;t do anything and doesn&amp;rsquo;t throw any errors.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; setProperty(obj: Any, name: str, value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;obj&lt;/strong&gt;: Any - an object to write property to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - name of the property to set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - new value for the property to set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;propertyreflectorproperty_reflector&#34;&gt;&lt;a href=&#34;../property_reflector&#34;&gt;PropertyReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;objectwriterobject_writer&#34;&gt;&lt;a href=&#34;../object_writer&#34;&gt;ObjectWriter&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: TypeDescriptor</title>
+      <link>/python/commons/reflect/type_descriptor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/type_descriptor/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The TypeDescriptor class stores a reference to a type represented by the type name and library (module) where the type is defined.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This class has symmetric implementation across all languages supported by the Pip.Services toolkit and it is used to support dynamic data processing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the type descriptor and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TypeDescriptor(name: str, library: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - name of the object type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;library&lt;/strong&gt;: str - a library or module where this object type is implemented.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;equals&#34;&gt;equals&lt;/h4&gt;
+&lt;p&gt;Compares this descriptor to a value.
+If the value is also a &lt;a href=&#34;&#34;&gt;TypeDescriptor&lt;/a&gt;, it compares their name and library fields.
+Otherwise this method returns false.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;equals(value: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if value is identical TypeDescriptor and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_library&#34;&gt;get_library&lt;/h4&gt;
+&lt;p&gt;Gets the name of the library or module where the object type is defined.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_library(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the name of the library or module.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_name&#34;&gt;get_name&lt;/h4&gt;
+&lt;p&gt;Gets the name of the object type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_name(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the name of the object type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;to_string&#34;&gt;to_string&lt;/h4&gt;
+&lt;p&gt;Gets a string representation of the object.
+The result has format &lt;em&gt;name[,library]&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;to_string(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - a string representation of the object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;from_string&#34;&gt;from_string&lt;/h4&gt;
+&lt;p&gt;Parses a string to get descriptor fields and returns them as a Descriptor.
+The string must have format &lt;em&gt;name[,library]&lt;/em&gt;&lt;br&gt;
+Throws a &lt;a href=&#34;../../errors/config_exception&#34;&gt;ConfigException&lt;/a&gt; if the descriptor string has the wrong format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_string(value: str): &lt;a href=&#34;&#34;&gt;TypeDescriptor&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a string to parse.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;TypeDescriptor&lt;/a&gt; - a newly created Descriptor.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: TypeMatcher</title>
+      <link>/python/commons/reflect/type_matcher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/type_matcher/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The TypeMatcher class allows you to match value types based on equality.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This class has symmetric implementation across all languages supported by the Pip.Services toolkit and it is used to support dynamic data processing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;match_type&#34;&gt;match_type&lt;/h4&gt;
+&lt;p&gt;Matches expected type to an actual type.
+The types can be specified as types, type names or &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; match_type(expected_type: Any, actual_type: &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;, actual_value: Any = None): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;expected_type&lt;/strong&gt;: Any - an expected type to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual_type&lt;/strong&gt;: &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt; - an actual type to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual_value&lt;/strong&gt;: Any - an optional value to match its type to the expected one.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if types are matching and false if they don&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match_type_by_name&#34;&gt;match_type_by_name&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; match_type_by_name(expected_type: str, actual_type: &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;, actual_value: Any = None): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;expected_type&lt;/strong&gt;: str - an expected type name to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual_type&lt;/strong&gt;: &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt; - an actual type to match defined by type code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual_value&lt;/strong&gt;: Any - an optional value to match its type to the expected one.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if types are matching and false if they don&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match_value_type&#34;&gt;match_value_type&lt;/h4&gt;
+&lt;p&gt;Matches expected type to a type of a value.
+The expected type can be specified by a type, type name or &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; match_value_type(expected_type: Any, actual_value: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;expected_type&lt;/strong&gt;: Any - an expected type to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual_value&lt;/strong&gt;: Any -  a value to match its type to the expected one.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if types are matching and false if they don&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match_value_type_by_name&#34;&gt;match_value_type_by_name&lt;/h4&gt;
+&lt;p&gt;Matches expected type to a type of a value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; match_value_type_by_name(expected_type: str, actual_value: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;expected_type&lt;/strong&gt;: Any - an expected type name to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual_value&lt;/strong&gt;: Any -  a value to match its type to the expected one.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if types are matching and false if they don&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;typecodeconverttype_code&#34;&gt;&lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: TypeReflector</title>
+      <link>/python/commons/reflect/type_reflector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/reflect/type_reflector/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The TypeReflector class allows you to examine the type of an object, and create instancies of objects based on their type.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This class has symmetric implementation across all languages supported by Pip.Services toolkit and used to support dynamic data processing.&lt;/li&gt;
+&lt;li&gt;Because all languages have different casing and case sensitivity rules, the TypeReflector class treats all type names as case insensitive.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;create_instance_by_type&#34;&gt;create_instance_by_type&lt;/h4&gt;
+&lt;p&gt;Creates an instance of an object type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; create_instance_by_type(obj_type: Any, *args: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: Any - an object type (factory function) to create.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: Any - arguments for the object constructor.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the created object instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;create_instance_by_descriptor&#34;&gt;create_instance_by_descriptor&lt;/h4&gt;
+&lt;p&gt;Creates an instance of an object type specified by type descriptor.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; create_instance_by_descriptor(descriptor: &lt;a href=&#34;../type_descriptor&#34;&gt;TypeDescriptor&lt;/a&gt;, *args: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;descriptor&lt;/strong&gt;: &lt;a href=&#34;../type_descriptor&#34;&gt;TypeDescriptor&lt;/a&gt; - a type descriptor that points to an object type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: Any - arguments for the object constructor.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the created object instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;create_instance_by_type-1&#34;&gt;create_instance_by_type&lt;/h4&gt;
+&lt;p&gt;Creates an instance of an object type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; create_instance_by_type(obj_type: Any, *args: Any): Any:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: Any - an object type (factory function) to create.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: Any - arguments for the object constructor.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the created object instance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_type&#34;&gt;get_type&lt;/h4&gt;
+&lt;p&gt;Gets object type by its name and library where it is defined.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_type(name: str, library: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - an object type name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;library&lt;/strong&gt;: str - a library where the type is defined&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the object type or None is the type wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_type_by_descriptor&#34;&gt;get_type_by_descriptor&lt;/h4&gt;
+&lt;p&gt;Gets object type by type descriptor.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; get_type_by_descriptor(descriptor: &lt;a href=&#34;../type_descriptor&#34;&gt;TypeDescriptor&lt;/a&gt;): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;descriptor&lt;/strong&gt;: &lt;a href=&#34;../type_descriptor&#34;&gt;TypeDescriptor&lt;/a&gt; - a type descriptor that points to an object type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the object type or None is the type wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_primitive&#34;&gt;is_primitive&lt;/h4&gt;
+&lt;p&gt;Checks if value has primitive type.&lt;/p&gt;
+&lt;p&gt;Primitive types are: numbers, strings, booleans, date and time.
+Complex (non-primitive types are): objects, maps and arrays.&lt;br&gt;
+See &lt;a href=&#34;../../convert/type_converter/#to_type_code&#34;&gt;TypeConverter.to_type_code&lt;/a&gt;, &lt;a href=&#34;../../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; is_primitive(value: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to check&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the value has primitive type and false if value type is complex.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+&lt;span style=&#34;color:#111&#34;&gt;descriptor&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;MyObject&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mylibrary&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Typeeflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_type_by_descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;myObj&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeReflector&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;create_instance_by_descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;TypeDescriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;is_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;           &lt;span style=&#34;color:#75715e&#34;&gt;# Result: false&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;TypeDescriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;is_primitive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# Result: true&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;typedescriptortype_descriptor&#34;&gt;&lt;a href=&#34;../type_descriptor&#34;&gt;TypeDescriptor&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

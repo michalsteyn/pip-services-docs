@@ -1,0 +1,658 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Trace</title>
+    <link>/python/components/trace/</link>
+    <description>Recent content in Trace on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/components/trace/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: CachedTracer</title>
+      <link>/python/components/trace/cached_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/cached_tracer/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CachedTracer class allows you to create a tracer that caches the recorded traces in memory and periodically dumps them.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Child classes implement saving cached traces to their specified destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;: source (context) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: interval in milliseconds to save log messages (default: 10 seconds)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_cache_size&lt;/strong&gt;: maximum number of messages stored in this cache (default: 100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_source&#34;&gt;_source&lt;/h4&gt;
+&lt;p&gt;Source (context) name&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_source&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_cache&#34;&gt;_cache&lt;/h4&gt;
+&lt;p&gt;List of traces&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_cache&lt;/strong&gt;: List[&lt;a href=&#34;../operation_trace&#34;&gt;OperationTrace&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_updated&#34;&gt;_updated&lt;/h4&gt;
+&lt;p&gt;Boolean variable that indicates whether there has been an update or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_updated&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_last_dump_time&#34;&gt;_last_dump_time&lt;/h4&gt;
+&lt;p&gt;Time of the last dump&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_last_dump_time&lt;/strong&gt;: float&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_max_cache_size&#34;&gt;_max_cache_size&lt;/h4&gt;
+&lt;p&gt;Maximum number of messages stored in this cache (default: 100)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_max_cache_size&lt;/strong&gt; = 100&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_interval&#34;&gt;_interval&lt;/h4&gt;
+&lt;p&gt;Interval in milliseconds to save log messages (default: 10 seconds)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_interval&lt;/strong&gt; = 10000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begin_trace&#34;&gt;begin_trace&lt;/h4&gt;
+&lt;p&gt;Begins recording an operation trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_trace(correlation_id: Optional[str], component: str, operation: str): &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of a called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears (removes) all cached log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;clear()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;dump&#34;&gt;dump&lt;/h4&gt;
+&lt;p&gt;Dumps (writes) the currently cached log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dump()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;failure&#34;&gt;failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;failure(correlation_id: Optional[str], component: str, operation: str, error: Exception,
+duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_save&#34;&gt;_save&lt;/h4&gt;
+&lt;p&gt;Saves log messages from the cache.
+Throws error if not done.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; _save(messages: List[&lt;a href=&#34;../operation_trace&#34;&gt;OperationTrace&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;messages&lt;/strong&gt;: List[&lt;a href=&#34;../operation_trace&#34;&gt;OperationTrace&lt;/a&gt;] - a list with log messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;trace(correlation_id: Optional[str], component: str, operation: str, duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_update&#34;&gt;_update&lt;/h4&gt;
+&lt;p&gt;Sets trace cache as updated
+and dumps it when timeout expires.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_update()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_write&#34;&gt;_write&lt;/h4&gt;
+&lt;p&gt;Writes a log message to the logger destination.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_write(correlation_id: Optional[str], component: str, operation: str, error: Optional[Exception], duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Optional[Exception] - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;itraceritracer&#34;&gt;&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;operationtraceoperation_trace&#34;&gt;&lt;a href=&#34;../operation_trace&#34;&gt;OperationTrace&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: CompositeTracer</title>
+      <link>/python/components/trace/composite_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/composite_tracer/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeTracer class allows you to aggregate all tracers from component references under a single component.&lt;/p&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:tracer:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; components to pass operation tracessource&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CompositeTracer(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_tracers&#34;&gt;_TRACERS&lt;/h4&gt;
+&lt;p&gt;List of tracers&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_TRACERS&lt;/strong&gt;: List[&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;] = []&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begin_trace&#34;&gt;begin_trace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_trace(correlation_id: Optional[str], component: str, operation: str): &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;failure(correlation_id: Optional[str], component: str, operation: str, error: Exception,
+duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;trace(correlation_id: Optional[str], component: str, operation: str, duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - a name of called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - a name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IReferenceable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__tracer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CompositeTracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;set_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;my_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;correlaton_id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;begin_trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlaton_id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;end_trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;end_failure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;itraceritracer&#34;&gt;&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: DefaultTracerFactory</title>
+      <link>/python/components/trace/default_tracer_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/default_tracer_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultTracerFactory class allows you to create a factory used to create &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; components based on their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DefaultLoggerFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nulltracernull_tracer&#34;&gt;&lt;a href=&#34;../null_tracer&#34;&gt;NullTracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;consoletracerconsole_tracer&#34;&gt;&lt;a href=&#34;../console_tracer&#34;&gt;ConsoleTracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositetracercomposite_tracer&#34;&gt;&lt;a href=&#34;../composite_tracer&#34;&gt;CompositeTracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ITracer</title>
+      <link>/python/components/trace/itracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/itracer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ITracer interface is used to create tracer component that capture operation traces.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begin_trace&#34;&gt;begin_trace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_trace(correlation_id: Optional[str], component: str, operation: str): &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;failure(correlation_id: Optional[str], component: str, operation: str, error: Exception,
+duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - a name of called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - a name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;trace(correlation_id: Optional[str], component: str, operation: str, duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: LogTracer</title>
+      <link>/python/components/trace/log_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/log_tracer/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LogTracer class allows you to create a tracer that dumps recorded traces to a logger.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;log_level&lt;/strong&gt;: log level to record traces (default: debug)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - &lt;a href=&#34;../../log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to dump the captured counters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begin_trace&#34;&gt;begin_trace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_trace(correlation_id: Optional[str], component: str, operation: str): &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;failure(correlation_id: Optional[str], component: str, operation: str, error: Exception,
+duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;trace(correlation_id: Optional[str], component: str, operation: str, duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;tracer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;LogTracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;References&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;from_tuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;logger&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;console&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConsoleLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;begin_trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;end_trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;end_failure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;tracertracer&#34;&gt;&lt;a href=&#34;../tracer&#34;&gt;Tracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;cachedcounterscountcached_counters&#34;&gt;&lt;a href=&#34;../../count/cached_counters&#34;&gt;CachedCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositeloggerlogcomposite_logger&#34;&gt;&lt;a href=&#34;../../log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: NullTracer</title>
+      <link>/python/components/trace/null_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/null_tracer/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NullTracer class allows you to create a dummy tracer with no real effect.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It can be used in testing or in situations when tracing is required but must be disabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begin_trace&#34;&gt;begin_trace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_trace(correlation_id: Optional[str], component: str, operation: str): &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;failure(correlation_id: Optional[str], component: str, operation: str, error: Exception,
+duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;trace(correlation_id: Optional[str], component: str, operation: str, duration: float)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;itraceritracer&#34;&gt;&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: OperationTrace</title>
+      <link>/python/components/trace/operation_trace/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/operation_trace/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OperationTrace class allows you to create a data object used to store captured operation traces.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This object is used by &lt;a href=&#34;../cached_tracer&#34;&gt;CachedTracer&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create new instance of OperationTrace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OperationTrace(time: datetime, source: str, component: str, operation: str, correlation_id: str, duration: float, error: &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;time&lt;/strong&gt;: datetime - The time when operation was executed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;: str - source (context name)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - name of the component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - name of the executed operation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: str - transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: float - duration of the operation in milliseconds&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt; - The description of the captured error&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;time&#34;&gt;time&lt;/h4&gt;
+&lt;p&gt;The time when operation was executed&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;time&lt;/strong&gt;: datetime&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;source&#34;&gt;source&lt;/h4&gt;
+&lt;p&gt;The source (context name)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;source&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;component&#34;&gt;component&lt;/h4&gt;
+&lt;p&gt;The name of the component&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;component&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;operation&#34;&gt;operation&lt;/h4&gt;
+&lt;p&gt;The name of the executed operation&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;operation&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;correlation_id&#34;&gt;correlation_id&lt;/h4&gt;
+&lt;p&gt;The transaction id to trace execution through call chain.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;duration&#34;&gt;duration&lt;/h4&gt;
+&lt;p&gt;The duration of the operation in milliseconds&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;duration&lt;/strong&gt;: float&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;error&#34;&gt;error&lt;/h4&gt;
+&lt;p&gt;The description of the captured error.&lt;br&gt;
+See also &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;, &lt;a href=&#34;../../../commons/errors/application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;error&lt;/strong&gt;: &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: TraceTiming</title>
+      <link>/python/components/trace/trace_timing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/trace/trace_timing/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The TraceTiming class is used to create the timing object returned by &lt;a href=&#34;../itracer/#begin_trace&#34;&gt;ITracer.begin_trace&lt;/a&gt; to end the timing of and execution block and record the associated trace.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TraceTiming(correlation_id: Optional[str], component: str, operation: str, tracer: &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: str - an associated component name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - an associated operation name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tracer&lt;/strong&gt;: &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; - a callback that shall be called when endTiming is called.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;end_failure&#34;&gt;end_failure&lt;/h4&gt;
+&lt;p&gt;Ends timing of a failed block, calculates elapsed time
+and records the associated trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;end_failure(error: Exception)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this trace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;end_trace&#34;&gt;end_trace&lt;/h4&gt;
+&lt;p&gt;Ends timing of an execution block, calculates the elapsed time
+and records the associated trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;end_trace()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;begin_trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;end_trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Exceptions&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;end_failure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

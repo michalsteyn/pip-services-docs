@@ -1,0 +1,486 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Refer</title>
+    <link>/python/container/refer/</link>
+    <description>Recent content in Refer on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/container/refer/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: BuildReferencesDecorator</title>
+      <link>/python/container/refer/build_references_decorator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/container/refer/build_references_decorator/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../references_decorator&#34;&gt;ReferencesDecorator&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The BuildReferencesDecorator class allows you to create a references decorator that automatically creates missing components using availale component factories upon component retrieval.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the decorator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;BuildReferencesDecorator(next_references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;, top_references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;next_references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - the next references or decorator in the chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;top_references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - the decorator at the top of the chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;clarify_locator&#34;&gt;clarify_locator&lt;/h4&gt;
+&lt;p&gt;Clarifies a component locator by merging two descriptors into one to replace missing fields.
+That allows to get a more complete descriptor that includes all possible fields.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;clarify_locator(locator: Any, factory: &lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt;): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - component locator to clarify.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;factory&lt;/strong&gt;: &lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt; - factory that shall create the component.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - clarified component descriptor (locator)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;create&#34;&gt;create&lt;/h4&gt;
+&lt;p&gt;Creates a component identified by the given locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;create(locator: Any, factory: &lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt;): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator used to identify the component to be created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;factory&lt;/strong&gt;: &lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt; - factory that shall create the component.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - created component.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;find&#34;&gt;find&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match the specified locator.
+Throws a &lt;a href=&#34;../../../commons/refer/reference_exception&#34;&gt;ReferenceException&lt;/a&gt; when required is set to True but no references are found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;find(locator: Any, required: bool): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - it True, it forces to raise an exception when no reference is found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;find_factory&#34;&gt;find_factory&lt;/h4&gt;
+&lt;p&gt;Finds a factory capable creating a component by given descriptor
+from the components registered in the references.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;find_factory(locator: Any): Optional[&lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator of the component to be created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../components/build/ifactory&#34;&gt;IFactory&lt;/a&gt;] - found factory or None if no factory was found.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ContainerReferences</title>
+      <link>/python/container/refer/container_references/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/container/refer/container_references/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../managed_references&#34;&gt;ManagedReferences&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ContainerReferences class allows you to create container&amp;rsquo;s managed references that can be created from a container configuration.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;put_from_config&#34;&gt;put_from_config&lt;/h4&gt;
+&lt;p&gt;Puts components into the references from the container&amp;rsquo;s configuration.&lt;/p&gt;
+&lt;p&gt;Throws &lt;a href=&#34;../../../components/build/create_exception&#34;&gt;CreateException&lt;/a&gt; when one of component cannot be created.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;put_from_config(config: &lt;a href=&#34;../../config/container_config&#34;&gt;ContainerConfig&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../config/container_config&#34;&gt;ContainerConfig&lt;/a&gt; - container&amp;rsquo;s configuration with information of the components to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;managedreferencesmanaged_references&#34;&gt;&lt;a href=&#34;../managed_references&#34;&gt;ManagedReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: LinkReferencesDecorator</title>
+      <link>/python/container/refer/link_references_decorator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/container/refer/link_references_decorator/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../references_decorator&#34;&gt;ReferencesDecorator&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LinkReferencesDecorator class allows you to create a references decorator that automatically sets references to newly added components that implement the &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt; interface, and unsets references from removed components that implement the &lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt; interface.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the decorator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LinkReferencesDecorator(next_references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;, top_references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;next_references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - next references or decorator in the chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;top_references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - decorator at the top of the chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
+&lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;close(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_open&#34;&gt;is_open&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is_open(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the component is open and False otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;open(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;put&#34;&gt;put&lt;/h4&gt;
+&lt;p&gt;Puts a new reference into the reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;put(locator: Any = None, component: Any = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find the reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: Any - component&amp;rsquo;s reference to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove&#34;&gt;remove&lt;/h4&gt;
+&lt;p&gt;Removes a previously added reference that matches the specified locator.
+If many references match the locator, it removes only the first one.
+When all references shall be removed, use &lt;strong&gt;remove_all&lt;/strong&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;remove(locator: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to remove reference&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - removed component reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove_all&#34;&gt;remove_all&lt;/h4&gt;
+&lt;p&gt;Removes all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;remove_all(locator: Any): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - the locator to remove references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list, containing all removed references.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ManagedReferences</title>
+      <link>/python/container/refer/managed_references/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/container/refer/managed_references/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../references_decorator&#34;&gt;ReferencesDecorator&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ManagedReferences class allows you to create managed references that in additon to keeping and locating references can also manage their lifecycle, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Auto-creation of missing components using available factories&lt;/li&gt;
+&lt;li&gt;Auto-linking newly added components&lt;/li&gt;
+&lt;li&gt;Auto-opening newly added components&lt;/li&gt;
+&lt;li&gt;Auto-closing removed components&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the decorator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ManagedReferences(tuples: Sequence[Any] = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;tuples&lt;/strong&gt;: Sequence[Any] - tuples where odd values are component locators (descriptors) and even values are component references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
+&lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;close(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_open&#34;&gt;is_open&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is_open(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the component is open and False otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;open(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;from_tuples&#34;&gt;from_tuples&lt;/h4&gt;
+&lt;p&gt;Removes all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_tuples(*tuples: Any): &lt;a href=&#34;&#34;&gt;ManagedReferences&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to remove references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ManagedReferences&lt;/a&gt; - list containing all removed references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;runreferencesdecoratorrun_references_decorator&#34;&gt;&lt;a href=&#34;../run_references_decorator&#34;&gt;RunReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;linkreferencesdecoratorlink_references_decorator&#34;&gt;&lt;a href=&#34;../link_references_decorator&#34;&gt;LinkReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;buildreferencesdecoratorbuild_references_decorator&#34;&gt;&lt;a href=&#34;../build_references_decorator&#34;&gt;BuildReferencesDecorator&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;referencescommonsreferreferences&#34;&gt;&lt;a href=&#34;../../../commons/refer/references&#34;&gt;References&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ReferencesDecorator</title>
+      <link>/python/container/refer/references_decorator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/container/refer/references_decorator/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ReferencesDecorator class allows you to create chainable decorators for IReferences that allow to inject addtional capabilities, such as automatic component creation, automatic registration and opening.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the decorator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ReferencesDecorator(next_references: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;], top_references: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;next_references&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;] - next references or decorator in the chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;top_references&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;] - decorator at the top of the chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;next_references&#34;&gt;next_references&lt;/h4&gt;
+&lt;p&gt;Next references or decorator in the chain.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;next_references&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;top_references&#34;&gt;top_references&lt;/h4&gt;
+&lt;p&gt;Decorator at the top of the chain.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;top_references&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;find&#34;&gt;find&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match the specified locator.
+Throws a &lt;a href=&#34;../../../commons/refer/reference_exception&#34;&gt;ReferenceException&lt;/a&gt; when required is set to True but no references were found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;find(locator: Any, required: bool): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - if True, it forces to raise an exception when no reference is found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] -  list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_all&#34;&gt;get_all&lt;/h4&gt;
+&lt;p&gt;Gets all component references registered in this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_all(): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list with component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_all_locators&#34;&gt;get_all_locators&lt;/h4&gt;
+&lt;p&gt;Gets locators for all registered component references in the reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_all_locators(): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list with component locators.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_one_optional&#34;&gt;get_one_optional&lt;/h4&gt;
+&lt;p&gt;Gets an optional component reference that matches the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_one_optional(locator: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - matching component reference or None if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_one_required&#34;&gt;get_one_required&lt;/h4&gt;
+&lt;p&gt;Gets a required component reference that matches the specified locator.
+Throws a &lt;a href=&#34;../../../commons/refer/reference_exception&#34;&gt;ReferenceException&lt;/a&gt; when no references were found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_one_required(locator: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - matching component reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_optional&#34;&gt;get_optional&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_optional(locator: Any): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list with matching component references or empty list if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_required&#34;&gt;get_required&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match the specified locator.
+At least one component reference must be present.
+Throws a &lt;a href=&#34;../../../commons/refer/reference_exception&#34;&gt;ReferenceException&lt;/a&gt; when no references were found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_required(locator: Any): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;put&#34;&gt;put&lt;/h4&gt;
+&lt;p&gt;Puts a new reference into the reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;put(locator: Any = None, reference: Any = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find the reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reference&lt;/strong&gt;: Any - component reference to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove&#34;&gt;remove&lt;/h4&gt;
+&lt;p&gt;Removes a previously added component that matches the specified locator.
+If many references match the locator, it removes only the first one.
+When all references shall be removed, use &lt;strong&gt;remove_all&lt;/strong&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;remove(locator: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to remove component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - removed component.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove_all&#34;&gt;remove_all&lt;/h4&gt;
+&lt;p&gt;Removes all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;remove_all(locator: Any): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to remove references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list containing all removed references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferencescommonsreferireferences&#34;&gt;&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: RunReferencesDecorator</title>
+      <link>/python/container/refer/run_references_decorator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/container/refer/run_references_decorator/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../references_decorator&#34;&gt;ReferencesDecorator&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RunReferencesDecorator class allows you to create a references decorator that automatically opens to newly added components that implement the &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt; interface and closes removed components that implement the &lt;a href=&#34;../../../commons/run/iclosable&#34;&gt;IClosable&lt;/a&gt; interface.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the decorator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;RunReferencesDecorator(next_references: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;], top_references: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;next_references&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;] - next references or decorator in the chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;top_references&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;] - decorator at the top of the chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_opened&#34;&gt;_opened&lt;/h4&gt;
+&lt;p&gt;Flag of the component state&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_opened: boolean = false&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;put&#34;&gt;put&lt;/h4&gt;
+&lt;p&gt;Puts a new reference into the reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;put(locator: Any = None, reference: Any = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to find the reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reference&lt;/strong&gt;: Any - component reference to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove&#34;&gt;remove&lt;/h4&gt;
+&lt;p&gt;Removes a previously added component that matches the specified locator.
+If many references match the locator, it removes only the first one.
+When all references shall be removed, use the &lt;strong&gt;remove_all&lt;/strong&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;remove(locator: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to remove component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - removed component.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove_all&#34;&gt;remove_all&lt;/h4&gt;
+&lt;p&gt;Removes all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;remove_all(locator: Any): List[Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: Any - locator to remove references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[Any] - list containing all removed references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferencescommonsreferireferences&#34;&gt;&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

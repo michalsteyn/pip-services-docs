@@ -1,0 +1,1228 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Queues</title>
+    <link>/python/messaging/queues/</link>
+    <description>Recent content in Queues on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/messaging/queues/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: CachedMessageQueue</title>
+      <link>/python/messaging/queues/cached_message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/cached_message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/run/icleanable&#34;&gt;ICleanable&lt;/a&gt;, &lt;a href=&#34;../message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CachedMessageQueue class allows you to create message queues that cache received messages in memory, to allow peek operations that may not be supported by the undelying queue.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This queue is used as a base implementation for other queues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the persistence component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CachedMessageQueue(name: str = None, capabilities: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt; = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - (optional) queue name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;capabilities&lt;/strong&gt;: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt; - (optional) capabilities of the message queue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_auto_subscribe&#34;&gt;_auto_subscribe&lt;/h4&gt;
+&lt;p&gt;Boolean variable indicating whether a message queue auto-subscribes or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_auto_subscribe&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_lock&#34;&gt;_lock&lt;/h4&gt;
+&lt;p&gt;Thread lock.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_lock&lt;/strong&gt;: threading.Lock&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_event&#34;&gt;_event&lt;/h4&gt;
+&lt;p&gt;Thread event.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_event&lt;/strong&gt;: threading.Event
+t&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_messages&#34;&gt;_messages&lt;/h4&gt;
+&lt;p&gt;List of messages in a queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_messages&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;[]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_receiver&#34;&gt;_receiver&lt;/h4&gt;
+&lt;p&gt;Message receiver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;abstract-methods&#34;&gt;Abstract methods&lt;/h3&gt;
+&lt;h4 id=&#34;subscribe&#34;&gt;subscribe&lt;/h4&gt;
+&lt;p&gt;Subscribes to the message broker.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; subscribe(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsubscribe&#34;&gt;unsubscribe&lt;/h4&gt;
+&lt;p&gt;Unsubscribes from the message broker.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; unsubscribe(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears component state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;clear(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;end_listen&#34;&gt;end_listen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages.
+When this method is called, &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;end_listen(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until the queue is closed.
+See &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;, &lt;a href=&#34;#receive&#34;&gt;receive&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;listen(correlation_id: Optional[str], receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;open(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it.
+If there are no messages available in the queue it returns None.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;peek(correlation_id: Optional[str]): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - peeked message or &lt;strong&gt;None&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek_batch&#34;&gt;peek_batch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them.
+If there are no messages available in the queue it returns an empty list.&lt;/p&gt;
+&lt;p&gt;Important: This method is not supported by MQTT.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;peek_batch(correlation_id: Optional[str], message_count: int):List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_count&lt;/strong&gt;: int - maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;] - list with peeked messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;read_message_count&#34;&gt;read_message_count&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;read_message_count(): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;receive(correlation_id: Optional[str], wait_timeout: int): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;wait_timeout&lt;/strong&gt;: int - timeout in milliseconds to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - received message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_send_message_to_receiver&#34;&gt;_send_message_to_receiver&lt;/h4&gt;
+&lt;p&gt;Sends a message to a receiver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_send_message_to_receiver(receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;, message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver of the message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to be sent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagequeuemessage_queue&#34;&gt;&lt;a href=&#34;../message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: CallbackMessageReceiver</title>
+      <link>/python/messaging/queues/callback_message_receiver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/callback_message_receiver/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CallbackMessageReceiver class allows you to wrap message callbacks into &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an instance of the CallbackMessageReceiver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CallbackMessageReceiver(callback: Callable[[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;], None])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;callback&lt;/strong&gt;: Callable[[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;], None] - a callback function that shall be wrapped into &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;receive_message&#34;&gt;receive_message&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message from the queue.&lt;br&gt;
+See also &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;receive_message(envelope: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, queue: &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;envelope&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - incoming message&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;queue&lt;/strong&gt;: &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt; - queue where the message comes from&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: IMessageQueue</title>
+      <link>/python/messaging/queues/imessage_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/imessage_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iclosable&#34;&gt;IClosable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IMessageQueue interface is used for asynchronous message queues.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Not all queues may implement all the methods.&lt;/li&gt;
+&lt;li&gt;An ttempt to call a non-supported method will result in a NotImplemented exception.&lt;/li&gt;
+&lt;li&gt;To verify if a specific method is supported check &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;abandon&#34;&gt;abandon&lt;/h4&gt;
+&lt;p&gt;Returns a message into the queue and makes it available for all subscribers to receive it again. This method is usually used to return a message which could not be processed at the moment, to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently or/and sent to dead letter queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;abandon(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to return.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;begin_listen&#34;&gt;begin_listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages without blocking the current thread.&lt;br&gt;
+See also &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;, &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_listen(correlation_id: Optional[str], receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through a the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complete&#34;&gt;complete&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue. This method is usually used to remove the message after successful processing.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;complete(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;end_listen&#34;&gt;end_listen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages. When this method is called, &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;end_listen(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_capabilities&#34;&gt;get_capabilities&lt;/h4&gt;
+&lt;p&gt;Gets the queue capabilities&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_capabilities(): &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt; - queue&amp;rsquo;s capabilities object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_name&#34;&gt;get_name&lt;/h4&gt;
+&lt;p&gt;Gets the queue name&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_name(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - queue name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until queue is closed.&lt;br&gt;
+See also &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;, &lt;a href=&#34;#receive&#34;&gt;receive&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;listen(correlation_id: Optional[str], receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;move_to_dead_letter&#34;&gt;move_to_dead_letter&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue and sends it to the dead letter queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;move_to_dead_letter(message: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to be removed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it. If there are no messages available in the queue, it returns None.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;peek(correlation_id: Optional[str]): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - peeked message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peekbatch&#34;&gt;peekBatch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them. If there are no messages available in the queue, it returns an empty list.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;peekBatch(orrelation_id: Optional[str], message_count: int): List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;orrelation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_count&lt;/strong&gt;: int - maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;] - peeked list with messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;read_message_count&#34;&gt;read_message_count&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;read_message_count(): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - number of messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;receive(correlation_id: Optional[str], wait_timeout: int): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;wait_timeout&lt;/strong&gt;: int - timeout in milliseconds to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - received message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;renew_lock&#34;&gt;renew_lock&lt;/h4&gt;
+&lt;p&gt;Renews a lock on a message that makes it invisible from other receivers in the queue. This method is usually used to extend the message processing time.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;renew_lock(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, lock_timeout: int)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to extend its lock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;lock_timeout&lt;/strong&gt;: int - locking timeout in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send&#34;&gt;send&lt;/h4&gt;
+&lt;p&gt;Sends a message into the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;send(correlation_id: Optional[str], envelope: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;envelope&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message envelop to be sent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send_as_object&#34;&gt;send_as_object&lt;/h4&gt;
+&lt;p&gt;Sends an object into the queue. Before being sent, the object is converted into JSON string and wrapped in a &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;send_as_object(correlation_id: Optional[str], message_type: str, value: Any):&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_type&lt;/strong&gt;: str - message type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - object value to be sent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messageenvelopemessage_envelope&#34;&gt;&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagingcapabilitiesmessaging_capabilities&#34;&gt;&lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: IMessageReceive</title>
+      <link>/python/messaging/queues/imessage_receiver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/imessage_receiver/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IMessageReceive interface is used to receive incoming messages.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;receive_message&#34;&gt;receive_message&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message from the queue.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;receive_message(envelope: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, queue: &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;envelope&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - incoming message&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;queue&lt;/strong&gt;: &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt; - queue where the message comes from&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyMessageReceiver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IMessageReceiver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;receive_message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;envelop&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Received message: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;envelop&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_message_as_string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;messageQueue&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MemoryMessageQueue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;messageQueue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;listen&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyMessageReceiver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;())&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;messageQueue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;messageQueue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;send&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MessageEnvelope&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymessage&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# Output in console: &amp;#34;ABC&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: LockedMessage</title>
+      <link>/python/messaging/queues/locked_message/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/locked_message/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LockedMessage class allows you to create data objects used to store and lock incoming messages in &lt;a href=&#34;../memory_message_queue&#34;&gt;MemoryMessageQueue&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;expiration_time&#34;&gt;expiration_time&lt;/h4&gt;
+&lt;p&gt;The expiration time for the message lock.
+If it is None, then the message is not locked.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;expiration_time&lt;/strong&gt;: datetime.datetime&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;message&#34;&gt;message&lt;/h4&gt;
+&lt;p&gt;The incoming message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;timeout&#34;&gt;timeout&lt;/h4&gt;
+&lt;p&gt;The lock timeout in milliseconds.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;timeout&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;memorymessagequeuememory_message_queue&#34;&gt;&lt;a href=&#34;../memory_message_queue&#34;&gt;MemoryMessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MemoryMessageQueue</title>
+      <link>/python/messaging/queues/memory_message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/memory_message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MemoryMessageQueue class is used to create message queues that send and receive messages within the same process by using shared memory.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This queue is typically used for testing to mock real queues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: name of the message queue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/ilogger&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the message queue.&lt;br&gt;
+See also &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MemoryMessageQueue(name: str = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - (optional) a queue name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_lock&#34;&gt;_lock&lt;/h4&gt;
+&lt;p&gt;Threading lock.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_lock&lt;/strong&gt;: threading.Lock&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_event&#34;&gt;_event&lt;/h4&gt;
+&lt;p&gt;Threading event.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_event&lt;/strong&gt;: threading.Event&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;abandon&#34;&gt;abandon&lt;/h4&gt;
+&lt;p&gt;Returns a message into the queue and makes it available for all subscribers to receive it again. This method is usually used to return a message that could not be processed at the moment to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently or/and sent to dead letter queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;abandon(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to return.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears the component&amp;rsquo;s state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;clear(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
+&lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;close(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complete&#34;&gt;complete&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue. This method is usually used to remove the message after successful processing.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;complete(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;end_listen&#34;&gt;end_listen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages. When this method is called, &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;end_listen(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_open&#34;&gt;is_open&lt;/h4&gt;
+&lt;p&gt;Checks if the component is opened.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is_open(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the component is open and False otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until the queue is closed.&lt;br&gt;
+See also &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;, &lt;a href=&#34;#receive&#34;&gt;receive&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;listen(correlation_id: Optional[str], receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it. If there are no messages available in the queue, it returns None.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;peek(correlation_id: Optional[str]): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - peeked message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek_batch&#34;&gt;peek_batch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them. If there are no messages available in the queue, it returns an empty list.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;peek_batch(correlation_id: Optional[str], message_count: int): List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_count&lt;/strong&gt;: int - maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;] - list with peeked messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;read_message_count&#34;&gt;read_message_count&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;read_message_count(): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;:  int - number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;receive(correlation_id: Optional[str], wait_timeout: int): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;wait_timeout&lt;/strong&gt;: int - timeout in milliseconds to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - received message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;renew_lock&#34;&gt;renew_lock&lt;/h4&gt;
+&lt;p&gt;Renews a lock on a message that makes it invisible from other receivers in the queue. This method is usually used to extend the message processing time.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;renew_lock(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, lock_timeout: int)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to extend its lock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;lock_timeout&lt;/strong&gt;: int - locking timeout in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send&#34;&gt;send&lt;/h4&gt;
+&lt;p&gt;Sends a message into the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;send(correlation_id: Optional[str], envelope: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;envelope&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message envelop to be sent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_open_with_params&#34;&gt;_open_with_params&lt;/h4&gt;
+&lt;p&gt;Opens the component with given connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_open_with_params(correlation_id: Optional[str], connections: List[&lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;ConnectionParams&lt;/a&gt;], credentials: &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: List[&lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;queue&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MessageQueue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myqueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;send&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MessageEnvelope&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymessage&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;message&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;receive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;message&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# ...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;complete&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagingcapabilitiesmessaging_capabilities&#34;&gt;&lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagequeuemessage_queue&#34;&gt;&lt;a href=&#34;../message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MessageEnvelope</title>
+      <link>/python/messaging/queues/message_envelope/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/message_envelope/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MessageEnvelope class allows you to add additional information to messages.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A correlation id, message id, and a message type are added to the data being sent/received. Additionally, a MessageEnvelope can reference a lock token.&lt;/li&gt;
+&lt;li&gt;A MessageEnvelope&amp;rsquo;s message is stored as a buffer, so strings are converted using utf8 conversions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt;, which adds a correlation id, message id, and a type to the data being sent/received.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MessageEnvelope(correlation_id: Optional[str], message_type: Optional[str], message: Optional[Any])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_type&lt;/strong&gt;: Optional[str] - a string value that defines the message&amp;rsquo;s type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: Optional[Any] - the data being sent/received.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;correlation_id&#34;&gt;correlation_id&lt;/h4&gt;
+&lt;p&gt;The unique business transaction id that is used to trace calls across components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;message&#34;&gt;message&lt;/h4&gt;
+&lt;p&gt;The stored message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;message&lt;/strong&gt;: bytes&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;message_id&#34;&gt;message_id&lt;/h4&gt;
+&lt;p&gt;The message&amp;rsquo;s auto-generated ID.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;message_id&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;message_type&#34;&gt;message_type&lt;/h4&gt;
+&lt;p&gt;String value that defines the stored message&amp;rsquo;s type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;message_type&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;sent_time&#34;&gt;sent_time&lt;/h4&gt;
+&lt;p&gt;The time at which the message was sent.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;sent_time&lt;/strong&gt;: datetime.datetime&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_message_as&#34;&gt;get_message_as&lt;/h4&gt;
+&lt;p&gt;Returns any the value that was stored in this message as a JSON string.&lt;br&gt;
+See also &lt;a href=&#34;#set_message_as_object&#34;&gt;set_message_as_object&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_message_as(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - value that was stored in this message as a JSON string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_message_as_string&#34;&gt;get_message_as_string&lt;/h4&gt;
+&lt;p&gt;Returns the information stored in this message as a UTF-8 encoded string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_message_as_string(): Optional[str]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Optional[str] - information stored in this message as a UTF-8 encoded string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_reference&#34;&gt;get_reference&lt;/h4&gt;
+&lt;p&gt;Returns the lock token that this &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt; references.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_reference(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - lock token that this &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt; references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_message_as_object&#34;&gt;set_message_as_object&lt;/h4&gt;
+&lt;p&gt;Stores the given value as an object.
+See also &lt;a href=&#34;#get_message_as&#34;&gt;get_message_as&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_message_as_object(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any -  value to convert to JSON and store in this message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_message_as_string&#34;&gt;set_message_as_string&lt;/h4&gt;
+&lt;p&gt;Stores the given string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_message_as_string(value: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - string to set. It will be converted to a buffer using UTF-8 encoding.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_reference&#34;&gt;set_reference&lt;/h4&gt;
+&lt;p&gt;Sets a lock token reference for this &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_reference(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - lock token to reference the message envelope.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;to_json&#34;&gt;to_json&lt;/h4&gt;
+&lt;p&gt;Converts this &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt; to a JSON string. The message payload is passed as base64 string&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;to_json(): dict&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dict - JSON encoded representation of the object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;to_string&#34;&gt;to_string&lt;/h4&gt;
+&lt;p&gt;Converts this &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt; to a string, using the following format:&lt;br&gt;
+&lt;em&gt;&amp;quot;[&amp;lt;correlation_id&amp;gt;,&amp;lt;message_type&amp;gt;,&amp;lt;message.toString&amp;gt;]&amp;quot;&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If any of the values are &lt;em&gt;None&lt;/em&gt;, they will be replaced with ---.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;to_string(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - generated string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;from_json&#34;&gt;from_json&lt;/h4&gt;
+&lt;p&gt;Converts a JSON string into a &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt; The message payload is passed as a base64 string&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_json(value: str): &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - JSON encoded string&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;MessageEnvelope&lt;/a&gt; - decoded Message Envelope.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MessageQueue</title>
+      <link>/python/messaging/queues/message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../imessage_queue&#34;&gt;IMessageQueue&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MessageQueue class allows you to create a message queue that is used as a basis for specific message queue implementions.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: name of the message queue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: key to retrieve parameters from discovery service&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: connection protocol like http, https, tcp, udp&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: key to retrieve parameters from credential store&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_id&lt;/strong&gt;: application access id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_key&lt;/strong&gt;: application secret key&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/ilogger&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; components to discover connection(s)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; componetns to lookup credential(s)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the message queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MessageQueue(name: str = None, capabilities: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt; = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - (optional) queue name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;capabilities&lt;/strong&gt;: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt; - (optional) capabilities of this message queue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_lock&#34;&gt;_lock&lt;/h4&gt;
+&lt;p&gt;Threading lock.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_lock&lt;/strong&gt;: threading.Lock&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_event&#34;&gt;_event&lt;/h4&gt;
+&lt;p&gt;Threading event.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_event&lt;/strong&gt; = threading.Event&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_logger&#34;&gt;_logger&lt;/h4&gt;
+&lt;p&gt;Component used to pass log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
+&lt;p&gt;Component to pass collected measurements.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/composite_counters&#34;&gt;CompositeCounters&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_connectionresolver&#34;&gt;_connectionResolver&lt;/h4&gt;
+&lt;p&gt;Component used to resolve connections.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_connectionResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/connect/connection_resolver&#34;&gt;ConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_credentialresolver&#34;&gt;_credentialResolver&lt;/h4&gt;
+&lt;p&gt;Component used to resolve credentials.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_credentialResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_resolver&#34;&gt;CredentialResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_name&#34;&gt;_name&lt;/h4&gt;
+&lt;p&gt;Name of the message queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_name&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_capabilities&#34;&gt;_capabilities&lt;/h4&gt;
+&lt;p&gt;Component used to store the message queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_capabilities&lt;/strong&gt;: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;abstract-methods&#34;&gt;Abstract methods&lt;/h3&gt;
+&lt;h4 id=&#34;abandon&#34;&gt;abandon&lt;/h4&gt;
+&lt;p&gt;Returns a message into the queue and makes it available for all subscribers to receive it again. This method is usually used to return a message which could not be processed at the moment to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently or/and sent to dead letter queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; abandon(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to return.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears a component&amp;rsquo;s state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; clear(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees the used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; close(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complete&#34;&gt;complete&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue. This method is usually used to remove the message after successful processing.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; complete(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;end_listen&#34;&gt;end_listen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages. When this method is called, &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; end_listen(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_open&#34;&gt;is_open&lt;/h4&gt;
+&lt;p&gt;Checks if the component is opened.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; is_open(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the component has been opened and False otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until the queue is closed.&lt;br&gt;
+See also &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;, &lt;a href=&#34;#receive&#34;&gt;receive&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; listen(correlation_id: Optional[str], receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;move_to_dead_letter&#34;&gt;move_to_dead_letter&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue and sends it to dead letter queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; move_to_dead_letter(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to be removed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it. If there are no messages available in the queue, it returns None.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; peek(correlation_id: Optional[str]): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - peeked message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek_batch&#34;&gt;peek_batch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them. If there are no messages available in the queue, it returns an empty list.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; peek_batch(correlation_id: Optional[str], message_count: int): List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] -  (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_count&lt;/strong&gt;: int - maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;] - list of peeked messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;read_message_count&#34;&gt;read_message_count&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; read_message_count(): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; receive(correlation_id: Optional[str], wait_timeout: int): &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;wait_timeout&lt;/strong&gt;: int - timeout in milliseconds to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - received message or &lt;em&gt;None&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;renew_lock&#34;&gt;renew_lock&lt;/h4&gt;
+&lt;p&gt;Renews a lock on a message that makes it invisible from other receivers in the queue. This method is usually used to extend the message processing time.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; renew_lock(message: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, lock_timeout: int)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to extend its lock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;lock_timeout&lt;/strong&gt;: int - locking timeout in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send&#34;&gt;send&lt;/h4&gt;
+&lt;p&gt;Sends a message into the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; send(correlation_id: Optional[str], envelope: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;envelope&lt;/strong&gt;: &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message envelop to be sent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send_as_object&#34;&gt;send_as_object&lt;/h4&gt;
+&lt;p&gt;Sends an object into the queue.
+Before sending the object is converted into JSON string and wrapped in a &lt;a href=&#34;../message_mnvelope&#34;&gt;MessageEnvelope&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; send_as_object(correlation_id: Optional[str], message_type: str, message: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_type&lt;/strong&gt;: str - a message type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: Any - an object value to be sent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;begin_listen&#34;&gt;begin_listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages without blocking the current thread.&lt;br&gt;
+See also &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt;, &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;begin_listen(correlation_id: Optional[str], receiver: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_capabilities&#34;&gt;get_capabilities&lt;/h4&gt;
+&lt;p&gt;Gets the queue capabilities&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_capabilities(): &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt; - queue&amp;rsquo;s capabilities object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_name&#34;&gt;get_name&lt;/h4&gt;
+&lt;p&gt;Gets the queue name&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_name(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - queue name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;open(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send_as_object-1&#34;&gt;send_as_object&lt;/h4&gt;
+&lt;p&gt;Sends an object into the queue. Before sending it, the object is converted into a JSON string and wrapped in a &lt;a href=&#34;../message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;send_as_object(correlation_id: Optional[str], message_type: str, message: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message_type&lt;/strong&gt;: str - message type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: Any - object value to be sent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;to_string&#34;&gt;to_string&lt;/h4&gt;
+&lt;p&gt;Gets a string representation of the object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;to_string(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - string representation of the object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_open_with_params&#34;&gt;_open_with_params&lt;/h4&gt;
+&lt;p&gt;Opens the component with the given connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_open_with_params(correlation_id: Optional[str], connections: List[&lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;ConnectionParams&lt;/a&gt;], credentials: &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: List[&lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;ConnectionParams&lt;/a&gt;] - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credentials&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_check_open&#34;&gt;_check_open&lt;/h4&gt;
+&lt;p&gt;Checks if the queue has been opened.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_check_open(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Exception - an exception if queue wasn&amp;rsquo;t opened or &lt;em&gt;None&lt;/em&gt; otherwise&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MessagingCapabilities</title>
+      <link>/python/messaging/queues/messaging_capabilities/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/messaging/queues/messaging_capabilities/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MessagingCapabilities class allows you to create data objects that contain supported capabilities of message queues.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If certain capability is not supported a queue will throw a NotImplemented exception.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the capabilities object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MessagingCapabilities(can_message_count: bool, can_send: bool, can_receive: bool, can_peek: bool, can_peek_batch: bool, can_renew_lock: bool, can_abandon: bool, can_dead_letter: bool, can_clear: bool)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;can_message_count&lt;/strong&gt;: bool - True if the queue supports reading message count.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_send&lt;/strong&gt;: bool - True if the queue is able to send messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_receive&lt;/strong&gt;: bool - True if the queue is able to receive messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_peek&lt;/strong&gt;: bool - True if the queue is able to peek messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_peek_batch&lt;/strong&gt;: bool - True if the queue is able to peek multiple messages in one batch.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_renew_lock&lt;/strong&gt;: bool - True if the queue is able to renew message lock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_abandon&lt;/strong&gt;: bool - True if the queue is able to abandon messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_dead_letter&lt;/strong&gt;: bool - True if the queue is able to send messages to dead letter queue.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;can_clear&lt;/strong&gt;: bool - True if the queue can be cleared.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;h4 id=&#34;can_abandon&#34;&gt;can_abandon&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to abandon messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_abandon(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to abandon messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_clear&#34;&gt;can_clear&lt;/h4&gt;
+&lt;p&gt;Informs if the queue can be cleared.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_clear(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue can be cleared.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_dead_letter&#34;&gt;can_dead_letter&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to send messages to dead letter queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_dead_letter(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to send messages to dead letter queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_message_count&#34;&gt;can_message_count&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to read the number of messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_message_count(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue supports reading message count.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_peek&#34;&gt;can_peek&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to peek messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_peek(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to peek messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_peek_batch&#34;&gt;can_peek_batch&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to peek multiple messages in one batch.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_peek_batch(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to peek multiple messages in one batch.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_receive&#34;&gt;can_receive&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to receive messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_receive(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to receive messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_renew_lock&#34;&gt;can_renew_lock&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to renew message lock.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_renew_lock(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to renew message lock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;can_send&#34;&gt;can_send&lt;/h4&gt;
+&lt;p&gt;Informs if the queue is able to send messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;can_send(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the queue is able to send messages.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

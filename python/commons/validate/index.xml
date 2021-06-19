@@ -1,0 +1,1359 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Validate</title>
+    <link>/python/commons/validate/</link>
+    <description>Recent content in Validate on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/commons/validate/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: AndRule</title>
+      <link>/python/commons/validate/and_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/and_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The AndRule class allows you to validate combinations of rules created with AND logical operations.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When one or more of the combined rules return errors, then this rule returns all the errors that appeared.&lt;/li&gt;
+&lt;li&gt;When none of the combined rules returns errors, then this rule also returns no errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AndRule(*rules: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - a list of rules to join with AND operator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;AndRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;GTE&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;LTE&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)))&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 0 must be greater or equal to 1&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no error&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 20 must be letter or equal 10&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ArraySchema</title>
+      <link>/python/commons/validate/array_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/array_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ArraySchema class allows you to validate arrays based on a specified validation rule.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.
+See &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ArraySchema(valueType: Any = None, required: bool = None, rules: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;valueType&lt;/strong&gt;: Any - a type of array elements. Null means that elements may have any type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-None values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - (optional) a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_value_type&#34;&gt;get_value_type&lt;/h4&gt;
+&lt;p&gt;Gets the type of array elements.
+Null means that elements may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_value_type(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the type of array elements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;perform_validation&#34;&gt;perform_validation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_perform_validation(path: str, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_value_type&#34;&gt;set_value_type&lt;/h4&gt;
+&lt;p&gt;Sets the type of array elements.
+Null means that elements may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_value_type(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a type of array elements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ArraySchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;C&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;])&lt;/span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;])&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: element type mismatch&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# Result: type mismatch    &lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: AtLeastOneExistsRule</title>
+      <link>/python/commons/validate/at_least_one_exists_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/at_least_one_exists_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The AtLeastOneExistsRule class allows you to check that given a set of properties, at least one of them exists.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AtLeastOneExistsRule(*properties: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;properties&lt;/strong&gt;: str - a list of property names where at least one property must exist&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;AtLeastOneExistsRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;field1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;field2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;                  &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;                            &lt;span style=&#34;color:#75715e&#34;&gt;# Result: at least one of properties field1, field2 must exist&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ExcludedRule</title>
+      <link>/python/commons/validate/excluded_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/excluded_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ExcludedRule allows you to verify that none of the values specified in the rule is present in a list of constants.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ExcludedRule(*values: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: Any - a list of constants that value must be excluded from&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the given value. None of the values set in this ExcludedRule object must exist
+in the value that is given for validation to pass.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - the dot notation path to the value that is to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - (not used in this implementation).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - the value that is to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - the results of the validation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ExcludedRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 2 must not be one of 1, 2, 3&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: FilterParamsSchema</title>
+      <link>/python/commons/validate/filter_params_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/filter_params_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../map_schema&#34;&gt;MapSchema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The FilterParamsSchema class allows you to create a schema to validate &lt;a href=&#34;../../data/filter_params&#34;&gt;FilterParams&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation schema.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;FilterParamsSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;filterparamsdatafilter_params&#34;&gt;&lt;a href=&#34;../../data/filter_params&#34;&gt;FilterParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: IncludedRule</title>
+      <link>/python/commons/validate/included_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/included_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InclidedRule class allows you to check that a list contains only specified values.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;IncludedRule(*values: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: Any - a list of constants that value must be included to&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IncludedRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 10 must be one of 1, 2, 3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: IValidationRule</title>
+      <link>/python/commons/validate/ivalidation_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/ivalidation_rule/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IValidationRule interface allows you to implement custom validation rules.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MapSchema</title>
+      <link>/python/commons/validate/map_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/map_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MapSchema class provides you with a schema to validate maps&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation schema and sets its values.
+See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;, &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MapSchema(key_type: Any = None, value_type: Any = None, required: bool = None,
+rules: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;key_type&lt;/strong&gt;: Any - a type of map keys. Null means that keys may have any type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value_type&lt;/strong&gt;: Any - a type of map values. Null means that values may have any type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: boolean - (optional) true to always require non-None values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - (optional) a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_key_type&#34;&gt;get_key_type&lt;/h4&gt;
+&lt;p&gt;Gets the type of map keys.
+Null means that keys may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_key_type(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the type of map keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_value_type&#34;&gt;get_value_type&lt;/h4&gt;
+&lt;p&gt;Gets the type of map values.
+Null means that values may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_value_type(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the type of map values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;perform_validation&#34;&gt;perform_validation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_perform_validation(path: str, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_key_type&#34;&gt;set_key_type&lt;/h4&gt;
+&lt;p&gt;Sets the type of map keys.
+Null means that keys may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_key_type(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a type of map keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_value_type&#34;&gt;set_value_type&lt;/h4&gt;
+&lt;p&gt;Sets the type of map values.
+Null means that values may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_value_type(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a type of map values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MapSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Integer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;           &lt;span style=&#34;color:#75715e&#34;&gt;# Result: element type mismatch&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;])&lt;/span&gt;                        &lt;span style=&#34;color:#75715e&#34;&gt;# Result: type mismatch&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: NotRule</title>
+      <link>/python/commons/validate/not_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/not_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NotRule class allows you to negate a rule. Thus, when the embedded rule returns errors, then the negated rule returns no errors and vice versa.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NotRule(rule: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rule&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - a rule to be negated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;NotRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;EQ&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)))&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: error&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no error&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ObjectComparator</title>
+      <link>/python/commons/validate/object_comparator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/object_comparator/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ObjectComparator class allows you to perform a comparison over two values of any type.&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;are_equal&#34;&gt;are_equal&lt;/h4&gt;
+&lt;p&gt;Checks if two values are equal.
+The operation can be performed over values of any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; are_equal(value1: Any, value2: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: Any - the first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: Any - the second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if values are equal and false otherwise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;are_not_equal&#34;&gt;are_not_equal&lt;/h4&gt;
+&lt;p&gt;Checks if two values are NOT equal.
+The operation can be performed over values of any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; are_not_equal(value1: Any, value2: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: Any - the first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: Any - the second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if values are NOT equal and false otherwise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;compare&#34;&gt;compare&lt;/h4&gt;
+&lt;p&gt;Perform comparison operation over two arguments.
+The operation can be performed over values of any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; compare(value1: Any, operation: str, value2: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: Any - the first argument to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - the comparison operation: &lt;em&gt;&amp;quot;==&amp;quot; (&amp;quot;=&amp;quot;, &amp;ldquo;EQ&amp;rdquo;), &amp;ldquo;!= &amp;quot; (&amp;quot;&amp;lt;&amp;gt;&amp;rdquo;, &amp;ldquo;NE&amp;rdquo;); &amp;ldquo;&amp;lt;&amp;quot;/&amp;quot;&amp;gt;&amp;rdquo; (&amp;ldquo;LT&amp;rdquo;/&amp;ldquo;GT&amp;rdquo;), &amp;ldquo;&amp;lt;=&amp;quot;/&amp;quot;&amp;gt;=&amp;rdquo; (&amp;ldquo;LE&amp;rdquo;/&amp;ldquo;GE&amp;rdquo;); &amp;ldquo;LIKE&amp;rdquo;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: Any - the second argument to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - result of the comparison operation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_greater&#34;&gt;is_greater&lt;/h4&gt;
+&lt;p&gt;Checks if first value is greater than the second one.
+The operation can be performed over numbers or strings.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; is_greater(value1: Any, value2: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: Any - the first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: Any - the second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the first value is greater than second and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_less&#34;&gt;is_less&lt;/h4&gt;
+&lt;p&gt;Checks if first value is less than the second one.
+The operation can be performed over numbers or strings.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; is_less(value1: Any, value2: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: Any - the first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: Any - the second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the first value is less than second and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match&#34;&gt;match&lt;/h4&gt;
+&lt;p&gt;Checks if string matches a regular expression&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; match(value: Any, regexp: Any): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a string value to match&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;regexp&lt;/strong&gt;: Any - a regular expression string&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the value matches regular expression and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;ObjectComparator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;compare&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;GT&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Result: true&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;ObjectComparator&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;are_equal&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;# Result: false&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ObjectSchema</title>
+      <link>/python/commons/validate/object_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/object_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ObjectSchema class allows you to create a validation schema that can be used to validate user defined objects.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation schema and sets its values.
+See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ObjectSchema(allow_undefined: bool = False, required: bool = None, rules: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] = None):&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;allow_undefined&lt;/strong&gt;?: bool - true to allow properties undefined in the schema&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-None values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - (optional) a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;h4 id=&#34;is_undefined_allowed&#34;&gt;is_undefined_allowed&lt;/h4&gt;
+&lt;p&gt;Gets flag to allow undefined properties&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is_undefined_allowed(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true to allow undefined properties and false to disallow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sets flag to allow undefined properties&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is_undefined_allowed(value: bool)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: bool - true to allow undefined properties and false to disallow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;allow_undefined&#34;&gt;allow_undefined&lt;/h4&gt;
+&lt;p&gt;Sets flag to allow undefined properties
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;allow_undefined(value: bool): &lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: bool - true to allow undefined properties and false to disallow.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt; - this validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_properties&#34;&gt;get_properties&lt;/h4&gt;
+&lt;p&gt;Gets validation schemas for object properties.
+See &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_properties(): List[&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;] - the list of property validation schemas.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;perform_validation&#34;&gt;perform_validation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_perform_validation(path: str, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_properties&#34;&gt;set_properties&lt;/h4&gt;
+&lt;p&gt;Sets validation schemas for object properties.
+See &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_properties(value: List[&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: List[&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;] - a list of property validation schemas.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;with_optional_property&#34;&gt;with_optional_property&lt;/h4&gt;
+&lt;p&gt;Adds a validation schema for an optional object property.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;with_optional_property(name: str, typ: Any, *rules: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a property name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;typ&lt;/strong&gt;: Any - (optional) a property schema or type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - (optional) a list of property validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;with_property&#34;&gt;with_property&lt;/h4&gt;
+&lt;p&gt;Adds a validation schema for an object property.
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls.
+See &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;with_property(schema: &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt; - a property validation schema to be added.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt; - this validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;with_required_property&#34;&gt;with_required_property&lt;/h4&gt;
+&lt;p&gt;Adds a validation schema for a required object property.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;with_required_property(name: str, typ: Any, *rules: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a property name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;typ&lt;/strong&gt;: Any - (optional) a property schema or type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - (optional) a list of property validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+                    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_optional_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+                    &lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_required_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;           &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Result: id type mismatch&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Result: name is missing, unexpected __name&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;                     &lt;span style=&#34;color:#75715e&#34;&gt;# Result: type mismatch&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: OnlyOneExistsRule</title>
+      <link>/python/commons/validate/only_one_exists_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/only_one_exists_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OnlyOneExistsRule allows you to check that only one property of a list of properties exists in an object.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OnlyOneExistsRule(*properties: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;properties&lt;/strong&gt;: str - a list of property names where at only one property must exist&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;OnlyOneExistsRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;field1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;field2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;# Result: only one of properties field1, field2 must exist&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;                  &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;                            &lt;span style=&#34;color:#75715e&#34;&gt;# Result: only one of properties field1, field2 must exist&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: OrRule</title>
+      <link>/python/commons/validate/or_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/or_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OrRule class allows you to validate combinations of rules created with OR logical operations.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When one of the combined rules returns no errors, then this rule also returns no errors.&lt;/li&gt;
+&lt;li&gt;When all combined rules return errors, then this rule returns all the errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OrRule(*rules: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - a list of rules to join with OR operator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;OrRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;LT&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;GT&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no error&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 5 must be less than 1 or 5 must be more than 10&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no error&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: PagingParamsSchema</title>
+      <link>/python/commons/validate/paging_params_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/paging_params_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PagingParamsSchema class allows you to create a schema to validate &lt;a href=&#34;../../data/paging_params&#34;&gt;PagingParams&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PagingParamsSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;pagingparamsdatapaging_params&#34;&gt;&lt;a href=&#34;../../data/paging_params&#34;&gt;PagingParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ProjectionParamsSchema</title>
+      <link>/python/commons/validate/projection_params_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/projection_params_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../array_schema&#34;&gt;ArraySchema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ProjectionParamsSchema class allows you to create a schema to validate &lt;a href=&#34;../../data/projection_params&#34;&gt;ProjectionParams&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ProjectionParamsSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;projectionparamsdataprojection_params&#34;&gt;&lt;a href=&#34;../../data/projection_params&#34;&gt;ProjectionParams&lt;/a&gt;.&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: PropertiesComparisonRule</title>
+      <link>/python/commons/validate/properties_comparison_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/properties_comparison_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PropertiesComparisonRule class allows you to create a validation rule to compare two object properties.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its arguments.
+See &lt;a href=&#34;../object_comparator/#compare&#34;&gt;ObjectComparator.compare&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PropertiesComparisonRule(property1: str, operation: str, property2: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;property1&lt;/strong&gt;: str - a name of the first property to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - a comparison operation: &lt;em&gt;&amp;quot;==&amp;quot; (&amp;quot;=&amp;quot;, &amp;ldquo;EQ&amp;rdquo;), &amp;ldquo;!= &amp;quot; (&amp;quot;&amp;lt;&amp;gt;&amp;rdquo;, &amp;ldquo;NE&amp;rdquo;); &amp;ldquo;&amp;lt;&amp;quot;/&amp;quot;&amp;gt;&amp;rdquo; (&amp;ldquo;LT&amp;rdquo;/&amp;ldquo;GT&amp;rdquo;), &amp;ldquo;&amp;lt;=&amp;quot;/&amp;quot;&amp;gt;=&amp;rdquo; (&amp;ldquo;LE&amp;rdquo;/&amp;ldquo;GE&amp;rdquo;); &amp;ldquo;LIKE&amp;rdquo;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;property2&lt;/strong&gt;: str - a name of the second property to compare.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;PropertyComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;field1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;NE&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;field2&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;# Result: field1 shall not be equal to field2&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({})&lt;/span&gt;                             &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: PropertySchema</title>
+      <link>/python/commons/validate/property_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/property_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PropertySchema class allows you to create schemas to validate object properties.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its arguments.
+See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;, &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PropertySchema(name: str, typ: Any, required: bool, rules: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - (optional) a property name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;typ&lt;/strong&gt;: Any - (optional) a property type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool -  (optional) true to always require non-None values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - (optional) a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_name&#34;&gt;get_name&lt;/h4&gt;
+&lt;p&gt;Gets the property name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_name(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the property name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;gettype&#34;&gt;getType&lt;/h4&gt;
+&lt;p&gt;Gets the property type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_type(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the property type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;perform_validation&#34;&gt;perform_validation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_perform_validation(path: str, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_name&#34;&gt;set_name&lt;/h4&gt;
+&lt;p&gt;Sets the property name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_name(value: str)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a new property name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_type&#34;&gt;set_type&lt;/h4&gt;
+&lt;p&gt;Sets a new property type.
+The type can be defined as type, type name or &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_type(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: str - a new property type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_property&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;PropertySchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;})&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;# Result: id type mismatch&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;objectschemaobject_schema&#34;&gt;&lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: Schema</title>
+      <link>/python/commons/validate/schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/schema/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Schema class provides a basic schema to validate values against a set of validation rules.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This schema is used as a basis for specific schemas to validate objects, project properties, arrays and maps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation schema and sets its values.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Schema(required: bool, rules: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-None values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - (optional) a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_rules&#34;&gt;get_rules&lt;/h4&gt;
+&lt;p&gt;Gets validation rules to check values against.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_rules(): List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;is_required&#34;&gt;is_required&lt;/h4&gt;
+&lt;p&gt;Gets a flag that always requires non-None values.
+For None values it raises a validation error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is_required(): bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true to always require non-None values and false to allow None values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;make_optional&#34;&gt;make_optional&lt;/h4&gt;
+&lt;p&gt;Makes validated values optional.
+Validation for None values will be skipped.
+This method returns reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;make_optional(): &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; - this validation schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;make_required&#34;&gt;make_required&lt;/h4&gt;
+&lt;p&gt;Makes validated values always required (non-None).
+For None values the schema will raise errors.
+This method returns reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;make_required(): &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; - this validation schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;perform_type_validation&#34;&gt;perform_type_validation&lt;/h4&gt;
+&lt;p&gt;Validates a given value to match specified type.
+The type can be defined as a Schema, type, a type name or &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;
+When type is a Schema, it executes validation recursively against that Schema.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_perform_type_validation(path: str, type: Any, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: Any - a type to match the value type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;perform_validation&#34;&gt;perform_validation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_perform_validation(path: str, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_required&#34;&gt;set_required&lt;/h4&gt;
+&lt;p&gt;Sets a flag that always requires non-None values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_required(value: bool)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: bool - true to always require non-None values and false to allow None values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_rules&#34;&gt;set_rules&lt;/h4&gt;
+&lt;p&gt;Sets validation rules to check values against.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_rules(value: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - a list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the given value and returns a list with the validation results.
+See &lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(value: Any): List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;] - a list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate_and_return_exception&#34;&gt;validate_and_return_exception&lt;/h4&gt;
+&lt;p&gt;Validates the given value and returns a &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; if errors were found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate_and_return_exception(correlation_id: Optional[str], value: Any, strict: bool = False): &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any -  a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: boolean = false - true to treat warnings as errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; - validation exception.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate_and_throw_exception&#34;&gt;validate_and_throw_exception&lt;/h4&gt;
+&lt;p&gt;Validates the given value and throws a &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; if errors were found.&lt;br&gt;
+See &lt;a href=&#34;../validation_exception/#throw_exception_if_needed&#34;&gt;ValidationException.throw_exception_if_needed&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate_and_throw_exception(correlation_id: Optional[str], value: Any, strict: boolean = false)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool = false - true to treat warnings as errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;with_rule&#34;&gt;with_rule&lt;/h4&gt;
+&lt;p&gt;Adds validation rule to this schema.
+This method returns reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;with_rule(rule: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rule&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - a validation rule to be added.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; - this validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;objectschemaobject_schema&#34;&gt;&lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;propertyschemaproperty_schema&#34;&gt;&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;arrayschemaarray_schema&#34;&gt;&lt;a href=&#34;../array_schema&#34;&gt;ArraySchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;mapschemamap_schema&#34;&gt;&lt;a href=&#34;../map_schema&#34;&gt;MapSchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ValidationException</title>
+      <link>/python/commons/validate/validation_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/validation_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../errors/bad_request_exception&#34;&gt;BadRequestException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValidationException is used to define errors in schema validation.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Validation errors are usually generated based in &lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;If using strict mode, warnings will also raise validation exceptions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation exception and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ValidationException(correlation_id: Optional[str], message: Optional[str], results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: Optional[str] - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;:  List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - (optional) a list of validation results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;compose_message&#34;&gt;compose_message&lt;/h4&gt;
+&lt;p&gt;Composes a human readable error message based on validation results.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; compose_message(results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;]): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list of validation results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str -  a composed error message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;from_results&#34;&gt;from_results&lt;/h4&gt;
+&lt;p&gt;Creates a new ValidationException based on errors in validation results.
+If validation results have no errors, then None is returned.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; from_results(correlation_id: Optional[str], results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;], strict: bool)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] -  list of validation results that may contain errors&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool - true to treat warnings as errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ValidationException&lt;/a&gt; - a newly created ValidationException or None if no errors in found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;throw_exception_if_needed&#34;&gt;throw_exception_if_needed&lt;/h4&gt;
+&lt;p&gt;Throws ValidationException based on errors in validation results.
+If validation results have no errors, then no exception is thrown.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; throw_exception_if_needed(correlation_id: Optional[str], results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;], strict: bool)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - list of validation results that may contain errors&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool - true to treat warnings as errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;badrequestexceptionerrorsbad_request_exception&#34;&gt;&lt;a href=&#34;../../errors/bad_request_exception&#34;&gt;BadRequestException&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;validationresultvalidation_result&#34;&gt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ValidationResult</title>
+      <link>/python/commons/validate/validation_result/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/validation_result/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValidationResult class provides a representation of the result generated by a schema validation.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of a validation result and sets its values.
+See &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ValidationResult(path: str = None, type: &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; = None, code: str = None, message: str = None,  expected: Any = None, actual: Any = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path of the validated element.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; - a type of the validation result: Information, Warning, or Error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: str - an error code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: str - a human readable message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;expected&lt;/strong&gt;: Any - an value expected by schema validation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual&lt;/strong&gt;: Any - an actual value found by schema validation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_actual&#34;&gt;get_actual&lt;/h4&gt;
+&lt;p&gt;Gets the actual value found by schema validation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_actual(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the actual value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_code&#34;&gt;get_code&lt;/h4&gt;
+&lt;p&gt;Gets the error code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_code(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the error code&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_expected&#34;&gt;get_expected&lt;/h4&gt;
+&lt;p&gt;Gets the value expected by schema validation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_expected(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the expected value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_message&#34;&gt;get_message&lt;/h4&gt;
+&lt;p&gt;Gets the human readable message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_message(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the result message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_path&#34;&gt;get_path&lt;/h4&gt;
+&lt;p&gt;Gets dot notation path of the validated element.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_path(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: str - the path of the validated element.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_type&#34;&gt;get_type&lt;/h4&gt;
+&lt;p&gt;Gets dot notation path of the validated element.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_type(): &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; - the type of the validation result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;to_json&#34;&gt;to_json&lt;/h4&gt;
+&lt;p&gt;Returns the validation result in JSON format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;to_json(): object&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ValidationResultType</title>
+      <link>/python/commons/validate/validation_result_type/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/validation_result_type/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValidationResultType class defines the types of validation results generated by validation schemas.&lt;/p&gt;
+&lt;h3 id=&#34;enumeration-members&#34;&gt;Enumeration members&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Information&lt;/strong&gt; = 0 - General information (not an error).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Warning&lt;/strong&gt; = 1 - Warning about something suspecious. In strict mode is treated as error&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error&lt;/strong&gt; = 2 - Validation error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;validationresultvalidation_result&#34;&gt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: ValueComparisonRule</title>
+      <link>/python/commons/validate/value_comparison_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/commons/validate/value_comparison_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValueComparisonRule class allows you to create a validation rule that compares a value to a constant.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ValueComparisonRule(operation: str, value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: str - a comparison operation: &lt;em&gt;&amp;quot;==&amp;quot; (&amp;quot;=&amp;quot;, &amp;ldquo;EQ&amp;rdquo;), &amp;ldquo;!= &amp;quot; (&amp;quot;&amp;lt;&amp;gt;&amp;rdquo;, &amp;ldquo;NE&amp;rdquo;); &amp;ldquo;&amp;lt;&amp;quot;/&amp;quot;&amp;gt;&amp;rdquo; (&amp;ldquo;LT&amp;rdquo;/&amp;ldquo;GT&amp;rdquo;), &amp;ldquo;&amp;lt;=&amp;quot;/&amp;quot;&amp;gt;=&amp;rdquo; (&amp;ldquo;LE&amp;rdquo;/&amp;ldquo;GE&amp;rdquo;); &amp;ldquo;LIKE&amp;rdquo;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a constant value to compare to&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;validate(path: str, schema: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;, value: Any, results: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: str - a dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - a schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List[&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;] - a list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;with_rule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;EQ&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: no errors&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;# Result: 2 is not equal to 1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

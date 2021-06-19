@@ -1,0 +1,852 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Refer</title>
+    <link>/golang/commons/refer/</link>
+    <description>Recent content in Refer on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/commons/refer/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: DependencyResolver</title>
+      <link>/golang/commons/refer/dependency_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/dependency_resolver/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DependencyResolver is a helper class that allows you to resolve component dependencies. It is configured to resolve named dependencies by a specific locator.&lt;/p&gt;
+&lt;p&gt;Important points:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;During deployment the dependency locator can be changed. This mechanism can be used to clarify a specific dependency among several alternatives. Typically components are configured to retrieve the first dependency that matches a logical group, type and version. However, if the container contains more than one instance and the resolution has to be specific about those instances; they can be given a unique name, and the dependency resolvers can be reconfigured to retrieve dependencies according to their name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[dependency name 1]&lt;/strong&gt;: Dependency 1 locator (descriptor)&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[dependency name N]&lt;/strong&gt;: Dependency N locator (descriptor)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;p&gt;References must match configured dependencies.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newdependencyresolverwithparams&#34;&gt;NewDependencyResolverWithParams&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the dependency resolver.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../../config/config_params&#34;&gt;ConfigParams&lt;/a&gt;, &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewDependencyResolverWithParams(config &lt;a href=&#34;../../config/config_params&#34;&gt;*conf.ConfigParams&lt;/a&gt;, references &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../config/config_params&#34;&gt;*conf.ConfigParams&lt;/a&gt; - (optional) default configuration where key is dependency name and value is locator (descriptor)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt; - (optional) default component references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;newdependencyresolverfromtuples&#34;&gt;NewDependencyResolverFromTuples&lt;/h4&gt;
+&lt;p&gt;Creates a new DependencyResolver from a list of key-value pairs called tuples
+where key is dependency name and value the depedency locator (descriptor).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewDependencyResolverFromTuples(tuples &amp;hellip;interface{}) &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;tuples&lt;/strong&gt;: &amp;hellip;interface{} - a list of values where odd elements are dependency name and the following even elements are dependency locator (descriptor)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;newdependencyresolver&#34;&gt;NewDependencyResolver&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewDependencyResolver() &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component with specified parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) Configure(config &lt;a href=&#34;../../config/config_params&#34;&gt;*conf.ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../config/config_params&#34;&gt;*conf.ConfigParams&lt;/a&gt; - configuration parameters to set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;find&#34;&gt;Find&lt;/h4&gt;
+&lt;p&gt;Finds all matching dependencies by their name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *DependencyResolver) Find(name string, required bool) ([]interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - the dependency name to locate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - true to raise an exception when no dependencies are found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]interface{}, error) - a list of found dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getoneoptional&#34;&gt;GetOneOptional&lt;/h4&gt;
+&lt;p&gt;Gets one optional dependency by its name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) GetOneOptional(name string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - the dependency name to locate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - a dependency reference or nil of the dependency was not found&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getonerequired&#34;&gt;GetOneRequired&lt;/h4&gt;
+&lt;p&gt;Gets one required dependency by its name.
+At least one dependency must present.
+If the dependency was found it throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) GetOneRequired(name string) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - the dependency name to locate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (interface{}, error) - a dependency reference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getoptional&#34;&gt;GetOptional&lt;/h4&gt;
+&lt;p&gt;Gets all optional dependencies by their name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) GetOptional(name string) []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - the dependency name to locate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with found dependencies or empty list of no dependencies was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getrequired&#34;&gt;GetRequired&lt;/h4&gt;
+&lt;p&gt;Gets all required dependencies by their name.
+At least one dependency must be present.
+If no dependencies was found it throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) GetRequired(name string) ([]interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - the dependency name to locate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]interface{}, error) - a list with found dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;put&#34;&gt;Put&lt;/h4&gt;
+&lt;p&gt;Adds a new dependency into this resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) Put(name string, locator interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - the dependency&amp;rsquo;s name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find the dependency by.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets the component references. References must match configured dependencies.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*DependencyResolver&lt;/a&gt;) SetReferences(references IReferences)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt; - references to set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;TODO&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;add&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;example&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferencesireferences&#34;&gt;&lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: Descriptor</title>
+      <link>/golang/commons/refer/descriptor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/descriptor/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Descriptor class provides you with a component locator. This locator is often used in the PipServices toolkit. It locates components using the following fields:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Group:&lt;/strong&gt; a package or just named group of components, like &amp;ldquo;pip-services&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Type:&lt;/strong&gt; logical component type that defines it&amp;rsquo;s contract, like &amp;ldquo;persistence&amp;rdquo; .&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kind:&lt;/strong&gt; physical implementation type, like &amp;ldquo;mongodb&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Name:&lt;/strong&gt; unique component name, like &amp;ldquo;default&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version:&lt;/strong&gt; version of the component contract, like &amp;ldquo;1.0&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The locator matching can be done by all or only few selected fields.&lt;/li&gt;
+&lt;li&gt;The fields that shall be excluded from the matching must be set to &lt;em&gt;&amp;quot;&lt;/em&gt;&amp;quot;* or *nil*.&lt;/li&gt;
+&lt;li&gt;This approach allows to implement many interesting scenarios. For instance:
+&lt;ul&gt;
+&lt;li&gt;Locate all loggers (match by type and version)&lt;/li&gt;
+&lt;li&gt;Locate persistence components for a microservice (match by group and type)&lt;/li&gt;
+&lt;li&gt;Locate specific component by its name (match by name)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newdescriptor&#34;&gt;NewDescriptor&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the descriptor.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewDescriptor(group string, typ string, kind string, name string, version string) &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;group&lt;/strong&gt;: string - a logical component group&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;typ&lt;/strong&gt;: string - a logical component type or contract&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;kind&lt;/strong&gt;: string - a component implementation type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a unique component name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;version&lt;/strong&gt;: string - a component implementation version&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;equals&#34;&gt;Equals&lt;/h4&gt;
+&lt;p&gt;Compares this descriptor to a value.
+If value is a Descriptor it tries to match them,
+otherwise the method returns false.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) Equals(value interface{}) bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - the value to match against this descriptor.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the value is matching descriptor and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;exactmatch&#34;&gt;ExactMatch&lt;/h4&gt;
+&lt;p&gt;Matches this descriptor to another descriptor by all fields.
+No exceptions are made.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) ExactMatch(descriptor &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;descriptor&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt; - the descriptor to match this one against.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if descriptors match and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;group&#34;&gt;Group&lt;/h4&gt;
+&lt;p&gt;Gets the component&amp;rsquo;s logical group.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) Group() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - the component&amp;rsquo;s logical group&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;kind&#34;&gt;Kind&lt;/h4&gt;
+&lt;p&gt;Gets the component&amp;rsquo;s implementation type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) Kind() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - the component&amp;rsquo;s implementation type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;name&#34;&gt;Name&lt;/h4&gt;
+&lt;p&gt;Gets the unique component&amp;rsquo;s name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) Name() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - the unique component&amp;rsquo;s name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;version&#34;&gt;Version&lt;/h4&gt;
+&lt;p&gt;Gets the component&amp;rsquo;s implementation version.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) Version() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - the component&amp;rsquo;s implementation version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;iscomplete&#34;&gt;IsComplete&lt;/h4&gt;
+&lt;p&gt;Checks whether all descriptor fields are set.
+If descriptor has at least one &amp;ldquo;*&amp;rdquo; or nil field it is considered &amp;ldquo;incomplete&amp;rdquo;,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) IsComplete() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if all descriptor fields are defined and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match&#34;&gt;Match&lt;/h4&gt;
+&lt;p&gt;Partially matches this descriptor to another descriptor.
+Fields that contain &amp;ldquo;*&amp;rdquo; or nil are excluded from the match.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) Match(descriptor &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;descriptor&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt; the descriptor to match this one against.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if descriptors match and false otherwise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;parsedescriptorfromstring&#34;&gt;ParseDescriptorFromString&lt;/h4&gt;
+&lt;p&gt;Parses colon-separated list of descriptor fields and returns them as a Descriptor.&lt;br&gt;
+Throws a &lt;a href=&#34;../../errors/config_error&#34;&gt;ConfigError&lt;/a&gt; if the descriptor string is of a wrong format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ParseDescriptorFromString(value string) (&lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - colon-separated descriptor fields to initialize Descriptor.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt; - a newly created Descriptor.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;string&#34;&gt;String&lt;/h4&gt;
+&lt;p&gt;Gets a string representation of the object.
+The result is a colon-separated list of descriptor fields as
+&lt;em&gt;&amp;ldquo;mygroup:connector:aws:default:1.0&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Descriptor&lt;/a&gt;) String() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - a string representation of the object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;locator1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connector&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;aws&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;locator2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptorFromString&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup:connector:*:*:1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#75af00&#34;&gt;locator1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Match&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;locator2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// Result: true
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;locator1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Equal&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;locator2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// Result: true
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;locator1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ExactMatch&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;locator2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// Result: false
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: IReferenceable</title>
+      <link>/golang/commons/refer/ireferenceable/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/ireferenceable/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IReferenceable interface allows you to set references for components that depend on other components.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If component requires explicit notification to unset references, it must also implement the &lt;a href=&#34;../iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt; interface.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SetReferences(references &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IPersistence&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getOneRequired&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+        &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;persistence&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferencesireferences&#34;&gt;&lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iunreferenceableiunreferenceable&#34;&gt;&lt;a href=&#34;../iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;referencerreferencer&#34;&gt;&lt;a href=&#34;../referencer&#34;&gt;Referencer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: IReferences</title>
+      <link>/golang/commons/refer/ireferences/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/ireferences/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IReferences interface can be used to manage references stored in a map, and which can be passed to other components to establish dependencies between them.&lt;/p&gt;
+&lt;p&gt;Generally speaking, an IReferences object is a simple map, where keys are locators and values are component references. Thus, it allows you to add, remove and find components    by their locators. Locators can be any values like integers, strings or component types.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Together with &lt;a href=&#34;../ireferenceable&#34;&gt;IReferenceable&lt;/a&gt; and &lt;a href=&#34;../iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt; interfaces it implements a Locator pattern that is used by PipServices toolkit for Inversion of Control to assign external dependencies to components.&lt;/li&gt;
+&lt;li&gt;Generally, the PipServices toolkit uses &lt;a href=&#34;../descriptor&#34;&gt;Descriptor&lt;/a&gt; as locators that match according to the following fields: group, type, kind, name and version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;find&#34;&gt;Find&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match specified locator.&lt;br&gt;
+Throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt; when required is set to true but no references found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Find(locator interface{}, required bool) ([]interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - forces to raise an exception if no reference is found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]interface{}, error) - a list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getall&#34;&gt;GetAll&lt;/h4&gt;
+&lt;p&gt;Gets all component references registered in this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetAll() []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getalllocators&#34;&gt;GetAllLocators&lt;/h4&gt;
+&lt;p&gt;Gets locators for all registered component references in this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetAllLocators() []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with component locators.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getoneoptional&#34;&gt;GetOneOptional&lt;/h4&gt;
+&lt;p&gt;Gets an optional component reference that matches specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetOneOptional(locator interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - a matching component reference or nil if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getonerequired&#34;&gt;GetOneRequired&lt;/h4&gt;
+&lt;p&gt;Gets a required component reference that matches specified locator.&lt;br&gt;
+Throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt; when no references found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetOneRequired(locator interface{}) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (interface{}, error) - a matching component reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getoptional&#34;&gt;GetOptional&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetOptional(locator interface{}) []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with matching component references or empty list if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getrequired&#34;&gt;GetRequired&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match specified locator.
+At least one component reference must be present.
+If it doesn&amp;rsquo;t the method throws an error.&lt;br&gt;
+Throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt; when no references found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetRequired(locator interface{}) ([]interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: ([]interface{}, error) - the locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - a list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;put&#34;&gt;Put&lt;/h4&gt;
+&lt;p&gt;Puts a new reference into this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Put(locator interface{}, component interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - a locator to find the reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: interface{} - a component reference to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove&#34;&gt;Remove&lt;/h4&gt;
+&lt;p&gt;Removes a previously added reference that matches specified locator.
+If many references match the locator, it removes only the first one.
+When all references shall be removed, use &lt;a href=&#34;#removeall&#34;&gt;removeAll&lt;/a&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Remove(locator interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - a locator to remove reference&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - the removed component reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;removeall&#34;&gt;RemoveAll&lt;/h4&gt;
+&lt;p&gt;Removes all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;RemoveAll(locator interface{}) []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to remove references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list, containing all removed references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;TODO&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;add&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;example&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;descriptordescriptor&#34;&gt;&lt;a href=&#34;../descriptor&#34;&gt;Descriptor&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;referencesreferences&#34;&gt;&lt;a href=&#34;../references&#34;&gt;References&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: IUnreferenceable</title>
+      <link>/golang/commons/refer/iunreferenceable/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/iunreferenceable/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IUnreferenceable interface can be used for components that require the capacity to clear previously defined references to dependent components.&lt;/p&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;unsetreferences&#34;&gt;UnsetReferences&lt;/h4&gt;
+&lt;p&gt;Unsets (clears) previously set references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;UnsetReferences()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IMyPersistence&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;GetOneRequired&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+        &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;persistence&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;UnsetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferencesireferences&#34;&gt;&lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferenceableireferenceable&#34;&gt;&lt;a href=&#34;../ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: Reference</title>
+      <link>/golang/commons/refer/reference/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/reference/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Reference class allows you to store a reference to a component and a locator to find it.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is used by &lt;a href=&#34;../references&#34;&gt;References&lt;/a&gt; to store registered component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newreference&#34;&gt;NewReference&lt;/h4&gt;
+&lt;p&gt;Create a new instance of the reference object and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewReference(locator interface{}, component interface{}) &lt;a href=&#34;&#34;&gt;*Reference&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - a locator to find the reference.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: interface{} - a reference to component.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;component&#34;&gt;Component&lt;/h4&gt;
+&lt;p&gt;Gets the stored component reference.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *Reference) Component() interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - the component&amp;rsquo;s references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;locator&#34;&gt;Locator&lt;/h4&gt;
+&lt;p&gt;Gets the stored component locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *Reference) Locator() interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - the component&amp;rsquo;s locator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match&#34;&gt;Match&lt;/h4&gt;
+&lt;p&gt;Matches locator to this reference locator.
+Descriptors are matched using equal method.
+All other locator types are matched using direct comparison.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *Reference) Match(locator interface{}) bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if locators are matching and false it they don&amp;rsquo;t.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: ReferenceError</title>
+      <link>/golang/commons/refer/reference_error/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/reference_error/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ReferenceError` class provides a Reference error type, which can be used to create an error instance when a required component dependency cannot be found.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newreferenceerror&#34;&gt;NewReferenceError&lt;/h4&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewReferenceError(correlationId string, locator interface{}) &lt;a href=&#34;../../errors/application_error&#34;&gt;*errors.ApplicationError&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find reference to dependent component.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: Referencer</title>
+      <link>/golang/commons/refer/referencer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/referencer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Referencer class allows you to set and unset references to components.&lt;/p&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to multiple components.&lt;/p&gt;
+&lt;p&gt;To set references components must implement &lt;a href=&#34;../ireferenceable&#34;&gt;IReferenceable&lt;/a&gt; interface.
+If they don&amp;rsquo;t the call to this method has no effect.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TReferencer) SetReferences(references &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;, components []interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt; - the references to be set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: []interface{} - a list of components to set the references to.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferencesforone&#34;&gt;SetReferencesForOne&lt;/h4&gt;
+&lt;p&gt;Sets references to specific component.&lt;/p&gt;
+&lt;p&gt;To set references components must implement &lt;a href=&#34;../ireferenceable&#34;&gt;IReferenceable&lt;/a&gt; interface.
+If they don&amp;rsquo;t the call to this method has no effect.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TReferencer) SetReferencesForOne(references &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;, component interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt; - the references to be set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: interface{} - the component to set references to.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsetreferences&#34;&gt;UnsetReferences&lt;/h4&gt;
+&lt;p&gt;Unsets references in multiple components.
+To unset references components must implement &lt;a href=&#34;../iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt; interface.
+If they don&amp;rsquo;t the call to this method has no effect.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TReferencer) UnsetReferences(components []interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;components&lt;/strong&gt;: []interface{} - the list of components, whose references must be cleared.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsetreferencesforone&#34;&gt;UnsetReferencesForOne&lt;/h4&gt;
+&lt;p&gt;Unsets references in specific component.&lt;/p&gt;
+&lt;p&gt;To unset references components must implement &lt;a href=&#34;../iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt; interface.
+If they don&amp;rsquo;t the call to this method has no effect.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TReferencer) UnsetReferencesForOne(component interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: interface{} - the component to unset references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferenceableireferenceable&#34;&gt;&lt;a href=&#34;../ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iunreferenceableiunreferenceable&#34;&gt;&lt;a href=&#34;../iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: References</title>
+      <link>/golang/commons/refer/references/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/commons/refer/references/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The References class allows you to store and locate component references.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newreferences&#34;&gt;NewReferences&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of references and initializes it with references.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewReferences(tuples []interface{}) &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;newreferencesfromtuples&#34;&gt;NewReferencesFromTuples&lt;/h4&gt;
+&lt;p&gt;Creates a new References from a list of key-value pairs called tuples.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewReferencesFromTuples(tuples &amp;hellip;interface{}) &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;tuples&lt;/strong&gt;: &amp;hellip;interface{} - a list of values where odd elements are locators and the following even elements are component references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;newemptyreferences&#34;&gt;NewEmptyReferences&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of references and initializes it with references.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewEmptyReferences() &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;tuples&lt;/strong&gt;: []interface{} - (optional) a list of values where odd elements are locators and the following even elements are component references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;references&#34;&gt;references&lt;/h4&gt;
+&lt;p&gt;A list of values where odd elements are locators and the following even elements are component references.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;references&lt;/strong&gt;: []&lt;a href=&#34;../reference&#34;&gt;*Reference&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;find&#34;&gt;Find&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match specified locator.&lt;br&gt;
+Throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt; when required is set to true but no references found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) Find(locator interface{}, required bool) ([]interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - forces to raise an exception if no reference is found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]interface{}, error) - a list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getall&#34;&gt;GetAll&lt;/h4&gt;
+&lt;p&gt;Gets all component references registered in this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) GetAll() []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getalllocators&#34;&gt;GetAllLocators&lt;/h4&gt;
+&lt;p&gt;Gets locators for all registered component references in this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) GetAllLocators() []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with component locators.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getoneoptional&#34;&gt;GetOneOptional&lt;/h4&gt;
+&lt;p&gt;Gets an optional component reference that matches specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) GetOneOptional(locator interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - a matching component reference or nil if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getonerequired&#34;&gt;GetOneRequired&lt;/h4&gt;
+&lt;p&gt;Gets a required component reference that matches specified locator.&lt;br&gt;
+throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt; when no references found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) GetOneRequired(locator interface{}) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find a reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (interface{}, error) - a matching component reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getoptional&#34;&gt;GetOptional&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) GetOptional(locator interface{}) []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list with matching component references or empty list if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getrequired&#34;&gt;GetRequired&lt;/h4&gt;
+&lt;p&gt;Gets all component references that match specified locator.
+At least one component reference must be present.
+If it doesn&amp;rsquo;t the method throws an error.
+Throws a &lt;a href=&#34;../reference_error&#34;&gt;ReferenceError&lt;/a&gt; when no references found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) GetRequired(locator interface{}) ([]interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to find references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]interface{}, error) - a list with matching component references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;put&#34;&gt;Put&lt;/h4&gt;
+&lt;p&gt;Puts a new reference into this reference map.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) Put(locator interface{}, component interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - a locator to find the reference by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: interface{} - a component reference to be added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;remove&#34;&gt;Remove&lt;/h4&gt;
+&lt;p&gt;Removes a previously added reference that matches specified locator.
+If many references match the locator, it removes only the first one.
+When all references shall be removed, use &lt;a href=&#34;#removeall&#34;&gt;RemoveAll&lt;/a&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) Remove(locator interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - a locator to remove reference&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - the removed component reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;removeall&#34;&gt;RemoveAll&lt;/h4&gt;
+&lt;p&gt;Removes all component references that match the specified locator.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*References&lt;/a&gt;) RemoveAll(locator interface{}) []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;locator&lt;/strong&gt;: interface{} - the locator to remove references by.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - a list, containing all removed references.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IMyPersistence&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;mc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_persistence&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;GetOneRequired&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+        &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;persistence&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;persistence&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMyMongoDbPersistence&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+ 
+&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewReferencesFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;persistence&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mongodb&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;persistence&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferencesireferences&#34;&gt;&lt;a href=&#34;../ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

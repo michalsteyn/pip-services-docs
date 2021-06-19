@@ -1,0 +1,387 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Microservice Dockerization</title>
+    <link>/python/tutorials/microservice_dockerization/</link>
+    <description>Recent content in Microservice Dockerization on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/tutorials/microservice_dockerization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: Step 1. Build</title>
+      <link>/python/tutorials/microservice_dockerization/step1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/tutorials/microservice_dockerization/step1/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;TODO rewrite this step for Python (Python is an interpreted language and not a compiled one)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.&lt;/p&gt;
+&lt;p&gt;To perform the build process for a Node.js project, we’ll be creating a Docker container build scenario in a file named Dockerfile.build. Copy the following into this file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;FROM python:3
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# set working directory&lt;/span&gt;
+WORKDIR /usr/src/app
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# copy project file&lt;/span&gt;
+COPY requirements.txt .
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# install dependencies&lt;/span&gt;
+RUN pip install -r requirements.txt
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# copy all project&lt;/span&gt;
+COPY . .
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This file, along with the others we will be creating, should be placed in the docker folder at the root of the project.&lt;/p&gt;
+&lt;p&gt;Let’s have a look at what this Docker script will be doing. The standard Python v.3 image is going to be used as the base image, and Python is going to be installed on top of it. Next, /app is set as the working directory and our project’s requirements.txt file is copied there. This file contains a list of dependencies that are required to build the project, which are installed using the npm install command. The last steps of the script simply copies the rest of the project to the image.&lt;/p&gt;
+&lt;p&gt;Note that the file requirements.txt is copied first, then the dependencies are installed, and only after that do we copy the rest of the source code. This is done to speed up container creation during future runs, as the steps that haven’t changed from the last run are simply taken from Docker’s cache. In other words, unless we add or remove a dependency, Docker can use the cached image with all of the dependencies already installed, and only has to perform the “copy” steps when we change the project’s source code.&lt;/p&gt;
+&lt;p&gt;In our projects, we strive to make our scripts as universal as possible. Because of this, all variable values are defined in a separate file named component.json, which looks like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component-name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;registry&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;registry-name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;version&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This file contains basic information about the component we are dealing with: its name, Docker Hub registry, version, and build number.&lt;/p&gt;
+&lt;p&gt;We’ve developed a special script called &lt;strong&gt;build.ps1&lt;/strong&gt; for building our projects. This script is written in PowerShell - a scripting language used for creating system scripts. Since version 6.0, PowerShell is supported by most platforms that are used for development, such as Windows, Mac, and Linux. If for some reason PowerShell can’t be used, you can rewrite the script using bash or any other scripting language.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env pwsh&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;Set-StrictMode&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Version&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;latest&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$ErrorActionPreference&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Stop&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Get component data and set necessary variables&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Get-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component.json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConvertFrom-Json&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$buildImage&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-build&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Get build number from teamcity agent&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$env:BUILD_NUMBER&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Set-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component.json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Value&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConvertTo-Json&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Remove build files&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Test-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;obj&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;Remove-Item&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Recurse&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Force&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;obj&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Copy private keys to access git repo&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-not&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Test-Path&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;docker/id_rsa&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$env:GIT_PRIVATE_KEY&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-ne&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;Set-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;docker/id_rsa&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Value&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$env:GIT_PRIVATE_KEY&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;Copy-Item&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;~/.ssh/id_rsa&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Destination&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;docker&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Build docker image&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Dockerfile&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-t&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$buildImage&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Create and copy compiled files, then destroy&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;create&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;-name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$container&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$buildImage&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rm &lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$container&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This script generates a name for the image using the data in the &lt;strong&gt;component.json&lt;/strong&gt; file, cleans the project of files from previous compilations, runs the Docker build scenario, and then copies the compiled files from the image back into the project. Once the files are copied, the container is deleted, and the script outputs the results of the build to the console.&lt;/p&gt;
+&lt;p&gt;This finishes up the build process. Continue on to &lt;a href=&#34;../step2&#34;&gt;Step 2 to dockerize the testing process.&lt;/a&gt;&lt;/p&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h3 id=&#34;step-2-running-automated-testsstep2&#34;&gt;&lt;a href=&#34;../step2&#34;&gt;Step 2. Running automated tests.&lt;/a&gt;&lt;/h3&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: Step 2. Test</title>
+      <link>/python/tutorials/microservice_dockerization/step2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/tutorials/microservice_dockerization/step2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Automated tests play a key role in achieving a guaranteed quality of microservices. Testing can be performed on various levels - unit tests for separate classes, end-to-end or integrated tests for microservices with dependencies, and tests that show how microservices work together within the actual system. In this tutorial however, we will only be looking at testing individual microservices, and system tests will not be covered.&lt;/p&gt;
+&lt;p&gt;To correctly perform testing, especially iterative testing, we need to correctly configure our environment with all of the necessary services and correct configuration parameters. Replicating and supporting testing configurations manually, especially across different operating systems, is far from being easy. Pretty much every development team knows that sometimes tests work perfectly locally, but break on the build server. And finding the cause of this inconsistency is usually quite time consuming.&lt;/p&gt;
+&lt;p&gt;Dockerizing automated tests provides you with a 100%-repeatable environment that can be replicated on any machine in just a number of minutes. This step of the tutorial contains specific instructions for each of the languages supported by the Pip.Services Toolkit.&lt;/p&gt;
+&lt;p&gt;Let’s create a separate Docker container for running tests. This container’s build scenario will be defined in a file named &lt;strong&gt;Dockerfile.test&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt; python:3&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# set working directory&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WORKDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt; /usr/src/app&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# copy project file&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;COPY&lt;/span&gt; requirements.txt .&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# install dependencies&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;RUN&lt;/span&gt; pip install -r requirements.txt&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# copy all project&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;COPY&lt;/span&gt; . .&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# run test&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;CMD&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;./test.py&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The scenario for testing is nearly identical to the one we wrote for the build process - the only difference being the last command, which will run the tests in this case.&lt;/p&gt;
+&lt;p&gt;Oftentimes, tests may require dependent microservices, databases, message brokers, and other infrastructure services. We can use a docker-compose file to start these services in separate containers and connect them to our test Docker container. We’ll be calling this file &lt;strong&gt;docker-compose.test.yml&lt;/strong&gt;, and the configuration it should contain is listed below:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;3.3&amp;#39;&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;‍&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;..&lt;/span&gt;
+      &lt;span style=&#34;color:#f92672&#34;&gt;dockerfile&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;docker/Dockerfile.test&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;${IMAGE:-pip/test}&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;depends_on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=test&lt;/span&gt;
+&lt;span style=&#34;color:#ae81ff&#34;&gt;‍&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;mongo&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo:latest&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This configuration will start two containers: the first with the application being tested (who’s name is dynamically generated by ${IMAGE:-pip/test}), and the second with a MongoDB (mongo:latest). The test image has a number of environment variables being set to enable proper connectivity to the database from within the Docker Compose environment.&lt;/p&gt;
+&lt;p&gt;To automate the testing process, create a PowerShell script file named &lt;strong&gt;test.ps1&lt;/strong&gt; and populate it with the following code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env pwsh&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;Set-StrictMode&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Version&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;latest&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$ErrorActionPreference&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Stop&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Get component data and set necessary variables&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Get-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component.json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConvertFrom-Json&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$testImage&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-test&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Set environment variables&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$env:IMAGE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$testImage&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Workaround to remove dangling images&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;down&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;up&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;-build&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;-abort-on-container-exit&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;-exit-code-from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;test&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Workaround to remove dangling images &lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;down&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To run the script, simply type:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;./test.ps1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;When run, this script will perform an automatic build of the test image and run it in the Docker Compose environment we’ve set up. While it runs, the testing process’s progress will be outputted to the console. When finished, the container will automatically be stopped, regardless of the test’s results.&lt;/p&gt;
+&lt;p&gt;Now that we have automated testing all set up, we can move on to &lt;a href=&#34;../step3&#34;&gt;Step 3 to package our microservice&lt;/a&gt; into a Docker container, before we publish it.&lt;/p&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h3 id=&#34;step-3-packaging-a-microservice-into-a-containerstep3&#34;&gt;&lt;a href=&#34;../step3&#34;&gt;Step 3. Packaging a microservice into a container.&lt;/a&gt;&lt;/h3&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: Step 3. Package</title>
+      <link>/python/tutorials/microservice_dockerization/step3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/tutorials/microservice_dockerization/step3/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Once a microservice has successfully passed the previous “build” and “test” stages, it is ready to be published and tested as a part of the system. But before we can do this, we need to correctly package it into a Docker container.&lt;/p&gt;
+&lt;p&gt;When creating containers, we follow the “Build once - run everywhere” principle. What this means is that the container is created just once. After being created, this container goes through the stages of system testing in various environments and eventually gets deployed into production - all without any modifications.&lt;/p&gt;
+&lt;p&gt;Furthermore, a flexibly configurable container can easily be included in various systems, even those that use a wide array of system services, databases, and communication protocols. This is achieved by building and configuring microservices out of loosely coupled components using the container’s configuration. Environment variables are often used for configuration and have great support in Docker. To do this, developers need to envisage all possible configuration combinations, include the required components into the container, open up ports, and then perform configuration via environment variables.&lt;/p&gt;
+&lt;p&gt;We’ll be creating a separate container for packaging our microservice and defining its build instructions in a file named &lt;strong&gt;Dockerfile&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dockerfile&#34; data-lang=&#34;dockerfile&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt; python:3&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# set working directory&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;WORKDIR&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt; /usr/src/app&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# copy project file&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;COPY&lt;/span&gt; requirements.txt .&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# install dependencies&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;RUN&lt;/span&gt; pip install -r requirements.txt&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# copy all project&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;COPY&lt;/span&gt; . .&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;ENV&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HTTP_PORT&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;ENV&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MONGO_SERVICE_HOST&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;mongo
+&lt;span style=&#34;color:#00a8c8&#34;&gt;ENV&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MONGO_SERVICE_PORT&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;27017&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;EXPOSE&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt; &amp;#34;8080:8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# run &lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;CMD&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;python&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;./bin/run.py&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Once again, this script is pretty similar to the ones we’ve already written. What’s new in this script is the indication of which file needs to be used to start the application, as well as what port we need to expose to make the service available from outside the container (EXPOSE &amp;ldquo;8080:8080&amp;rdquo;).&lt;/p&gt;
+&lt;p&gt;We checked that our microservice is functional in the previous “testing” step, but this doesn’t guarantee that the container that the microservice is running in will work as needed. To check this, we can create a special Docker Compose environment. Place the following code into a file named &lt;strong&gt;docker-compose.yml&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;3.3&amp;#39;&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;${IMAGE}&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8080:8080&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;depends_on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;HTTP_PORT=8080&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_ENABLED=true&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;mongo&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo:latest&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To automate this process, create a &lt;strong&gt;package.ps1&lt;/strong&gt; script with the following content:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env pwsh&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;‍&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Set-StrictMode&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Version&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;latest&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$ErrorActionPreference&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Stop&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Get-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component.json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConvertFrom-Json&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-rc&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$latestImage&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:latest&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Build docker image&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Dockerfile&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-t&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$image&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-t&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$latestImage&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Set environment variables&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$env:IMAGE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$image&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Workaround to remove dangling images&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;down&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;up&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-d&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;Start-Sleep&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Seconds&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;15&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;Invoke-WebRequest&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Uri&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;//&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;localhost&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;8080&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;heartbeat&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;Write-Host&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The container was successfully built.&amp;#34;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Save the result to avoid overwriting it with the &amp;#34;down&amp;#34; command below&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;$exitCode&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$LastExitCode&lt;/span&gt; 
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;down&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Return the exit code of the &amp;#34;docker-compose.yml up&amp;#34; command&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$exitCode&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This script performs an automatic build of the Docker image and then runs and checks it from within the Docker Compose environment. The Docker Compose environment allows us to run our microservice alongside its dependencies, while keeping them all in separate containers. The script then runs the microservice and, if all is well, the service can be checked by requesting the http://localhost:8080/heartbeat URL from a browser. This URL returns and displays the current time in the JSON format, which indicates that the application is up and running in the container. All build results will be outputted to the console. Once the container tests are done, the containers are stopped.&lt;/p&gt;
+&lt;p&gt;This finishes the process of preparing a microservice container for publishing. When you’re ready, continue on to &lt;a href=&#34;../step4&#34;&gt;Step 4 to publish the image to a Docker registry.&lt;/a&gt;&lt;/p&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h3 id=&#34;step-4-publishing-a-microservice-container-to-a-registrystep4&#34;&gt;&lt;a href=&#34;../step4&#34;&gt;Step 4. Publishing a microservice container to a registry.&lt;/a&gt;&lt;/h3&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: Step 4. Publish</title>
+      <link>/python/tutorials/microservice_dockerization/step4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/tutorials/microservice_dockerization/step4/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Now that all of the preparational work has been done, all that’s left is to publish the image of the container we’ve created with our microservice to a Docker Registry. In this tutorial, we’ll be demonstrating the process of publishing to a free registry on Docker Hub, so you’ll be needing a Docker Hub account to continue. If you don’t have a Docker ID yet, you can get one by registering on their site: &lt;a href=&#34;https://hub.docker.com/&#34;&gt;https://hub.docker.com/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In commercial projects, we tend to use private Docker registries instead of DockerHub. Private registries function in a similar manner to DockerHub, so with minimal modifications to the scripts you can use them as well.&lt;/p&gt;
+&lt;p&gt;Login to Docker Hub using your credentials and create a repository for hosting the microservice’s image that we built. For simplicity, let’s name the repository &lt;strong&gt;test_registry&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;It’s worth pointing out that a version number tag is appended to the name of the image. The tagging system allows us to control the versions of images we’ve published. By changing a service’s tag, you can publish more than one version of your service to the repository. This way you can start using the new version, without breaking any other systems that are still using an older version of your service.&lt;/p&gt;
+&lt;p&gt;Since our scripts use values from the &lt;strong&gt;component.json&lt;/strong&gt; file, make sure to edit that file as needed before you package your service&lt;/p&gt;
+&lt;p&gt;To automate the publication process, create a &lt;strong&gt;publish.ps1&lt;/strong&gt; file with the following script inside:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env pwsh&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;‍&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Set-StrictMode&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Version&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;latest&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$ErrorActionPreference&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Stop&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Get component data and set necessary variables&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Get-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component.json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConvertFrom-Json&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$rcImage&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-rc&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Define server name&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$pos&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IndexOf&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$server&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$pos&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-gt&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;$server&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Substring&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$pos&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Automatically login to server&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$env:DOCKER_USER&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-ne&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$null&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-and&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$env:DOCKER_PASS&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-ne&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;login&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$server&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-u&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$env:DOCKER_USER&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-p&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$env:DOCKER_PASS&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;‍&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# Push image to docker registry&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;push&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$rcImage&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Before running this script, be sure to initialize the &lt;strong&gt;DOCKER_USER&lt;/strong&gt; and &lt;strong&gt;DOCKER_PASS&lt;/strong&gt; variables in your environment, as these will be used for authorization in Docker Hub.&lt;/p&gt;
+&lt;p&gt;Run the script using the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;./publish.ps1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;While running, the script will generate a name for the image using the data in the component.json file, authorize itself in the Docker Hub service, and push the image to the repository.&lt;/p&gt;
+&lt;p&gt;Please wait for the image to finish uploading. Once uploaded, the image will become available for use, alongside the other images in the repository.&lt;/p&gt;
+&lt;p&gt;The publishing stage is the last step of a microservice’s Dockerized development process. However, sometimes there occurs the need to just run a microservice for demonstration or testing purposes. &lt;a href=&#34;../step5&#34;&gt;Step 5&lt;/a&gt; will focus on how we can use Docker to help us do that as well.&lt;/p&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h3 id=&#34;step-5-running-a-dockerized-microservicestep5&#34;&gt;&lt;a href=&#34;../step5&#34;&gt;Step 5. Running a dockerized microservice.&lt;/a&gt;&lt;/h3&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: Step 5. Run</title>
+      <link>/python/tutorials/microservice_dockerization/step5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/tutorials/microservice_dockerization/step5/</guid>
+      <description>
+        
+        
+        &lt;p&gt;While developing and debugging a project, you may find the need to run and connect to a microservice, for example, using a client. Readily available Docker images, like the ones we made in the previous steps, are quite handy in such situations.&lt;/p&gt;
+&lt;p&gt;To run our service, we’ll be using the scenario we wrote in the third step of this tutorial in the &lt;strong&gt;docker-compose.yml&lt;/strong&gt; file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;3.3&amp;#39;&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;${IMAGE}&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8080:8080&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;depends_on&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;HTTP_PORT=8080&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_ENABLED=true&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;mongo&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo:latest&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To automated the running process, we can create a file named &lt;strong&gt;run.ps1&lt;/strong&gt; with the following script:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ps1&#34; data-lang=&#34;ps1&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env pwsh&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;Set-StrictMode&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Version&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;latest&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$ErrorActionPreference&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Stop&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Get-Content&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;-Path&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;component.json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConvertFrom-Json&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;registry&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;$component&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;-rc&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Set environment variables&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;$env:IMAGE&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;$image&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;up&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-f&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;./&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;docker-compose&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;yml&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;down&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To run the script, enter the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;./run.ps1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;While running, the script will generate a name for the image using the data in the component.json file and then run it in Docker Compose. In accordance with the scenario, Docker Compose will run two containers: one with the service, and another with a DB. The service will be made available on port 8080.&lt;/p&gt;
+&lt;p&gt;When the service is stopped, both containers will automatically be stopped as well.&lt;/p&gt;
+&lt;p&gt;Congratulations! You now know how to Dockerize your microservices! We hope this knowledge helps you avoid environment related errors and keep your development process automated and standardized.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

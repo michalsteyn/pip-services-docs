@@ -1,0 +1,793 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Errors</title>
+    <link>/node/commons/errors/</link>
+    <description>Recent content in Errors on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/node/commons/errors/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Node: ApplicationException</title>
+      <link>/node/commons/errors/application_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/application_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; Error&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ApplicationException class defines a base class used to define various application exceptions.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Most languages have own definition of base exception (error) types. However, this class is implemented symmetrically in all languages supported by the PipServices toolkit and  allows to create portable implementations and support proper error propagation in microservices calls.&lt;/li&gt;
+&lt;li&gt;Error propagation means that when a microservice implemented in one language calls a microservice(s) implemented in a different language(s), errors are returned throught the entire call chain and restored in their original (or close) type.&lt;/li&gt;
+&lt;li&gt;Since the number of potential exception types is endless, the PipServices toolkit supports only 12 standard categories of exceptions, which are defined in &lt;a href=&#34;../error_category&#34;&gt;ErrorCategory&lt;/a&gt;. The &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; class acts as a basis for these 12 standard exception types.&lt;/li&gt;
+&lt;li&gt;Most exceptions use a free-form message that describes occured error. However, this may not be sufficient to create meaninful error descriptions. Therefore, the &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; class proposes an extended error definition that has more standard fields:
+&lt;ul&gt;
+&lt;li&gt;message: a human-readable error description&lt;/li&gt;
+&lt;li&gt;category: one of the 12 standard error categories&lt;/li&gt;
+&lt;li&gt;status: numeric HTTP status code for REST invocations&lt;/li&gt;
+&lt;li&gt;code: a unique error code, usually defined as &amp;ldquo;MY_ERROR_CODE&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;correlation_id: a unique transaction id used to trace execution through a call chain&lt;/li&gt;
+&lt;li&gt;details: map with error parameters that can help to recreate meaningful error description in other languages&lt;/li&gt;
+&lt;li&gt;stack_trace: a stack trace&lt;/li&gt;
+&lt;li&gt;cause: the original error that is wrapped by this exception&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The ApplicationException class is not serializable. To pass errors through the wire it must be converted into a &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; object and then restored on the receiving end into an identical exception type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of application exception and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(category: string = null, correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;category&lt;/strong&gt;: string - (optional) a standard error category. Default: Unknown&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;message&#34;&gt;message&lt;/h4&gt;
+&lt;p&gt;A human-readable error description (usually written in English)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;message&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;category&#34;&gt;category&lt;/h4&gt;
+&lt;p&gt;Standard error category&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;category&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;status&#34;&gt;status&lt;/h4&gt;
+&lt;p&gt;HTTP status code associated with this error type&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;status&lt;/strong&gt;: number = 500&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;code&#34;&gt;code&lt;/h4&gt;
+&lt;p&gt;A unique error code&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;code&lt;/strong&gt;: string = &amp;lsquo;UNKNOWN&amp;rsquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;details&#34;&gt;details&lt;/h4&gt;
+&lt;p&gt;A map with additional details that can be used to restore error description in other languages&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;details&lt;/strong&gt;: &lt;a href=&#34;../../data/string_value_map&#34;&gt;StringValueMap&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;correlation_id&#34;&gt;correlation_id&lt;/h4&gt;
+&lt;p&gt;A unique transaction id to trace execution throug call chain&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;correlation_id&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;stack_trace&#34;&gt;stack_trace&lt;/h4&gt;
+&lt;p&gt;Stack trace of the exception&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;stack_trace&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;cause&#34;&gt;cause&lt;/h4&gt;
+&lt;p&gt;Original error wrapped by this exception&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;cause&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getcausestring&#34;&gt;getCauseString&lt;/h4&gt;
+&lt;p&gt;Gets original error wrapped by this exception as a string message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getCauseString(): string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - an original error message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getstacktracestring&#34;&gt;getStackTraceString&lt;/h4&gt;
+&lt;p&gt;Gets a stack trace where this exception occured.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getStackTraceString(): string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - a stack trace as a string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setcausestring&#34;&gt;setCauseString&lt;/h4&gt;
+&lt;p&gt;Sets original error wrapped by this exception as a string message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setCauseString(value: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - an original error message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setstacktracestring&#34;&gt;setStackTraceString&lt;/h4&gt;
+&lt;p&gt;Sets a stack trace where this exception occured.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setStackTraceString(value: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - a stack trace as a string&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withcause&#34;&gt;withCause&lt;/h4&gt;
+&lt;p&gt;Sets a original error wrapped by this exception
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; withCause(cause: Error): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: Error - original error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withcode&#34;&gt;withCode&lt;/h4&gt;
+&lt;p&gt;Sets a unique error code.&lt;br&gt;
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; withCode(code: string): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - a unique error code&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withcorrelationid&#34;&gt;withCorrelationId&lt;/h4&gt;
+&lt;p&gt;Sets a correlation id which can be used to trace this error through a call chain.&lt;br&gt;
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; withCorrelationId(correlationId: string): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - a unique transaction id to trace error through call chain&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withdetails&#34;&gt;withDetails&lt;/h4&gt;
+&lt;p&gt;Sets a parameter for additional error details.
+This details can be used to restore error description in other languages.&lt;/p&gt;
+&lt;p&gt;This method returns reference to this exception to implement Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; withDetails(key: string, value: any): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - key a details parameter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: any - value a details parameter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withstacktrace&#34;&gt;withStackTrace&lt;/h4&gt;
+&lt;p&gt;Sets a stack trace for this error.&lt;br&gt;
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; withStackTrace(stackTrace: string): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;stackTrace&lt;/strong&gt;: string -stackTrace a stack trace where this error occured&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withstatus&#34;&gt;withStatus&lt;/h4&gt;
+&lt;p&gt;Sets a HTTP status code which shall be returned by REST calls.
+This method returns reference to this exception to implement Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; withStatus(status: number): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;: number - an HTTP error code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;wrap&#34;&gt;wrap&lt;/h4&gt;
+&lt;p&gt;Wraps another exception into an application exception object.&lt;/p&gt;
+&lt;p&gt;If original exception is of ApplicationException type it is returned without changes.
+Otherwise a new ApplicationException is created and original error is set as its cause.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; wrap(cause: any): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: any - an original error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an original or newly created ApplicationException&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;unwraperror&#34;&gt;unwrapError&lt;/h4&gt;
+&lt;p&gt;Unwraps original exception through wrapped exception objects.&lt;/p&gt;
+&lt;p&gt;Many frameworks like Seneca or restify wrap original exception.
+That may result in propagating less specific errors and can hide
+causes of the errors.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; unwrapError(error: any): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: any - an error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an original error object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;wraperror&#34;&gt;wrapError&lt;/h4&gt;
+&lt;p&gt;Wraps another exception into specified application exception object.&lt;/p&gt;
+&lt;p&gt;If original exception is of ApplicationException type it is returned without changes.
+Otherwise the original error is set as a cause to specified ApplicationException object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; wrapError(error: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;, cause: any): &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an ApplicationException object to wrap the cause&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: any - an original error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an original or newly created ApplicationException&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;errorcategoryerror_category&#34;&gt;&lt;a href=&#34;../error_category&#34;&gt;ErrorCategory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;errordescriptionerror_description&#34;&gt;&lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ApplicationExceptionFactory</title>
+      <link>/node/commons/errors/application_exception_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/application_exception_factory/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ApplicationExceptionFactory acts as a factory to recreate from &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; values passed through the wire.&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;create&#34;&gt;create&lt;/h4&gt;
+&lt;p&gt;Recreates ApplicationException object from serialized ErrorDescription.
+It tries to restore original exception type using type or error category fields.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; create(description: &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt;): &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; - a serialized error description received as a result of remote call&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt; - new instance of the &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;applicationexceptionapplication_exception&#34;&gt;&lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;errordescriptionerror_description&#34;&gt;&lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: BadRequestException</title>
+      <link>/node/commons/errors/bad_request_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/bad_request_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The BadRequestException class is used to manage errors created by improper user requests. For example, when there are missing or incorrect parameters in the request.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ConfigException</title>
+      <link>/node/commons/errors/config_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/config_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConfigException is used to manage errors related to mistakes in microservice&amp;rsquo;s user-defined configurations.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ConflictException</title>
+      <link>/node/commons/errors/conflict_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/conflict_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConflictException class is used to manage errors raised by conflicts between object versions that were posted by the user and those that are stored on the server&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ConnectionException</title>
+      <link>/node/commons/errors/connection_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/connection_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionException class is used to manage errors that occur during a connection to a remote service. These errors can be related to misconfiguration, network issues, or the remote service itself.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ErrorCategory</title>
+      <link>/node/commons/errors/error_category/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/error_category/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ErrorCategory class defines the 12 standard error categories supported by the PipServices toolkit.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;unknown&#34;&gt;Unknown&lt;/h4&gt;
+&lt;p&gt;Unknown or unexpected errors.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;Unknown&lt;/strong&gt;: string = &amp;ldquo;Unknown&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;internal&#34;&gt;Internal&lt;/h4&gt;
+&lt;p&gt;Internal errors caused by programming mistakes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;Internal&lt;/strong&gt;: string = &amp;ldquo;Internal&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;misconfiguration&#34;&gt;Misconfiguration&lt;/h4&gt;
+&lt;p&gt;Errors related to mistakes in user-defined configurations.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;Misconfiguration&lt;/strong&gt;: string = &amp;ldquo;Misconfiguration&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;invalidstate&#34;&gt;InvalidState&lt;/h4&gt;
+&lt;p&gt;Errors caused by incorrect object state..
+For example: business calls when the component is not ready.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;InvalidState&lt;/strong&gt;: string = &amp;ldquo;InvalidState&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;noresponse&#34;&gt;NoResponse&lt;/h4&gt;
+&lt;p&gt;Errors caused by remote calls timeouted and not returning results.
+It allows to clearly separate communication related problems
+from other application errors.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;NoResponse&lt;/strong&gt;: string = &amp;ldquo;NoResponse&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;failedinvocation&#34;&gt;FailedInvocation&lt;/h4&gt;
+&lt;p&gt;Errors caused by remote calls failed due to unidenfied reasons.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;FailedInvocation&lt;/strong&gt;: string = &amp;ldquo;FailedInvocation&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;fileerror&#34;&gt;FileError&lt;/h4&gt;
+&lt;p&gt;Errors in read/write local disk operations.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;FileError&lt;/strong&gt;: string = &amp;ldquo;FileError&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;badrequest&#34;&gt;BadRequest&lt;/h4&gt;
+&lt;p&gt;Errors due to incorrectly specified invocation parameters.
+For example: missing or incorrect parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;BadRequest&lt;/strong&gt;: string = &amp;ldquo;BadRequest&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;unauthorized&#34;&gt;Unauthorized&lt;/h4&gt;
+&lt;p&gt;Access errors caused by missing user identity (authentication error)
+or incorrect security permissions (authorization error).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;Unauthorized&lt;/strong&gt;: string = &amp;ldquo;Unauthorized&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;notfound&#34;&gt;NotFound&lt;/h4&gt;
+&lt;p&gt;Errors caused by attempts to access missing objects.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;NotFound&lt;/strong&gt;: string = &amp;ldquo;NotFound&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;conflict&#34;&gt;Conflict&lt;/h4&gt;
+&lt;p&gt;Errors raised by conflicts between object versions that were
+posted by the user and those that are stored on the server.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;Conflict&lt;/strong&gt;: string = &amp;ldquo;Conflict&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;unsupported&#34;&gt;Unsupported&lt;/h4&gt;
+&lt;p&gt;Errors caused by calls to unsupported or not yet implemented functionality.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;strong&gt;Unsupported&lt;/strong&gt;: string = &amp;ldquo;Unsupported&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ErrorDescription</title>
+      <link>/node/commons/errors/error_description/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/error_description/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ErrorDescription class is used to pass information about errors between microservices implemented in different languages. On the receiving side &lt;a href=&#34;&#34;&gt;ErrorDescription&lt;/a&gt; is used to recreate the exception object close to its original type without missing additional details. This class is serializeable.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;type&#34;&gt;type&lt;/h4&gt;
+&lt;p&gt;Data type of the original error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;type&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;category&#34;&gt;category&lt;/h4&gt;
+&lt;p&gt;Standard error category&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;category&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;status&#34;&gt;status&lt;/h4&gt;
+&lt;p&gt;HTTP status code associated with this error type&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;status&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;code&#34;&gt;code&lt;/h4&gt;
+&lt;p&gt;A unique error code&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;code&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;message&#34;&gt;message&lt;/h4&gt;
+&lt;p&gt;A human-readable error description (usually written in English)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;message&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;details&#34;&gt;details&lt;/h4&gt;
+&lt;p&gt;A map with additional details that can be used to restore error description in other languages&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;details&lt;/strong&gt;: any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;correlation_id&#34;&gt;correlation_id&lt;/h4&gt;
+&lt;p&gt;A unique transaction id to trace execution throug call chain&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;correlation_id&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;cause&#34;&gt;cause&lt;/h4&gt;
+&lt;p&gt;Original error wrapped by this exception&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;cause&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;stack_trace&#34;&gt;stack_trace&lt;/h4&gt;
+&lt;p&gt;Stack trace of the exception&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;strong&gt;stack_trace&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;applicationexceptionapplication_exception&#34;&gt;&lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;applicationexceptionfactoryapplication_exception_factory&#34;&gt;&lt;a href=&#34;../application_exception_factory&#34;&gt;ApplicationExceptionFactory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: ErrorDescriptionFactory</title>
+      <link>/node/commons/errors/error_description_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/error_description_factory/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ErrorDescriptionFactory class provides a factory to create a serializeable &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; from &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt; or from arbitrary errors.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Error descriptions are used to pass errors through the wire between microservices implemented in different languages. They allow to restore exceptions on the receiving side close to the original type and preserve additional information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;create&#34;&gt;create&lt;/h4&gt;
+&lt;p&gt;Creates a serializable ErrorDescription from error object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; create(error: any): &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: any - an error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; - a serializeable ErrorDescription object that describes the error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;applicationexceptionapplication_exception&#34;&gt;&lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;errordescriptionerror_description&#34;&gt;&lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: FileException</title>
+      <link>/node/commons/errors/file_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/file_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The FileException class is used to manage errors in read/write local disk operations.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: InternalException</title>
+      <link>/node/commons/errors/internal_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/internal_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InternalException class is used to manage errors caused by programming mistakes.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: InvalidStateException</title>
+      <link>/node/commons/errors/invalid_state_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/invalid_state_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InvalidStateException class is used to manage errors related to calling opertaions that require the component to be in a specific state. For example, business calls when the component is not reay.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: InvocationException</title>
+      <link>/node/commons/errors/invocation_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/invocation_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InvocationException class is used to manage errors returned by remote services or by the network during call attempts.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: NotFoundException</title>
+      <link>/node/commons/errors/not_found_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/not_found_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NotFoundException class is used to manage errors caused by attempts to access missing objects.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; NotFoundException(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: UnauthorizedException</title>
+      <link>/node/commons/errors/unauthorized_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/unauthorized_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The UnauthorizedException class is used to manage access errors caused by missing user identity (authentication error) or incorrect security permissions (authorization error).&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: UnknownException</title>
+      <link>/node/commons/errors/unknown_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/unknown_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The UnknownException class is used to manage unknown or unexpected errors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: UnsupportedException</title>
+      <link>/node/commons/errors/unsupported_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/commons/errors/unsupported_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The UnsupportedException class is used to manage errors caused by calls to unsupported or not yet implemented functionality.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an error instance and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(correlation_id: string = null, code: string = null, message: string = null)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
