@@ -25,14 +25,14 @@ Defines a base class used to define various application exceptions.
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/commons/errors/application_error/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-06-11T18:47:49&#43;03:00" />
+<meta property="article:modified_time" content="2021-06-20T23:57:57&#43;02:00" />
 
 <meta itemprop="name" content="ApplicationError">
 <meta itemprop="description" content="
 Defines a base class used to define various application exceptions.
 ">
-<meta itemprop="dateModified" content="2021-06-11T18:47:49&#43;03:00" />
-<meta itemprop="wordCount" content="773">
+<meta itemprop="dateModified" content="2021-06-20T23:57:57&#43;02:00" />
+<meta itemprop="wordCount" content="779">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ApplicationError"/>
 <meta name="twitter:description" content="
@@ -113276,7 +113276,7 @@ Defines a base class used to define various application exceptions.
 </ul>
 <h3 id="constructors">Constructors</h3>
 <h4 id="newerror">NewError</h4>
-<p>Creates a new instance of application exception and assigns its values.</p>
+<p>Creates a new instance of an application exception and assigns its values.</p>
 <blockquote>
 <p>NewError(message string) <a href="">*ApplicationError</a></p>
 </blockquote>
@@ -113306,12 +113306,12 @@ Defines a base class used to define various application exceptions.
 <p><strong>Code</strong>: string</p>
 </blockquote>
 <h4 id="details">Details</h4>
-<p>A map with additional details that can be used to restore error description in other languages</p>
+<p>Map with additional details that can be used to restore error description in other languages</p>
 <blockquote>
 <p><strong>Details</strong>: <a href="../../data/string_value_map">StringValueMap</a></p>
 </blockquote>
 <h4 id="correlationid">CorrelationId</h4>
-<p>A unique transaction id to trace execution throug call chain</p>
+<p>Unique transaction id used to trace execution through the call chain</p>
 <blockquote>
 <p><strong>CorrelationId</strong>: string</p>
 </blockquote>
@@ -113337,7 +113337,7 @@ Defines a base class used to define various application exceptions.
 </ul>
 <h4 id="withcause">WithCause</h4>
 <p>Sets a original error wrapped by this exception
-This method returns reference to this exception to implement Builder pattern
+This method returns a reference to this exception to implement the Builder pattern
 to chain additional calls.</p>
 <blockquote>
 <p>(e <a href="">*ApplicationError</a>) WithCause(cause error) <a href="">*ApplicationError</a></p>
@@ -113348,30 +113348,30 @@ to chain additional calls.</p>
 </ul>
 <h4 id="withcode">WithCode</h4>
 <p>Sets a unique error code.<br>
-This method returns reference to this exception to implement Builder pattern
+This method returns reference to this exception to implement the Builder pattern
 to chain additional calls.</p>
 <blockquote>
 <p>(e <a href="">*ApplicationError</a>) WithCode(code string) <a href="">*ApplicationError</a></p>
 </blockquote>
 <ul>
-<li><strong>code</strong>: string - a unique error code</li>
+<li><strong>code</strong>: string - unique error code</li>
 <li><strong>returns</strong>: <a href="">*ApplicationError</a> - this exception object</li>
 </ul>
 <h4 id="withcorrelationid">WithCorrelationId</h4>
-<p>Sets a correlation id which can be used to trace this error through a call chain.<br>
-This method returns reference to this exception to implement Builder pattern
+<p>Sets a correlation id which can be used to trace this error through the call chain.<br>
+This method returns reference to this exception to implement the Builder pattern
 to chain additional calls.</p>
 <blockquote>
 <p>(e <a href="">*ApplicationError</a>) WithCorrelationId(correlationId string) <a href="">*ApplicationError</a></p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - a unique transaction id to trace error through call chain</li>
+<li><strong>correlationId</strong>: string - unique transaction id used to trace error through the call chain</li>
 <li><strong>returns</strong>: <a href="">*ApplicationError</a> - this exception object</li>
 </ul>
 <h4 id="withdetails">WithDetails</h4>
 <p>Sets a parameter for additional error details.
-This details can be used to restore error description in other languages.</p>
-<p>This method returns reference to this exception to implement Builder pattern
+These details can be used to restore the error description in other languages.</p>
+<p>This method returns reference to this exception to implement the Builder pattern
 to chain additional calls.</p>
 <blockquote>
 <p>(e <a href="">*ApplicationError</a>) WithDetails(key string, value interface{}) <a href="">*ApplicationError</a></p>
@@ -113383,37 +113383,37 @@ to chain additional calls.</p>
 </ul>
 <h4 id="withstatus">WithStatus</h4>
 <p>Sets a HTTP status code which shall be returned by REST calls.
-This method returns reference to this exception to implement Builder pattern
+This method returns reference to this exception to implement the Builder pattern
 to chain additional calls.</p>
 <blockquote>
 <p>(e <a href="">*ApplicationError</a>) WithStatus(status int) <a href="">*ApplicationError</a></p>
 </blockquote>
 <ul>
-<li><strong>status</strong>: int - an HTTP error code.</li>
+<li><strong>status</strong>: int - HTTP error code.</li>
 <li><strong>returns</strong>: <a href="">*ApplicationError</a> - this exception object</li>
 </ul>
 <h4 id="wrap">Wrap</h4>
 <p>Wraps another exception into an application exception object.</p>
-<p>If original exception is of ApplicationError type it is returned without changes.
+<p>If the original exception is of ApplicationError type, it is returned without changes.
 Otherwise a new ApplicationError is created and original error is set as its cause.</p>
 <blockquote>
 <p>(e <a href="">*ApplicationError</a>) Wrap(err error) <a href="">*ApplicationError</a></p>
 </blockquote>
 <ul>
-<li><strong>cause</strong>: error - an original error object</li>
-<li><strong>returns</strong>: <a href="">*ApplicationError</a> - an original or newly created ApplicationError</li>
+<li><strong>cause</strong>: error - original error object</li>
+<li><strong>returns</strong>: <a href="">*ApplicationError</a> - original or newly created ApplicationError</li>
 </ul>
 <h4 id="wraperror">WrapError</h4>
-<p>Wraps another exception into specified application exception object.</p>
-<p>If original exception is of ApplicationError type it is returned without changes.
-Otherwise the original error is set as a cause to specified ApplicationError object.</p>
+<p>Wraps another exception into a specified application exception object.</p>
+<p>If the original exception is of ApplicationError type, it is returned without changes.
+Otherwise the original error is set as a cause to the specified ApplicationError object.</p>
 <blockquote>
 <p>WrapError(err error, message string) <a href="">*ApplicationError</a></p>
 </blockquote>
 <ul>
-<li><strong>error</strong>: error - an ApplicationError object to wrap the cause</li>
-<li><strong>cause</strong>: string - an original error object</li>
-<li><strong>returns</strong>: <a href="">*ApplicationError</a> - an original or newly created ApplicationError</li>
+<li><strong>error</strong>: error - ApplicationError object to wrap the cause</li>
+<li><strong>cause</strong>: string - original error object</li>
+<li><strong>returns</strong>: <a href="">*ApplicationError</a> - original or newly created ApplicationError</li>
 </ul>
 <h3 id="see-also">See also</h3>
 <ul>
