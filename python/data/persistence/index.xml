@@ -102,7 +102,7 @@
 &lt;p&gt;Important points&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The data items must implement the &lt;a href=&#34;../../../commons/data/iidentifiable&#34;&gt;IIdentifiable&lt;/a&gt; interface.&lt;/li&gt;
-&lt;li&gt;In basic scenarios child classes shall only override &lt;a href=&#34;../mysql_persistence/#get_page_by_filter&#34;&gt;get_page_by_filter&lt;/a&gt;, &lt;a href=&#34;../memory_persistence/#get_list_by_filter&#34;&gt;get_list_by_filter&lt;/a&gt; or &lt;a href=&#34;../mysql_persistence/#delete_by_filter&#34;&gt;delete_by_filter&lt;/a&gt; operations with a specific filter function. All other operations can be used out of the box.&lt;/li&gt;
+&lt;li&gt;In basic scenarios child classes shall only override &lt;a href=&#34;../memory_persistence/#get_page_by_filter&#34;&gt;get_page_by_filter&lt;/a&gt;, &lt;a href=&#34;../memory_persistence/#get_list_by_filter&#34;&gt;get_list_by_filter&lt;/a&gt; or &lt;a href=&#34;../memory_persistence/#delete_by_filter&#34;&gt;delete_by_filter&lt;/a&gt; operations with a specific filter function. All other operations can be used out of the box.&lt;/li&gt;
 &lt;li&gt;In complex scenarios child classes can implement additional operations by accessing cached items via the self._items property and calling the &lt;strong&gt;save&lt;/strong&gt; method on updates.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
@@ -533,10 +533,11 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;p&gt;This method shall be called by a public &lt;strong&gt;get_one_random&lt;/strong&gt; method from a child class
 that receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;get_one_random(correlation_id: Optional[str]): T&lt;/p&gt;
+&lt;p&gt;get_one_random(correlation_id: Optional[str], filter: Any = None): T&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: Any - (optional) a filter function to filter items.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: T - random item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;get_page_by_filter&#34;&gt;get_page_by_filter&lt;/h4&gt;
