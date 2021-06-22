@@ -1,0 +1,666 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Trace</title>
+    <link>/golang/components/trace/</link>
+    <description>Recent content in Trace on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/components/trace/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: CachedTracer</title>
+      <link>/golang/components/trace/cached_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/cached_tracer/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CachedTracer class allows you to create a tracer that caches the recorded traces in memory and periodically dumps them.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Child classes implement saving cached traces to their specified destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;: source (context) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: interval in milliseconds to save log messages (default: 10 seconds)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_cache_size&lt;/strong&gt;: maximum number of messages stored in this cache (default: 100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritcachedtracer&#34;&gt;InheritCachedTracer&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritCachedTracer(saver ICachedTraceSaver) &lt;a href=&#34;&#34;&gt;*CachedTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;saver&lt;/strong&gt;: ICachedTraceSaver - inherited tracer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;source&#34;&gt;source&lt;/h4&gt;
+&lt;p&gt;Source (context) name&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;source&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;cache&#34;&gt;Cache&lt;/h4&gt;
+&lt;p&gt;List of traces&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;Cache&lt;/strong&gt;: []&lt;a href=&#34;../operation_trace&#34;&gt;*OperationTrace&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;updated&#34;&gt;updated&lt;/h4&gt;
+&lt;p&gt;Boolean variable that indicates whether there has been an update or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;updated&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;lastdumptime&#34;&gt;lastDumpTime&lt;/h4&gt;
+&lt;p&gt;Time of the last dump&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;lastDumpTime&lt;/strong&gt;: time.Time&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;maxcachesize&#34;&gt;maxCacheSize&lt;/h4&gt;
+&lt;p&gt;Maximum number of messages stored in this cache (default: 100)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;maxCacheSize&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;interval&#34;&gt;interval&lt;/h4&gt;
+&lt;p&gt;Interval in milliseconds to save log messages (default: 10 seconds)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;interval&lt;/strong&gt;: int64&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintrace&#34;&gt;BeginTrace&lt;/h4&gt;
+&lt;p&gt;Begins recording an operation trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) BeginTrace(correlationId string, component string, operation string) &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of a called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;Clear&lt;/h4&gt;
+&lt;p&gt;Clears (removes) all cached log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Clear()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*cconf.ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*cconf.ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;dump&#34;&gt;Dump&lt;/h4&gt;
+&lt;p&gt;Dumps (writes) the currently cached log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Dump()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;failure&#34;&gt;Failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Failure(correlationId string, component string, operation string, err error, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;Trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Trace(correlationId string, component string, operation string, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;update&#34;&gt;Update&lt;/h4&gt;
+&lt;p&gt;Sets trace cache as updated
+and dumps it when timeout expires.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Update()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;write&#34;&gt;Write&lt;/h4&gt;
+&lt;p&gt;Writes a log message to the logger destination.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CachedTracer) Write(correlationId string, component string, operation string, err error, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;Save&lt;/h4&gt;
+&lt;p&gt;Saves log messages from the cache.
+Throws error if not done.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Save(operations []&lt;a href=&#34;../operation_trace&#34;&gt;*OperationTrace&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;messages&lt;/strong&gt;: []&lt;a href=&#34;../operation_trace&#34;&gt;*OperationTrace&lt;/a&gt; - a list with log messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;itraceritracer&#34;&gt;&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;operationtraceoperation_trace&#34;&gt;&lt;a href=&#34;../operation_trace&#34;&gt;OperationTrace&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: CompositeTracer</title>
+      <link>/golang/components/trace/composite_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/composite_tracer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeTracer class allows you to aggregate all tracers from component references under a single component.&lt;/p&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:tracer:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; components to pass operation tracessource&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newcompositetracer&#34;&gt;NewCompositeTracer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewCompositeTracer(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*CompositeTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;tracers&#34;&gt;Tracers&lt;/h4&gt;
+&lt;p&gt;List of tracers&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tracers&lt;/strong&gt;: []&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintrace&#34;&gt;BeginTrace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeTracer&lt;/a&gt;) BeginTrace(correlationId string, component string, operation string) &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;Failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeTracer&lt;/a&gt;) Failure(correlationId string, component string, operation string, err error, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeTracer&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;Trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeTracer&lt;/a&gt;) Trace(correlationId string, component string, operation string, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - a name of called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - a name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeTracer&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMyComponent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+		&lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewCompositeTracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyMethod&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlatonId&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;BeginTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+        &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndFailure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;itraceritracer&#34;&gt;&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: DefaultTracerFactory</title>
+      <link>/golang/components/trace/default_tracer_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/default_tracer_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultTracerFactory class allows you to create a factory used to create &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; components based on their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newdefaulttracerfactory&#34;&gt;NewDefaultTracerFactory&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewDefaultTracerFactory() &lt;a href=&#34;&#34;&gt;*DefaultTracerFactory&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nulltracernull_tracer&#34;&gt;&lt;a href=&#34;../null_tracer&#34;&gt;NullTracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;consoletracerconsole_tracer&#34;&gt;&lt;a href=&#34;../console_tracer&#34;&gt;ConsoleTracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositetracercomposite_tracer&#34;&gt;&lt;a href=&#34;../composite_tracer&#34;&gt;CompositeTracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: ITracer</title>
+      <link>/golang/components/trace/itracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/itracer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ITracer interface is used to create tracer component that capture operation traces.&lt;/p&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintrace&#34;&gt;BeginTrace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;BeginTrace(correlationId string, component string, operation string) &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;Failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Failure(correlationId string, component string, operation string, err error, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - a name of called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - a name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;Trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Trace(correlationId string, component string, operation string, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: LogTracer</title>
+      <link>/golang/components/trace/log_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/log_tracer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LogTracer class allows you to create a tracer that dumps recorded traces to a logger.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;log_level&lt;/strong&gt;: log level to record traces (default: debug)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - &lt;a href=&#34;../../log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to dump the captured counters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newlogtracer&#34;&gt;NewLogTracer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewLogTracer() &lt;a href=&#34;&#34;&gt;*LogTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintrace&#34;&gt;BeginTrace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LogTracer&lt;/a&gt;) BeginTrace(correlationId string, component string, operation string) &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LogTracer&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*cconf.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*cconf.ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;Failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LogTracer&lt;/a&gt;) Failure(correlationId string, component string, operation string, err error, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LogTracer&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;cref.IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;Trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LogTracer&lt;/a&gt;) Trace(correlationId string, component string, operation string, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewLogTracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewReferencesFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;logger&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;console&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewConsoleLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;trcer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;BeginTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndFailure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;tracertracer&#34;&gt;&lt;a href=&#34;../tracer&#34;&gt;Tracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;cachedcounterscountcached_counters&#34;&gt;&lt;a href=&#34;../../count/cached_counters&#34;&gt;CachedCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositeloggerlogcomposite_logger&#34;&gt;&lt;a href=&#34;../../log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: NullTracer</title>
+      <link>/golang/components/trace/null_tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/null_tracer/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NullTracer class allows you to create a dummy tracer with no real effect.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It can be used in testing or in situations when tracing is required but must be disabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newnulltracer&#34;&gt;NewNullTracer&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewNullTracer() &lt;a href=&#34;&#34;&gt;*NullTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;begintrace&#34;&gt;BeginTrace&lt;/h4&gt;
+&lt;p&gt;Begings recording an operation trace&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullTracer&lt;/a&gt;) BeginTrace(correlationId string, component string, operation string) &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: &lt;a href=&#34;../trace_timing&#34;&gt;*TraceTiming&lt;/a&gt; - a trace timing object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;failure&#34;&gt;Failure&lt;/h4&gt;
+&lt;p&gt;Records an operation failure with its name, duration and error&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullTracer&lt;/a&gt;) Failure(correlationId string, component string, operation string, err error, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;Trace&lt;/h4&gt;
+&lt;p&gt;Records an operation trace with its name and duration.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullTracer&lt;/a&gt;) Trace(correlationId string, component string, operation string, duration int64)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - name of the called component&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - name of the executed operation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;duration&lt;/strong&gt;: int64 - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;itraceritracer&#34;&gt;&lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: OperationTrace</title>
+      <link>/golang/components/trace/operation_trace/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/operation_trace/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OperationTrace class allows you to create a data object used to store captured operation traces.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This object is used by &lt;a href=&#34;../cached_tracer&#34;&gt;CachedTracer&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;time&#34;&gt;Time&lt;/h4&gt;
+&lt;p&gt;The time when operation was executed&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Time&lt;/strong&gt;: time.Time&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;source&#34;&gt;Source&lt;/h4&gt;
+&lt;p&gt;The source (context name)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Source&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;component&#34;&gt;Component&lt;/h4&gt;
+&lt;p&gt;The name of the component&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Component&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;operation&#34;&gt;Operation&lt;/h4&gt;
+&lt;p&gt;The name of the executed operation&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Operation&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;correlationid&#34;&gt;CorrelationId&lt;/h4&gt;
+&lt;p&gt;The transaction id to trace execution through call chain.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CorrelationId&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;duration&#34;&gt;Duration&lt;/h4&gt;
+&lt;p&gt;The duration of the operation in milliseconds&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Duration&lt;/strong&gt;: int64&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;error&#34;&gt;Error&lt;/h4&gt;
+&lt;p&gt;The description of the captured error.&lt;br&gt;
+See also &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;, &lt;a href=&#34;../../../commons/errors/application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Error&lt;/strong&gt;: &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: TraceTiming</title>
+      <link>/golang/components/trace/trace_timing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/trace/trace_timing/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The TraceTiming class is used to create the timing object returned by &lt;a href=&#34;../itracer/#begin_trace&#34;&gt;ITracer.begin_trace&lt;/a&gt; to end the timing of and execution block and record the associated trace.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newtracetiming&#34;&gt;NewTraceTiming&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewTraceTiming(correlationId string, component string, operation string, tracer &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*TraceTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;component&lt;/strong&gt;: string - an associated component name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - an associated operation name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tracer&lt;/strong&gt;: &lt;a href=&#34;../itracer&#34;&gt;ITracer&lt;/a&gt; - a callback that shall be called when endTiming is called.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;endfailure&#34;&gt;EndFailure&lt;/h4&gt;
+&lt;p&gt;Ends timing of a failed block, calculates elapsed time
+and records the associated trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*TraceTiming&lt;/a&gt;) EndFailure(err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: error - an error object associated with this trace.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;endtrace&#34;&gt;EndTrace&lt;/h4&gt;
+&lt;p&gt;Ends timing of an execution block, calculates the elapsed time
+and records the associated trace.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*TraceTiming&lt;/a&gt;) EndTrace()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;BeginTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndFailure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

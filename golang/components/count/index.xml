@@ -80,14 +80,14 @@ Inherit cache counters from saver.&lt;/p&gt;
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;BeginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; object which has to be called at
-&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CachedCounters&lt;/a&gt;) BeginTiming(name string) &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CachedCounters&lt;/a&gt;) BeginTiming(name string) &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;clear&#34;&gt;Clear&lt;/h4&gt;
 &lt;p&gt;Clears (resets) a counter specified by its name.&lt;/p&gt;
@@ -253,14 +253,14 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;BeginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; object which has to be called at
-&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeCounters&lt;/a&gt;) BeginTiming(name string) &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeCounters&lt;/a&gt;) BeginTiming(name string) &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;endtiming&#34;&gt;EndTiming&lt;/h4&gt;
 &lt;p&gt;Ends measurement of execution elapsed time and updates specified counter.&lt;/p&gt;
@@ -432,6 +432,45 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Golang: CounterTiming</title>
+      <link>/golang/components/count/counter_timing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/count/counter_timing/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CounterTiming class allows you to create callback objects that are returned by &lt;a href=&#34;../icounters/#begintiming&#34;&gt;ICounters.BeginTiming&lt;/a&gt; to end the timing of execution blocks and update the associated counters.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newcountertiming&#34;&gt;NewCounterTiming&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewCounterTiming(counter string, callback &lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*CounterTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;counter&lt;/strong&gt;: string - an associated counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;callback&lt;/strong&gt;: &lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt; - a callback that shall be called when end_timing is called.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;newemptycountertiming&#34;&gt;NewEmptyCounterTiming&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewEmptyCounterTiming() &lt;a href=&#34;&#34;&gt;*CounterTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;EndTiming&lt;/h4&gt;
+&lt;p&gt;Ends timing of an execution block, calculates elapsed time and updates the associated counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CounterTiming&lt;/a&gt;) EndTiming()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;BeginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;defer&lt;/span&gt;  &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>Golang: CounterType</title>
       <link>/golang/components/count/counter_type/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -510,14 +549,14 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;BeginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; object which has to be called at
-&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;BeginTiming(name string) &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;BeginTiming(name string) &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;increment&#34;&gt;Increment&lt;/h4&gt;
 &lt;p&gt;Increments counter by a given value.&lt;/p&gt;
@@ -602,20 +641,20 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
     </item>
     
     <item>
-      <title>Golang: ITimingCallback</title>
-      <link>/golang/components/count/itiming_callback/</link>
+      <title>Golang: ICounterTimingCallback</title>
+      <link>/golang/components/count/icounter_timing_callback/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/golang/components/count/itiming_callback/</guid>
+      <guid>/golang/components/count/icounter_timing_callback/</guid>
       <description>
         
         
         &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The ITimingCallback interface defines the method used for a callback to end the measurement of the execution elapsed time.&lt;/p&gt;
+&lt;p&gt;The ICounterTimingCallback interface defines the method used for a callback to end the measurement of the execution elapsed time.&lt;/p&gt;
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
-&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;EndTiming&lt;/h4&gt;
 &lt;p&gt;Ends measurement of execution elapsed time and updates specified counter.
-See also &lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.EndTiming&lt;/a&gt;&lt;/p&gt;
+See also &lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.EndTiming&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;EndTiming(name string, elapsed float32)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -728,14 +767,14 @@ See also &lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.EndTiming&lt;/a&gt;
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;BeginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; object which has to be called at
-&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.EndTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;(c *NullCounters) BeginTiming(name string) &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(c *NullCounters) BeginTiming(name string) &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;*Timing&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;*CounterTiming&lt;/a&gt; - a callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;increment&#34;&gt;Increment&lt;/h4&gt;
 &lt;p&gt;Increments counter by given value.&lt;/p&gt;
@@ -795,45 +834,6 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-      </description>
-    </item>
-    
-    <item>
-      <title>Golang: Timing</title>
-      <link>/golang/components/count/timing/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/golang/components/count/timing/</guid>
-      <description>
-        
-        
-        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The Timing class allows you to create callback objects that are returned by &lt;a href=&#34;../icounters/#begintiming&#34;&gt;ICounters.BeginTiming&lt;/a&gt; to end the timing of execution blocks and update the associated counters.&lt;/p&gt;
-&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
-&lt;h4 id=&#34;newtiming&#34;&gt;NewTiming&lt;/h4&gt;
-&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;NewTiming(counter string, callback &lt;a href=&#34;../itiming_callback&#34;&gt;ITimingCallback&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*Timing&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;counter&lt;/strong&gt;: string - an associated counter name&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;callback&lt;/strong&gt;: &lt;a href=&#34;../itiming_callback&#34;&gt;ITimingCallback&lt;/a&gt; - a callback that shall be called when end_timing is called.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;newemptytiming&#34;&gt;NewEmptyTiming&lt;/h4&gt;
-&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;NewEmptyTiming() &lt;a href=&#34;&#34;&gt;*Timing&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
-&lt;h4 id=&#34;endtiming&#34;&gt;EndTiming&lt;/h4&gt;
-&lt;p&gt;Ends timing of an execution block, calculates elapsed time and updates the associated counter.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*Timing&lt;/a&gt;) EndTiming()&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;BeginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;defer&lt;/span&gt;  &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;EndTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     

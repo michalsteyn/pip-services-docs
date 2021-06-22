@@ -15,7 +15,7 @@
     
     
     <item>
-      <title>Golang: CompositeConnectionResolver!</title>
+      <title>Golang: CompositeConnectionResolver</title>
       <link>/golang/components/connect/composite_connection_resolver/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -23,7 +23,182 @@
       <description>
         
         
-        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeConnectionResolver class allows you to resolve connection and credential parameters, validate them and generate connection options.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: communication protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) a key to retrieve the credentials from &lt;a href=&#34;../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: user name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) Credential stores to resolve credentials &lt;a href=&#34;../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;options&#34;&gt;Options&lt;/h4&gt;
+&lt;p&gt;The connection options&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connectionresolver&#34;&gt;ConnectionResolver&lt;/h4&gt;
+&lt;p&gt;The connections resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ConnectionResolver&lt;/strong&gt;: &lt;a href=&#34;../connection_resolver&#34;&gt;ConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;credentialresolver&#34;&gt;CredentialResolver&lt;/h4&gt;
+&lt;p&gt;The credentials resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CredentialResolver&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_resolver&#34;&gt;CredentialResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;clustersupported&#34;&gt;ClusterSupported&lt;/h4&gt;
+&lt;p&gt;The cluster support (multiple connections)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ClusterSupported&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;defaultprotocol&#34;&gt;DefaultProtocol&lt;/h4&gt;
+&lt;p&gt;The default protocol&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DefaultProtocol&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;defaultport&#34;&gt;DefaultPort&lt;/h4&gt;
+&lt;p&gt;The default port&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DefaultPort&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;supportedprotocols&#34;&gt;SupportedProtocols&lt;/h4&gt;
+&lt;p&gt;The list of supported protocols&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;SupportedProtocols&lt;/strong&gt;: []string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;compose&#34;&gt;Compose&lt;/h4&gt;
+&lt;p&gt;Composes Composite connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) Compose(correlationId string, connections []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, credential &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt;, parameters &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;) (options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - optional parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, err error) - resolved options or error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;composeoptions&#34;&gt;ComposeOptions&lt;/h4&gt;
+&lt;p&gt;A composite of several merger options&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) ComposeOptions(connections []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, credential &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt;, parameters &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - optional parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - resolved options or error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;finalizeoptions&#34;&gt;FinalizeOptions&lt;/h4&gt;
+&lt;p&gt;Finalize merged options.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) FinalizeOptions(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - options: connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - finalized connection options&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mergeconnection&#34;&gt;MergeConnection&lt;/h4&gt;
+&lt;p&gt;Merges connection options with connection parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) MergeConnection(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, connection &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - connection parameters to be merged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - merged connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mergecredential&#34;&gt;MergeCredential&lt;/h4&gt;
+&lt;p&gt;Merges connection options with credential parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) MergeCredential(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, credential &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt;) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt; - credential parameters to be merged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - merged connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mergeoptional&#34;&gt;MergeOptional&lt;/h4&gt;
+&lt;p&gt;Merges connection options with optional parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) MergeOptional(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, parameters &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - connection options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - optional parameters to be merged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - merged connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve&#34;&gt;Resolve&lt;/h4&gt;
+&lt;p&gt;Resolves connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) Resolve(correlationId string) (options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, err error) - resolved options or error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;refer.IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;refer.IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validateconnection&#34;&gt;ValidateConnection&lt;/h4&gt;
+&lt;p&gt;Validates connection parameters.
+Throws error if validation failed.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) ValidateConnection(correlationId string, connection &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - connection parameters to be validated&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - returns error if validation failed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validatecredential&#34;&gt;ValidateCredential&lt;/h4&gt;
+&lt;p&gt;Validates credential parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CompositeConnectionResolver&lt;/a&gt;) ValidateCredential(correlationId string, credential &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../auth/credential_params&#34;&gt;*auth.CredentialParams&lt;/a&gt; - credential parameters to be validated&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - returns error if validation failed&lt;/li&gt;
+&lt;/ul&gt;
+
       </description>
     </item>
     
@@ -403,7 +578,7 @@ from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscove
     </item>
     
     <item>
-      <title>Golang: ConnectionUtils!</title>
+      <title>Golang: ConnectionUtils</title>
       <link>/golang/components/connect/connection_utils/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -411,7 +586,67 @@ from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscove
       <description>
         
         
-        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionUtils class provides a set of utility functions used to process connection parameters.&lt;/p&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;composeuri&#34;&gt;ComposeUri&lt;/h4&gt;
+&lt;p&gt;Composes URI from config parameters.
+The result URI will be in the following form:
+&lt;em&gt;protocol://username@password@host1:port1,host2:port2,&amp;hellip;?param1=abc&amp;amp;param2=xyz&amp;amp;&amp;hellip;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TConnectionUtils) ComposeUri(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, defaultProtocol string, defaultPort int) string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - configuration parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;defaultProtocol&lt;/strong&gt;: string - a default protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;defaultPort&lt;/strong&gt;: int - a default port&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - a composed URI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;concat&#34;&gt;Concat&lt;/h4&gt;
+&lt;p&gt;Concatinates two options by combining duplicated properties into comma-separated list&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TConnectionUtils) Concat(options1 &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, options2 &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, keys &amp;hellip;string) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options1&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - first options to merge&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options2&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - second options to merge&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: &amp;hellip;string - when defined, it limits only to specific keys&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - new connection parameters to be added&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;exclude&#34;&gt;Exclude&lt;/h4&gt;
+&lt;p&gt;Excludes specified keys from the config parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TConnectionUtils) Exclude(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, keys &amp;hellip;string) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - configuration parameters to be processed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: &amp;hellip;string - a list of keys to be excluded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - a processed config parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;include&#34;&gt;Include&lt;/h4&gt;
+&lt;p&gt;Includes specified keys from the config parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TConnectionUtils) Include(options &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, keys &amp;hellip;string) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - configuration parameters to be processed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: &amp;hellip;string - a list of keys to be included.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - a processed config parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;parseuri&#34;&gt;ParseUri&lt;/h4&gt;
+&lt;p&gt;Parses URI into config parameters.
+The URI shall be in the following form:
+&lt;code&gt;protocol://username@password@host1:port1,host2:port2,...?param1=abc&amp;amp;param2=xyz&amp;amp;...&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *TConnectionUtils) ParseUri(uri string, defaultProtocol string, defaultPort int) &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: string - the URI to be parsed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;defaultProtocol&lt;/strong&gt;: string - a default protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;defaultPort&lt;/strong&gt;: string - a default port&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt; - a configuration parameters with URI elements&lt;/li&gt;
+&lt;/ul&gt;
+
       </description>
     </item>
     
