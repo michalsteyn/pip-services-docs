@@ -121039,12 +121039,14 @@ The persistence components come in two kinds. The first kind is a basic persiste
   }
 
   delHiddenLgSearch();
- 
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
+
   docsearch({
       
       
       apiKey: '6974095177303d4ec7cb2a2d7c6f051a',
-      indexName: window.location.host.indexOf('github') > 0 ? 'pip_docs_test' : 'pip_docs_s3', 
+      indexName: isGitRepo > 0 ? 'pip_docs_test' : 'pip_docs_s3', 
       appId: 'ETKGUND67W',
       
       
@@ -121052,12 +121054,13 @@ The persistence components come in two kinds. The first kind is a basic persiste
 
       transformData: function (hits) {
       
+        let langNamePosInUrl = isGitRepo ? 4 : 3 
 
         hits = hits.filter((item) => {
           console.log(item);
           
           if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-            let hitLangPage = item['url'].split('/')[4].toLowerCase();
+            let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
             let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
 
             return isCorrectHit;
