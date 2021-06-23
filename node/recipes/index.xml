@@ -14,5 +14,146 @@
       
     
     
+    <item>
+      <title>Node: Component Lifecycle</title>
+      <link>/node/recipes/component_lifecycle/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/recipes/component_lifecycle/</guid>
+      <description>
+        
+        
+        &lt;ul&gt;
+&lt;li&gt;by Alex Mazur&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;component-lifecycle&#34;&gt;Component lifecycle&lt;/h3&gt;
+&lt;p&gt;A microservice is a set of loosely coupled components, each of which serves a specific purpose, such as logging events, reading records from a database, or connecting to a 3rd party service.
+One of the roles of the microservice’s container is to correctly initialize all internal components, each of which can have its own lifecycle. For example, loading its own configuration, running certain functional processes, and even waiting for results from other components. The order in which component lifecycle management methods are called is as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../images/tutorials/component_lifecycle/component_lifecycle_scheme.png&#34; alt=&#34;ConsoleScreen1&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Configuration of the component is performed (configure)&lt;/li&gt;
+&lt;li&gt;Components are linked (setReference)&lt;/li&gt;
+&lt;li&gt;Connections are opened and active processes are started (open)&lt;/li&gt;
+&lt;li&gt;Business processes are called or event notifications are sent (execute, notify)&lt;/li&gt;
+&lt;li&gt;Active processes are stopped and connections are closed (close)&lt;/li&gt;
+&lt;li&gt;The links between components are destroyed (unsetReferences)&lt;/li&gt;
+&lt;li&gt;The component is destroyed&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A flexible and, at the same time, standardized approach was developed in the Pip.Services Toolkit for initializing components. This approach preserves the conceptual integrity of the whole microservice, while keeping the source code clean, coherent, and testable. A component’s lifecycle is determined by which of the following interfaces it implements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;IConfigurable – component configuration &lt;a href=&#34;../../commons/config&#34;&gt;Config&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;IReferenceable и IUnreferenceable – setting and destroying references to other components &lt;a href=&#34;../../commons/refer/reference&#34;&gt;Reference&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;IOpenable и IClosable – starting and stopping internal functional processes &lt;a href=&#34;../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;IExecutable – execution of functional processes &lt;a href=&#34;../../commons/run/iexecutable&#34;&gt;Executable&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;INotifiable - sending event notifications &lt;a href=&#34;../../commons/run/inotifiable&#34;&gt;Notifiable&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IConfigurable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;config&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IOpenable&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IClosable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+
+	&lt;span style=&#34;color:#75af00&#34;&gt;isOpen&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;boolean&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+	&lt;span style=&#34;color:#75af00&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IClosable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IExecutable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;args&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;any&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;implementation&#34;&gt;Implementation&lt;/h3&gt;
+&lt;p&gt;Microservice developers are free to implement just the interfaces needed by their components. When the container is started, all implemented methods will be called in the previously mentioned order.
+For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;FixedRateTimer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Parameters&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services3-commons-nodex&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReconfigurable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IExecutable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IOpenable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferences&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services3-commons-nodex&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;LogLevel&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services3-components-nodex&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CounterController&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReconfigurable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IOpenable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IExecutable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;FixedRateTimer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;parameters&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;constructor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(){&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setLevel&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;LogLevel&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;config&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;){&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;parameters&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromConfig&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+        
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;){&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+        
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;isOpen&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;boolean&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;isStarted&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;isOpen&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setCallback&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(()&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setInterval&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setDelay&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;start&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Counter controller opened&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+        
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;timer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;stop&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;trace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Counter controller closed&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+        
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;args&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;any&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;info&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+            &lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;counter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34; - &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getAsStringWithDefault&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;message&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Hello World!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getAsObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;utilities&#34;&gt;Utilities&lt;/h3&gt;
+&lt;p&gt;The Pip.Service’s Toolkit also includes a few utilities that can be used during microservice development:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Opener – initiates the functional processes of selected components.&lt;/li&gt;
+&lt;li&gt;Closer – stops the functional processes of selected components.&lt;/li&gt;
+&lt;li&gt;Executor – runs the functional processes of selected components.&lt;/li&gt;
+&lt;li&gt;Notifier - sends event notifications for selected components.&lt;/li&gt;
+&lt;li&gt;Cleaner – cleans the current state of selected components.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Opener&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;Closer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;get_all&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
   </channel>
 </rss>
