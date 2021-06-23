@@ -1263,6 +1263,86 @@
   
           
         
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+      
+    
+  
+
+
+  
+  
+    
+    
+  
+  
+  
+  
+
+
+  
+
+   
+  
+
+  
+    
+    
+  </li>
+  
+          
+        
       </ul>
     
   </li>
@@ -127365,7 +127445,7 @@
             <li><a href="#background-execution">Background execution</a></li>
             <li><a href="#1-using-a-timer-and-distributed-lock">1. Using a timer and distributed lock.</a></li>
             <li><a href="#2-using-message-queues">2. Using message queues</a></li>
-            <li><a href="#3-using-the-jobs-microservice">3. 	Using the Jobs microservice</a></li>
+            <li><a href="#3-using-the-jobs-microservice">3. Using the Jobs microservice</a></li>
           </ul>
         </li>
       </ul>
@@ -127469,44 +127549,37 @@ This article explains how to tackle those three approaches through the use of a 
 
 </code></pre></div><h3 id="2-using-message-queues">2. Using message queues</h3>
 <p>In this case, task execution is triggered by a message/signal that is received from a message queue (preferably with guaranteed delivery). A simple listener can be used to watch the queue and initiate the task. Once the listener receives a message, it starts the task, but leaves the message/signal in the queue as a lock for the duration of the processing event. Once the task has been processed, the message/signal is deleted from the queue. This method guarantees that the task will be executed once and only once.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">public</span> <span style="color:#111">Task</span> <span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#111">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
-<span style="color:#111">{</span>
-   <span style="color:#111">_messageQueue</span><span style="color:#960050;background-color:#1e0010">?</span><span style="color:#f92672">.</span><span style="color:#111">BeginListen</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">async</span> <span style="color:#111">(</span><span style="color:#111">message</span><span style="color:#111">,</span> <span style="color:#111">q</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span>
-   <span style="color:#111">{</span>
-           <span style="color:#111">await</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">);</span>
-   	<span style="color:#111">await</span> <span style="color:#111">q</span><span style="color:#f92672">.</span><span style="color:#111">CompleteAsync</span><span style="color:#111">(</span><span style="color:#111">message</span><span style="color:#111">);</span>
-   <span style="color:#111">});</span>
- 
-   <span style="color:#00a8c8">return</span> <span style="color:#111">Task</span><span style="color:#f92672">.</span><span style="color:#111">CompletedTask</span><span style="color:#111">;</span>
-<span style="color:#111">}</span>
-<span style="color:#111">public</span> <span style="color:#111">async</span> <span style="color:#111">Task</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#111">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
-<span style="color:#111">{</span>
-  <span style="color:#f92672">...</span> <span style="color:#f92672">//</span> <span style="color:#111">Long</span> <span style="color:#111">running</span> <span style="color:#111">tasks</span>
-<span style="color:#111">}</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">):</span>
+   <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_message_queue</span><span style="color:#f92672">.</span><span style="color:#111">begin_listen</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">perform_analysis</span><span style="color:#111">)</span>
 
-</code></pre></div><h3 id="3-using-the-jobs-microservice">3. 	Using the Jobs microservice</h3>
-<p>For cases where distributed locks and message queues can’t be used, the PipServices Job Queue microservice can be used instead (<a href="https://github.com/pip-services-infrastructure/pip-services-jobs-node)">https://github.com/pip-services-infrastructure/pip-services-jobs-node)</a>. This microservice acts as a simple manager for the tasks that are running and provides relevant information to any interested services. For our example of periodic file processing, we’ll need</p>
+
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">perform_analysis</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">):</span>
+   <span style="color:#f92672">...</span> <span style="color:#75715e"># Long running tasks</span>
+
+
+</code></pre></div><h3 id="3-using-the-jobs-microservice">3. Using the Jobs microservice</h3>
+<p>For cases where distributed locks and message queues can’t be used, the PipServices Job Queue microservice can be used instead (<a href="https://github.com/pip-services-infrastructure/pip-services-jobs-python)">https://github.com/pip-services-infrastructure/pip-services-jobs-python)</a>. This microservice acts as a simple manager for the tasks that are running and provides relevant information to any interested services. For our example of periodic file processing, we’ll need</p>
 <ol>
 <li>a timer,</li>
 <li>the Jobs service’s client, and</li>
 <li>a type for the job/task being executed.</li>
 </ol>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">//</span> <span style="color:#111">Step</span> <span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">–</span> <span style="color:#111">Create</span> <span style="color:#111">a</span> <span style="color:#111">timer</span><span style="color:#111">,</span> <span style="color:#111">the</span> <span style="color:#111">Jobs</span> <span style="color:#111">service</span><span style="color:#960050;background-color:#1e0010">’</span><span style="color:#111">s</span> <span style="color:#111">client</span><span style="color:#111">,</span>  <span style="color:#f92672">and</span> <span style="color:#111">a</span> <span style="color:#111">type</span> <span style="color:#00a8c8">for</span> <span style="color:#111">the</span> <span style="color:#111">job</span><span style="color:#f92672">/</span><span style="color:#111">task</span> <span style="color:#111">being</span> <span style="color:#111">executed</span>
-<span style="color:#111">private</span> <span style="color:#111">FixedRateTimer</span> <span style="color:#111">Timer</span> <span style="color:#111">{</span> <span style="color:#111">get</span><span style="color:#111">;</span> <span style="color:#111">set</span><span style="color:#111">;</span> <span style="color:#111">}</span> <span style="color:#f92672">=</span> <span style="color:#111">new</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">();</span>
-<span style="color:#111">private</span> <span style="color:#111">IJobsClientV1</span> <span style="color:#111">JobsClient</span> <span style="color:#111">{</span> <span style="color:#111">get</span><span style="color:#111">;</span> <span style="color:#111">set</span><span style="color:#111">;</span> <span style="color:#111">}</span>
-<span style="color:#111">private</span> <span style="color:#111">const</span> <span style="color:#111">string</span> <span style="color:#111">JobType</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#111">AnalysisOfNewFiles</span><span style="color:#960050;background-color:#1e0010">”</span><span style="color:#111">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Step 1 – Create a timer, the Jobs service’s client,  and a type for the job/task being executed</span>
+<span style="color:#111">__timer</span> <span style="color:#f92672">=</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">()</span>
+<span style="color:#111">__jobs_client</span><span style="color:#111">:</span> <span style="color:#111">IJobsClientV1</span> <span style="color:#f92672">=</span> <span style="color:#111">None</span>
+<span style="color:#111">__job_type</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;AnalysisOfNewFiles&#34;</span>
 <span style="color:#f92672">...</span>
-<span style="color:#f92672">//</span> <span style="color:#111">Step2</span> <span style="color:#960050;background-color:#1e0010">–</span> <span style="color:#111">Structure</span> <span style="color:#111">the</span> <span style="color:#111">processing</span> <span style="color:#111">of</span> <span style="color:#111">requests</span>
-<span style="color:#111">public</span> <span style="color:#111">Task</span> <span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#111">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
-<span style="color:#111">{</span>
-   <span style="color:#111">Timer</span><span style="color:#f92672">.</span><span style="color:#111">Task</span> <span style="color:#f92672">=</span> <span style="color:#111">new</span> <span style="color:#111">Action</span><span style="color:#111">(</span><span style="color:#111">async</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span>  <span style="color:#111">await</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">));</span>
-   <span style="color:#111">Timer</span><span style="color:#f92672">.</span><span style="color:#111">Interval</span> <span style="color:#f92672">=</span> <span style="color:#111">Parameters</span><span style="color:#f92672">.</span><span style="color:#111">GetAsInteger</span><span style="color:#111">(</span><span style="color:#d88200">&#34;interval&#34;</span><span style="color:#111">);</span>
-   <span style="color:#111">Timer</span><span style="color:#f92672">.</span><span style="color:#111">Delay</span> <span style="color:#f92672">=</span> <span style="color:#111">Parameters</span><span style="color:#f92672">.</span><span style="color:#111">GetAsInteger</span><span style="color:#111">(</span><span style="color:#d88200">&#34;delay&#34;</span><span style="color:#111">);</span>
-   <span style="color:#111">Timer</span><span style="color:#f92672">.</span><span style="color:#111">Start</span><span style="color:#111">();</span>
 
-   <span style="color:#00a8c8">return</span> <span style="color:#111">Task</span><span style="color:#f92672">.</span><span style="color:#111">CompletedTask</span><span style="color:#111">;</span>
-<span style="color:#111">}</span>
+<span style="color:#75715e"># Step2 – Structure the processing of requests</span>
+<span style="color:#00a8c8">def</span> <span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">):</span>
+   <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__timer</span><span style="color:#f92672">.</span><span style="color:#111">set_task</span><span style="color:#111">(</span><span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">perform_analysis</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">))</span> 
+   <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__timer</span><span style="color:#f92672">.</span><span style="color:#111">set_interval</span><span style="color:#111">(</span><span style="color:#111">Parameters</span><span style="color:#f92672">.</span><span style="color:#111">get_as_integer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;interval&#34;</span><span style="color:#111">))</span>
+   <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__timer</span><span style="color:#f92672">.</span><span style="color:#111">set_delay</span><span style="color:#111">(</span><span style="color:#111">Parameters</span><span style="color:#f92672">.</span><span style="color:#111">get_as_integer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;delay&#34;</span><span style="color:#111">))</span>
+   <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__timer</span><span style="color:#f92672">.</span><span style="color:#111">start</span><span style="color:#111">()</span>
+
 </code></pre></div><p>Now, in the task’s method, we need to add some code that checks whether or not a job of this type is already running or not. If it is, then no processing is required. If it isn’t, then a job is created, started, and eventually completed, once all processing has been performed.</p>
+<p>TODO: complete it for Python</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">public</span> <span style="color:#111">async</span> <span style="color:#111">Task</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#111">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
 <span style="color:#111">{</span>
 <span style="color:#f92672">//</span> <span style="color:#111">Step</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span> <span style="color:#111">check</span> <span style="color:#111">whether</span> <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> <span style="color:#111">a</span> <span style="color:#111">job</span> <span style="color:#111">of</span> <span style="color:#111">this</span> <span style="color:#111">type</span> <span style="color:#f92672">is</span> <span style="color:#111">already</span> <span style="color:#111">running</span> <span style="color:#f92672">or</span> <span style="color:#f92672">not</span>
