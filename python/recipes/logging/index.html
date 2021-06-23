@@ -130184,7 +130184,7 @@
             <li><a href="#introduction">Introduction</a></li>
             <li><a href="#logging">Logging</a>
               <ul>
-                <li><a href="#the-logger-interface">The logger interface</a></li>
+                <li><a href="#the-ilogger-interface">The ILogger interface</a></li>
                 <li><a href="#log-levels">Log levels</a></li>
                 <li><a href="#logger-types">Logger types</a></li>
                 <li><a href="#adding-a-logger">Adding a logger</a></li>
@@ -130259,8 +130259,8 @@
 <p>Any and all nontrivial systems need logging, and microservices are no exception. Messages in logs  help us track running transactions and sort out any problems that may occur. The quality of the information that is stored in logs largely defines how simple or difficult it is to support a system.
 The Pip.Services Toolkit contains logging components that can either output messages to the console, or hand them over to specialized services, such as ElasticSearch, AppInsights or CloudWatch.</p>
 <h3 id="logging">Logging</h3>
-<h4 id="the-logger-interface">The logger interface</h4>
-<p>The logger interface is defined in the Log package of the Components module. This interface contains methods that are common for most logger implementations.</p>
+<h4 id="the-ilogger-interface">The ILogger interface</h4>
+<p>The <a href="../../components/log/ilogger/">ILogger</a> interface is defined in the Log package of the Components module. This interface contains methods that are common for most logger implementations.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">ILogger</span><span style="color:#111">(</span><span style="color:#111">ABC</span><span style="color:#111">):</span>
 
@@ -130290,14 +130290,14 @@ The Pip.Services Toolkit contains logging components that can either output mess
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">:</span> <span style="color:#111">Optional</span><span style="color:#111">[</span><span style="color:#111">str</span><span style="color:#111">],</span> <span style="color:#111">message</span><span style="color:#111">:</span> <span style="color:#111">str</span><span style="color:#111">,</span> <span style="color:#f92672">*</span><span style="color:#111">args</span><span style="color:#111">:</span> <span style="color:#111">Any</span><span style="color:#111">,</span> <span style="color:#f92672">**</span><span style="color:#111">kwargs</span><span style="color:#111">:</span> <span style="color:#111">Any</span><span style="color:#111">):</span>
         <span style="color:#00a8c8">raise</span> <span style="color:#75af00">NotImplementedError</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Method from interface definition&#39;</span><span style="color:#111">)</span>
-</code></pre></div><p>The log method writes messages to the log, using the provided log level. The other methods collect messages at various logging levels and can be used in your code to add transparency.
-The level property can be used to optimize code. Generating log messages can cost you resources. We can optimize the use of these resources by only generating messages for the log level that is currently set, as is shown in the example below:</p>
+</code></pre></div><p>The <strong>log</strong> method writes messages to the log, using the provided log level. The other methods collect messages at various logging levels and can be used in your code to add transparency.
+The <strong>level</strong> property can be used to optimize code. Generating log messages can cost you resources. We can optimize the use of these resources by only generating messages for the log level that is currently set, as is shown in the example below:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">if</span> <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">Level</span> <span style="color:#f92672">&gt;=</span> <span style="color:#111">LogLevel</span><span style="color:#f92672">.</span><span style="color:#111">Trace</span><span style="color:#111">:</span>
     <span style="color:#111">message</span> <span style="color:#f92672">=</span> <span style="color:#f92672">...</span>  <span style="color:#75715e"># Costly message preparation</span>
     <span style="color:#111">logger</span><span style="color:#f92672">.</span><span style="color:#111">trace</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">message</span><span style="color:#111">)</span>
-</code></pre></div><p>One differentiating factor of the Pip.Services Toolkit is the required correlation_id parameter. correlation_id is used in all business methods and is passed in a standardized way when calling microservices. This way, the correlation_id is passed along the entire chain of microservice calls, from start to finish, and is included in any and all errors and log messages. This allows us to grasp an understanding of what’s going on, in conditions where information is fragmented and collected from various sources.</p>
+</code></pre></div><p>One differentiating factor of the Pip.Services Toolkit is the required <strong>correlation_id</strong> parameter. This parameter is used in all business methods and is passed in a standardized way when calling microservices. This way, the <strong>correlation_id</strong> is passed along the entire chain of microservice calls, from start to finish, and is included in any and all errors and log messages. This allows us to grasp an understanding of what’s going on, in conditions where information is fragmented and collected from various sources.</p>
 <h4 id="log-levels">Log levels</h4>
-<p>To be able to generate quality logs, it’s crucial to know how the various LogLevels should be used. For some reason, most developers don’t consider this to be important, which makes it harder for users, technical support, and for developers themselves to use the system. The main purpose of LogLevel is to filter messages by their importance. When LogLevel is used incorrectly, important messages are bound to be lost, or the opposite can occur, where the output is spammed by various messages, making the search for information a real burden.</p>
+<p>To be able to generate quality logs, it’s crucial to know how the various log levels should be used. For some reason, most developers don’t consider this to be important, which makes it harder for users, technical support, and for developers themselves to use the system. The main purpose of <a href="../../components/log/log_level/">LogLevel</a> is to filter messages by their importance. When <strong>LogLevel</strong> is used incorrectly, important messages are bound to be lost, or the opposite can occur, where the output is spammed by various messages, making the search for information a real burden.</p>
 <ul>
 <li>Nothing - disable all messages</li>
 <li>Fatal - critical errors that lead to partial or complete system failures</li>
