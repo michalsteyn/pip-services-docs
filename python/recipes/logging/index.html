@@ -130299,13 +130299,13 @@ The <strong>level</strong> property can be used to optimize code. Generating log
 <h4 id="log-levels">Log levels</h4>
 <p>To be able to generate quality logs, it’s crucial to know how the various log levels should be used. For some reason, most developers don’t consider this to be important, which makes it harder for users, technical support, and for developers themselves to use the system. The main purpose of <a href="../../components/log/log_level/">LogLevel</a> is to filter messages by their importance. When <strong>LogLevel</strong> is used incorrectly, important messages are bound to be lost, or the opposite can occur, where the output is spammed by various messages, making the search for information a real burden.</p>
 <ul>
-<li>Nothing - disable all messages</li>
-<li>Fatal - critical errors that lead to partial or complete system failures</li>
-<li>Error - user errors that don’t affect the system’s performance</li>
-<li>Warning - warnings that technical support should check out</li>
-<li>Info - messages relating to important transactions running in the system. These help get an idea of what’s going on in the system under normal conditions.</li>
-<li>Debug - detailed information on what’s happening in the system. These messages are used by technical support and are turned on for short periods of time to help debug the system.</li>
-<li>Trace - very detailed information on what’s happening in the system. These messages are used only by developers and are almost never turned on in production.</li>
+<li><strong>Nothing</strong> - disable all messages</li>
+<li><strong>Fatal</strong> - critical errors that lead to partial or complete system failures</li>
+<li><strong>Error</strong> - user errors that don’t affect the system’s performance</li>
+<li><strong>Warning</strong> - warnings that technical support should check out</li>
+<li><strong>Info</strong> - messages relating to important transactions running in the system. These help get an idea of what’s going on in the system under normal conditions.</li>
+<li><strong>Debug</strong> - detailed information on what’s happening in the system. These messages are used by technical support and are turned on for short periods of time to help debug the system.</li>
+<li><strong>Trace</strong> - very detailed information on what’s happening in the system. These messages are used only by developers and are almost never turned on in production.</li>
 </ul>
 <p>It’s also important to write messages to the log in such a way that they can be understood by people who don’t possess knowledge of the inner workings of the system.</p>
 <h4 id="logger-types">Logger types</h4>
@@ -130340,8 +130340,8 @@ The <strong>level</strong> property can be used to optimize code. Generating log
     <span style="color:#f92672">daily</span><span style="color:#111">:</span> <span style="color:#00a8c8">true</span>      
 </code></pre></div><h4 id="composite-logger">Composite logger</h4>
 <p>It’s not rare for multiple loggers to be used simultaneously. One logger can be used to output messages to the console, allowing developers to debug the microservice, while another logger collects messages from all running microservices in a distributed storage, allowing technical support to monitor the system.
-To simplify the collection of log messages in situations when the amount of loggers and/or their configurations are bound to change, the CompositeLogger from the <a href="../../components/log/console_logger">Components</a> module is used. The CompositeLogger’s task is to pass along any messages it receives to all of the other loggers included in the container it’s in. Logger linking is performed in the SetReferences method (<a href="../component_references">see the References Recipe</a>).</p>
-<p>The CompositeLogger is used in the following way:</p>
+To simplify the collection of log messages in situations when the amount of loggers and/or their configurations are bound to change, the <a href="../../components/log/composite_logger/">CompositeLogger</a> from the <a href="../../components/">Components</a> module is used. The <strong>CompositeLogger</strong>’s task is to pass along any messages it receives to all of the other loggers included in the container. Logger linking is performed in the <strong>SetReferences</strong> method (<a href="../component_references">see the References Recipe</a>).</p>
+<p>The <strong>CompositeLogger</strong> is used in the following way:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span><span style="color:#111">(</span><span style="color:#111">IConfigurable</span><span style="color:#111">,</span> <span style="color:#111">IReferenceable</span><span style="color:#111">):</span>
     <span style="color:#111">__logger</span> <span style="color:#f92672">=</span> <span style="color:#111">CompositeLogger</span><span style="color:#111">()</span>
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">config</span><span style="color:#111">):</span>
