@@ -445,7 +445,7 @@ The connection parameters are redirected to DiscoveryService when discovery_key 
         
         
         &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The ConnectionResolver class is used to retrieve component connections.&lt;/p&gt;
+&lt;p&gt;The ConnectionResolver class is used to retrieve a component&amp;rsquo;s connections.&lt;/p&gt;
 &lt;p&gt;Important points&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;If the connections are configured to be retrieved from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;, the connection resolver will automatically locate &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; in component references and retrieve the connections from there using the discovery_key parameter.&lt;/li&gt;
@@ -453,7 +453,7 @@ The connection parameters are redirected to DiscoveryService when discovery_key 
 &lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key used to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : other connection parameters&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;connections&lt;/strong&gt;:  alternative to connection&lt;/p&gt;
@@ -475,7 +475,7 @@ The connection parameters are redirected to DiscoveryService when discovery_key 
 &lt;/ul&gt;
 &lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
 &lt;h4 id=&#34;newconnectionresolver&#34;&gt;NewConnectionResolver&lt;/h4&gt;
-&lt;p&gt;Creates a new instance of connection resolver.&lt;/p&gt;
+&lt;p&gt;Creates a new instance of ConnectionResolver.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;NewConnectionResolver(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*config.ConfigParams&lt;/a&gt;, references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;refer.IReferences&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -484,13 +484,13 @@ The connection parameters are redirected to DiscoveryService when discovery_key 
 &lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;refer.IReferences&lt;/a&gt; - (optional) component references&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;newemptyconnectionresolver&#34;&gt;NewEmptyConnectionResolver&lt;/h4&gt;
-&lt;p&gt;Creates a new instance of connection resolver.&lt;/p&gt;
+&lt;p&gt;Creates a new instance of ConnectionResolver.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;NewEmptyConnectionResolver() &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
 &lt;h4 id=&#34;add&#34;&gt;Add&lt;/h4&gt;
-&lt;p&gt;Adds a new connection to component connections&lt;/p&gt;
+&lt;p&gt;Adds a new connection to component connections.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;) Add(connection &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -508,12 +508,12 @@ The connection parameters are redirected to DiscoveryService when discovery_key 
 &lt;h4 id=&#34;getall&#34;&gt;GetAll&lt;/h4&gt;
 &lt;p&gt;Gets all connections configured in component configuration.
 Redirect to Discovery services is not done at this point.
-If you need fully fleshed connection use &lt;strong&gt;resolve&lt;/strong&gt; method instead.&lt;/p&gt;
+If you need fully fleshed connection use the &lt;strong&gt;resolve&lt;/strong&gt; method instead.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;) GetAll() []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - a list with connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - list with connection parameters&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
 &lt;p&gt;Registers the given connection in all referenced discovery services.
@@ -522,9 +522,9 @@ This method can be used for dynamic service discovery.&lt;/p&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;) Register(correlationId string, connection &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;) error&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - a connection to register.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - return error if not registered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt; - connection to a register.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - returned error if not registered.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;resolve&#34;&gt;Resolve&lt;/h4&gt;
 &lt;p&gt;Resolves a single component connection. If connections are configured to be retrieved
@@ -533,7 +533,7 @@ from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscove
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;) Resolve(correlationId string) (&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, error)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, error) - resolved connection parameters or nil if nothing was found.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;resolveall&#34;&gt;ResolveAll&lt;/h4&gt;
@@ -543,8 +543,8 @@ from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscove
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*ConnectionResolver&lt;/a&gt;) ResolveAll(correlationId string) ([]&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, error)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, error) - a list of resolved connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]&lt;a href=&#34;../connection_params&#34;&gt;*ConnectionParams&lt;/a&gt;, error) - list of resolved connections.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
 &lt;p&gt;Sets references to dependent components.&lt;/p&gt;
