@@ -15,7 +15,7 @@
     
     
     <item>
-      <title>Node: IdentifiableJsonSqlServerPersistence</title>
+      <title>Node: IdentifiableJsonSqlServerPersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;</title>
       <link>/node/sqlserver/persistence/identifiable_json_sqlserver_persistence/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -156,10 +156,10 @@
     
     <item>
       <title>Node: IdentifiableSqlServerPersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;</title>
-      <link>/node/sqlserver/persistence/identifiable_postgres_persistence/</link>
+      <link>/node/sqlserver/persistence/identifiable_sqlserver_persistence/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/node/sqlserver/persistence/identifiable_postgres_persistence/</guid>
+      <guid>/node/sqlserver/persistence/identifiable_sqlserver_persistence/</guid>
       <description>
         
         
@@ -246,7 +246,7 @@
 &lt;h4 id=&#34;getlistbyids&#34;&gt;getListByIds&lt;/h4&gt;
 &lt;p&gt;Gets a list of data items retrieved based on given unique ids.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;getListByIds(correlationId: string, ids: K[]): Promise&amp;lt;\T[]&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getListByIds(correlationId: string, ids: K[]): Promise&amp;lt;\T[]&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through a call chain.&lt;/li&gt;
@@ -432,7 +432,10 @@ otherwise it creates a new data item.&lt;/p&gt;
 &lt;/span&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;autocreateobject&#34;&gt;autoCreateObject&lt;/h4&gt;
-&lt;p&gt;Adds an index definition to be created on opening&lt;/p&gt;
+&lt;p&gt;Adds an index definition to be created on opening.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is a deprecated method. Use &lt;strong&gt;ensureSchema&lt;/strong&gt; instead.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; autoCreateObject(schemaStatement: string): void&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -461,12 +464,12 @@ otherwise it creates a new data item.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string- the object to convert from the public partial format.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
-&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string- the object to convert from the public partial format.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;convertfrompublic&#34;&gt;convertFromPublic&lt;/h4&gt;
 &lt;p&gt;Converts an object value from public to internal format.&lt;/p&gt;
@@ -499,7 +502,7 @@ otherwise it creates a new data item.&lt;/p&gt;
 &lt;h4 id=&#34;createrequest&#34;&gt;createRequest&lt;/h4&gt;
 &lt;p&gt;Creates request to the database.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;createRequest(values: any[] = null): any&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; createRequest(values: any[] = null): any&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: any[] - optional list of query parameters&lt;/li&gt;
@@ -513,7 +516,7 @@ otherwise it creates a new data item.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through a call chain.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;_define_schema&#34;&gt;_define_schema&lt;/h4&gt;
+&lt;h4 id=&#34;defineschema&#34;&gt;defineSchema&lt;/h4&gt;
 &lt;p&gt;Defines a database schema via auto create objects or convenience methods.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; defineSchema(): void&lt;/p&gt;
@@ -557,7 +560,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - generated list of column names&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;generateparameters&#34;&gt;generateParameters&lt;/h4&gt;
-&lt;p&gt;Generates a list of value parameters to use in SQL statements like: &lt;em&gt;&amp;quot;$1,$2,$3&amp;quot;&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Generates a list of value parameters to use in SQL statements like: &lt;em&gt;&amp;quot;@1,@2,@3&amp;quot;&lt;/em&gt;.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; generateParameters(values: any): string&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -566,7 +569,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - generated list of value parameters&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;generatesetparameters&#34;&gt;generateSetParameters&lt;/h4&gt;
-&lt;p&gt;Generates a list of column sets to use in UPDATE statements like: &lt;em&gt;column1=?1,column2=?2&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Generates a list of column sets to use in UPDATE statements like: &lt;em&gt;&amp;quot;@1,@2,@3&amp;quot;&lt;/em&gt;.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; generateSetParameters(values: any): string&lt;/p&gt;
 &lt;/blockquote&gt;
