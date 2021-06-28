@@ -1,0 +1,1561 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Services</title>
+    <link>/net/rpc/services/</link>
+    <description>Recent content in Services on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/net/rpc/services/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Net: AboutOperations</title>
+      <link>/net/rpc/services/about_operations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/about_operations/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../rest_operations&#34;&gt;RestOperations&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The AboutOperations class is used to obtain information about running services.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;about&#34;&gt;About&lt;/h4&gt;
+&lt;p&gt;Gets information from a service.
+Send JSON string with information about the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task AboutAsync(HttpRequest request, HttpResponse response, ClaimsPrincipal user)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;user&lt;/strong&gt;: ClaimsPrincipal - to identify current user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getaboutoperation&#34;&gt;GetAboutOperation&lt;/h4&gt;
+&lt;p&gt;Gets the service&amp;rsquo;s information.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, Task&amp;gt; GetAboutOperation()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, Task&amp;gt; - the about method&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets the references of the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void SetReferences([IReferences](../../../commons/refer/ireferences references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - service&amp;rsquo;s references.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: CommandableHttpService</title>
+      <link>/net/rpc/services/commandable_http_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/commandable_http_service/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;See also &lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;, &lt;a href=&#34;../../clients/commandable_http_client&#34;&gt;CommandableHttpClient&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CommandableHttpService class allows you to create services that receive remote calls via the HTTP/REST protocol to operations automatically generated for commands defined in ICommandable components.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each command is exposed as POST operation that receives all parameters in the body object.&lt;/li&gt;
+&lt;li&gt;Commandable services require only three lines of code to implement a robust external HTTP-based remote interface.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;base_route&lt;/strong&gt;:              base route for remote URI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;endpoint&lt;/strong&gt;:              override for HTTP Endpoint dependency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;controller&lt;/strong&gt;:            override for Controller dependency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;:         (optional) a key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;:              connection protocol: http or https&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;:                  host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;:                  port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;:                   resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:traces:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/trace/itracer&#34;&gt;ITracer&lt;/a&gt; components to record traces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connection&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; CommandableHttpService(baseRoute: string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;baseRoute&lt;/strong&gt;: string - a service base route.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_swaggerauto&#34;&gt;_swaggerAuto&lt;/h4&gt;
+&lt;p&gt;Boolean variable that defines whether the configuration of Swagger is autogenerated or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_swaggerAuto&lt;/strong&gt;: bool = True&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Registers all service routes in the HTTP endpoint.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyCommandableHttpService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CommandableHttpService&lt;/span&gt; 
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyCommandableHttpService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyCommandableHttpService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;FromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;References&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Out&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The REST service is running on port 8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;restservicerest_service&#34;&gt;&lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;commandablehttpclientclientscommandable_http_client&#34;&gt;&lt;a href=&#34;../../clients/commandable_http_client&#34;&gt;CommandableHttpClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: CommandableSwaggerDocument</title>
+      <link>/net/rpc/services/commandable_swagger_document/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/commandable_swagger_document/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CommandableSwaggerDocument class allows you to generate Swagger code that describes created REST API methods and their parameters.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; CommandableSwaggerDocument(string baseRoute, &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config, List&amp;lt;&lt;a href=&#34;../../../commons/commands/icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; commands)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;baseRoute&lt;/strong&gt;: string - base route of the service&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;commands&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../../commons/commands/icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; - list of commmands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;h4 id=&#34;commands&#34;&gt;Commands&lt;/h4&gt;
+&lt;p&gt;List of commmands.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; List&amp;lt;&lt;a href=&#34;../../../commons/commands/icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; Commands { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;version&#34;&gt;Version&lt;/h4&gt;
+&lt;p&gt;Version number.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Version { get; set; } = &amp;ldquo;3.0.2&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;baseroute&#34;&gt;BaseRoute&lt;/h4&gt;
+&lt;p&gt;Base route.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string BaseRoute { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infotitle&#34;&gt;InfoTitle&lt;/h4&gt;
+&lt;p&gt;Title.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoTitle { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infodescription&#34;&gt;InfoDescription&lt;/h4&gt;
+&lt;p&gt;API description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoDescription { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infoversion&#34;&gt;InfoVersion&lt;/h4&gt;
+&lt;p&gt;API version&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoVersion { get; set; } = &amp;ldquo;1&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infotermsofservice&#34;&gt;InfoTermsOfService&lt;/h4&gt;
+&lt;p&gt;Terms of service information.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoTermsOfService { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infocontactname&#34;&gt;InfoContactName&lt;/h4&gt;
+&lt;p&gt;Contact name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoContactName { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infocontacturl&#34;&gt;InfoContactUrl&lt;/h4&gt;
+&lt;p&gt;Contact URL.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoContactUrl { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infocontactemail&#34;&gt;InfoContactEmail&lt;/h4&gt;
+&lt;p&gt;Contact email.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoContactEmail { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infolicensename&#34;&gt;InfoLicenseName&lt;/h4&gt;
+&lt;p&gt;License name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoLicenseName { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;infolicenseurl&#34;&gt;InfoLicenseUrl&lt;/h4&gt;
+&lt;p&gt;License information URL.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string InfoLicenseUrl { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getspaces&#34;&gt;GetSpaces&lt;/h4&gt;
+&lt;p&gt;Returns a string with spaces.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; string GetSpaces(int length)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;length&lt;/strong&gt;: int - determines the length of the string with spaces.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - string containing spaces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tostring&#34;&gt;ToString&lt;/h4&gt;
+&lt;p&gt;Returns string with Swagger code that describe service methods.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; string ToString()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - string with the API information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;writearrayitem&#34;&gt;WriteArrayItem&lt;/h4&gt;
+&lt;p&gt;Writes an array item to Swagger code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; void WriteArrayItem(int indent, string name, bool isObjectItem = false)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;indent&lt;/strong&gt;: int - number of spaces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - item&amp;rsquo;s name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;isObjectItem&lt;/strong&gt;: bool - True is the item is an object. false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;writeasobject&#34;&gt;WriteAsObject&lt;/h4&gt;
+&lt;p&gt;Adds a property and its value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; void WriteAsObject(int indent, string name, object value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;indent&lt;/strong&gt;: int - number of spaces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the property&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: object - value of the property&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;writeasstring&#34;&gt;WriteAsString&lt;/h4&gt;
+&lt;p&gt;Adds a string property and its string value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; void WriteAsString(int indent, string name, string value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;indent&lt;/strong&gt;: int - number of spaces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the property&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - value of the property&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;writedata&#34;&gt;WriteData&lt;/h4&gt;
+&lt;p&gt;Adds data to the Swagger code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; void WriteData(int indent, Dictionary&amp;lt;string, object&amp;gt; data)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;indent&lt;/strong&gt;: int - number of spaces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: Dictionary&amp;lt;string, object&amp;gt; - data to be added&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;writename&#34;&gt;WriteName&lt;/h4&gt;
+&lt;p&gt;Write a property or object name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; void WriteName(int indent, string name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;indent&lt;/strong&gt;: int - number of spaces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - string with added identation&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: HeartBeatOperations</title>
+      <link>/net/rpc/services/heartbeat_operations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/heartbeat_operations/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../rest_operations&#34;&gt;RestOperations&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The HeartBeatOperations class is used to handle the operations of a heartbeat service.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;heartbeat&#34;&gt;heartbeat&lt;/h4&gt;
+&lt;p&gt;Creates a heartbeat.
+Send request with the current time in UTC.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; Task HeartbeatAsync(HttpRequest httpRequest, HttpResponse response, ClaimsPrincipal user)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;user&lt;/strong&gt;: ClaimsPrincipal - to identify current user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getheartbeatoperation&#34;&gt;GetHeartbeatOperation&lt;/h4&gt;
+&lt;p&gt;Gets the heartbeat operation&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, Task&amp;gt; GetHeartbeatOperation()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, Task&amp;gt; - heartbeat operation&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: HeartbeatRestService</title>
+      <link>/net/rpc/services/heartbeat_rest_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/heartbeat_rest_service/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The HeartbeatRestService class allows you to create services that return heartbeat via HTTP/REST protocol.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The service responds on /heartbeat route (can be changed) with a string with the current time in UTC.&lt;/li&gt;
+&lt;li&gt;This service route can be used to perform health checks by loadbalancers and container orchestrators.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;base_route&lt;/strong&gt;: base route for remote URI (default: &amp;ldquo;&amp;quot;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: route to heartbeat operation (default: &amp;ldquo;heartbeat&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;endpoint&lt;/strong&gt;: override for HTTP Endpoint dependency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: connection protocol: http or https&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:traces:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/trace/itracer&#34;&gt;ITracer&lt;/a&gt; components to record traces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connection&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Registers all service routes in HTTP endpoint.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HeartbeatService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;FromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;route&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ping&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Out&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The Heartbeat service is accessible at http://+:8080/ping&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;restservicerest_service&#34;&gt;&lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;restclientclientsrest_client&#34;&gt;&lt;a href=&#34;../../clients/rest_client&#34;&gt;RestClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: HttpEndpoint</title>
+      <link>/net/rpc/services/http_endpoint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/http_endpoint/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The HttpEndpoint class allows you to create HTTP endpoints.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An endpoint is a URL, at which a given service can be accessed by a client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;Parameters to pass to the &lt;a href=&#34;#configure&#34;&gt;configure&lt;/a&gt; method for component configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;: the connection resolver&amp;rsquo;s connections:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;connection.discovery_key&amp;rdquo;&lt;/strong&gt;: key to use for connection resolving in a discovery service;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;connection.protocol&amp;rdquo;&lt;/strong&gt;: connection&amp;rsquo;s protocol;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;connection.host&amp;rdquo;&lt;/strong&gt;: target host;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;connection.port&amp;rdquo;&lt;/strong&gt;: target port;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;connection.uri&amp;rdquo;&lt;/strong&gt;: target URI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: the HTTPS credentials:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;credential.ssl_key_file&amp;rdquo;&lt;/strong&gt;: SSL private key in PEM&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;credential.ssl_crt_file&amp;rdquo;&lt;/strong&gt;: SSL certificate in PEM&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;credential.ssl_ca_file&amp;rdquo;&lt;/strong&gt;: certificate authorities (root cerfiticates) in PEM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;p&gt;A logger, counters, and a connection resolver can be referenced by passing the
+following references to the object&amp;rsquo;s &lt;a href=&#34;#set_references&#34;&gt;set_references&lt;/a&gt; method:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;closeasync&#34;&gt;CloseAsync&lt;/h4&gt;
+&lt;p&gt;Closes this endpoint and the REST server (service) that was opened earlier.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; Task CloseAsync(string correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures this HttpEndpoint using the given configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters, containing a &amp;ldquo;connection(s)&amp;rdquo; section.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;instrument&#34;&gt;Instrument&lt;/h4&gt;
+&lt;p&gt;Adds instrumentation to log calls and measure call time. It returns a CounterTiming
+object that is used to end the time measurement.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;a href=&#34;../../../components/count/counter_timing&#34;&gt;CounterTiming&lt;/a&gt; Instrument(string correlationId, string name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a method name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - CounterTiming object to end the time measurement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; bool IsOpen()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - whether or not this endpoint is open with an actively listening REST server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Registers a registerable object for dynamic endpoint discovery.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void Register(&lt;a href=&#34;../../services/iregisterable&#34;&gt;IRegisterable&lt;/a&gt; registration)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;registration&lt;/strong&gt;: &lt;a href=&#34;../../services/iregisterable&#34;&gt;IRegisterable&lt;/a&gt; - the registration to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registerinterceptor&#34;&gt;RegisterInterceptor&lt;/h4&gt;
+&lt;p&gt;Registers a middleware action for the given route.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void RegisterInterceptor(string route, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt;, Task&amp;gt; action)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: string - route to register in this object&amp;rsquo;s REST server (service).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt;, Task&amp;gt; - middleware action to perform at the given route.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registerroute&#34;&gt;RegisterRoute&lt;/h4&gt;
+&lt;p&gt;Registers an action in this objects REST server (service) by the given method and route.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void RegisterRoute(string method, string route, Func&amp;lt;HttpRequest, HttpResponse, RouteData, Task&amp;gt; action)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: string - HTTP method of the route.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: string - route to register in this object&amp;rsquo;s REST server (service).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, RouteData, Task&amp;gt; - action to perform at the given route.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registerroutewithauth&#34;&gt;RegisterRouteWithAuth&lt;/h4&gt;
+&lt;p&gt;Registers an action with authorization in this objects REST server (service)
+by the given method and route.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void RegisterRouteWithAuth(string method, string route, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; authorize, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt; action)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: string - HTTP method of the route.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: string - route to register in this object&amp;rsquo;s REST server (service).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;authorize&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - authorization interceptor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt; - action to perform at the given route.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to this endpoint&amp;rsquo;s logger, counters, and connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - IReferences object, containing references to a logger, counters, and a connection resolver.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unregister&#34;&gt;Unregister&lt;/h4&gt;
+&lt;p&gt;Unregisters a registerable object, so that it is no longer used in dynamic endpoint discovery.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void Unregister(&lt;a href=&#34;../services/iregisterable&#34;&gt;IRegisterable&lt;/a&gt; registration)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;registration&lt;/strong&gt;: &lt;a href=&#34;../services/iregisterable&#34;&gt;IRegisterable&lt;/a&gt; - registration to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyMethod&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IReferences&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; 
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;endpoint&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HttpEndpoint&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;endpoint&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;endpoint&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_endpoint&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iconfigurablecommonsconfigiconfigurable&#34;&gt;&lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ireferenceablecommonsreferireferenceable&#34;&gt;&lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iopenablecommonsruniopenable&#34;&gt;&lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: HttpRequestHelper</title>
+      <link>/net/rpc/services/http_request_detector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/http_request_detector/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;getcorrelationid&#34;&gt;GetCorrelationId&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; string GetCorrelationId(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getfilterparams&#34;&gt;GetFilterParams&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; GetFilterParams(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getpagingparams&#34;&gt;GetPagingParams&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;PagingParams&lt;/a&gt; GetPagingParams(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;PagingParams&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getparameters&#34;&gt;GetParameters&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;a href=&#34;../rest_operation_parameters&#34;&gt;RestOperationParameters&lt;/a&gt; GetParameters(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../rest_operation_parameters&#34;&gt;RestOperationParameters&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getsortparams&#34;&gt;GetSortParams&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;a href=&#34;../../../commons/data/sort_params&#34;&gt;SortParams&lt;/a&gt; GetSortParams(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/sort_params&#34;&gt;SortParams&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getcontextitem&#34;&gt;GetContextItem&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; T GetContextItem&amp;lt;T&amp;gt;(HttpRequest request, string name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: T - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;extractfromquery&#34;&gt;ExtractFromQuery&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; string ExtractFromQuery(string parameter, HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;parameter&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - HTTP request to process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../rest_operation_parameters&#34;&gt;RestOperationParameters&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: HttpResponseSender</title>
+      <link>/net/rpc/services/http_response_sender/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/http_response_sender/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The HttpResponseSender class allows you to handle HTTP-based responses.&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;sendcreatedresultasync&#34;&gt;SendCreatedResultAsync&lt;/h4&gt;
+&lt;p&gt;Creates a callback function that sends a newly created object as JSON.
+This callack function call be called directly or passed
+as a parameter to business logic components.&lt;/p&gt;
+&lt;p&gt;If the object is not null, it returns 201 status code.
+For null results, it returns 204 status code.
+If an error occurs, it sends ErrorDescription with approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; Task SendCreatedResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - an HTTP response&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;senddeletedresultasync&#34;&gt;SendDeletedResultAsync&lt;/h4&gt;
+&lt;p&gt;Creates a SendDeletedResult function that sends a deleted object as JSON.
+That callack function call be called directly or passed
+as a parameter to business logic components.&lt;/p&gt;
+&lt;p&gt;If object is not null, it returns 201 status code.
+For null results, it returns 204 status code.
+If an error occurs, it sends ErrorDescription with the approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; Task SendDeletedResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - execution result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendemptyresultasync&#34;&gt;SendEmptyResultAsync&lt;/h4&gt;
+&lt;p&gt;Creates a callback function that sends an empty result with 204 status code.
+If an error occurs, it sends ErrorDescription with approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; Task SendEmptyResultAsync(HttpResponse response)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;senderrorasync&#34;&gt;SendErrorAsync&lt;/h4&gt;
+&lt;p&gt;Sends an error serialized as ErrorDescription object
+and an appropriate HTTP status code.
+If status code is not defined, it uses 500 status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; Task SendErrorAsync(HttpResponse response, Exception ex)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ex&lt;/strong&gt;: Exception - execution result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendresultasync&#34;&gt;SendResultAsync&lt;/h4&gt;
+&lt;p&gt;Creates a callback function that sends a result as a JSON object.
+That callack function call be called directly or passed
+as a parameter to business logic components.&lt;/p&gt;
+&lt;p&gt;If object is not null, it returns 200 status code.
+For null results, it returns 204 status code.
+If error occur, it sends ErrorDescription with the approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public static&lt;/code&gt; Task SendResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - execution result&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: InstrumentTiming</title>
+      <link>/net/rpc/services/instrument_timing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/instrument_timing/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InstrumentTiming class allows you to create logs, countes and timings for methods that call instrument.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of InstrumentTiming.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor((correlationId: string, name: string, verb: string, logger: &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt;, counters: &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt;,
+counterTiming: &lt;a href=&#34;../../../components/count/counter_timing&#34;&gt;CounterTiming&lt;/a&gt;, traceTiming: &lt;a href=&#34;../../../components/trace/trace_timing&#34;&gt;TraceTiming&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string -  transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;verb&lt;/strong&gt;: string - verb or &amp;lsquo;call&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; - logger&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; - counters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;counterTiming&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - counter&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;traceTiming&lt;/strong&gt;: &lt;a href=&#34;../../../components/trace/trace_timing&#34;&gt;TraceTiming&lt;/a&gt; - time tracer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;endfailure&#34;&gt;endFailure&lt;/h4&gt;
+&lt;p&gt;Manages a failed service end.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;endFailure(err: Error): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: Error - exception&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;p&gt;Ends the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;endTiming(err?: Error): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;err&lt;/strong&gt;: Error - exception&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;endsuccess&#34;&gt;endSuccess&lt;/h4&gt;
+&lt;p&gt;Manages a successful service end.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;endSuccess(): void&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: Interceptor</title>
+      <link>/net/rpc/services/interceptor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/interceptor/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;h4 id=&#34;route&#34;&gt;Route&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Route { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;action&#34;&gt;Action&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt;, Task&amp;gt; Action { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: IRegisterable</title>
+      <link>/net/rpc/services/iregisterable/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/iregisterable/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IRegisterable interface is used to perform on-demand registrations.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Performs the required registration steps.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: ISwaggerService</title>
+      <link>/net/rpc/services/iswagger_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/iswagger_service/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The  ISwaggerService interface is used to perform Swagger registrations.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;registeropenapispec&#34;&gt;RegisterOpenApiSpec&lt;/h4&gt;
+&lt;p&gt;Performs the required Swagger registration steps.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void RegisterOpenApiSpec(string baseRoute, string swaggerRoute)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;baseRoute&lt;/strong&gt;: string - base route&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;swaggerRoute&lt;/strong&gt;: string - Swagger route&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: RestOperations</title>
+      <link>/net/rpc/services/rest_operations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/rest_operations/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RestOperations class allows you to handle REST services&#39; operations.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_logger&#34;&gt;_logger&lt;/h4&gt;
+&lt;p&gt;Composite logger component&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt; = CompositeLogger()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
+&lt;p&gt;Counter component&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/composite_counters&#34;&gt;CompositeCounters&lt;/a&gt; = CompositeCounters()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_dependencyresolver&#34;&gt;_dependencyResolver&lt;/h4&gt;
+&lt;p&gt;Dependency resolver component&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_dependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt; = DependencyResolver()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getcorrelationid&#34;&gt;GetCorrelationId&lt;/h4&gt;
+&lt;p&gt;Returns a correlationId from a request&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; string GetCorrelationId(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - correlationId from a request&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getfilterparams&#34;&gt;GetFilterParams&lt;/h4&gt;
+&lt;p&gt;Gets the filter parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; GetFilterParams(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; - filter paramters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getpagingparams&#34;&gt;GetPagingParams&lt;/h4&gt;
+&lt;p&gt;Gets the paging parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;PagingParams&lt;/a&gt; GetPagingParams(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;PagingParams&lt;/a&gt; - paging paramters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;invokeasync&#34;&gt;InvokeAsync&lt;/h4&gt;
+&lt;p&gt;Invokes an operation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task InvokeAsync(string operation, object[] parameters)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - operation to be invoked.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: object[] - TODO: add description.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;invokewithresponseasync&#34;&gt;InvokeWithResponseAsync&lt;/h4&gt;
+&lt;p&gt;Invokes an operation with returning response.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task&amp;lt;dynamic&amp;gt; InvokeWithResponseAsync(string operation, object[] parameters)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: string - operation to be invoked.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;parameters&lt;/strong&gt;: object[] - TODO: add description.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;dynamic&amp;gt; - operation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendbadrequestasync&#34;&gt;SendBadRequestAsync&lt;/h4&gt;
+&lt;p&gt;Sends a bad request error message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendBadRequestAsync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendconflictasync&#34;&gt;SendConflictAsync&lt;/h4&gt;
+&lt;p&gt;Sends a conflict error messge&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendConflictAsync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendcreatedresultasync&#34;&gt;SendCreatedResultAsync&lt;/h4&gt;
+&lt;p&gt;Sends a JSON object with the created result.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendCreatedResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;senddeletedresultasync&#34;&gt;SendDeletedResultAsync&lt;/h4&gt;
+&lt;p&gt;Sends the deleted result in JSON format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendDeletedResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendemptyresultasync&#34;&gt;SendEmptyResultAsync&lt;/h4&gt;
+&lt;p&gt;Send an empty result with 204 status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendEmptyResultAsync(HttpResponse response)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;senderrorasync&#34;&gt;SendErrorAsync&lt;/h4&gt;
+&lt;p&gt;Sends an error serialized as ErrorDescription object and appropriate HTTP status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendErrorAsync(HttpResponse response, Exception error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendinternalerrorasync&#34;&gt;SendInternalErrorAsync&lt;/h4&gt;
+&lt;p&gt;Sends an internal error message&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendInternalErrorAsync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendnotfoundasync&#34;&gt;SendNotFoundAsync&lt;/h4&gt;
+&lt;p&gt;Sends a not found error message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendNotFoundAsync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendresultasync&#34;&gt;SendResultAsync&lt;/h4&gt;
+&lt;p&gt;Sends a result as a JSON object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendserverunavailable&#34;&gt;SendServerUnavailable&lt;/h4&gt;
+&lt;p&gt;Sends a server unavailable error message (Status code 503).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendServerUnavailableAsync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendsessionexpiredasync&#34;&gt;SendSessionExpiredASync&lt;/h4&gt;
+&lt;p&gt;Sends a session expired error message (Status code 440).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendSessionExpiredASync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendunauthorizedasync&#34;&gt;SendUnauthorizedAsync&lt;/h4&gt;
+&lt;p&gt;Sends an unauthorized error message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendUnauthorizedAsync(HttpRequest request, HttpResponse response, string message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets the specified references.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - specified references&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: RestService</title>
+      <link>/net/rpc/services/rest_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/rest_service/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;, &lt;a href=&#34;../iregisterable&#34;&gt;IRegisterable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RestService class allows you to create REST services that receive remote calls via the HTTP/REST protocol.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;base_route&lt;/strong&gt;: base route for remote URI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;endpoint&lt;/strong&gt;: override for HTTP Endpoint dependency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;controller&lt;/strong&gt;: override for Controller dependency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: connection protocol (http or https)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: the HTTPS credentials:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ssl_key_file&lt;/strong&gt;: SSL private key in PEM&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ssl_crt_file&lt;/strong&gt;: SSL certificate in PEM&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ssl_ca_file&lt;/strong&gt;: certificate authorities (root cerfiticates) in PEM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:traces:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/trace/itracer&#34;&gt;ITracer&lt;/a&gt; components to record traces&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connection&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:endpoint:http:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../http_endpoint&#34;&gt;HttpEndpoint&lt;/a&gt; reference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_dependencyresolver&#34;&gt;_dependencyResolver&lt;/h4&gt;
+&lt;p&gt;Dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_dependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_logger&#34;&gt;_logger&lt;/h4&gt;
+&lt;p&gt;Logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt; = CompositeLogger()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
+&lt;p&gt;Performance counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/composite_counters&#34;&gt;CompositeCounters&lt;/a&gt; = CompositeCounters()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_debug&#34;&gt;_debug&lt;/h4&gt;
+&lt;p&gt;Boolean that set debugging to True or False.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_debug&lt;/strong&gt;: boolean = false&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_baseroute&#34;&gt;_baseRoute&lt;/h4&gt;
+&lt;p&gt;Base route.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_baseRoute&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_endpoint&#34;&gt;_endpoint&lt;/h4&gt;
+&lt;p&gt;HTTP endpoint that exposes this service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_endpoint&lt;/strong&gt;: &lt;a href=&#34;../http_endpoint&#34;&gt;HttpEndpoint&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_config&#34;&gt;_config&lt;/h4&gt;
+&lt;p&gt;Service&amp;rsquo;s configuration paramters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_swaggerservice&#34;&gt;_swaggerService&lt;/h4&gt;
+&lt;p&gt;Swagger service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_swaggerService&lt;/strong&gt;: &lt;a href=&#34;../iswagger_service&#34;&gt;ISwaggerService&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_swaggerenable&#34;&gt;_swaggerEnable&lt;/h4&gt;
+&lt;p&gt;Boolean that defines if the Swagger sevice is enabled or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_swaggerEnable&lt;/strong&gt;: bool = false&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_swaggerroute&#34;&gt;_swaggerRoute&lt;/h4&gt;
+&lt;p&gt;Swagger&amp;rsquo;s route.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_swaggerRoute&lt;/strong&gt;: string = &amp;lsquo;swagger&amp;rsquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;closeasync&#34;&gt;CloseAsync&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; Task CloseAsync(string correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters, containing a &amp;ldquo;connection(s)&amp;rdquo; section.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getcorrelationid&#34;&gt;GetCorrelationId&lt;/h4&gt;
+&lt;p&gt;Returns correlationId from a request&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; string GetCorrelationId(HttpRequest request)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - the correlation id from request.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;instrument&#34;&gt;Instrument&lt;/h4&gt;
+&lt;p&gt;Adds instrumentation to log calls and measure call time.
+It returns a Timing object that is used to end the time measurement.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;a href=&#34;../../../components/count/counter_timing&#34;&gt;CounterTiming&lt;/a&gt; Instrument(string correlationId, string methodName)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;methodName&lt;/strong&gt;: string - method name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - InstrumentTiming object to end the time measurement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; bool IsOpen()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - True if the component has been opened and False otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;openasync&#34;&gt;OpenAsync&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; Task OpenAsync(string correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Registers all service routes in a HTTP endpoint.&lt;/p&gt;
+&lt;p&gt;This method is called by the service and must be overriden
+in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;registerinterceptor&#34;&gt;RegisterInterceptor&lt;/h4&gt;
+&lt;p&gt;Registers a middleware for a given route in HTTP endpoint.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void RegisterInterceptor(string route, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt;, Task&amp;gt; action)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: string - command route. Base route will be added to this route&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt; - action function that is called when middleware is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registeropenapispec&#34;&gt;RegisterOpenApiSpec&lt;/h4&gt;
+&lt;p&gt;Registers the open api spec.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected virtual&lt;/code&gt; void RegisterOpenApiSpec(string content)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;content&lt;/strong&gt;: string - response header content&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registeropenapispecfromfile&#34;&gt;RegisterOpenApiSpecFromFile&lt;/h4&gt;
+&lt;p&gt;Registers the open api spec from a file.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected virtual&lt;/code&gt; void RegisterOpenApiSpecFromFile(string path)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: string - path to the file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registeropenapispecfromresource&#34;&gt;RegisterOpenApiSpecFromResource&lt;/h4&gt;
+&lt;p&gt;Registers the open api spec from resource.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected virtual&lt;/code&gt; void RegisterOpenApiSpecFromResource(string name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - resource name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registeropenapispecfrommetadata&#34;&gt;RegisterOpenApiSpecFromMetadata&lt;/h4&gt;
+&lt;p&gt;Registers the open api spec from metadata.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected virtual&lt;/code&gt; void RegisterOpenApiSpecFromMetadata()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;registerroute&#34;&gt;RegisterRoute&lt;/h4&gt;
+&lt;p&gt;Registers a route in HTTP endpoint.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected virtual&lt;/code&gt; void RegisterRoute(string method, string route, Func&amp;lt;HttpRequest, HttpResponse, RouteData, Task&amp;gt; action)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: string - HTTP method: &amp;ldquo;get&amp;rdquo;, &amp;ldquo;head&amp;rdquo;, &amp;ldquo;post&amp;rdquo;, &amp;ldquo;put&amp;rdquo;, &amp;ldquo;delete&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: string - command route. The base route will be added to this route&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, RouteData, Task&amp;gt; - action function that is called when an operation is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registerroutewithauth&#34;&gt;RegisterRouteWithAuth&lt;/h4&gt;
+&lt;p&gt;Registers a route with authorization in HTTP endpoint.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected virtual&lt;/code&gt; void RegisterRouteWithAuth(string method, string route, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; autorize, Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt; action)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: string - HTTP method: &amp;ldquo;get&amp;rdquo;, &amp;ldquo;head&amp;rdquo;, &amp;ldquo;post&amp;rdquo;, &amp;ldquo;put&amp;rdquo;, &amp;ldquo;delete&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: string - command route. The base route will be added to this route&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;authorize&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - authorization interceptor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Task&amp;gt; - action function that is called when an operation is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendcreatedresult&#34;&gt;SendCreatedResult&lt;/h4&gt;
+&lt;p&gt;Creates a callback function that sends a newly created object as JSON. The callack function call be called directly or passed as a parameter to business logic components.&lt;/p&gt;
+&lt;p&gt;If the object is not null, it returns 200 status code. For null results it returns
+204 status code. If an error occurs, it sends ErrorDescription with the approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendCreatedResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;res&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - an IReferences object, containing references to a logger, counters, and a connection resolver.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;senddeletedasync&#34;&gt;SendDeletedAsync&lt;/h4&gt;
+&lt;p&gt;Creates a callback function that sends deleted object as JSON.
+That callack function call be called directly or passed
+as a parameter to business logic components.&lt;/p&gt;
+&lt;p&gt;If object is not null it returns 200 status code.
+For null results it returns 204 status code.
+If error occur it sends ErrorDescription with approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendDeletedAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - body object to result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;senderrorasync&#34;&gt;SendErrorAsync&lt;/h4&gt;
+&lt;p&gt;Sends an error serialized as ErrorDescription object and the appropriate HTTP status code. If status code is not defined, it uses 500 status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendErrorAsync(HttpResponse response, Exception ex)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ex&lt;/strong&gt;: Exception - error object to be sent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sendresultasync&#34;&gt;SendResultAsync&lt;/h4&gt;
+&lt;p&gt;Creates a callback function that sends a result as a JSON object. The callack function call be called directly or passed as a parameter to business logic components.&lt;/p&gt;
+&lt;p&gt;If the object is not null it returns 200 status code. For null results, it returns
+204 status code. If an error occurs, it sends ErrorDescription with the approproate status code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; Task SendResultAsync(HttpResponse response, object result)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;result&lt;/strong&gt;: object - body object to result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsetreferences&#34;&gt;UnsetReferences&lt;/h4&gt;
+&lt;p&gt;Unsets (clears) previously set references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; void UnsetReferences()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RestService&lt;/span&gt; 
+&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IMyController&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+        &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IReferences&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getRequired&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IMyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;References&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Out&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The REST service is running on port 8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;restclientclientsrest_client&#34;&gt;&lt;a href=&#34;../../clients/rest_client&#34;&gt;RestClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: StatusOperations</title>
+      <link>/net/rpc/services/status_operations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/status_operations/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../rest_operations&#34;&gt;RestOperations&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The StatusOperations class allows you to handle status requests for REST operations.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getstatusoperation&#34;&gt;GetStatusOperation&lt;/h4&gt;
+&lt;p&gt;Gets the status of the operation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, Task&amp;gt; GetStatusOperation()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, Task&amp;gt; - status operation method&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;statusasync&#34;&gt;StatusAsync&lt;/h4&gt;
+&lt;p&gt;Handles status requests.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task StatusAsync(HttpRequest request, HttpResponse response, ClaimsPrincipal user)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: HttpRequest - an HTTP request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;response&lt;/strong&gt;: HttpResponse - an HTTP response.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;user&lt;/strong&gt;: ClaimsPrincipal - to identify current user.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: StatusRestService</title>
+      <link>/net/rpc/services/status_rest_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/services/status_rest_service/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The StatusRestService class allows you to create a service that returns microservice status information via the HTTP/REST protocol.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;The service responds on /status route (can be changed) with a JSON object:
+{
+    - &amp;quot;id&amp;quot;:            unique container id (usually hostname)
+    - &amp;quot;name&amp;quot;:          container name (from ContextInfo)
+    - &amp;quot;description&amp;quot;:   container description (from ContextInfo)
+    - &amp;quot;start_time&amp;quot;:    time when container was started
+    - &amp;quot;current_time&amp;quot;:  current time in UTC
+    - &amp;quot;uptime&amp;quot;:        duration since container start time in milliseconds
+    - &amp;quot;properties&amp;quot;:    additional container properties (from ContextInfo)
+    - &amp;quot;components&amp;quot;:    descriptors of components registered in the container
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;base_route&lt;/strong&gt;: base route for remote URI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;route&lt;/strong&gt;: status route (default: &amp;ldquo;status&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;endpoint&lt;/strong&gt;: override for HTTP Endpoint dependency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;controller&lt;/strong&gt;: override for Controller dependency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: connection protocol (http or https)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connection&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:endpoint:http:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../http_endpoint&#34;&gt;HttpEndpoint&lt;/a&gt; reference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;register&#34;&gt;Register&lt;/h3&gt;
+&lt;p&gt;Registers all service routes in HTTP endpoint.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public override&lt;/code&gt; void Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;StatusService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;FromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;Console&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Out&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;WriteLine&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The Status service is accessible at http://+:8080/status&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;restclientclientsrest_client&#34;&gt;&lt;a href=&#34;../../clients/rest_client&#34;&gt;RestClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;restservicerest_service&#34;&gt;&lt;a href=&#34;../rest_service&#34;&gt;RestService&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
