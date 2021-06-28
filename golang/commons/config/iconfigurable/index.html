@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/commons/config/iconfigurable/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-06-08T21:24:51&#43;03:00" />
+<meta property="article:modified_time" content="2021-06-28T22:23:05&#43;03:00" />
 
 <meta itemprop="name" content="IConfigurable">
 <meta itemprop="description" content="An interface used to set configuration parameters to an object. 
 ">
-<meta itemprop="dateModified" content="2021-06-08T21:24:51&#43;03:00" />
-<meta itemprop="wordCount" content="96">
+<meta itemprop="dateModified" content="2021-06-28T22:23:05&#43;03:00" />
+<meta itemprop="wordCount" content="126">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IConfigurable"/>
 <meta name="twitter:description" content="An interface used to set configuration parameters to an object. 
@@ -143546,8 +143546,21 @@ to change object configuration in runtime, use <a href="../ireconfigurable">IRec
 <li><strong>config</strong>: <a href="../config_params">*ConfigParams</a> - configuration parameters to be set.</li>
 </ul>
 <h3 id="examples">Examples</h3>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">TODO</span><span style="color:#111">:</span> <span style="color:#75af00">add</span> <span style="color:#75af00">example</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">MyStruct</span> <span style="color:#00a8c8">struct</span>  <span style="color:#111">{</span>
+     <span style="color:#75af00">myParam</span> <span style="color:#00a8c8">string</span> 
+<span style="color:#111">}</span>
 
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">NewMyStruct</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">MyStruct</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">MyStruct</span><span style="color:#111">{</span>
+        <span style="color:#75af00">myParam</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;default value&#34;</span><span style="color:#111">,</span>
+    <span style="color:#111">},</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75715e">// Implement configure
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#f92672">*</span> <span style="color:#75af00">MyStruct</span><span style="color:#111">)</span> <span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span> <span style="color:#f92672">*</span><span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">ConfigParams</span><span style="color:#111">)</span>  <span style="color:#111">{</span>
+    <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">myParam</span> <span style="color:#111">=</span> <span style="color:#75af00">config</span><span style="color:#111">.</span><span style="color:#75af00">GetAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;options.param&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">myParam</span><span style="color:#111">);</span>
+    <span style="color:#f92672">...</span>
+<span style="color:#111">}</span>
 </code></pre></div><h3 id="see-also">See also</h3>
 <ul>
 <li>

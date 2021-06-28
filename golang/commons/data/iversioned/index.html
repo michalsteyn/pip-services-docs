@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>IVersioned! | Services Docs</title><meta property="og:title" content="IVersioned!" />
-<meta property="og:description" content="**TODO: this is not implemented for this language yet**
+<meta property="og:description" content="Interface used to define data objects that can be versioned.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/commons/data/iversioned/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-06-11T15:39:05&#43;03:00" />
+<meta property="article:modified_time" content="2021-06-28T22:23:05&#43;03:00" />
 
 <meta itemprop="name" content="IVersioned!">
-<meta itemprop="description" content="**TODO: this is not implemented for this language yet**
+<meta itemprop="description" content="Interface used to define data objects that can be versioned.
 ">
-<meta itemprop="dateModified" content="2021-06-11T15:39:05&#43;03:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="dateModified" content="2021-06-28T22:23:05&#43;03:00" />
+<meta itemprop="wordCount" content="123">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IVersioned!"/>
-<meta name="twitter:description" content="**TODO: this is not implemented for this language yet**
+<meta name="twitter:description" content="Interface used to define data objects that can be versioned.
 "/>
 
 
@@ -143452,6 +143452,26 @@
 
 
 
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#fields">Fields</a>
+              <ul>
+                <li><a href="#version">version</a></li>
+              </ul>
+            </li>
+            <li><a href="#examples">Examples</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
 
 
           </div>
@@ -143538,9 +143558,41 @@
 </div>
 
 	
-    <div class="lead"><strong>TODO: this is not implemented for this language yet</strong></div>
+    <div class="lead">Interface used to define data objects that can be versioned.</div>
 	       
-	
+	<h3 id="description">Description</h3>
+<p>The IVersioned interface allows you to define data objects that can be versioned.</p>
+<p>Important points</p>
+<ul>
+<li>Versioning is often used as an optimistic concurrency mechanism.</li>
+<li>The version doesn&rsquo;t have to be a number, but it is recommended to use sequential values to determine if one object has a newer or older version than another one.</li>
+<li>It is common to use the time of change as the object version.</li>
+</ul>
+<h3 id="fields">Fields</h3>
+<span class="hide-title-link">
+<h4 id="version">version</h4>
+<p>The object&rsquo;s version.</p>
+<blockquote>
+<p><strong>version</strong>: string</p>
+</blockquote>
+</span>
+<h3 id="examples">Examples</h3>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">MyData</span> <span style="color:#00a8c8">struct</span>  <span style="color:#111">{</span>
+    <span style="color:#75af00">Id</span> <span style="color:#00a8c8">string</span>                  <span style="color:#d88200">`json:&#34;id&#34;`</span>
+    <span style="color:#75af00">Field1</span> <span style="color:#00a8c8">string</span>              <span style="color:#d88200">`json:&#34;field1&#34;`</span>
+    <span style="color:#75af00">Field2</span> <span style="color:#00a8c8">int32</span>               <span style="color:#d88200">`json:&#34;field2&#34;`</span>
+    <span style="color:#75af00">Version</span> <span style="color:#00a8c8">string</span>             <span style="color:#d88200">`json:&#34;version&#34;`</span>
+    <span style="color:#f92672">...</span>
+<span style="color:#111">}</span>
+   
+<span style="color:#00a8c8">func</span>  <span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#f92672">*</span> <span style="color:#75af00">MyData</span><span style="color:#111">)</span> <span style="color:#75af00">UpdateData</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">item</span> <span style="color:#75af00">MyData</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span> <span style="color:#111">{</span>
+    <span style="color:#f92672">...</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">version</span> <span style="color:#111">&lt;</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">version</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#75af00">NewConcurrencyErrorn</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;VERSION_CONFLICT&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;The change has older version stored value&#34;</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span>
+    <span style="color:#f92672">...</span>
+</code></pre></div>
 	
 	
 	<div class="text-muted mt-5 pt-3 border-top">
