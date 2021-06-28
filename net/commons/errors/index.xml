@@ -28,10 +28,10 @@
 &lt;p&gt;The ApplicationException class defines a base class used to define various application exceptions.&lt;/p&gt;
 &lt;p&gt;Important points&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Most languages have own definition of base exception (error) types. However, this class is implemented symmetrically in all languages supported by the PipServices toolkit and  allows to create portable implementations and support proper error propagation in microservices calls.&lt;/li&gt;
+&lt;li&gt;Most languages have their own definition of base exception (error) types. However, this class is implemented symmetrically in all languages supported by the PipServices toolkit and  allows to create portable implementations and support proper error propagation in microservices calls.&lt;/li&gt;
 &lt;li&gt;Error propagation means that when a microservice implemented in one language calls a microservice(s) implemented in a different language(s), errors are returned throught the entire call chain and restored in their original (or close) type.&lt;/li&gt;
 &lt;li&gt;Since the number of potential exception types is endless, the PipServices toolkit supports only 12 standard categories of exceptions, which are defined in &lt;a href=&#34;../error_category&#34;&gt;ErrorCategory&lt;/a&gt;. The &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; class acts as a basis for these 12 standard exception types.&lt;/li&gt;
-&lt;li&gt;Most exceptions use a free-form message that describes occured error. However, this may not be sufficient to create meaninful error descriptions. Therefore, the &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; class proposes an extended error definition that has more standard fields:
+&lt;li&gt;Most exceptions use a free-form message that describes the occured error. However, this may not be sufficient to create meaninful error descriptions. Therefore, the &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; class proposes an extended error definition that has more standard fields:
 &lt;ul&gt;
 &lt;li&gt;message: a human-readable error description&lt;/li&gt;
 &lt;li&gt;category: one of the 12 standard error categories&lt;/li&gt;
@@ -51,68 +51,68 @@
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; ApplicationException(string category = null, string correlationId = null, string code = null, string message = null)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;category&lt;/strong&gt;: string - (optional) a standard error category. Default: Unknown&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) a unique transaction id to trace execution through call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) a unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) a human-readable description of the error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;category&lt;/strong&gt;: string - (optional) standard error category. Default: Unknown&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) unique transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - (optional) unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - (optional) human-readable description of the error.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Creates a new instance of application exception.&lt;/p&gt;
+&lt;p&gt;Creates a new instance of ApplicationException.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; ApplicationException()&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Creates a new instance of application exception with string message.&lt;/p&gt;
+&lt;p&gt;Creates a new instance of ApplicationException with string message.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; ApplicationException(string message)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable description of the error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - human-readable description of the error.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;Creates a new instance of ApplicationException.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; ApplicationException(SerializationInfo info, StreamingContext context)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;info&lt;/strong&gt;: SerializationInfo - TODO: add description&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;context&lt;/strong&gt;: StreamingContext - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;info&lt;/strong&gt;: SerializationInfo - serialization information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;context&lt;/strong&gt;: StreamingContext - streaming context&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
 &lt;h4 id=&#34;basemessage&#34;&gt;BaseMessage&lt;/h4&gt;
-&lt;p&gt;A human-readable error description (usually written in English)&lt;/p&gt;
+&lt;p&gt;A human-readable error description (usually written in English).&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; string BaseMessage { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;category&#34;&gt;Category&lt;/h4&gt;
-&lt;p&gt;Standard error category&lt;/p&gt;
+&lt;p&gt;Standard error category.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Category { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;status&#34;&gt;Status&lt;/h4&gt;
-&lt;p&gt;HTTP status code associated with this error type&lt;/p&gt;
+&lt;p&gt;HTTP status code associated with this error type.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; int Status = 500 { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;code&#34;&gt;Code&lt;/h4&gt;
-&lt;p&gt;A unique error code&lt;/p&gt;
+&lt;p&gt;A unique error code.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Code = &amp;lsquo;UNKNOWN&amp;rsquo; { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;details&#34;&gt;Details&lt;/h4&gt;
-&lt;p&gt;A map with additional details that can be used to restore error description in other languages&lt;/p&gt;
+&lt;p&gt;Map with additional details that can be used to restore error descriptions in other languages.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;../../data/string_value_map&#34;&gt;StringValueMap&lt;/a&gt; Details&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;correlationid&#34;&gt;CorrelationId&lt;/h4&gt;
-&lt;p&gt;A unique transaction id to trace execution throug call chain&lt;/p&gt;
+&lt;p&gt;A unique transaction id used to trace execution throug a call chain.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; string CorrelationId { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;stacktrace&#34;&gt;StackTrace&lt;/h4&gt;
-&lt;p&gt;Stack trace of the exception&lt;/p&gt;
+&lt;p&gt;Stack trace of the exception.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; string StackTrace { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;cause&#34;&gt;Cause&lt;/h4&gt;
-&lt;p&gt;Original error wrapped by this exception&lt;/p&gt;
+&lt;p&gt;Original error wrapped by this exception.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Cause { get; set; }&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -128,108 +128,108 @@
 &lt;/ul&gt;
 &lt;h4 id=&#34;withcause&#34;&gt;WithCause&lt;/h4&gt;
 &lt;p&gt;Sets a original error wrapped by this exception
-This method returns reference to this exception to implement Builder pattern
+This method returns a reference to this exception to the implement Builder pattern
 to chain additional calls.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WithCause(Exception cause)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: Exception  - original error object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - exception object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;withcode&#34;&gt;WithCode&lt;/h4&gt;
 &lt;p&gt;Sets a unique error code.&lt;br&gt;
-This method returns reference to this exception to implement Builder pattern
+This method returns reference to this exception to implement the Builder pattern
 to chain additional calls.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WithCode(string code)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - a unique error code&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: string - unique error code&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - exception object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;withcorrelationid&#34;&gt;WithCorrelationId&lt;/h4&gt;
 &lt;p&gt;Sets a correlation id which can be used to trace this error through a call chain.&lt;br&gt;
-This method returns reference to this exception to implement Builder pattern
+This method returns a reference to this exception to implement the Builder pattern
 to chain additional calls.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WithCorrelationId(string correlationId)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - a unique transaction id to trace error through call chain&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - unique transaction id used to trace an error through a call chain&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - exception object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;withdetails&#34;&gt;WithDetails&lt;/h4&gt;
 &lt;p&gt;Sets a parameter for additional error details.
 This details can be used to restore error description in other languages.&lt;/p&gt;
-&lt;p&gt;This method returns reference to this exception to implement Builder pattern
+&lt;p&gt;This method returns a reference to this exception to implement the Builder pattern
 to chain additional calls.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WithDetails(string key, object value)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - key a details parameter name&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: object - value a details parameter name&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - key of the details parameter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: object - value of the details parameter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - exception object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;withstacktrace&#34;&gt;WithStackTrace&lt;/h4&gt;
 &lt;p&gt;Sets a stack trace for this error.&lt;br&gt;
-This method returns reference to this exception to implement Builder pattern
+This method returns a reference to this exception to implement the Builder pattern
 to chain additional calls&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WithStackTrace(string stackTrace)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;stackTrace&lt;/strong&gt;: string - stackTrace a stack trace where this error occured&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - exception object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;withstatus&#34;&gt;WithStatus&lt;/h4&gt;
 &lt;p&gt;Sets a HTTP status code which shall be returned by REST calls.
-This method returns reference to this exception to implement Builder pattern
+This method returns a reference to this exception to implement the Builder pattern
 to chain additional calls.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WithStatus(int status)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;: int  - an HTTP error code.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - this exception object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;: int  - HTTP error code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - exception object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;wrap&#34;&gt;Wrap&lt;/h4&gt;
 &lt;p&gt;Wraps another exception into an application exception object.&lt;/p&gt;
-&lt;p&gt;If original exception is of ApplicationException type it is returned without changes.
-Otherwise a new ApplicationException is created and original error is set as its cause.&lt;/p&gt;
+&lt;p&gt;If the original exception is of ApplicationException type, it is returned without changes.
+Otherwise, a new ApplicationException is created and the original error is set as its cause.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; Wrap(Exception cause)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: Exception - an original error object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an original or newly created ApplicationException&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: Exception - original error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - original or newly created ApplicationException&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
 &lt;h4 id=&#34;unwraperror&#34;&gt;UnwrapError!&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;TODO: this method is not realized yet for this language&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note: this method is not available for this language&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Unwraps original exception through wrapped exception objects.&lt;/p&gt;
-&lt;p&gt;Many frameworks like Seneca or restify wrap original exception.
-That may result in propagating less specific errors and can hide
+&lt;p&gt;Many frameworks like Seneca or restify wrap original exceptions.
+That may result in propagating less specific errors and can hide the
 causes of the errors.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; UnwrapError(Exception error)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an original error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - original error object&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;wrapexception&#34;&gt;WrapException&lt;/h4&gt;
-&lt;p&gt;Wraps another exception into specified application exception object.&lt;/p&gt;
-&lt;p&gt;If original exception is of ApplicationException type it is returned without changes.
-Otherwise the original error is set as a cause to specified ApplicationException object.&lt;/p&gt;
+&lt;p&gt;Wraps another exception into a specified application exception object.&lt;/p&gt;
+&lt;p&gt;If the original exception is of ApplicationException type, it is returned without changes.
+Otherwise, the original error is set as a cause for the specified ApplicationException object.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public static&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; WrapException(&lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; error, Exception cause)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an ApplicationException object to wrap the cause&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: Exception - an original error object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - an original or newly created ApplicationException&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - ApplicationException object to wrap the cause&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cause&lt;/strong&gt;: Exception - original error object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ApplicationException&lt;/a&gt; - original or newly created ApplicationException&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
 &lt;ul&gt;
