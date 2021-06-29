@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/rpc/clients/rest_client/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-28T20:54:06&#43;03:00" />
+<meta property="article:modified_time" content="2021-06-29T16:45:33&#43;03:00" />
 
 <meta itemprop="name" content="RestClient">
 <meta itemprop="description" content="Abstract client that calls remote endpoints using the HTTP/REST protocol.
 ">
-<meta itemprop="dateModified" content="2021-06-28T20:54:06&#43;03:00" />
-<meta itemprop="wordCount" content="1036">
+<meta itemprop="dateModified" content="2021-06-29T16:45:33&#43;03:00" />
+<meta itemprop="wordCount" content="1329">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RestClient"/>
 <meta name="twitter:description" content="Abstract client that calls remote endpoints using the HTTP/REST protocol.
@@ -145944,11 +145944,13 @@
                 <li><a href="#callasync">CallAsync</a></li>
                 <li><a href="#closeasync">CloseAsync</a></li>
                 <li><a href="#configure">Configure</a></li>
+                <li><a href="#executeasync">ExecuteAsync</a></li>
                 <li><a href="#instrument">Instrument</a></li>
                 <li><a href="#instrumenterror">InstrumentError</a></li>
                 <li><a href="#isopen">IsOpen</a></li>
                 <li><a href="#openasync">OpenAsync</a></li>
                 <li><a href="#setreferences">SetReferences</a></li>
+                <li><a href="#safeexecuteasync">SafeExecuteAsync</a></li>
                 <li><a href="#safecallasync">SafeCallAsync</a></li>
               </ul>
             </li>
@@ -146234,6 +146236,37 @@ to the invocation parameter map.</p>
 <ul>
 <li><strong>config</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters to be set.</li>
 </ul>
+<h4 id="executeasync">ExecuteAsync</h4>
+<p>Executes a remote method via HTTP/REST protocol.</p>
+<blockquote>
+<p><code>protected</code> Task ExecuteAsync(string correlationId, HttpMethod method, string route, object requestEntity)</p>
+</blockquote>
+<ul>
+<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>method</strong>: HttpMethod - HTTP method: &ldquo;get&rdquo;, &ldquo;head&rdquo;, &ldquo;post&rdquo;, &ldquo;put&rdquo;, &ldquo;delete&rdquo;</li>
+<li><strong>route</strong>: string - a command route. Base route will be added to this route</li>
+<li><strong>requestEntity</strong>: object - request body object.</li>
+</ul>
+<blockquote>
+<p><code>protected</code> async Task&lt;T&gt; ExecuteAsync&lt;T&gt;(string correlationId, HttpMethod method, string route)</p>
+</blockquote>
+<ul>
+<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>method</strong>: HttpMethod - HTTP method: &ldquo;get&rdquo;, &ldquo;head&rdquo;, &ldquo;post&rdquo;, &ldquo;put&rdquo;, &ldquo;delete&rdquo;</li>
+<li><strong>route</strong>: string - a command route. Base route will be added to this route</li>
+<li><strong>requestEntity</strong>: object - request body object.</li>
+<li><strong>returns</strong>: Task&lt;T&gt; - result object.</li>
+</ul>
+<blockquote>
+<p><code>protected</code> Task&lt;T&gt; ExecuteAsync&lt;T&gt;(string correlationId, HttpMethod method, string route, object requestEntity)</p>
+</blockquote>
+<ul>
+<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>method</strong>: HttpMethod - HTTP method: &ldquo;get&rdquo;, &ldquo;head&rdquo;, &ldquo;post&rdquo;, &ldquo;put&rdquo;, &ldquo;delete&rdquo;</li>
+<li><strong>route</strong>: string - a command route. Base route will be added to this route</li>
+<li><strong>requestEntity</strong>: object - request body object.</li>
+<li><strong>returns</strong>: Task&lt;T&gt; - result object.</li>
+</ul>
 <h4 id="instrument">Instrument</h4>
 <p>Adds instrumentation to log calls and measures call time.
 It returns a Timing object that is used to end the time measurement.</p>
@@ -146279,6 +146312,27 @@ It returns a Timing object that is used to end the time measurement.</p>
 </blockquote>
 <ul>
 <li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references used to locate the component dependencies.</li>
+</ul>
+<h4 id="safeexecuteasync">SafeExecuteAsync</h4>
+<p>Safely executes a remote method via HTTP/REST protocol and logs execution time.</p>
+<blockquote>
+<p><code>protected</code> Task&lt;T&gt; SafeExecuteAsync&lt;T&gt;(string correlationId, HttpMethod method, string route, object requestEntity)</p>
+</blockquote>
+<ul>
+<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>method</strong>: HttpMethod - HTTP method: &ldquo;get&rdquo;, &ldquo;head&rdquo;, &ldquo;post&rdquo;, &ldquo;put&rdquo;, &ldquo;delete&rdquo;</li>
+<li><strong>route</strong>: string - a command route. Base route will be added to this route</li>
+<li><strong>requestEntity</strong>: object - request body object.</li>
+<li><strong>returns</strong>: Task&lt;T&gt; - result object.</li>
+</ul>
+<blockquote>
+<p><code>protected</code> async Task&lt;T&gt; SafeExecuteAsync&lt;T&gt;(string correlationId, HttpMethod method, string route)</p>
+</blockquote>
+<ul>
+<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>method</strong>: HttpMethod - HTTP method: &ldquo;get&rdquo;, &ldquo;head&rdquo;, &ldquo;post&rdquo;, &ldquo;put&rdquo;, &ldquo;delete&rdquo;</li>
+<li><strong>route</strong>: string - a command route. Base route will be added to this route</li>
+<li><strong>returns</strong>: Task&lt;T&gt; - result object.</li>
 </ul>
 <h4 id="safecallasync">SafeCallAsync</h4>
 <p>Safely calls a remote method via HTTP/REST protocol and logs execution time.</p>
