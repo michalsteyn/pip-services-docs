@@ -31,7 +31,7 @@
 &lt;ul&gt;
 &lt;li&gt;In general, ConfigParams is used to pass configurations to IConfigurable objects. It also serves as a basis for more concrete configurations, such as ConnectionParams or CredentialParams.&lt;/li&gt;
 &lt;li&gt;This class stores all values as strings. These values can be serialized as JSON or string forms. When retrieved the values can be automatically converted using GetAsXXX methods.&lt;/li&gt;
-&lt;li&gt;The keys are case-sensitive, so it is recommended to use consistent C-style, such as “my_param”.&lt;/li&gt;
+&lt;li&gt;The keys are case-sensitive, so it is recommended to use consistent C-style notation, such as “my_param”.&lt;/li&gt;
 &lt;li&gt;Configuration parameters can be broken into sections and subsections using dot notation, such as “section1.subsection1.param1”. Using GetSection method all parameters from the specified section can be extracted from a ConfigMap.&lt;/li&gt;
 &lt;li&gt;The ConfigParams class supports serialization from/to plain strings as: “key1=123;key2=ABC;key3=2016-09-16T00:00:00.00Z”&lt;/li&gt;
 &lt;/ul&gt;
@@ -42,11 +42,11 @@ See &lt;a href=&#34;../../data/string_value_map/#constructors&#34;&gt;StringValu
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(values: any = null)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: any - (optional) an object to be converted into key-value pairs to initialize this config map.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: any - (optional) object to be converted into key-value pairs to initialize this config map.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance Methods&lt;/h3&gt;
 &lt;h4 id=&#34;addsection&#34;&gt;addSection&lt;/h4&gt;
-&lt;p&gt;Adds parameters into this ConfigParams under specified section.
+&lt;p&gt;Adds parameters into this ConfigParams under a specified section.
 Keys for the new parameters are appended with section dot prefix.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; addSection(section: string, sectionParams: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
@@ -71,26 +71,26 @@ The section name is removed from parameter keys.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; getSectionNames(): string[]&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string[] - a list of section names stored in this ConfigMap.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string[] - list of section names stored in this ConfigMap.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;override&#34;&gt;override&lt;/h4&gt;
-&lt;p&gt;Overrides parameters with new values from specified &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;
+&lt;p&gt;Overrides parameters with new values from a specified &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; object
 and returns a new &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; object.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; override(configParams: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;configParams&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - ConfigMap with parameters to override the current values.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - new ConfigParams object.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setdefaults&#34;&gt;setDefaults&lt;/h4&gt;
-&lt;p&gt;Set default values from specified ConfigParams and returns a new ConfigParams object.&lt;/p&gt;
+&lt;p&gt;Set default values from a specified ConfigParams object and returns a new ConfigParams object.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; setDefaults(defaultConfigParams: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;): &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;defaultConfigParams&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - ConfigMap with default parameter values.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;defaultConfigParams&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - ConfigMap object with default parameter values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - new ConfigParams object.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
 &lt;h4 id=&#34;fromstring&#34;&gt;fromString&lt;/h4&gt;
@@ -99,9 +99,9 @@ and returns a new &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; object.&lt;/p&
 &lt;p&gt;&lt;code&gt;public static&lt;/code&gt; fromString(line: string): &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;line&lt;/strong&gt;: string - a string with serialized key-value pairs as &amp;ldquo;key1=value1;key2=value2;&amp;hellip;&amp;rdquo;&lt;br&gt;
+&lt;li&gt;&lt;strong&gt;line&lt;/strong&gt;: string - string with serialized key-value pairs as &amp;ldquo;key1=value1;key2=value2;&amp;hellip;&amp;rdquo;&lt;br&gt;
 Example: &lt;em&gt;&amp;ldquo;Key1=123;Key2=ABC;Key3=2016-09-16T00:00:00.00Z&amp;rdquo;&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - new ConfigParams object.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;fromtuples&#34;&gt;fromTuples&lt;/h4&gt;
 &lt;p&gt;Creates a new ConfigParams object filled with provided key-value pairs called tuples.
@@ -111,8 +111,8 @@ See &lt;a href=&#34;../../data/string_value_map/#fromtuplesarray&#34;&gt;StringV
 &lt;p&gt;&lt;code&gt;public static&lt;/code&gt; fromTuples(&amp;hellip;tuples: any[]): &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;tuples&lt;/strong&gt;: any[] - the tuples to fill a new ConfigParams object.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tuples&lt;/strong&gt;: any[] - tuples to fill a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - new ConfigParams object.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;fromvalue&#34;&gt;fromValue&lt;/h4&gt;
 &lt;p&gt;Creates a new ConfigParams object filled with key-value pairs from specified object.&lt;/p&gt;
@@ -120,8 +120,8 @@ See &lt;a href=&#34;../../data/string_value_map/#fromtuplesarray&#34;&gt;StringV
 &lt;p&gt;&lt;code&gt;public static&lt;/code&gt; fromValue(value: any): &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: any - an object with key-value pairs used to initialize a new ConfigParams.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: any - object with key-value pairs used to initialize a new ConfigParams.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - new ConfigParams object.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;mergeconfigs&#34;&gt;mergeConfigs&lt;/h4&gt;
 &lt;p&gt;Merges two or more ConfigParams into one. The following ConfigParams override
@@ -131,8 +131,8 @@ See &lt;a href=&#34;../../data/string_value_map/#frommaps&#34;&gt;StringValueMap
 &lt;p&gt;&lt;code&gt;public static&lt;/code&gt; mergeConfigs(&amp;hellip;configs: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;[]): &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;configs&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;[] - a list of ConfigParams objects to be merged.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - a new ConfigParams object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;configs&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt;[] - list of ConfigParams objects to be merged.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConfigParams&lt;/a&gt; - new ConfigParams object.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// Create a ConfigParams object from a tuple
