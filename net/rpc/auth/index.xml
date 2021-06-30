@@ -1,0 +1,132 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Auth</title>
+    <link>/net/rpc/auth/</link>
+    <description>Recent content in Auth on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/net/rpc/auth/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Net: BasicAuthorizer</title>
+      <link>/net/rpc/auth/basic_authorizer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/auth/basic_authorizer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The BasicAuthorizer provides two methods: one to grant access to everyone and another to grant access to authorized users.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;anybody&#34;&gt;Anybody&lt;/h4&gt;
+&lt;p&gt;Allows everyone access, even unauthorized users.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; Anybody()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns anybody handler.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;signed&#34;&gt;Signed&lt;/h4&gt;
+&lt;p&gt;Access is granted only to authorized users.&lt;br&gt;
+Throws &lt;a href=&#34;../../../commons/errors/unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt; exception if not authorized.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; Signed()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns sign handler.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: OwnerAuthorizer</title>
+      <link>/net/rpc/auth/owner_authorizer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/auth/owner_authorizer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OwnerAuthorizer class provides access granting methods for owners and administrators.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;owner&#34;&gt;Owner&lt;/h4&gt;
+&lt;p&gt;Access is granted only for the session owner.&lt;br&gt;
+Throws &lt;a href=&#34;../../../commons/errors/unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt; exception if not authorized or not owner.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; Owner(string idParam = &amp;ldquo;user_id&amp;rdquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;idParam&lt;/strong&gt;: string - id of the current owner.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns owner handler.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;owneroradmin&#34;&gt;OwnerOrAdmin&lt;/h4&gt;
+&lt;p&gt;Access is granted only to authorized users.&lt;br&gt;
+Throws &lt;a href=&#34;../../../commons/errors/unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt; exception if not authorized or not owner.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; OwnerOrAdmin(string idParam = &amp;ldquo;user_id&amp;rdquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;idParam&lt;/strong&gt;: string - id of the current owner.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns owner or admin handler.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: RoleAuthorizer</title>
+      <link>/net/rpc/auth/role_authorizer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/rpc/auth/role_authorizer/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RoleAuthorizer class provides methods to check on a user&amp;rsquo;s roles.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;userinroles&#34;&gt;UserInRoles&lt;/h4&gt;
+&lt;p&gt;Checks on the roles a user has been assigned.
+Throws &lt;a href=&#34;../../../commons/errors/unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt; exception if not authorized or not owner.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; UserInRoles(string[] roles)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;roles&lt;/strong&gt;: string[] - roles list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns roles handler.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;userinrole&#34;&gt;UserInRole&lt;/h4&gt;
+&lt;p&gt;Check if the role is assigned to the user.&lt;br&gt;
+Throws &lt;a href=&#34;../../../commons/errors/unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt; exception if not authorized or not owner.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; UserInRole(string role)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;role&lt;/strong&gt;: string - the user role.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns role handler.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;admin&#34;&gt;Admin&lt;/h4&gt;
+&lt;p&gt;Check if the user has admin role.&lt;br&gt;
+Throws &lt;a href=&#34;../../../commons/errors/unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt; exception if not authorized or not owner.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; Admin()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Func&amp;lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&amp;lt;Task&amp;gt;, Task&amp;gt; - returns admin handler.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
