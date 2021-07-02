@@ -1,0 +1,314 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Build</title>
+    <link>/node/aws/clients/</link>
+    <description>Recent content in Build on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/node/aws/clients/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Node: CommandableLambdaClient</title>
+      <link>/node/aws/clients/commandable_lambda_client/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/aws/clients/commandable_lambda_client/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../lambda_client&#34;&gt;LambdaClient&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;Commandable services are generated automatically for &lt;a href=&#34;../../../commons/commands/icommandable&#34;&gt;ICommandable&lt;/a&gt;.
+Each command is exposed as action determined by &amp;ldquo;cmd&amp;rdquo; parameter.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;region&lt;/strong&gt;: (optional) AWS region&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credentials&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) a key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_id&lt;/strong&gt;: AWS access/client id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_key&lt;/strong&gt;: AWS access/client id&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt;: (optional) Credential stores to resolve credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of this client.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(name: string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a service name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;callcommand&#34;&gt;callCommand&lt;/h4&gt;
+&lt;p&gt;Calls a remote action in AWS Lambda function.
+The name of the action is added as &amp;ldquo;cmd&amp;rdquo; parameter
+to the action parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; callCommand(cmd: string, correlationId: string, params: any): Promise&amp;lt;any&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cmd&lt;/strong&gt;: string - an action name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params&lt;/strong&gt;: any - command parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;any&amp;gt; - action result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaClient&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CommandableLambdaClient&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IMyClient&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+ 
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;getData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;id&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;any&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;callCommand&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get_data&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;id&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaClient&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.region&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.access_id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XXXXXXXXXXX&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.access_key&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XXXXXXXXXXX&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.arn&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;YYYYYYYYYYYYY&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+     
+&lt;span style=&#34;color:#00a8c8&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;lambdafunctioncontainerslambda_function&#34;&gt;&lt;a href=&#34;../../containers/lambda_function&#34;&gt;LambdaFunction&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Node: LambdaClient</title>
+      <link>/node/aws/clients/lambda_client/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/aws/clients/lambda_client/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;When making calls &amp;ldquo;cmd&amp;rdquo; parameter determines which what action shall be called, while
+other parameters are passed to the action itself.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;region&lt;/strong&gt;: (optional) AWS region&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credentials&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) a key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_id&lt;/strong&gt;: AWS access/client id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_key&lt;/strong&gt;: AWS access/client id&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connect_timeout&lt;/strong&gt;: (optional) connection timeout in milliseconds (default: 10 sec)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt;: (optional) Credential stores to resolve credentials.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of this client.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(name: string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a service name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_connection&#34;&gt;_connection&lt;/h4&gt;
+&lt;p&gt;The AWS connection parameters&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_connection&lt;/strong&gt;: &lt;a href=&#34;../../connect/aws_connection_params&#34;&gt;AwsConnectionParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_connectionresolver&#34;&gt;_connectionResolver&lt;/h3&gt;
+&lt;p&gt;The connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_connectionResolver&lt;/strong&gt;: &lt;a href=&#34;../../connect/aws_connection_resolver&#34;&gt;AwsConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_counters&#34;&gt;_counters&lt;/h3&gt;
+&lt;p&gt;The performance counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/composite_counters&#34;&gt;CompositeCounters&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_dependencyresolver&#34;&gt;_dependencyResolver&lt;/h3&gt;
+&lt;p&gt;The dependencies resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_dependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_lambda&#34;&gt;_lambda&lt;/h3&gt;
+&lt;p&gt;The reference to AWS Lambda Function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_lambda&lt;/strong&gt;: any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_logger&#34;&gt;_logger&lt;/h3&gt;
+&lt;p&gt;The logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_opened&#34;&gt;_opened&lt;/h3&gt;
+&lt;p&gt;The opened flag.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_opened&lt;/strong&gt;: boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;_tracer&#34;&gt;_tracer&lt;/h3&gt;
+&lt;p&gt;The tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_tracer&lt;/strong&gt;: &lt;a href=&#34;../../../components/trace/composite_tracer&#34;&gt;CompositeTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;call&#34;&gt;call&lt;/h4&gt;
+&lt;p&gt;Calls a AWS Lambda Function action.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; call(cmd: string, correlationId: string, params: any = {}): Promise&amp;lt;any&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cmd&lt;/strong&gt;: string - an action name to be called.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params&lt;/strong&gt;: any - (optional) action parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;any&amp;gt; - action result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;calloneway&#34;&gt;callOneWay&lt;/h4&gt;
+&lt;p&gt;Calls a AWS Lambda Function action asynchronously without waiting for response.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; callOneWay(cmd: string, correlationId: string, params: any = {}): Promise&amp;lt;any&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cmd&lt;/strong&gt;: string - an action name to be called.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params&lt;/strong&gt;: any - (optional) action parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;any&amp;gt; - action result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
+&lt;p&gt;Closes component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; close(correlationId: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;instrument&#34;&gt;instrument&lt;/h4&gt;
+&lt;p&gt;Adds instrumentation to log calls and measure call time.
+It returns a InstrumentTiming object that is used to end the time measurement.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; instrument(correlationId: string, name: string): &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;InstrumentTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - a method name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;InstrumentTiming&lt;/a&gt; - object to end the time measurement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;invoke&#34;&gt;invoke&lt;/h4&gt;
+&lt;p&gt;Performs AWS Lambda Function invocation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; invoke(invocationType: string, cmd: string, correlationId: string, args: any): Promise&amp;lt;any&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;invocationType&lt;/strong&gt;: string - an invocation type: &amp;ldquo;RequestResponse&amp;rdquo; or &amp;ldquo;Event&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cmd&lt;/strong&gt;: string - an action name to be called.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any - action arguments&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;any&amp;gt; - action result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;isOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is opened.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; isOpen(): boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: boolean - true if the component has been opened and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; open(correlationId: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setReferences(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaClient&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;LambdaClient&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IMyClient&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+ 
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;getData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;id&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;MyData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;instrument&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;myclient.get_data&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;call&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get_data&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;id&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+        &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaClient&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.region&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.access_id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XXXXXXXXXXX&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.access_key&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XXXXXXXXXXX&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.arn&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;YYYYYYYYYYYYY&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+ &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;     
+&lt;span style=&#34;color:#00a8c8&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;lambdafunctioncontainerslambda_function&#34;&gt;&lt;a href=&#34;../../containers/lambda_function&#34;&gt;LambdaFunction&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
