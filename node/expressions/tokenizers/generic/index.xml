@@ -193,16 +193,21 @@
         
         &lt;p&gt;&lt;strong&gt;Implements&lt;/strong&gt;: &lt;a href=&#34;../../iquote_state&#34;&gt;IQuoteState&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;The GenericQuoteState allows you to create a quoteState that returns a quoted string token from a scanner.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This state will collect characters until it sees a match to the character that the tokenizer used to switch to this state.&lt;/li&gt;
+&lt;li&gt;For example, if a tokenizer uses a double-quote character to enter this state, then &lt;em&gt;nextToken()&lt;/em&gt; will search for another double-quote until it finds one or finds the end of the scanner.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h4 id=&#34;dot&#34;&gt;DOT&lt;/h4&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;Represents a dot (.) character.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;DOT&lt;/strong&gt;: number = &amp;lsquo;.&#39;.charCodeAt(0);&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;minus&#34;&gt;MINUS&lt;/h4&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;Represents a minus (-) character.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;MINUS&lt;/strong&gt;: number = &amp;lsquo;-&#39;.charCodeAt(0);&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -214,9 +219,9 @@
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; decodeString(value: string, quoteSymbol: number): string&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - A string value to be decoded.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;quoteSymbol&lt;/strong&gt;: number - A string quote character.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - An decoded string.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - string value to be decoded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;quoteSymbol&lt;/strong&gt;: number - string quote character.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - decoded string.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;encodestring&#34;&gt;encodeString&lt;/h4&gt;
 &lt;p&gt;Encodes a string value.&lt;/p&gt;
@@ -224,21 +229,21 @@
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; encodeString(value: string, quoteSymbol: number): string&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - A string value to be encoded.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;quoteSymbol&lt;/strong&gt;: number - A string quote character.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - An encoded string.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - string value to be encoded.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;quoteSymbol&lt;/strong&gt;: number - string quote character.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - encoded string.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;nexttoken&#34;&gt;nextToken&lt;/h4&gt;
-&lt;p&gt;Return a quoted string token from a scanner. This method will collect
+&lt;p&gt;Returns a quoted string token from a scanner. This method will collect
 characters until it sees a match to the character that the tokenizer used
 to switch to this state.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; nextToken(scanner: &lt;a href=&#34;../../../io/iscanner&#34;&gt;IScanner&lt;/a&gt;, tokenizer: &lt;a href=&#34;../../itokenizer&#34;&gt;ITokenizer&lt;/a&gt;): &lt;a href=&#34;../../token&#34;&gt;Token&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;scanner&lt;/strong&gt;: &lt;a href=&#34;../../../io/iscanner&#34;&gt;IScanner&lt;/a&gt; - A textual string to be tokenized.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;tokenizer&lt;/strong&gt;: &lt;a href=&#34;../../itokenizer&#34;&gt;ITokenizer&lt;/a&gt; - A tokenizer class that controls the process.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../token&#34;&gt;Token&lt;/a&gt; - The next token from the top of the stream.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;scanner&lt;/strong&gt;: &lt;a href=&#34;../../../io/iscanner&#34;&gt;IScanner&lt;/a&gt; - textual string to be tokenized.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tokenizer&lt;/strong&gt;: &lt;a href=&#34;../../itokenizer&#34;&gt;ITokenizer&lt;/a&gt; - tokenizer class that controls the process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../token&#34;&gt;Token&lt;/a&gt; - next token from the top of the stream.&lt;/li&gt;
 &lt;/ul&gt;
 
       </description>
