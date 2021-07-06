@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>SymbolNode | Services Docs</title><meta property="og:title" content="SymbolNode" />
-<meta property="og:description" content="A *SymbolNode* object is a member of a tree that contains all possible prefixes of allowable symbols. Multi-character symbols appear in a *SymbolNode* tree with one node for each character.
+<meta property="og:description" content="Constructs a SymbolNode.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/expressions/tokenizers/generic/symbol_node/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-01T21:12:09&#43;03:00" />
+<meta property="article:modified_time" content="2021-07-06T02:57:06&#43;02:00" />
 
 <meta itemprop="name" content="SymbolNode">
-<meta itemprop="description" content="A *SymbolNode* object is a member of a tree that contains all possible prefixes of allowable symbols. Multi-character symbols appear in a *SymbolNode* tree with one node for each character.
+<meta itemprop="description" content="Constructs a SymbolNode.
 ">
-<meta itemprop="dateModified" content="2021-07-01T21:12:09&#43;03:00" />
-<meta itemprop="wordCount" content="546">
+<meta itemprop="dateModified" content="2021-07-06T02:57:06&#43;02:00" />
+<meta itemprop="wordCount" content="568">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SymbolNode"/>
-<meta name="twitter:description" content="A *SymbolNode* object is a member of a tree that contains all possible prefixes of allowable symbols. Multi-character symbols appear in a *SymbolNode* tree with one node for each character.
+<meta name="twitter:description" content="Constructs a SymbolNode.
 "/>
 
 
@@ -163385,118 +163385,113 @@
 </div>
 
 	
-    <div class="lead">A <em>SymbolNode</em> object is a member of a tree that contains all possible prefixes of allowable symbols. Multi-character symbols appear in a <em>SymbolNode</em> tree with one node for each character.</div>
+    <div class="lead">Constructs a SymbolNode.</div>
 	       
 	<h3 id="description">Description</h3>
-<p>For example, the symbol <em>=:~</em> will appear in a tree as three nodes. The first
-node contains an equals sign, and has a child; that child contains a colon and has a child;
-this third child contains a tilde, and has no children of its own. If the colon node had
-another child for a dollar sign character, then the tree would contain the symbol <em>=:$</em>.</p>
-<p>A tree of <em>SymbolNode</em> objects collaborate to read a (potentially multi-character)
-symbol from an input stream. A root node with no character of its own finds an initial node
-that represents the first character in the input. This node looks to see if the next character
-in the stream matches one of its children. If so, the node delegates its reading task to its child.
-This approach walks down the tree, pulling symbols from the input that match the path down the tree.</p>
-<p>When a node does not have a child that matches the next character, we will have read the longest
-possible symbol prefix. This prefix may or may not be a valid symbol.
-Consider a tree that has had <em>=:~</em> added and has not had <em>=:</em> added.
-In this tree, of the three nodes that contain <em>=:~</em>, only the first and third contain
-complete symbols. If, say, the input contains <em>=:a</em>, the colon node will not have
-a child that matches the &lsquo;a&rsquo; and so it will stop reading. The colon node has to &ldquo;unread&rdquo;: it must
-push back its character, and ask its parent to unread. Unreading continues until it reaches
-an ancestor that represents a valid symbol.</p>
+<p>The SymbolNode class allows you to construct a SymbolNode.</p>
+<p>Important points</p>
+<ul>
+<li>A <em>SymbolNode</em> object is a member of a tree that contains all possible prefixes of allowable symbols. Multi-character symbols appear in a <em>SymbolNode</em> tree with one node for each character.</li>
+<li>For example, the symbol <em>=:~</em> will appear in a tree as three nodes. The first node contains an equals sign, and has a child; that child contains a colon and has a child; this third child contains a tilde, and has no children of its own. If the colon node had another child for a dollar sign character, then the tree would contain the symbol <em>=:$</em>.</li>
+<li>A tree of <em>SymbolNode</em> objects collaborate to read a (potentially multi-character) symbol from an input stream. A root node with no character of its own finds an initial node
+that represents the first character in the input. This node looks to see if the next character in the stream matches one of its children. If so, the node delegates its reading task to its child.</li>
+<li>This approach walks down the tree, pulling symbols from the input that match the path down the tree.</li>
+<li>When a node does not have a child that matches the next character, we will have read the longest possible symbol prefix. This prefix may or may not be a valid symbol.</li>
+<li>Consider a tree that has had <em>=:~</em> added and has not had <em>=:</em> added. In this tree, of the three nodes that contain <em>=:~</em>, only the first and third contain
+complete symbols. If, say, the input contains <em>=:a</em>, the colon node will not have a child that matches the &lsquo;a&rsquo; and so it will stop reading. The colon node has to &ldquo;unread&rdquo;: it must push back its character, and ask its parent to unread. Unreading continues until it reaches an ancestor that represents a valid symbol.</li>
+</ul>
 <h3 id="constructors">Constructors</h3>
 <p>Constructs a SymbolNode with the given parent, representing the given character.</p>
 <blockquote>
 <p><code>public</code> constructor(parent: <a href="">SymbolNode</a>, character: number)</p>
 </blockquote>
 <ul>
-<li><strong>parent</strong>: <a href="">SymbolNode</a> - This node&rsquo;s parent</li>
-<li><strong>character</strong>: number - This node&rsquo;s associated character.</li>
+<li><strong>parent</strong>: <a href="">SymbolNode</a> - node&rsquo;s parent</li>
+<li><strong>character</strong>: number - node&rsquo;s associated character.</li>
 </ul>
 <h3 id="properties">Properties</h3>
 <h4 id="tokentype">tokenType</h4>
-<p>TODO: add description</p>
+<p>Token type</p>
 <blockquote>
 <p><code>public</code> tokenType(): <a href="../../token_type">TokenType</a></p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: <a href="../../token_type">TokenType</a> - TODO: add description</li>
+<li><strong>returns</strong>: <a href="../../token_type">TokenType</a> - token type</li>
 </ul>
 <blockquote>
 <p><code>public</code> tokenType(value: <a href="../../token_type">TokenType</a>)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: <a href="../../token_type">TokenType</a> - TODO: add description</li>
+<li><strong>value</strong>: <a href="../../token_type">TokenType</a> - token type</li>
 </ul>
 <h4 id="valid">valid</h4>
-<p>TODO: add description</p>
+<p>Boolean variable</p>
 <blockquote>
 <p><code>public</code> valid(): boolean</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: boolean - TODO: add description</li>
+<li><strong>returns</strong>: boolean - true or false</li>
 </ul>
 <blockquote>
 <p><code>public</code> valid(value: boolean)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: boolean - TODO: add description</li>
+<li><strong>value</strong>: boolean - true or false</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="adddescendantline">addDescendantLine</h4>
-<p>Add a line of descendants that represent the characters in the given string.</p>
+<p>Adds a line of descendants that represents the characters in the given string.</p>
 <blockquote>
 <p><code>public</code> addDescendantLine(value: string, tokenType: <a href="../../token_type">TokenType</a>): void</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: string - TODO: add description</li>
-<li><strong>tokenType</strong>: <a href="../../token_type">TokenType</a> - TODO: add description</li>
+<li><strong>value</strong>: string - given string</li>
+<li><strong>tokenType</strong>: <a href="../../token_type">TokenType</a> - token type</li>
 </ul>
 <h4 id="ancestry">ancestry</h4>
-<p>Show the symbol this node represents.</p>
+<p>Shows the symbol this node represents.</p>
 <blockquote>
 <p><code>public</code> ancestry(): string</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: string - The symbol this node represents.</li>
+<li><strong>returns</strong>: string - symbol this node represents.</li>
 </ul>
 <h4 id="deepestread">deepestRead</h4>
-<p>Establish characters in the given range as valid characters for part of a word after the first character. Note that the tokenizer must determine which characters are valid as the beginning character of a word.</p>
+<p>Establishes characters in the given range as valid characters for the part of a word after the first character. Note that the tokenizer must determine which characters are valid as the beginning character of a word.</p>
 <blockquote>
 <p><code>public</code> deepestRead(scanner: <a href="../../../io/iscanner">IScanner</a>): <a href="">SymbolNode</a></p>
 </blockquote>
 <ul>
-<li><strong>scanner</strong>: <a href="../../../io/iscanner">IScanner</a> - TODO: add description</li>
-<li><strong>returns</strong>: <a href="">SymbolNode</a> - TODO: add description</li>
+<li><strong>scanner</strong>: <a href="../../../io/iscanner">IScanner</a> - scanner</li>
+<li><strong>returns</strong>: <a href="">SymbolNode</a> - symbol&rsquo;s node</li>
 </ul>
 <h4 id="ensurechildwithchar">ensureChildWithChar</h4>
-<p>Find or create a child for the given character.</p>
+<p>Finds or creates a child for the given character.</p>
 <blockquote>
 <p><code>public</code> ensureChildWithChar(value: number): <a href="">SymbolNode</a></p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: number - TODO: add description</li>
+<li><strong>value</strong>: number - chararacters&rsquo;s</li>
 <li><strong>returns</strong>: <a href="">SymbolNode</a> - TODO: add description</li>
 </ul>
 <h4 id="findchildwithchar">findChildWithChar</h4>
-<p>Find a child with the given character.</p>
+<p>Finds a child with the given character.</p>
 <blockquote>
 <p><code>public</code> findChildWithChar(value: number): <a href="">SymbolNode</a></p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: number - TODO: add description</li>
-<li><strong>returns</strong>: <a href="">SymbolNode</a> - TODO: add description</li>
+<li><strong>value</strong>: number - value</li>
+<li><strong>returns</strong>: <a href="">SymbolNode</a> - symbol&rsquo;s node</li>
 </ul>
 <h4 id="unreadtovalid">unreadToValid</h4>
-<p>Unwind to a valid node; this node is &ldquo;valid&rdquo; if its ancestry represents a complete symbol.
-If this node is not valid, put back the character and ask the parent to unwind.</p>
+<p>Unwinds to a valid node; this node is &ldquo;valid&rdquo; if its ancestry represents a complete symbol.
+If this node is not valid, puts back the character and asks the parent to unwind.</p>
 <blockquote>
 <p><code>public</code> unreadToValid(scanner: <a href="../../../io/iscanner">IScanner</a>): <a href="">SymbolNode</a></p>
 </blockquote>
 <ul>
-<li><strong>scanner</strong>: <a href="../../../io/iscanner">IScanner</a> - TODO: add description</li>
-<li><strong>returns</strong>: <a href="">SymbolNode</a> - TODO: add description</li>
+<li><strong>scanner</strong>: <a href="../../../io/iscanner">IScanner</a> - scanner</li>
+<li><strong>returns</strong>: <a href="">SymbolNode</a> - symbol&rsquo;s node</li>
 </ul>
 
 	
