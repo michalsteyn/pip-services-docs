@@ -380,15 +380,24 @@
         
         
         &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The behavior of a tokenizer depends on its character state table. This table is an array
-of 256 &lt;em&gt;TokenizerState&lt;/em&gt; states. The state table decides which state to enter
+&lt;p&gt;The ITokenizer interface defines the main elements of a tokenizer.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A tokenizer divides a string into tokens. This class is highly customizable with regard to exactly how this division occurs, but it also has defaults that are suitable for many languages. This class assumes that the character values read from the string lie in the range 0-255. For example, the Unicode value of a capital A is 65, so &lt;em&gt;String.fromCharCode(65)&lt;/em&gt; prints out a capital A.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The behavior of a tokenizer depends on its character state table. This table is an array of 256 &lt;em&gt;TokenizerState&lt;/em&gt; states. The state table decides which state to enter
 upon reading a character from the input string.&lt;/p&gt;
-&lt;p&gt;For example, by default, upon reading an &amp;lsquo;A&amp;rsquo;, a tokenizer will enter a &amp;ldquo;word&amp;rdquo; state.
-This means the tokenizer will ask a &lt;em&gt;WordState&lt;/em&gt; object to consume the &amp;lsquo;A&amp;rsquo;,
-along with the characters after the &amp;lsquo;A&amp;rsquo; that form a word. The state&amp;rsquo;s responsibility
-is to consume characters and return a complete token.&lt;/p&gt;
-&lt;p&gt;The default table sets a SymbolState for every character from 0 to 255,
-and then overrides this with:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For example, by default, upon reading an &amp;lsquo;A&amp;rsquo;, a tokenizer will enter a &amp;ldquo;word&amp;rdquo; state. This means the tokenizer will ask a &lt;em&gt;WordState&lt;/em&gt; object to consume the &amp;lsquo;A&amp;rsquo;,
+along with the characters after the &amp;lsquo;A&amp;rsquo; that form a word. The state&amp;rsquo;s responsibility is to consume characters and return a complete token.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The default table sets a SymbolState for every character from 0 to 255, and then overrides this with:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;blockquote&gt;&lt;pre&gt;
 From    To        State
  0     &#39; &#39;   whitespaceState 
@@ -402,9 +411,9 @@ From    To        State
 &#39;\&#39;&#39;   &#39;\&#39;&#39;     quoteState
 &#39;/&#39;    &#39;/&#39;      slashState
 &lt;/pre&gt;&lt;/blockquote&gt;
-&lt;p&gt;In addition to allowing modification of the state table, this class makes each of the states
-above available. Some of these states are customizable. For example, wordState allows customization
-of what characters can be part of a word, after the first character.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In addition to allowing modification of the state table, this class makes each of the states above available. Some of these states are customizable. For example, wordState allows customization of what characters can be part of a word, after the first character.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h4 id=&#34;commentstate&#34;&gt;commentState&lt;/h4&gt;
@@ -448,7 +457,7 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;skipEof&lt;/strong&gt;: boolean&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;skipunknown&#34;&gt;skipUnknown&lt;/h4&gt;
-&lt;p&gt;Skip unknown characters&lt;/p&gt;
+&lt;p&gt;Skip unknown characters.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;skipUnknown&lt;/strong&gt;: boolean&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -463,7 +472,7 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;symbolState&lt;/strong&gt;: &lt;a href=&#34;../isymbol_state&#34;&gt;ISymbolState&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;unifynumbers&#34;&gt;unifyNumbers&lt;/h4&gt;
-&lt;p&gt;Unifies numbers: &amp;ldquo;Integers&amp;rdquo; and &amp;ldquo;Floats&amp;rdquo; makes just &amp;ldquo;Numbers&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Unifies numbers: &amp;ldquo;Integers&amp;rdquo; and &amp;ldquo;Floats&amp;rdquo; makes just &amp;ldquo;Numbers&amp;rdquo;.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;unifyNumbers&lt;/strong&gt;: boolean&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -480,7 +489,7 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;/span&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;hasnexttoken&#34;&gt;hasNextToken&lt;/h4&gt;
-&lt;p&gt;Checks if there is the next token exist.&lt;/p&gt;
+&lt;p&gt;Checks if there i a next token.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;hasNextToken(): boolean&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -493,7 +502,7 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;nextToken(): &lt;a href=&#34;../token&#34;&gt;Token&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../token&#34;&gt;Token&lt;/a&gt; - Next token of &lt;em&gt;null&lt;/em&gt; if there are no more tokens left.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../token&#34;&gt;Token&lt;/a&gt; - next token of &lt;em&gt;null&lt;/em&gt; if there are no more tokens left.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;tokenizebuffer&#34;&gt;tokenizeBuffer&lt;/h4&gt;
 &lt;p&gt;Tokenizes a string buffer into a list of tokens structures.&lt;/p&gt;
@@ -501,8 +510,8 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;tokenizeBuffer(buffer: string): &lt;a href=&#34;../token&#34;&gt;Token[]&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;buffer&lt;/strong&gt;: string - A string buffer to be tokenized.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../token&#34;&gt;Token[]&lt;/a&gt; - A list of token structures.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;buffer&lt;/strong&gt;: string - string buffer to be tokenized.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../token&#34;&gt;Token[]&lt;/a&gt; - list of token structures.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;tokenizebuffertostrings&#34;&gt;tokenizeBufferToStrings&lt;/h4&gt;
 &lt;p&gt;Tokenizes a string buffer into a list of strings.&lt;/p&gt;
@@ -510,8 +519,8 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;tokenizeBufferToStrings(buffer: string): string[]&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;buffer&lt;/strong&gt;: string - A string buffer to be tokenized.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string[] - A list of token strings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;buffer&lt;/strong&gt;: string - string buffer to be tokenized.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string[] - list of token strings.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;tokenizestream&#34;&gt;tokenizeStream&lt;/h4&gt;
 &lt;p&gt;Tokenizes a textual stream into a list of token structures.&lt;/p&gt;
@@ -519,8 +528,8 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;tokenizeStream(scanner: &lt;a href=&#34;../../io/iscanner&#34;&gt;IScanner&lt;/a&gt;): &lt;a href=&#34;../token&#34;&gt;Token[]&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;scanner&lt;/strong&gt;: &lt;a href=&#34;../../io/iscanner&#34;&gt;IScanner&lt;/a&gt; - A textual stream to be tokenized.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../token&#34;&gt;Token[]&lt;/a&gt; - A list of token structures.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;scanner&lt;/strong&gt;: &lt;a href=&#34;../../io/iscanner&#34;&gt;IScanner&lt;/a&gt; - textual stream to be tokenized.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../token&#34;&gt;Token[]&lt;/a&gt; - list of token structures.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;tokenizestreamtostrings&#34;&gt;tokenizeStreamToStrings&lt;/h4&gt;
 &lt;p&gt;Tokenizes a textual stream into a list of strings.&lt;/p&gt;
@@ -528,8 +537,8 @@ of what characters can be part of a word, after the first character.&lt;/p&gt;
 &lt;p&gt;tokenizeStreamToStrings(scanner: &lt;a href=&#34;../../io/iscanner&#34;&gt;IScanner&lt;/a&gt;): string[]&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;scanner&lt;/strong&gt;: &lt;a href=&#34;../../io/iscanner&#34;&gt;IScanner&lt;/a&gt; - A textual stream to be tokenized.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string[] - A list of token strings.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;scanner&lt;/strong&gt;: &lt;a href=&#34;../../io/iscanner&#34;&gt;IScanner&lt;/a&gt; - textual stream to be tokenized.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string[] - list of token strings.&lt;/li&gt;
 &lt;/ul&gt;
 
       </description>

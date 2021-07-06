@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>ITokenizer | Services Docs</title><meta property="og:title" content="ITokenizer" />
-<meta property="og:description" content="A tokenizer divides a string into tokens. This class is highly customizable with regard to exactly how this division occurs, but it also has defaults that are suitable for many languages. This class assumes that the character values read from the string lie in the range 0-255. For example, the Unicode value of a capital A is 65, so *String.fromCharCode(65)* prints out a capital A.
+<meta property="og:description" content="Interface for tokenizers.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/expressions/tokenizers/itokenizer/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-01T21:12:09&#43;03:00" />
+<meta property="article:modified_time" content="2021-07-06T22:22:57&#43;02:00" />
 
 <meta itemprop="name" content="ITokenizer">
-<meta itemprop="description" content="A tokenizer divides a string into tokens. This class is highly customizable with regard to exactly how this division occurs, but it also has defaults that are suitable for many languages. This class assumes that the character values read from the string lie in the range 0-255. For example, the Unicode value of a capital A is 65, so *String.fromCharCode(65)* prints out a capital A.
+<meta itemprop="description" content="Interface for tokenizers.
 ">
-<meta itemprop="dateModified" content="2021-07-01T21:12:09&#43;03:00" />
-<meta itemprop="wordCount" content="475">
+<meta itemprop="dateModified" content="2021-07-06T22:22:57&#43;02:00" />
+<meta itemprop="wordCount" content="543">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ITokenizer"/>
-<meta name="twitter:description" content="A tokenizer divides a string into tokens. This class is highly customizable with regard to exactly how this division occurs, but it also has defaults that are suitable for many languages. This class assumes that the character values read from the string lie in the range 0-255. For example, the Unicode value of a capital A is 65, so *String.fromCharCode(65)* prints out a capital A.
+<meta name="twitter:description" content="Interface for tokenizers.
 "/>
 
 
@@ -163202,18 +163202,27 @@
 </div>
 
 	
-    <div class="lead">A tokenizer divides a string into tokens. This class is highly customizable with regard to exactly how this division occurs, but it also has defaults that are suitable for many languages. This class assumes that the character values read from the string lie in the range 0-255. For example, the Unicode value of a capital A is 65, so <em>String.fromCharCode(65)</em> prints out a capital A.</div>
+    <div class="lead">Interface for tokenizers.</div>
 	       
 	<h3 id="description">Description</h3>
-<p>The behavior of a tokenizer depends on its character state table. This table is an array
-of 256 <em>TokenizerState</em> states. The state table decides which state to enter
+<p>The ITokenizer interface defines the main elements of a tokenizer.</p>
+<p>Important points</p>
+<ul>
+<li>
+<p>A tokenizer divides a string into tokens. This class is highly customizable with regard to exactly how this division occurs, but it also has defaults that are suitable for many languages. This class assumes that the character values read from the string lie in the range 0-255. For example, the Unicode value of a capital A is 65, so <em>String.fromCharCode(65)</em> prints out a capital A.</p>
+</li>
+<li>
+<p>The behavior of a tokenizer depends on its character state table. This table is an array of 256 <em>TokenizerState</em> states. The state table decides which state to enter
 upon reading a character from the input string.</p>
-<p>For example, by default, upon reading an &lsquo;A&rsquo;, a tokenizer will enter a &ldquo;word&rdquo; state.
-This means the tokenizer will ask a <em>WordState</em> object to consume the &lsquo;A&rsquo;,
-along with the characters after the &lsquo;A&rsquo; that form a word. The state&rsquo;s responsibility
-is to consume characters and return a complete token.</p>
-<p>The default table sets a SymbolState for every character from 0 to 255,
-and then overrides this with:</p>
+</li>
+<li>
+<p>For example, by default, upon reading an &lsquo;A&rsquo;, a tokenizer will enter a &ldquo;word&rdquo; state. This means the tokenizer will ask a <em>WordState</em> object to consume the &lsquo;A&rsquo;,
+along with the characters after the &lsquo;A&rsquo; that form a word. The state&rsquo;s responsibility is to consume characters and return a complete token.</p>
+</li>
+<li>
+<p>The default table sets a SymbolState for every character from 0 to 255, and then overrides this with:</p>
+</li>
+</ul>
 <blockquote><pre>
 From    To        State
  0     ' '   whitespaceState 
@@ -163227,9 +163236,9 @@ From    To        State
 '\''   '\''     quoteState
 '/'    '/'      slashState
 </pre></blockquote>
-<p>In addition to allowing modification of the state table, this class makes each of the states
-above available. Some of these states are customizable. For example, wordState allows customization
-of what characters can be part of a word, after the first character.</p>
+<ul>
+<li>In addition to allowing modification of the state table, this class makes each of the states above available. Some of these states are customizable. For example, wordState allows customization of what characters can be part of a word, after the first character.</li>
+</ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="commentstate">commentState</h4>
@@ -163273,7 +163282,7 @@ of what characters can be part of a word, after the first character.</p>
 <p><strong>skipEof</strong>: boolean</p>
 </blockquote>
 <h4 id="skipunknown">skipUnknown</h4>
-<p>Skip unknown characters</p>
+<p>Skip unknown characters.</p>
 <blockquote>
 <p><strong>skipUnknown</strong>: boolean</p>
 </blockquote>
@@ -163288,7 +163297,7 @@ of what characters can be part of a word, after the first character.</p>
 <p><strong>symbolState</strong>: <a href="../isymbol_state">ISymbolState</a></p>
 </blockquote>
 <h4 id="unifynumbers">unifyNumbers</h4>
-<p>Unifies numbers: &ldquo;Integers&rdquo; and &ldquo;Floats&rdquo; makes just &ldquo;Numbers&rdquo;</p>
+<p>Unifies numbers: &ldquo;Integers&rdquo; and &ldquo;Floats&rdquo; makes just &ldquo;Numbers&rdquo;.</p>
 <blockquote>
 <p><strong>unifyNumbers</strong>: boolean</p>
 </blockquote>
@@ -163305,7 +163314,7 @@ of what characters can be part of a word, after the first character.</p>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="hasnexttoken">hasNextToken</h4>
-<p>Checks if there is the next token exist.</p>
+<p>Checks if there i a next token.</p>
 <blockquote>
 <p>hasNextToken(): boolean</p>
 </blockquote>
@@ -163318,7 +163327,7 @@ of what characters can be part of a word, after the first character.</p>
 <p>nextToken(): <a href="../token">Token</a></p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: <a href="../token">Token</a> - Next token of <em>null</em> if there are no more tokens left.</li>
+<li><strong>returns</strong>: <a href="../token">Token</a> - next token of <em>null</em> if there are no more tokens left.</li>
 </ul>
 <h4 id="tokenizebuffer">tokenizeBuffer</h4>
 <p>Tokenizes a string buffer into a list of tokens structures.</p>
@@ -163326,8 +163335,8 @@ of what characters can be part of a word, after the first character.</p>
 <p>tokenizeBuffer(buffer: string): <a href="../token">Token[]</a></p>
 </blockquote>
 <ul>
-<li><strong>buffer</strong>: string - A string buffer to be tokenized.</li>
-<li><strong>returns</strong>: <a href="../token">Token[]</a> - A list of token structures.</li>
+<li><strong>buffer</strong>: string - string buffer to be tokenized.</li>
+<li><strong>returns</strong>: <a href="../token">Token[]</a> - list of token structures.</li>
 </ul>
 <h4 id="tokenizebuffertostrings">tokenizeBufferToStrings</h4>
 <p>Tokenizes a string buffer into a list of strings.</p>
@@ -163335,8 +163344,8 @@ of what characters can be part of a word, after the first character.</p>
 <p>tokenizeBufferToStrings(buffer: string): string[]</p>
 </blockquote>
 <ul>
-<li><strong>buffer</strong>: string - A string buffer to be tokenized.</li>
-<li><strong>returns</strong>: string[] - A list of token strings.</li>
+<li><strong>buffer</strong>: string - string buffer to be tokenized.</li>
+<li><strong>returns</strong>: string[] - list of token strings.</li>
 </ul>
 <h4 id="tokenizestream">tokenizeStream</h4>
 <p>Tokenizes a textual stream into a list of token structures.</p>
@@ -163344,8 +163353,8 @@ of what characters can be part of a word, after the first character.</p>
 <p>tokenizeStream(scanner: <a href="../../io/iscanner">IScanner</a>): <a href="../token">Token[]</a></p>
 </blockquote>
 <ul>
-<li><strong>scanner</strong>: <a href="../../io/iscanner">IScanner</a> - A textual stream to be tokenized.</li>
-<li><strong>returns</strong>: <a href="../token">Token[]</a> - A list of token structures.</li>
+<li><strong>scanner</strong>: <a href="../../io/iscanner">IScanner</a> - textual stream to be tokenized.</li>
+<li><strong>returns</strong>: <a href="../token">Token[]</a> - list of token structures.</li>
 </ul>
 <h4 id="tokenizestreamtostrings">tokenizeStreamToStrings</h4>
 <p>Tokenizes a textual stream into a list of strings.</p>
@@ -163353,8 +163362,8 @@ of what characters can be part of a word, after the first character.</p>
 <p>tokenizeStreamToStrings(scanner: <a href="../../io/iscanner">IScanner</a>): string[]</p>
 </blockquote>
 <ul>
-<li><strong>scanner</strong>: <a href="../../io/iscanner">IScanner</a> - A textual stream to be tokenized.</li>
-<li><strong>returns</strong>: string[] - A list of token strings.</li>
+<li><strong>scanner</strong>: <a href="../../io/iscanner">IScanner</a> - textual stream to be tokenized.</li>
+<li><strong>returns</strong>: string[] - list of token strings.</li>
 </ul>
 
 	
