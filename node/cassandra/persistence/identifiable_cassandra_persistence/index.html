@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/cassandra/persistence/identifiable_cassandra_persistence/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-07T21:40:33&#43;03:00" />
+<meta property="article:modified_time" content="2021-07-08T00:17:45&#43;02:00" />
 
 <meta itemprop="name" content="IdentifiableCassandraPersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;">
 <meta itemprop="description" content="Abstract persistence component that stores data in Cassandra and implements a number of CRUD operations over data items with unique ids.
 ">
-<meta itemprop="dateModified" content="2021-07-07T21:40:33&#43;03:00" />
-<meta itemprop="wordCount" content="749">
+<meta itemprop="dateModified" content="2021-07-08T00:17:45&#43;02:00" />
+<meta itemprop="wordCount" content="747">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IdentifiableCassandraPersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;"/>
 <meta name="twitter:description" content="Abstract persistence component that stores data in Cassandra and implements a number of CRUD operations over data items with unique ids.
@@ -167153,18 +167153,28 @@
 	<p><strong>Extends:</strong> <a href="../cassandra_persistence">CassandraPersistence<T></a></p>
 <p><strong>Implements:</strong> <a href="../../../data/core/iwriter">IWriter&lt;T, K&gt;</a>, <a href="../../../data/core/igetter">IGetter&lt;T, K&gt;</a>, <a href="../../../data/core/isetter">ISetter<T></a></p>
 <h3 id="description">Description</h3>
-<p>The data items must implement <a href="../../../commons/data/iidentifiable">IIdentifiable</a> interface.</p>
-<p>In basic scenarios child classes shall only override <a href="../cassandra_persistence/#getpagebyfilter">getPageByFilter</a>, <a href="../cassandra_persistence/#getlistbyfilter">getListByFilter</a> or <a href="../cassandra_persistence/#deletebyfilter">deleteByFilter</a> operations with specific filter function.
-All other operations can be used out of the box.</p>
-<p>In complex scenarios child classes can implement additional operations by
-accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</p>
+<p>Important points</p>
+<ul>
+<li>
+<p>The data items must implement the <a href="../../../commons/data/iidentifiable">IIdentifiable</a> interface.</p>
+</li>
+<li>
+<p>In basic scenarios child classes shall only override <a href="../cassandra_persistence/#getpagebyfilter">getPageByFilter</a>, <a href="../cassandra_persistence/#getlistbyfilter">getListByFilter</a> or <a href="../cassandra_persistence/#deletebyfilter">deleteByFilter</a> operations with specific filter function.</p>
+</li>
+<li>
+<p>All other operations can be used out of the box.</p>
+</li>
+<li>
+<p>In complex scenarios child classes can implement additional operations by accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</p>
+</li>
+</ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>table</strong>: (optional) Cassandra table name</li>
 <li><strong>keyspace</strong>: (optional) Cassandra keyspace name</li>
 <li><strong>connection(s)</strong>:
 <ul>
-<li><strong>discovery_key</strong>: (optional) a key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
+<li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
 <li><strong>host</strong>: host name or IP address</li>
 <li><strong>port</strong>: port number (default: 27017)</li>
 <li><strong>uri</strong>: resource URI or connection string with all parameters in it</li>
@@ -167172,9 +167182,9 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </li>
 <li><strong>credential(s)</strong>:
 <ul>
-<li><strong>store_key</strong>: (optional) a key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
-<li><strong>username</strong>: (optional) user name</li>
-<li><strong>password</strong>: (optional) user password</li>
+<li><strong>store_key</strong>: (optional) key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
+<li><strong>username</strong>: (optional) username</li>
+<li><strong>password</strong>: (optional) user&rsquo;s password</li>
 </ul>
 </li>
 <li><strong>options</strong>:
@@ -167189,7 +167199,7 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <ul>
 <li><strong>*:logger:*:*:1.0</strong> - (optional) <a href="../../../components/log/ilogger">ILogger</a> components to pass log messages</li>
 <li><strong>*:discovery:*:*:1.0</strong> - (optional) <a href="../../../components/connect/idiscovery">IDiscovery</a> services</li>
-<li><strong>*:credential-store:*:*:1.0</strong> - (optional) Credential stores to resolve credentials (<a href="../../../components/auth/icredential_store">ICredentialStore</a>)</li>
+<li><strong>*:credential-store:*:*:1.0</strong> - (optional) credential stores to resolve credentials (<a href="../../../components/auth/icredential_store">ICredentialStore</a>)</li>
 </ul>
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of the persistence component.</p>
@@ -167197,12 +167207,12 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <p><code>public</code> constructor(tableName: string, keyspaceName?: string)</p>
 </blockquote>
 <ul>
-<li><strong>tableName</strong>: string - (optional) collection name.</li>
-<li><strong>keyspaceName</strong>: string - (optional) a keyspace name.</li>
+<li><strong>tableName</strong>: string - (optional) collection&rsquo;s name.</li>
+<li><strong>keyspaceName</strong>: string - (optional) keyspace&rsquo;s name.</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
-<p>Flag to turn on automated string ID generation</p>
+<p>Flag used to turn on automated string ID generation</p>
 <blockquote>
 <p><code>protected</code> <strong>_autoGenerateId</strong>: boolean = true</p>
 </blockquote>
@@ -167214,8 +167224,8 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <p><code>protected</code> convertFromPublicPartial(value: any): any</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: any - the object to convert from the public partial format.</li>
-<li><strong>returns</strong>: any - the initial object.</li>
+<li><strong>value</strong>: any - object to convert from the public partial format.</li>
+<li><strong>returns</strong>: any - initial object.</li>
 </ul>
 <h4 id="create">create</h4>
 <p>Creates a data item.</p>
@@ -167267,8 +167277,8 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <li><strong>returns</strong>: Promise&lt;T&gt; - data item</li>
 </ul>
 <h4 id="set">set</h4>
-<p>Sets a data item. If the data item exists it updates it,
-otherwise it creates a new data item.</p>
+<p>Sets a data item. If the data item exists, it updates it.
+Otherwise, it creates a new data item.</p>
 <blockquote>
 <p><code>public</code> set(correlationId: string, item: T): Promise&lt;T&gt;</p>
 </blockquote>
