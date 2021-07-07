@@ -163383,40 +163383,76 @@ It allows to send asynchronous notifications to multiple subscribed listeners.</
   let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
+    algoliaOptions: {
       
       
-      apiKey: '6974095177303d4ec7cb2a2d7c6f051a',
-      indexName: isGitRepo > 0 ? 'pip_docs_test' : 'pip_docs_s3', 
-      appId: 'ETKGUND67W',
-      
-      
-      inputSelector: '.td-search-input',
+    },
 
-      transformData: function (hits) {
-      
-        let langNamePosInUrl = isGitRepo ? 4 : 3 
+    
+    
+    apiKey: 'd53c32f818dd6c6aac5dc342524ebad0', 
+    indexName: 'pipservices_org', 
+    
+    
+    
+    inputSelector: '.td-search-input',
 
-        hits = hits.filter((item) => {
+    transformData: function(hits) {
+      
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
+
+      console.log(hits.length);
+
+      hits = hits.filter((item, index) => {
+
+        
+
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
-          if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-            let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
-            let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
+          return isCorrectHit;
+        } else {
+          
+          let language = hits[index].url.split('/')[3]
+          
+          language = language.charAt(0).toUpperCase() + language.slice(1);
 
-            return isCorrectHit;
+          if (!item.hierarchy.lvl6) {
+            item.hierarchy.lvl6 = language;
+            item._highlightResult.hierarchy.lvl6 = { value: '<span style="color:#81c7f9">' + language + '</span>' };
           }
+        }
+        
+        return true
+        
+      });
 
-          return true
-          
-        });
-
-        return hits;
+      return hits;
       
-      },
+    },
 
 
-      
-      debug: true,
+    
+    debug: true,
   });
+
+  function copy(obj){
+    if (obj != undefined)
+      return JSON.parse(JSON.stringify(obj));
+    return undefined;
+  }
 
 </script>
 
