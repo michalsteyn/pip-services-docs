@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>LambdaFunction | Services Docs</title><meta property="og:title" content="LambdaFunction" />
-<meta property="og:description" content="Abstract AWS Lambda function, that acts as a container to instantiate and run components and expose them via external entry point. 
+<meta property="og:description" content="Abstract AWS Lambda function that acts as a container to instantiate and run components,  and expose them via an external entry point. 
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/aws/containers/lambda_function/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-02T04:50:48&#43;03:00" />
+<meta property="article:modified_time" content="2021-07-07T02:50:55&#43;02:00" />
 
 <meta itemprop="name" content="LambdaFunction">
-<meta itemprop="description" content="Abstract AWS Lambda function, that acts as a container to instantiate and run components and expose them via external entry point. 
+<meta itemprop="description" content="Abstract AWS Lambda function that acts as a container to instantiate and run components,  and expose them via an external entry point. 
 ">
-<meta itemprop="dateModified" content="2021-07-02T04:50:48&#43;03:00" />
-<meta itemprop="wordCount" content="526">
+<meta itemprop="dateModified" content="2021-07-07T02:50:55&#43;02:00" />
+<meta itemprop="wordCount" content="548">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LambdaFunction"/>
-<meta name="twitter:description" content="Abstract AWS Lambda function, that acts as a container to instantiate and run components and expose them via external entry point. 
+<meta name="twitter:description" content="Abstract AWS Lambda function that acts as a container to instantiate and run components,  and expose them via an external entry point. 
 "/>
 
 
@@ -163191,14 +163191,20 @@
 </div>
 
 	
-    <div class="lead">Abstract AWS Lambda function, that acts as a container to instantiate and run components and expose them via external entry point.</div>
+    <div class="lead">Abstract AWS Lambda function that acts as a container to instantiate and run components,  and expose them via an external entry point.</div>
 	       
 	<p><strong>Extends:</strong> <a href="../../../container/containers/container">Container</a></p>
 <h3 id="description">Description</h3>
-<p>When handling calls &ldquo;cmd&rdquo; parameter determines which what action shall be called, while
-other parameters are passed to the action itself.</p>
-<p>Container configuration for this Lambda function is stored in <em>&quot;./config/config.yml&quot;</em> file.
-But this path can be overriden by <em>CONFIG_PATH</em> environment variable.</p>
+<p>The LambdaFunction class allows you to create an abstract AWS Lambda function that acts as a container to instantiate and run components, and expose them via an external entry point.</p>
+<p>Important points</p>
+<ul>
+<li>
+<p>When handling calls &ldquo;cmd&rdquo; parameter determines which what action shall be called, while other parameters are passed to the action itself.</p>
+</li>
+<li>
+<p>Container configuration for this Lambda function is stored in <em>&quot;./config/config.yml&quot;</em> file. But this path can be overriden by <em>CONFIG_PATH</em> environment variable.</p>
+</li>
+</ul>
 <h4 id="references">References</h4>
 <ul>
 <li><strong>*:logger:*:*:1.0</strong>: (optional) <a href="../../../components/log/ilogger">ILogger</a> components to pass log messages.</li>
@@ -163218,32 +163224,32 @@ But this path can be overriden by <em>CONFIG_PATH</em> environment variable.</p>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="_actions">_actions</h4>
-<p>The map of registered actions.</p>
+<p>Map containing registered actions.</p>
 <blockquote>
 <p><code>protected</code> <strong>_actions</strong>: { [id: string]: any }</p>
 </blockquote>
 <h4 id="_configpath">_configPath</h4>
-<p>The default path to config file.</p>
+<p>Default path to config file.</p>
 <blockquote>
 <p><code>protected</code> <strong>_configPath</strong>: string = &lsquo;./config/config.yml&rsquo;</p>
 </blockquote>
 <h4 id="_counters">_counters</h4>
-<p>The performanc counters.</p>
+<p>Performanc counters.</p>
 <blockquote>
 <p><code>protected</code> <strong>_counters</strong> = new <a href="../../../components/count/composite_counters">CompositeCounters()</a></p>
 </blockquote>
 <h4 id="_dependencyresolver">_dependencyResolver</h4>
-<p>The dependency resolver.</p>
+<p>Dependency resolver.</p>
 <blockquote>
 <p><code>protected</code> <strong>_dependencyResolver</strong> = new <a href="../../../commons/refer/dependency_resolver">DependencyResolver()</a></p>
 </blockquote>
 <h4 id="_schemas">_schemas</h4>
-<p>The map of registred validation schemas.</p>
+<p>Map of registred validation schemas.</p>
 <blockquote>
 <p><code>protected</code> <strong>_schemas</strong>: { [id: string]: <a href="../../../commons/validate/schema">Schema</a> }</p>
 </blockquote>
 <h4 id="_tracer">_tracer</h4>
-<p>The tracer.</p>
+<p>Tracer.</p>
 <blockquote>
 <p><code>protected</code> <strong>_tracer</strong>: <a href="../../../components/trace/composite_tracer">CompositeTracer</a> = new <a href="../../../components/trace/composite_tracer">CompositeTracer()</a></p>
 </blockquote>
@@ -163251,7 +163257,7 @@ But this path can be overriden by <em>CONFIG_PATH</em> environment variable.</p>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="act">act</h4>
 <p>Calls registered action in this lambda function.
-&ldquo;cmd&rdquo; parameter in the action parameters determin
+&ldquo;cmd&rdquo; parameter in the action parameters determines
 what action shall be called.</p>
 <ul>
 <li>This method shall only be used in testing.</li>
@@ -163261,7 +163267,7 @@ what action shall be called.</p>
 </blockquote>
 <ul>
 <li><strong>params</strong>: any - action parameters.</li>
-<li><strong>returns</strong>: Promise&lt;any&gt; - TODO: add description</li>
+<li><strong>returns</strong>: Promise&lt;any&gt; - result</li>
 </ul>
 <h4 id="execute">execute</h4>
 <p>Executes this AWS Lambda function and returns the result.
@@ -163271,16 +163277,16 @@ if they need to change the default behavior</p>
 <p><code>protected</code> execute(event: any): Promise&lt;any&gt;</p>
 </blockquote>
 <ul>
-<li><strong>event</strong>: any - event the event parameters (or function arguments)</li>
-<li><strong>returns</strong>: Promise&lt;any&gt; - the result of the function execution.</li>
+<li><strong>event</strong>: any - event parameters (or function arguments)</li>
+<li><strong>returns</strong>: Promise&lt;any&gt; - result of the function execution.</li>
 </ul>
 <h4 id="gethandler">getHandler</h4>
-<p>Gets entry point into this lambda function.</p>
+<p>Gets an entry point into this lambda function.</p>
 <blockquote>
 <p><code>public</code> getHandler(): (event: any) =&gt; Promise&lt;\any&gt;</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: (event: any) =&gt; Promise&lt;\any&gt; - an incoming event object with invocation parameters.</li>
+<li><strong>returns</strong>: (event: any) =&gt; Promise&lt;\any&gt; - incoming event object with invocation parameters.</li>
 </ul>
 <h4 id="instrument">instrument</h4>
 <p>Gets entry point into this lambda function.</p>
@@ -163288,8 +163294,8 @@ if they need to change the default behavior</p>
 <p><code>protected</code> instrument(correlationId: string, name: string): <a href="../../../rpc/services/instrument_timing">InstrumentTiming</a></p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>name</strong>: string - a method name.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>name</strong>: string - method name.</li>
 <li><strong>returns</strong>: <a href="../../../rpc/services/instrument_timing">InstrumentTiming</a> - object to end the time measurement.</li>
 </ul>
 <h4 id="open">open</h4>
@@ -163298,7 +163304,7 @@ if they need to change the default behavior</p>
 <p><code>public</code> open(correlationId: string): Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="register">register</h4>
 <p>Registers all actions in this lambda function.</p>
@@ -163317,9 +163323,9 @@ if they need to change the default behavior</p>
 <p><code>protected</code> registerAction(cmd: string, schema: <a href="../../../commons/validate/schema">Schema</a>, action: (params: any) =&gt; Promise&lt;any&gt;): void</p>
 </blockquote>
 <ul>
-<li><strong>cmd</strong>: string - a action/command name.</li>
-<li><strong>schema</strong>: <a href="../../../commons/validate/schema">Schema</a> - a validation schema to validate received parameters.</li>
-<li><strong>action</strong>: (params: any) =&gt; Promise&lt;any&gt; - an action function that is called when action is invoked.</li>
+<li><strong>cmd</strong>: string - action/command name.</li>
+<li><strong>schema</strong>: <a href="../../../commons/validate/schema">Schema</a> - validation schema used to validate received parameters.</li>
+<li><strong>action</strong>: (params: any) =&gt; Promise&lt;any&gt; - action function that is called when action is invoked.</li>
 </ul>
 <h4 id="registerservices">registerServices</h4>
 <p>Registers all lambda services in the container.</p>
@@ -163339,7 +163345,7 @@ makes this function ready to access action calls.</p>
 <p><code>public</code> setReferences(references: <a href="../../../commons/refer/ireferences">IReferences</a>): void</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyLambdaFunction</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">LambdaFunction</span> <span style="color:#111">{</span>
