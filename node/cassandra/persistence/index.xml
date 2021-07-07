@@ -25,17 +25,18 @@
         
         &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/icleanable&#34;&gt;ICleanable&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;This is the most basic persistence component that is only
-able to store data items of any type. Specific CRUD operations
-over the data items must be implemented in child classes by
-accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collection&lt;/strong&gt; properties.&lt;/p&gt;
+&lt;p&gt;The CassandraPersistence class allows you to create abstract persistence components that store data in Cassandra using the default driver.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is the most basic persistence component that is only able to store data items of any type. Specific CRUD operations over the data items must be implemented in child classes by accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collection&lt;/strong&gt; properties.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;table:                       (optional) Cassandra table name&lt;/li&gt;
 &lt;li&gt;keyspace:                    (optional) Cassandra keyspace name&lt;/li&gt;
 &lt;li&gt;connection(s):
 &lt;ul&gt;
-&lt;li&gt;discovery_key:             (optional) a key to retrieve the connection from [[https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/connect.idiscovery.html IDiscovery]]&lt;/li&gt;
+&lt;li&gt;discovery_key:             (optional) key to retrieve the connection from [[https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/connect.idiscovery.html IDiscovery]]&lt;/li&gt;
 &lt;li&gt;host:                      host name or IP address&lt;/li&gt;
 &lt;li&gt;port:                      port number (default: 27017)&lt;/li&gt;
 &lt;li&gt;uri:                       resource URI or connection string with all parameters in it&lt;/li&gt;
@@ -43,9 +44,9 @@ accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collectio
 &lt;/li&gt;
 &lt;li&gt;credential(s):
 &lt;ul&gt;
-&lt;li&gt;store_key:                 (optional) a key to retrieve the credentials from [[https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/auth.icredentialstore.html ICredentialStore]]&lt;/li&gt;
-&lt;li&gt;username:                  (optional) user name&lt;/li&gt;
-&lt;li&gt;password:                  (optional) user password&lt;/li&gt;
+&lt;li&gt;store_key:                 (optional) key to retrieve the credentials from [[https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/auth.icredentialstore.html ICredentialStore]]&lt;/li&gt;
+&lt;li&gt;username:                  (optional) username&lt;/li&gt;
+&lt;li&gt;password:                  (optional) user&amp;rsquo;s password&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;options:
@@ -68,43 +69,43 @@ accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collectio
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(tableName?: string, keyspaceName?: string)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;tableName&lt;/strong&gt;: string - (optional) a table name.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;keyspaceName&lt;/strong&gt;: string - (optional) a keyspace name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tableName&lt;/strong&gt;: string - (optional) table name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keyspaceName&lt;/strong&gt;: string - (optional) keyspace name.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h4 id=&#34;_dependencyresolver&#34;&gt;_dependencyResolver&lt;/h4&gt;
-&lt;p&gt;The dependency resolver.&lt;/p&gt;
+&lt;p&gt;Dependency resolver.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_dependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_logger&#34;&gt;_logger&lt;/h4&gt;
-&lt;p&gt;The logger.&lt;/p&gt;
+&lt;p&gt;Logger.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_connection&#34;&gt;_connection&lt;/h4&gt;
-&lt;p&gt;The Cassandra connection component.&lt;/p&gt;
+&lt;p&gt;Cassandra connection component.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_connection&lt;/strong&gt;: &lt;a href=&#34;../../connect/cassandra_connection&#34;&gt;CassandraConnection&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_client&#34;&gt;_client&lt;/h4&gt;
-&lt;p&gt;The Cassandra connection pool object.&lt;/p&gt;
+&lt;p&gt;Cassandra connection pool object.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_client&lt;/strong&gt;: any&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_datacenter&#34;&gt;_datacenter&lt;/h4&gt;
-&lt;p&gt;The Cassandra datacenter name.&lt;/p&gt;
+&lt;p&gt;Cassandra datacenter&amp;rsquo;s name.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_datacenter&lt;/strong&gt;: string&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_tablename&#34;&gt;_tableName&lt;/h4&gt;
-&lt;p&gt;The Cassandra table name.&lt;/p&gt;
+&lt;p&gt;Cassandra table&amp;rsquo;s name.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_tableName&lt;/strong&gt;: string&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_keyspacename&#34;&gt;_keyspaceName&lt;/h4&gt;
-&lt;p&gt;The Cassandra keyspace name.&lt;/p&gt;
+&lt;p&gt;Cassandra keyspace&amp;rsquo;s name.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_keyspaceName&lt;/strong&gt;: string&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -137,7 +138,7 @@ accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collectio
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
-&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -145,7 +146,7 @@ accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collectio
 &lt;li&gt;&lt;strong&gt;config:&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;convertfrompublic&#34;&gt;convertFromPublic&lt;/h4&gt;
-&lt;p&gt;Converts object value from public to internal format.&lt;/p&gt;
+&lt;p&gt;Converts an object value from public to internal format.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; convertFromPublic(value: any): any&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -154,7 +155,7 @@ accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collectio
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: any - converted object in internal format.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;converttopublic&#34;&gt;convertToPublic&lt;/h4&gt;
-&lt;p&gt;Converts object value from internal to public format.&lt;/p&gt;
+&lt;p&gt;Converts an object value from internal to public format.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; convertToPublic(value: any): any&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -181,7 +182,7 @@ accessing &lt;strong&gt;this._db&lt;/strong&gt; or &lt;strong&gt;this._collectio
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;defineschema&#34;&gt;defineSchema&lt;/h4&gt;
-&lt;p&gt;Defines database schema via auto create objects or convenience methods.&lt;/p&gt;
+&lt;p&gt;Defines a database schema via auto-create objects or convenience methods.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; defineSchema(): void&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -197,7 +198,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: any - (optional) filter function to filter items.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;ensureindex&#34;&gt;ensureIndex&lt;/h4&gt;
-&lt;p&gt;Adds index definition to create it on opening.&lt;/p&gt;
+&lt;p&gt;Adds an index definition to create it on opening.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; ensureIndex(keys: any, options)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -206,7 +207,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: any - index options&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;ensureschema&#34;&gt;ensureSchema&lt;/h4&gt;
-&lt;p&gt;Adds a statement to schema definition.&lt;/p&gt;
+&lt;p&gt;Adds a statement to a schema definition.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; ensureSchema(schemaStatement: string): void&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -269,7 +270,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; getListByFilter(correlationId: string, filter: any, sort: any, select: any): Promise&amp;lt;T[]&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: any - (optional) filter function to filter items&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;sort&lt;/strong&gt;: any - (optional) sorting parameters&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;select&lt;/strong&gt;: any - (optional) projection parameters (not used yet)&lt;/li&gt;
@@ -284,8 +285,8 @@ that receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;Filter
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: any - (optional) a filter JSON object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;T&amp;gt; - a random item.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: any - (optional) filter JSON object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;T&amp;gt; - random item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;getpagebyfilter&#34;&gt;getPageByFilter&lt;/h4&gt;
 &lt;p&gt;Gets a page of data items retrieved by a given filter and sorted according to sort parameters.&lt;/p&gt;
@@ -300,15 +301,15 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;li&gt;&lt;strong&gt;paging&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;PagingParams&lt;/a&gt; - (optional) paging parameters&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;sort&lt;/strong&gt;: any - (optional) sorting JSON object&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;select&lt;/strong&gt;: any - (optional) projection JSON object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../commons/data/data_page&#34;&gt;DataPage&lt;T&gt;&lt;/a&gt;&amp;gt; - a data page of result by filter&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../commons/data/data_page&#34;&gt;DataPage&lt;T&gt;&lt;/a&gt;&amp;gt; - data page of results by the filter&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;isopen&#34;&gt;isOpen&lt;/h4&gt;
-&lt;p&gt;Checks if the component is opened.&lt;/p&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; isOpen(): boolean&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: boolean - True if the component has been opened and False otherwise.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: boolean - frue if the component has been opened and false otherwise.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
 &lt;p&gt;Opens the component.&lt;/p&gt;
@@ -328,12 +329,12 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - string with added quotes&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;quotedtablename&#34;&gt;quotedTableName&lt;/h4&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;Adds the kespace&amp;rsquo;s name to a table&amp;rsquo;s name.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; quotedTableName(): string&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - table&amp;rsquo;s name with added keyspace&amp;rsquo;s name on the left.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
 &lt;p&gt;Sets references to dependent components.&lt;/p&gt;
