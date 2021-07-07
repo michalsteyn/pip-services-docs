@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/azure/containers/commandable_azure_function/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-02T06:20:42&#43;03:00" />
+<meta property="article:modified_time" content="2021-07-07T05:17:14&#43;02:00" />
 
 <meta itemprop="name" content="CommandableAzureFunction">
 <meta itemprop="description" content="Abstract Azure Function function, that acts as a container to instantiate and run components and expose them via external entry point.
 ">
-<meta itemprop="dateModified" content="2021-07-02T06:20:42&#43;03:00" />
-<meta itemprop="wordCount" content="230">
+<meta itemprop="dateModified" content="2021-07-07T05:17:14&#43;02:00" />
+<meta itemprop="wordCount" content="238">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CommandableAzureFunction"/>
 <meta name="twitter:description" content="Abstract Azure Function function, that acts as a container to instantiate and run components and expose them via external entry point.
@@ -163175,12 +163175,17 @@
 	       
 	<p><strong>Extends</strong>: <a href="../azure_function">AzureFunction</a></p>
 <h3 id="description">Description</h3>
-<p>All actions are automatically generated for commands
-defined in <a href="../../../commons/commands/icommandable">ICommandable components</a>. Each command is exposed as an action defined by &ldquo;cmd&rdquo; parameter.</p>
-<p>Container configuration for this Azure Function is stored in <em>&quot;./config/config.yml&quot;</em> file.
-But this path can be overridden by <em>CONFIG_PATH</em> environment variable.</p>
+<p>Important points</p>
 <ul>
-<li>Note: This component has been deprecated. Use Azure <a href="../../services/function_service">FunctionService</a> instead.</li>
+<li>
+<p>All actions are automatically generated for commands defined in <a href="../../../commons/commands/icommandable">ICommandable components</a>. Each command is exposed as an action defined by &ldquo;cmd&rdquo; parameter.</p>
+</li>
+<li>
+<p>Container configuration for this Azure Function is stored in <em>&quot;./config/config.yml&quot;</em> file. But this path can be overridden by <em>CONFIG_PATH</em> environment variable.</p>
+</li>
+<li>
+<p><strong>Note</strong>: This component has been deprecated. Use Azure <a href="../../services/function_service">FunctionService</a> instead.</p>
+</li>
 </ul>
 <h4 id="references">References</h4>
 <ul>
@@ -163190,40 +163195,41 @@ But this path can be overridden by <em>CONFIG_PATH</em> environment variable.</p
 <li><strong>*:service:commandable-azure-function:*:1.0</strong>: (optional) <a href="../../services/iazure_function_service">IAzureFunctionService</a> services to handle action requests.</li>
 </ul>
 <h3 id="constructors">Constructors</h3>
+<p>Creates a new instance of this Azure Function.</p>
 <blockquote>
 <p><code>public</code> constructor(name: string, description?: string)</p>
 </blockquote>
 <ul>
-<li><strong>name</strong>: string - (optional) a container name (accessible via <a href="../../../components/info/context_info">ContextInfo</a>)</li>
-<li><strong>description</strong>: string - (optional) a container description (accessible via <a href="../../../components/info/context_info">ContextInfo</a>)</li>
+<li><strong>name</strong>: string - (optional) container name (accessible via <a href="../../../components/info/context_info">ContextInfo</a>)</li>
+<li><strong>description</strong>: string - (optional) container description (accessible via <a href="../../../components/info/context_info">ContextInfo</a>)</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="getcorrelationid">getCorrelationId</h4>
-<p>Returns correlationId from Azure Function context.</p>
+<p>Returns a correlationId from Azure Function context.</p>
 <blockquote>
 <p><code>public static</code> getCorrelationId(context: any): string</p>
 </blockquote>
 <ul>
-<li><strong>context</strong>: any - the Azure Function context.</li>
-<li><strong>returns</strong>: string - returns correlationId from context.</li>
+<li><strong>context</strong>: any - Azure Function context.</li>
+<li><strong>returns</strong>: string - returned correlationId from context.</li>
 </ul>
 <h4 id="getcommand">getCommand</h4>
-<p>Returns command from Azure Function context.</p>
+<p>Returns a command from Azure Function context.</p>
 <blockquote>
 <p><code>public static</code> getCommand(context: any): string</p>
 </blockquote>
 <ul>
-<li><strong>context</strong>: any - the Azure Function context.</li>
-<li><strong>returns</strong>: string - returns command from context.</li>
+<li><strong>context</strong>: any - Azure Function context.</li>
+<li><strong>returns</strong>: string - returned command from context.</li>
 </ul>
 <h4 id="gethttprequestbody">getHttpRequestBody</h4>
-<p>Returns body from Azure Function context http request.</p>
+<p>Returns a body from Azure Function context http request.</p>
 <blockquote>
 <p><code>public static</code> getHttpRequestBody(context: any): string</p>
 </blockquote>
 <ul>
-<li><strong>context</strong>: any - the Azure Function context.</li>
-<li><strong>returns</strong>: string - returns body from context.</li>
+<li><strong>context</strong>: any - Azure Function context.</li>
+<li><strong>returns</strong>: string - returned body from context.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyAzureFunctionFunction</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">CommandableAzureFunction</span> <span style="color:#111">{</span>
