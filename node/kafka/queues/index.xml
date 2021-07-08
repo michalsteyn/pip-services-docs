@@ -70,7 +70,7 @@
 &lt;li&gt;&lt;strong&gt;*:connection:kafka:*:1.0&lt;/strong&gt; - (optional) Shared connection to Kafka service&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
-&lt;p&gt;Creates a new instance of the persistence component.&lt;/p&gt;
+&lt;p&gt;Creates a new instance of the message queue.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(name?: string)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -78,7 +78,6 @@
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) a queue name.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
-&lt;h3 id=&#34;fields-1&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h4 id=&#34;_acks&#34;&gt;_acks&lt;/h4&gt;
 &lt;p&gt;TODO: add description&lt;/p&gt;
@@ -221,7 +220,6 @@ When this method is call &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt; unbloc
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; getTopic(): string&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: any - TODO: add description&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;isopen&#34;&gt;isOpen&lt;/h4&gt;
@@ -285,7 +283,7 @@ If there are no messages available in the queue it returns null.&lt;/p&gt;
 &lt;p&gt;Peeks multiple incoming messages from the queue without removing them.
 If there are no messages available in the queue it returns an empty list.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
+&lt;li&gt;Important: This method is not supported by Kafka.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; peekBatch(correlationId: string, messageCount: number): Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope[]&lt;/a&gt;&amp;gt;&lt;/p&gt;
@@ -311,7 +309,7 @@ If there are no messages available in the queue it returns an empty list.&lt;/p&
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;waitTimeout&lt;/strong&gt;: number - a timeout in milliseconds to wait for a message to come.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt; - a received message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt; - a received message or null if nothing was received.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;renewlock&#34;&gt;renewLock&lt;/h4&gt;
 &lt;p&gt;Renews a lock on a message that makes it invisible from other receivers in the queue.
