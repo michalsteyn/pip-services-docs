@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/sqlite/persistence/identifiable_json_sqlite_persistence/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-07T20:30:51&#43;03:00" />
+<meta property="article:modified_time" content="2021-07-08T22:41:55&#43;02:00" />
 
 <meta itemprop="name" content="IdentifiableJsonSqlitePersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;">
 <meta itemprop="description" content="Abstract persistence component that stores data in SQLite in JSON or JSONB fields and implements a number of CRUD operations over data items with unique ids.
 ">
-<meta itemprop="dateModified" content="2021-07-07T20:30:51&#43;03:00" />
-<meta itemprop="wordCount" content="406">
+<meta itemprop="dateModified" content="2021-07-08T22:41:55&#43;02:00" />
+<meta itemprop="wordCount" content="413">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IdentifiableJsonSqlitePersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;"/>
 <meta name="twitter:description" content="Abstract persistence component that stores data in SQLite in JSON or JSONB fields and implements a number of CRUD operations over data items with unique ids.
@@ -170000,13 +170000,14 @@
 	       
 	<p><strong>Extends:</strong> <a href="../identifiable_sqlite_persistence">IdentifiableSqlitePersistence&lt;T, K&gt;</a></p>
 <h3 id="description">Description</h3>
-<p>The data items must implement <a href="../../../commons/data/iidentifiable">IIdentifiable</a> interface.
-The JSON table has only two fields: id and data.
-In basic scenarios child classes shall only override <a href="../sqlite_persistence/#getpagebyfilter">getPageByFilter</a>,
-<a href="../sqlite_persistence/#getlistbyfilter">getListByFilter</a> or <a href="../sqlite_persistence/#deletebyfilter">deleteByFilter</a> operations with specific filter function.
-All other operations can be used out of the box.</p>
-<p>In complex scenarios child classes can implement additional operations by
-accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</p>
+<p>Important points</p>
+<ul>
+<li>The data items must implement <a href="../../../commons/data/iidentifiable">IIdentifiable</a> interface.</li>
+<li>The JSON table has only two fields: id and data.</li>
+<li>In basic scenarios child classes shall only override <a href="../sqlite_persistence/#getpagebyfilter">getPageByFilter</a>, <a href="../sqlite_persistence/#getlistbyfilter">getListByFilter</a> or <a href="../sqlite_persistence/#deletebyfilter">deleteByFilter</a> operations with a specific filter function.</li>
+<li>All other operations can be used out of the box.</li>
+<li>In complex scenarios child classes can implement additional operations by accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</li>
+</ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>table</strong>: (optional) SQLite table name</li>
@@ -170035,7 +170036,7 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="convertfrompublic">convertFromPublic</h4>
-<p>Converts object value from public to internal format.</p>
+<p>Converts an object value from public to internal format.</p>
 <blockquote>
 <p><code>protected</code> convertFromPublic(value: any): any</p>
 </blockquote>
@@ -170044,7 +170045,7 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <li><strong>returns</strong>: any - converted object in internal format.</li>
 </ul>
 <h4 id="converttopublic">convertToPublic</h4>
-<p>Converts object value from internal to public format.</p>
+<p>Converts an object value from internal to public format.</p>
 <blockquote>
 <p><code>protected</code> convertToPublic(value: any): any</p>
 </blockquote>
@@ -170053,7 +170054,7 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <li><strong>returns</strong>: any - converted object in public format.</li>
 </ul>
 <h4 id="ensuretable">ensureTable</h4>
-<p>Adds DML statement to automatically create a JSON(B) table</p>
+<p>Adds a DML statement to automatically create a JSON(B) table</p>
 <blockquote>
 <p><code>protected</code> ensureTable(idType: string = &lsquo;VARCHAR(32)&rsquo;, dataType: string = &lsquo;JSON&rsquo;)</p>
 </blockquote>
@@ -170062,7 +170063,7 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <li><strong>dataType</strong>: string - type of the data column (default: JSON)</li>
 </ul>
 <h4 id="updatepartially">updatePartially</h4>
-<p>Updates only few selected fields in a data item.</p>
+<p>Updates only a few selected fields in a data item.</p>
 <blockquote>
 <p><code>public</code> updatePartially(correlationId: string, id: K, data: <a href="../../../commons/data/any_value_map">AnyValueMap</a>): Promise&lt;T&gt;</p>
 </blockquote>
