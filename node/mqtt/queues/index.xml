@@ -1,0 +1,389 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Queues</title>
+    <link>/node/mqtt/queues/</link>
+    <description>Recent content in Queues on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/node/mqtt/queues/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Node: MqttMessageQueue</title>
+      <link>/node/mqtt/queues/mqtt_message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/node/mqtt/queues/mqtt_message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../../messaging/queues/message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/icleanable&#34;&gt;ICleanable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;MQTT is a popular light-weight protocol to communicate IoT devices.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: name of MQTT topic to subscribe&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from [[https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/connect.idiscovery.html IDiscovery]]&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) a key to retrieve the credentials from [[https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/auth.icredentialstore.html ICredentialStore]]&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: user name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;serialize_envelope&lt;/strong&gt;: (optional) true to serialize entire message as JSON, false to send only message payload (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;autosubscribe&lt;/strong&gt;: (optional) true to automatically subscribe on option (default: false)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;qos&lt;/strong&gt;: (optional) quality of service level aka QOS (default: 0)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retain&lt;/strong&gt;: (optional) retention flag for published messages (default: false)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is log (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait for connection (default: 30000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 1000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keepalive_timeout&lt;/strong&gt;: (optional) number of milliseconds to ping broker while inactive (default: 3000)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; to resolve credentials&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:connection:mqtt:*:1.0&lt;/strong&gt; - (optional) Shared connection to MQTT service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the message queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; constructor(name?: string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) a queue name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_autosubscribe&#34;&gt;_autoSubscribe&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_autoSubscribe&lt;/strong&gt;: boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_connection&#34;&gt;_connection&lt;/h4&gt;
+&lt;p&gt;The MQTT connection component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_connection&lt;/strong&gt;: any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_dependencyresolver&#34;&gt;_dependencyResolver&lt;/h4&gt;
+&lt;p&gt;The dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_dependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_logger&#34;&gt;_logger&lt;/h4&gt;
+&lt;p&gt;The logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt; = new &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger()&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_options&#34;&gt;_options&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; = new &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams()&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_messages&#34;&gt;_messages&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_messages&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope[]&lt;/a&gt; = []&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_qos&#34;&gt;_qos&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_qos&lt;/strong&gt;: number&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_receiver&#34;&gt;_receiver&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_receiver&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_serializeenvelope&#34;&gt;_serializeEnvelope&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_serializeEnvelope&lt;/strong&gt;: boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_subscribed&#34;&gt;_subscribed&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_subscribed&lt;/strong&gt;: boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_topic&#34;&gt;_topic&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_topic&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;abandon&#34;&gt;abandon&lt;/h4&gt;
+&lt;p&gt;Returnes message into the queue and makes it available for all subscribers to receive it again.
+This method is usually used to return a message which could not be processed at the moment
+to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
+or/and send to dead letter queue.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; abandon(message: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - a message to return.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears a component&amp;rsquo;s state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; clear(correlationId: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees the used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; close(correlationId: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complete&#34;&gt;complete&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue.
+This method is usually used to remove the message after successful processing.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; complete(message: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - a message to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config:&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;endlisten&#34;&gt;endListen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages.
+When this method is call &lt;a href=&#34;#listen&#34;&gt;listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; endListen(correlationId: string): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;frommessage&#34;&gt;fromMessage&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; fromMessage(message: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;): any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: any - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;gettopic&#34;&gt;getTopic&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; getTopic(): string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;isOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is opened.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; isOpen(): boolean&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: boolean - True if the component has been opened and False otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until queue is closed.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; listen(correlationId: string, receiver: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - a receiver to receive incoming messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;movetodeadletter&#34;&gt;moveToDeadLetter&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue and sends it to dead letter queue.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; moveToDeadLetter(message: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - a message to be removed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;onmessage&#34;&gt;onMessage&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; onMessage(topic: string, data: any, packet: any): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: any - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;packet&lt;/strong&gt;: any - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; open(correlationId: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it.
+If there are no messages available in the queue it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; peek(correlationId: string): Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt; - a peeked message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peekbatch&#34;&gt;peekBatch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them.
+If there are no messages available in the queue it returns an empty list.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; peekBatch(correlationId: string, messageCount: number): Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope[]&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;messageCount&lt;/strong&gt;: number - a maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope[]&lt;/a&gt;&amp;gt; - a list with peeked messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readmessagecount&#34;&gt;readMessageCount&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; readMessageCount(): Promise&amp;lt;number&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;*&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;number&amp;gt; - a number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; receive(correlationId: string, waitTimeout: number): Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;waitTimeout&lt;/strong&gt;: number - a timeout in milliseconds to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt; - a received message or null if nothing was received.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;renewlock&#34;&gt;renewLock&lt;/h4&gt;
+&lt;p&gt;Renews a lock on a message that makes it invisible from other receivers in the queue.
+This method is usually used to extend the message processing time.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; renewLock(message: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;, lockTimeout: number): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - a message to extend its lock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;lockTimeout&lt;/strong&gt;: number - a locking timeout in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send&#34;&gt;send&lt;/h4&gt;
+&lt;p&gt;Sends a message into the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; send(correlationId: string, message: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - a message envelop to be sent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setReferences(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;subscribe&#34;&gt;subscribe&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; subscribe(correlationId: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tomessage&#34;&gt;toMessage&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; toMessage(topic: string, data: any, packet: any): &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: any - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;packet&lt;/strong&gt;: any - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsetreferences&#34;&gt;unsetReferences&lt;/h4&gt;
+&lt;p&gt;Unsets (clears) previously set references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; unsetReferences(): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MqttMessageQueue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myqueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;topic&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mytopic&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mqtt&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1883&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;send&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MessageEnvelope&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymessage&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;receive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+       &lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;complete&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagequeuemessagingqueuesmessage_queue&#34;&gt;&lt;a href=&#34;../../../messaging/queues/message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagingcapabilitiesmessagingqueuesmessaging_capabilities&#34;&gt;&lt;a href=&#34;../../../messaging/queues/messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
