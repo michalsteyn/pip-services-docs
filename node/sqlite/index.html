@@ -165558,7 +165558,7 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">key</span>: <span style="color:#00a8c8">string</span><span style="color:#111">;</span>
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">value</span>: <span style="color:#00a8c8">number</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-</code></pre></div><p>The persistence component shall implement the following interface with a basic set of CRUD operations.</p>
+</code></pre></div><p>The persistence component shall implement the following interface with a basic set of CRUD operations:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IMyPersistence</span> <span style="color:#111">{</span>
   <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">,</span>
     <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">page</span>: <span style="color:#00a8c8">DataPage</span><span style="color:#111">&lt;</span><span style="color:#f92672">MyObject</span><span style="color:#111">&gt;)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
@@ -165573,7 +165573,7 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
     
   <span style="color:#75af00">deleteById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">id</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">callback</span><span style="color:#f92672">?:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">MyObject</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
-</code></pre></div><p>To implement postgresql persistence component you shall inherit <code>IdentifiableSqlitePersistence</code>.
+</code></pre></div><p>To implement SQLite persistence component you shall inherit <code>IdentifiableSqlitePersistence</code>.
 Most CRUD operations will come from the base class. You only need to override <code>getPageByFilter</code> method with a custom filter function.
 And implement a <code>getOneByKey</code> custom persistence method that doesn&rsquo;t exist in the base class.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableSqlitePersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-sqlite-nodex&#39;</span><span style="color:#111">;</span>
@@ -165691,7 +165691,7 @@ To access data fields you shall use <code>JSON_EXTRACT(data, '$.field')</code> e
   <span style="color:#111">}</span>
 
 <span style="color:#111">}</span>
-</code></pre></div><p>Configuration for your microservice that includes SQLite persistence may look the following way.</p>
+</code></pre></div><p>The configuration for your microservice that includes SQLite persistence may look the following way:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#111">...</span>
 {{<span style="color:#75715e">#if SQLITE_ENABLED}}</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#ae81ff">pip-services:connection:postgres:con1:1.0</span>
