@@ -172663,38 +172663,38 @@
       
       let langNamePosInUrl = isGitRepo ? 4 : 3 
 
-      console.log(hits.length);
-
       hits = hits.filter((item, index) => {
 
         
+        
+        
+        
+        
+        
 
         
+        let menuSection = item.url.split('/')[3];
+        let module = item.url.split('/')[4];
         
-        
-        
-        
-        
+        menuSection = menuSection.charAt(0).toUpperCase() + menuSection.slice(1);
+        module = module.charAt(0).toUpperCase() + module.slice(1);
 
-        
-        
-        
-        
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
           let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
+          item.hierarchy.lvl0 = module;
+          item._highlightResult.hierarchy.lvl0 = module;
+
           return isCorrectHit;
         } else {
-          
-          let language = hits[index].url.split('/')[3]
-          
-          language = language.charAt(0).toUpperCase() + language.slice(1);
+          item.hierarchy.lvl0 = menuSection + ' → ' + module;
+          item._highlightResult.hierarchy.lvl0 = menuSection + ' → ' + module;
 
-          if (!item.hierarchy.lvl6) {
-            item.hierarchy.lvl6 = language;
-            item._highlightResult.hierarchy.lvl6 = { value: '<span style="color:#81c7f9">' + language + '</span>' };
-          }
+          
+          
+          
+          
         }
         
         return true
