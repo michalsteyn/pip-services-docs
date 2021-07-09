@@ -1,0 +1,149 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Lock</title>
+    <link>/golang/redis/lock/</link>
+    <description>Recent content in Lock on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/redis/lock/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: RedisLock</title>
+      <link>/golang/redis/lock/redis_lock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/redis/lock/redis_lock/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements&lt;/strong&gt;: &lt;a href=&#34;../../../components/lock/lock&#34;&gt;Lock&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The RedisLock class allows you to create a distributed lock that is implemented based on the Redis in-memory database.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: key to retrieve parameters from credential store&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username (currently is not used)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;retry_timeout&lt;/strong&gt;: timeout in milliseconds to retry lock acquisition. (Default: 100)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retries&lt;/strong&gt;: number of retries (default: 3)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;db_num&lt;/strong&gt;: database number in Redis  (default 0)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newredislock&#34;&gt;NewRedisLock&lt;/h4&gt;
+&lt;p&gt;Method are creates a new instance of this lock.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewRedisLock() &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) Close(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) Open(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;releaselock&#34;&gt;ReleaseLock&lt;/h4&gt;
+&lt;p&gt;Releases a prevously acquired lock by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) ReleaseLock(correlationId string, key string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - unique lock key to release.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tryacquirelock&#34;&gt;TryAcquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*RedisLock&lt;/a&gt;) TryAcquireLock(correlationId string, key string, ttl int64) (result bool, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int64 - lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result bool, err error) - &lt;em&gt;true&lt;/em&gt; if lock was successfully acquired and &lt;em&gt;false&lt;/em&gt; otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-golang&#34; data-lang=&#34;golang&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;lock&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewRedisRedis&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;cconf&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewConfigParamsFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;6379&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;TryAcquireLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3000&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#75715e&#34;&gt;// Processing...
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ReleaseLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;// Continue...
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
