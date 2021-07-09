@@ -1,0 +1,581 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Persistence</title>
+    <link>/golang/sqlite/persistence/</link>
+    <description>Recent content in Persistence on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/sqlite/persistence/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: IdentifiableJsonSqlitePersistence</title>
+      <link>/golang/sqlite/persistence/identifiable_json_sqlite_persistence/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/sqlite/persistence/identifiable_json_sqlite_persistence/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../identifiable_sqlite_persistence&#34;&gt;IdentifiableSqlitePersistence&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The data items must implement the &lt;a href=&#34;../../../commons/data/iidentifiable&#34;&gt;IIdentifiable&lt;/a&gt; interface.&lt;/li&gt;
+&lt;li&gt;The JSON table has only two fields: id and data.&lt;/li&gt;
+&lt;li&gt;In basic scenarios, child classes shall only override &lt;a href=&#34;../sqlite_persistence/#getpagebyfilter&#34;&gt;GetPageByFilter&lt;/a&gt;, &lt;a href=&#34;../sqlite_persistence/#getlistbyfilter&#34;&gt;GetListByFilter&lt;/a&gt; or &lt;a href=&#34;../sqlite_persistence/#deletebyfilter&#34;&gt;DeleteByFilter&lt;/a&gt; operations with a specific filter function.&lt;/li&gt;
+&lt;li&gt;All other operations can be used out of the box.&lt;/li&gt;
+&lt;li&gt;In complex scenarios child classes can implement additional operations by accessing &lt;strong&gt;c._collection&lt;/strong&gt; and &lt;strong&gt;c._model&lt;/strong&gt; properties.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;table&lt;/strong&gt;: (optional) SQLite table name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: (optional) SQLite schema name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;database&lt;/strong&gt;: database file path&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI with file:// protocol&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritidentifiablejsonsqlitepersistence&#34;&gt;InheritIdentifiableJsonSqlitePersistence&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the persistence component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritIdentifiableJsonSqlitePersistence(overrides ISqlitePersistenceOverrides, proto reflect.Type, tableName string) &lt;a href=&#34;&#34;&gt;*IdentifiableJsonSqlitePersistence&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;overrides&lt;/strong&gt;: ISqlitePersistenceOverrides - a references to child class that overrides virtual methods&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;proto&lt;/strong&gt;: reflect.Type - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tableName&lt;/strong&gt;: string - (optional) a table name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;convertfrompublic&#34;&gt;ConvertFromPublic&lt;/h4&gt;
+&lt;p&gt;Converts an object value from public to internal format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableJsonSqlitePersistence&lt;/a&gt;) ConvertFromPublic(value interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - object in public format to convert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - converted object in internal format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;converttopublic&#34;&gt;ConvertToPublic&lt;/h4&gt;
+&lt;p&gt;Converts an object value from internal to public format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableJsonSqlitePersistence&lt;/a&gt;) ConvertToPublic(rows *sql.Rows) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rows&lt;/strong&gt;: *sql.Rows - object in internal format to convert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - converted object in public format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ensuretable&#34;&gt;EnsureTable&lt;/h4&gt;
+&lt;p&gt;Adds a DML statement to automatically create a JSON(B) table&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableJsonSqlitePersistence&lt;/a&gt;) EnsureTable(idType string, dataType string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;idType&lt;/strong&gt;: string - type of the id column (default: VARCHAR(32))&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dataType&lt;/strong&gt;: string - type of the data column (default: JSON)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;updatepartially&#34;&gt;UpdatePartially&lt;/h4&gt;
+&lt;p&gt;Updates only a few selected fields in a data item.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableJsonSqlitePersistence&lt;/a&gt;) UpdatePartially(correlationId string, id interface{}, data &lt;a href=&#34;../../../commons/data/any_value_map&#34;&gt;*AnyValueMap&lt;/a&gt;) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: interface{} - id of the data item to be updated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/any_value_map&#34;&gt;*AnyValueMap&lt;/a&gt; - map with fields to be updated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: (result interface{}, err error) - updated item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;TODO&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;add&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;example&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: IdentifiableSqlitePersistence</title>
+      <link>/golang/sqlite/persistence/identifiable_sqlite_persistence/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/sqlite/persistence/identifiable_sqlite_persistence/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../sqlite_persistence&#34;&gt;*SqlitePersistence&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The data items must implement the &lt;a href=&#34;../../../commons/data/iidentifiable&#34;&gt;IIdentifiable&lt;/a&gt; interface.&lt;/li&gt;
+&lt;li&gt;In basic scenarios, child classes shall only override &lt;a href=&#34;../sqlite_persistence/#getpagebyfilter&#34;&gt;GetPageByFilter&lt;/a&gt;, &lt;a href=&#34;../sqlite_persistence/#getlistbyfilter&#34;&gt;GetListByFilter&lt;/a&gt; or &lt;a href=&#34;../sqlite_persistence/#deletebyfilter&#34;&gt;DeleteByFilter&lt;/a&gt; operations with a specific filter function.&lt;/li&gt;
+&lt;li&gt;All other operations can be used out of the box.&lt;/li&gt;
+&lt;li&gt;In complex scenarios child classes can implement additional operations by accessing &lt;strong&gt;c._collection&lt;/strong&gt; and &lt;strong&gt;c._model&lt;/strong&gt; properties.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;table&lt;/strong&gt;: (optional) SQLite table name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: (optional) SQLite schema name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;database&lt;/strong&gt;: database file path&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI with file:// protocol&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) Credential stores to resolve credentials (&lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritidentifiablesqlitepersistence&#34;&gt;InheritIdentifiableSqlitePersistence&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the persistence component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritIdentifiableSqlitePersistence(overrides ISqlitePersistenceOverrides, proto reflect.Type, tableName string) &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;overrides&lt;/strong&gt;: ISqlitePersistenceOverrides - a references to child class that overrides virtual methods&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;proto&lt;/strong&gt;: reflect.Type -  TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tableName&lt;/strong&gt;: string - (optional) a table name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;convertfrompublicpartial&#34;&gt;ConvertFromPublicPartial!&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;create&#34;&gt;Create&lt;/h4&gt;
+&lt;p&gt;Creates a data item.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) Create(correlationId string, item interface{}) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: interface{} - item to be created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result interface{}, err error) - created item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;deletebyid&#34;&gt;DeleteById&lt;/h4&gt;
+&lt;p&gt;Deletes a data item by it&amp;rsquo;s unique id.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) DeleteById(correlationId string, id interface{}) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: interface{} - id of the item to be deleted&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result interface{}, err error) - deleted item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;deletebyids&#34;&gt;DeleteByIds&lt;/h4&gt;
+&lt;p&gt;Deletes multiple data items by their unique ids.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) DeleteByIds(correlationId string, ids []interface{}) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ids&lt;/strong&gt;: []interface{} - ids of the data items to be deleted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlistbyids&#34;&gt;GetListByIds&lt;/h4&gt;
+&lt;p&gt;Gets a list of data items retrieved by given unique ids.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) GetListByIds(correlationId string, ids []interface{}) (items []interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ids&lt;/strong&gt;: []interface{} - ids of the data items to be retrieved&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (items []interface{}, err error) - data list&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getonebyid&#34;&gt;GetOneById&lt;/h4&gt;
+&lt;p&gt;Gets a data item by its unique id.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) GetOneById(correlationId string, id interface{}) (item interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: interface{} - id of the data item to be retrieved.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;:(item interface{}, err error) - data item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set&#34;&gt;Set&lt;/h4&gt;
+&lt;p&gt;Sets a data item. If the data item exists, it updates it.
+Otherwise, it creates a new data item.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) Set(correlationId string, item interface{}) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: interface{} - item to be set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result interface{}, err error) - new or updated item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;update&#34;&gt;Update&lt;/h4&gt;
+&lt;p&gt;Updates a data item.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) Update(correlationId string, item interface{}) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: interface{} - item to be updated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result interface{}, err error) - updated item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;updatepartially&#34;&gt;UpdatePartially&lt;/h4&gt;
+&lt;p&gt;Updates only a few selected fields in a data item.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*IdentifiableSqlitePersistence&lt;/a&gt;) UpdatePartially(correlationId string, id interface{}, data &lt;a href=&#34;../../../commons/data/any_value_map&#34;&gt;*AnyValueMap&lt;/a&gt;) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: interface{} - id of data item to be updated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/any_value_map&#34;&gt;*AnyValueMap&lt;/a&gt; - map with fields to be updated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result interface{}, err error) - updated item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;TODO&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;add&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;example&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: SqlitePersistence&lt;T&gt;</title>
+      <link>/golang/sqlite/persistence/sqlite_persistence/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/sqlite/persistence/sqlite_persistence/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;, &lt;a href=&#34;../../../commons/run/icleanable&#34;&gt;ICleanable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The SqlitePersistence class allows you to create abstract persistence components that store data in SQLite using the default driver.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is the most basic persistence component that is only able to store data items of any type. Specific CRUD operations over the data items must be implemented in child classes by accessing &lt;strong&gt;c._db&lt;/strong&gt; or &lt;strong&gt;c._collection&lt;/strong&gt; properties.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;table&lt;/strong&gt;: (optional) SQLite table name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: (optional) SQLite schema name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number (default: 27017)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: (optional) username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: (optional) user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait before timing out when connecting a new client (default: 0)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;idle_timeout&lt;/strong&gt;: (optional) number of milliseconds a client must sit idle in the pool and not be checked out (default: 10000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_pool_size&lt;/strong&gt;: (optional) maximum number of clients the pool should contain (default: 10)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritsqlitepersistence&#34;&gt;InheritSqlitePersistence&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the persistence component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritSqlitePersistence(overrides ISqlitePersistenceOverrides, proto reflect.Type, tableName string) &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;overrides&lt;/strong&gt;: ISqlitePersistenceOverrides - a references to child class that overrides virtual methods&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;proto&lt;/strong&gt;: reflect.Type -  TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;tableName&lt;/strong&gt;: string - (optional) a table name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;databasename&#34;&gt;DatabaseName&lt;/h4&gt;
+&lt;p&gt;SQLite database name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DatabaseName&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;dependencyresolver&#34;&gt;DependencyResolver&lt;/h4&gt;
+&lt;p&gt;Dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;*DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;logger&#34;&gt;Logger&lt;/h4&gt;
+&lt;p&gt;Logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;*CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connection&#34;&gt;Connection&lt;/h4&gt;
+&lt;p&gt;SQLite connection component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Connection&lt;/strong&gt;: &lt;a href=&#34;../../connect/sqlite_connection&#34;&gt;*SQLiteConnection&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;client&#34;&gt;Client&lt;/h4&gt;
+&lt;p&gt;SQLite connection pool object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Client&lt;/strong&gt;: *sql.DB&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;maxpagesize&#34;&gt;MaxPageSize&lt;/h4&gt;
+&lt;p&gt;Maximum number of records to return from the database per request.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;MaxPageSize&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;clear&#34;&gt;Clear&lt;/h4&gt;
+&lt;p&gt;Clears a component&amp;rsquo;s state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) Clear(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clearschema&#34;&gt;ClearSchema&lt;/h4&gt;
+&lt;p&gt;Clears all auto-created objects&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) ClearSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees the used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) Close(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*cconf.ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config:&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*cconf.ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;convertfrompublic&#34;&gt;ConvertFromPublic&lt;/h4&gt;
+&lt;p&gt;Converts an object value from public to internal format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) ConvertFromPublic(value interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - object in public format to convert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - converted object in internal format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;converttopublic&#34;&gt;ConvertToPublic&lt;/h4&gt;
+&lt;p&gt;Converts object value from internal to func (c * SqlitePersistence) format.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) ConvertToPublic(rows *sql.Rows) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rows&lt;/strong&gt;: *sql.Rows - object in internal format to convert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - converted object in func (c * SqlitePersistence) format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;create&#34;&gt;Create&lt;/h4&gt;
+&lt;p&gt;Creates a data item.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) Create(correlationId string, item interface{}) (result interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: interface{} - item to be created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result interface{}, err error) - created item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;createschema&#34;&gt;CreateSchema&lt;/h4&gt;
+&lt;p&gt;Checks if a table exists and if not, it creates the necessary database objects.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) CreateSchema(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;defineschema&#34;&gt;DefineSchema&lt;/h4&gt;
+&lt;p&gt;Defines a database schema via auto-create objects or convenience methods.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) DefineSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;deletebyfilter&#34;&gt;DeleteByFilter&lt;/h4&gt;
+&lt;p&gt;Deletes data items that match to a given filter.
+This method shall be called by a func &lt;strong&gt;DeleteByFilter&lt;/strong&gt; method from child class that
+receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) DeleteByFilter(correlationId string, filter string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: string - (optional) filter function to filter items.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ensureindex&#34;&gt;EnsureIndex&lt;/h4&gt;
+&lt;p&gt;Adds index definition to create it on opening.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) EnsureIndex(name string, keys map[string]string, options map[string]string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: map[string]string - index keys (fields)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: map[string]string - index options&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ensureschema&#34;&gt;EnsureSchema&lt;/h4&gt;
+&lt;p&gt;Adds a statement to schema definition.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) EnsureSchema(schemaStatement string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;schemaStatement&lt;/strong&gt;: string - statement to be added to the schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;generatecolumns&#34;&gt;GenerateColumns&lt;/h4&gt;
+&lt;p&gt;Generates a list of column names to use in SQL statements like: &lt;em&gt;&amp;ldquo;column1,column2,column3&amp;rdquo;&lt;/em&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GenerateColumns(values interface{}) string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: interface{} - array with column values or a key-value map&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - generated list of column names&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;generateparameters&#34;&gt;GenerateParameters&lt;/h4&gt;
+&lt;p&gt;Generates a list of value parameters to use in SQL statements like: &amp;ldquo;$1,$2,$3&amp;rdquo;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GenerateParameters(values interface{}) string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: interface{} - array with values or a key-value map&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - generated list of value parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;generatesetparameters&#34;&gt;GenerateSetParameters&lt;/h4&gt;
+&lt;p&gt;Generates a list of column sets to use in UPDATE statements like: column1=$1,column2=$2&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GenerateSetParameters(values interface{}) (params string, columns string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: interface{} - key-value map with columns and values&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (params string, columns string) - generated list of column sets&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;generatevalues&#34;&gt;GenerateValues&lt;/h4&gt;
+&lt;p&gt;Generates a list of column parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GenerateValues(columns string, values interface{}) []interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;columns&lt;/strong&gt;: string - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: interface{} - key-value map with columns and values&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []interface{} - generated list of column values&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getcountbyfilter&#34;&gt;GetCountByFilter&lt;/h4&gt;
+&lt;p&gt;Gets a number of data items retrieved by a given filter.&lt;/p&gt;
+&lt;p&gt;This method shall be called by a func &lt;strong&gt;GetCountByFilter&lt;/strong&gt; method from the child class that
+receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GetCountByFilter(correlationId string, filter interface{}) (count int64, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: interface{} - (optional) JSON object filter&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (count int64, err error) - number of filtered items.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlistbyfilter&#34;&gt;GetListByFilter&lt;/h4&gt;
+&lt;p&gt;Gets a list of data items retrieved by a given filter and sorted according to sort parameters.&lt;/p&gt;
+&lt;p&gt;This method shall be called by a func &lt;strong&gt;GetListByFilter&lt;/strong&gt; method from a child class that
+receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GetListByFilter(correlationId string, filter interface{}, sort interface{}, sel interface{}) (items []interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: interface{} - (optional) filter function to filter items&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sort&lt;/strong&gt;: interface{} - (optional) sorting parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sel&lt;/strong&gt;: interface{} - (optional) projection parameters (not used yet)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (items []interface{}, err error) - data list of results by filter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getonerandom&#34;&gt;GetOneRandom&lt;/h4&gt;
+&lt;p&gt;Gets a random item from items that match to a given filter.&lt;/p&gt;
+&lt;p&gt;This method shall be called by a func &lt;strong&gt;GetOneRandom&lt;/strong&gt; method from a child class
+that receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GetOneRandom(correlationId string, filter interface{}) (item interface{}, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: interface{} - (optional) filter JSON object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (item interface{}, err error) - random item.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getpagebyfilter&#34;&gt;GetPageByFilter&lt;/h4&gt;
+&lt;p&gt;Gets a page of data items retrieved by a given filter and sorted according to sort parameters.&lt;/p&gt;
+&lt;p&gt;This method shall be called by a func &lt;strong&gt;GetPageByFilter&lt;/strong&gt; method from the a child class that
+receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) GetPageByFilter(correlationId string, filter interface{}, paging &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;*PagingParams&lt;/a&gt;, sort interface{}, sel interface{}) (page &lt;a href=&#34;../../../commons/data/data_page&#34;&gt;*DataPage&lt;/a&gt;, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filter&lt;/strong&gt;: interface{} - (optional) filter for JSON objects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;paging&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;*PagingParams&lt;/a&gt; - (optional) paging parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sort&lt;/strong&gt;: interface{} - (optional) sorting JSON object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sel&lt;/strong&gt;: interface{} - (optional) projection JSON object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (page &lt;a href=&#34;../../../commons/data/data_page&#34;&gt;*DataPage&lt;/a&gt;, err error) - data page of result by filter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component has been opened and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) Open(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;quoteidentifier&#34;&gt;QuoteIdentifier&lt;/h4&gt;
+&lt;p&gt;Adds single quotes to a string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) QuoteIdentifier(value string) string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: string - string where quotes need to be added&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - string with added quotes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;quotedtablename&#34;&gt;QuotedTableName!&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsetreferences&#34;&gt;UnsetReferences&lt;/h4&gt;
+&lt;p&gt;Unsets (clears) previously set references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*SqlitePersistence&lt;/a&gt;) UnsetReferences()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;TODO&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;add&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;example&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
