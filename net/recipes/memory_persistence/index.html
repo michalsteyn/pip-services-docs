@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.81.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../net/recipes/memory_persistence/index.xml">
+<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../net/recipes/memory_persistence/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -172331,15 +172331,15 @@ Below is an example of a custom persistent method.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#111">MyData</span><span style="color:#111">&gt;</span> <span style="color:#111">GetOneByNameAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">name</span><span style="color:#111">)</span>
 <span style="color:#111">{</span>
     <span style="color:#111">MyData</span> <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
-    <span style="color:#00a8c8">lock</span> <span style="color:#111">(</span><span style="color:#111">_lock</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">lock</span> <span style="color:#111">(</span><span style="color:#ae81ff">_l</span><span style="color:#111">ock</span><span style="color:#111">)</span>
     <span style="color:#111">{</span>
-        <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#111">_items</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Name</span> <span style="color:#111">==</span> <span style="color:#111">name</span><span style="color:#111">;</span> <span style="color:#111">});</span>
+        <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_</span><span style="color:#111">items</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Name</span> <span style="color:#111">==</span> <span style="color:#111">name</span><span style="color:#111">;</span> <span style="color:#111">});</span>
     <span style="color:#111">}</span>
 
     <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">item</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
-        <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found by Name {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
+        <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found by Name {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
     <span style="color:#00a8c8">else</span>
-        <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find by Id {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
+        <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find by Id {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
 
     <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">FromResult</span><span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">);</span>
 <span style="color:#111">}</span>
@@ -172349,7 +172349,7 @@ Below is an example of a custom persistent method.</p>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#111">MyMemoryPersistence</span><span style="color:#111">()</span>
     <span style="color:#111">{</span>
-        <span style="color:#111">_maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+        <span style="color:#ae81ff">_</span><span style="color:#111">maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
     <span style="color:#00a8c8">private</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">MyData</span><span style="color:#111">,</span> <span style="color:#00a8c8">bool</span><span style="color:#111">&gt;&gt;</span> <span style="color:#111">ComposeFilter</span><span style="color:#111">(</span><span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">)</span>
     <span style="color:#111">{</span>
@@ -172372,14 +172372,14 @@ Below is an example of a custom persistent method.</p>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#111">MyData</span><span style="color:#111">&gt;</span> <span style="color:#111">GetOneByNameAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">name</span><span style="color:#111">)</span>
     <span style="color:#111">{</span>
         <span style="color:#111">MyData</span> <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
-        <span style="color:#00a8c8">lock</span> <span style="color:#111">(</span><span style="color:#111">_lock</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">lock</span> <span style="color:#111">(</span><span style="color:#ae81ff">_l</span><span style="color:#111">ock</span><span style="color:#111">)</span>
         <span style="color:#111">{</span>
-            <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#111">_items</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Name</span> <span style="color:#111">==</span> <span style="color:#111">name</span><span style="color:#111">;</span> <span style="color:#111">});</span>
+            <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_</span><span style="color:#111">items</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">((</span><span style="color:#111">x</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Name</span> <span style="color:#111">==</span> <span style="color:#111">name</span><span style="color:#111">;</span> <span style="color:#111">});</span>
         <span style="color:#111">}</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">item</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
-            <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found by name {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
+            <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found by name {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">else</span>
-            <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find by name {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
+            <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find by name {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
 
         <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">FromResult</span><span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
@@ -172409,17 +172409,17 @@ Below is an example of a custom persistent method.</p>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyFilePersistence</span> <span style="color:#111">:</span> <span style="color:#111">MyMemoryPersistence</span>
     <span style="color:#111">{</span>
-        <span style="color:#00a8c8">protected</span> <span style="color:#111">JsonFilePersister</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">_persister</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">protected</span> <span style="color:#111">JsonFilePersister</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#ae81ff">_</span><span style="color:#111">persister</span><span style="color:#111">;</span>
         <span style="color:#00a8c8">public</span> <span style="color:#111">MyFilePersistence</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
-            <span style="color:#111">_persister</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JsonFilePersister</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;();</span>
-            <span style="color:#111">_loader</span> <span style="color:#111">=</span> <span style="color:#111">_persister</span><span style="color:#111">;</span>
-            <span style="color:#111">_saver</span> <span style="color:#111">=</span> <span style="color:#111">_persister</span><span style="color:#111">;</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">persister</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">JsonFilePersister</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;();</span>
+            <span style="color:#ae81ff">_l</span><span style="color:#111">oader</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_</span><span style="color:#111">persister</span><span style="color:#111">;</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">saver</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_</span><span style="color:#111">persister</span><span style="color:#111">;</span>
         <span style="color:#111">}</span>
         <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">override</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">)</span>
         <span style="color:#111">{</span>
             <span style="color:#00a8c8">base</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
-            <span style="color:#111">_persister</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">persister</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
         <span style="color:#111">}</span>
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>

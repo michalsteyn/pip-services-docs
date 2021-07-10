@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.81.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/data_microservice/step3/index.xml">
+<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/data_microservice/step3/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -24,12 +24,12 @@ Let’s start by navigating to the src/service directory and creating a persiste
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/tutorials/data_microservice/step3/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-29T21:06:47&#43;03:00" />
+<meta property="article:modified_time" content="2021-06-29T21:06:47+03:00" />
 
 <meta itemprop="name" content="Step 3. Implementing persistence components">
 <meta itemprop="description" content="In this step, we’ll be creating components for persisting the data model we defined in the previous step. In our projects, we always create at least two persistences: one for storing data in-memory (used for testing), and another for storing data in an external database (used in production). With the Beacons example, we’ll be doing the same.
 Let’s start by navigating to the src/service directory and creating a persistence directory inside it.">
-<meta itemprop="dateModified" content="2021-06-29T21:06:47&#43;03:00" />
+<meta itemprop="dateModified" content="2021-06-29T21:06:47+03:00" />
 <meta itemprop="wordCount" content="1550">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 3. Implementing persistence components"/>
@@ -172317,7 +172317,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
     <span style="color:#111">{</span>
         <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsMemoryPersistence</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
-            <span style="color:#111">_maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
         <span style="color:#111">}</span>
 
         <span style="color:#00a8c8">private</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">bool</span><span style="color:#111">&gt;&gt;</span> <span style="color:#111">ComposeFilter</span><span style="color:#111">(</span><span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">)</span>
@@ -172359,13 +172359,13 @@ Let’s start by navigating to the src/service directory and creating a persiste
         <span style="color:#111">{</span>
             <span style="color:#111">BeaconV1</span> <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
 
-            <span style="color:#00a8c8">lock</span> <span style="color:#111">(</span><span style="color:#111">_lock</span><span style="color:#111">)</span>
+            <span style="color:#00a8c8">lock</span> <span style="color:#111">(</span><span style="color:#ae81ff">_l</span><span style="color:#111">ock</span><span style="color:#111">)</span>
             <span style="color:#111">{</span>
-                <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#111">_items</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">((</span><span style="color:#111">beacon</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Udi</span> <span style="color:#111">==</span> <span style="color:#111">udi</span><span style="color:#111">;</span> <span style="color:#111">});</span>
+                <span style="color:#111">item</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_</span><span style="color:#111">items</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">((</span><span style="color:#111">beacon</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Udi</span> <span style="color:#111">==</span> <span style="color:#111">udi</span><span style="color:#111">;</span> <span style="color:#111">});</span>
             <span style="color:#111">}</span>
 
-            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">item</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found beacon by {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
-            <span style="color:#00a8c8">else</span> <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find beacon by {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">item</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found beacon by {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">else</span> <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find beacon by {0}&#34;</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
 
             <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">FromResult</span><span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">);</span>
         <span style="color:#111">}</span>
@@ -172424,12 +172424,12 @@ Let’s start by navigating to the src/service directory and creating a persiste
         <span style="color:#111">{</span>
             <span style="color:#00a8c8">var</span> <span style="color:#111">builder</span> <span style="color:#111">=</span> <span style="color:#111">Builders</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;.</span><span style="color:#111">Filter</span><span style="color:#111">;</span>
             <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">x</span> <span style="color:#111">=&gt;</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
-            <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_collection</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">).</span><span style="color:#111">FirstOrDefaultAsync</span><span style="color:#111">();</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">collection</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">).</span><span style="color:#111">FirstOrDefaultAsync</span><span style="color:#111">();</span>
 
             <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
-                <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Retrieved from {0} with udi = {1}&#34;</span><span style="color:#111">,</span> <span style="color:#111">_collectionName</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+                <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Retrieved from {0} with udi = {1}&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">collectionName</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
             <span style="color:#00a8c8">else</span>
-                <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Nothing found from {0} with udi = {1}&#34;</span><span style="color:#111">,</span> <span style="color:#111">_collectionName</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+                <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Nothing found from {0} with udi = {1}&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">collectionName</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
 
             <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
 
@@ -172475,17 +172475,17 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#111">Radius</span> <span style="color:#111">=</span> <span style="color:#ae81ff">50</span>
         <span style="color:#111">};</span>
 
-        <span style="color:#00a8c8">private</span> <span style="color:#111">IBeaconsPersistence</span> <span style="color:#111">_persistence</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">private</span> <span style="color:#111">IBeaconsPersistence</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">;</span>
 
         <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsPersistenceFixture</span><span style="color:#111">(</span><span style="color:#111">IBeaconsPersistence</span> <span style="color:#111">persistence</span><span style="color:#111">)</span>
         <span style="color:#111">{</span>
-            <span style="color:#111">_persistence</span> <span style="color:#111">=</span> <span style="color:#111">persistence</span><span style="color:#111">;</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span> <span style="color:#111">=</span> <span style="color:#111">persistence</span><span style="color:#111">;</span>
         <span style="color:#111">}</span>
 
         <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">TestCreateBeaconsAsync</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
             <span style="color:#75715e">// Create the first beacon
-</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">CreateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">BEACON1</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">CreateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">BEACON1</span><span style="color:#111">);</span>
 
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#111">BEACON1</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">);</span>
@@ -172495,7 +172495,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Center</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Create the second beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">CreateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">BEACON2</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">CreateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">BEACON2</span><span style="color:#111">);</span>
  
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#111">BEACON2</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">);</span>
@@ -172505,7 +172505,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Center</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Create the third beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">CreateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">BEACON3</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">CreateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">BEACON3</span><span style="color:#111">);</span>
 
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#111">BEACON3</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">);</span>
@@ -172521,7 +172521,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
 </span><span style="color:#75715e"></span>            <span style="color:#00a8c8">await</span> <span style="color:#111">TestCreateBeaconsAsync</span><span style="color:#111">();</span>
 
             <span style="color:#75715e">// Get all beacons
-</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
                 <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
                 <span style="color:#00a8c8">new</span> <span style="color:#111">FilterParams</span><span style="color:#111">(),</span>
                 <span style="color:#00a8c8">new</span> <span style="color:#111">PagingParams</span><span style="color:#111">()</span>
@@ -172535,26 +172535,26 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#75715e">// Update the beacon
 </span><span style="color:#75715e"></span>            <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Label</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">;</span>
 
-            <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">UpdateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">UpdateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">);</span>
 
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Label</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Get beacon by udi
-</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetOneByUdiAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetOneByUdiAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">);</span>
 
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Delete the beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">DeleteByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">DeleteByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
 
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">NotNull</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Try to get deleted beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetOneByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetOneByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">beacon1</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
 
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Null</span><span style="color:#111">(</span><span style="color:#111">beacon</span><span style="color:#111">);</span>
         <span style="color:#111">}</span>
@@ -172565,7 +172565,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
 </span><span style="color:#75715e"></span>            <span style="color:#00a8c8">await</span> <span style="color:#111">TestCreateBeaconsAsync</span><span style="color:#111">();</span>
 
             <span style="color:#75715e">// Filter by id
-</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
+</span><span style="color:#75715e"></span>            <span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
                 <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
                 <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">FromTuples</span><span style="color:#111">(</span>
                     <span style="color:#d88200">&#34;id&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1&#34;</span>
@@ -172576,7 +172576,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Single</span><span style="color:#111">(</span><span style="color:#111">page</span><span style="color:#111">.</span><span style="color:#111">Data</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Filter by udi
-</span><span style="color:#75715e"></span>            <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
                 <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
                 <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">FromTuples</span><span style="color:#111">(</span>
                     <span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;00002&#34;</span>
@@ -172587,7 +172587,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Single</span><span style="color:#111">(</span><span style="color:#111">page</span><span style="color:#111">.</span><span style="color:#111">Data</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Filter by udis
-</span><span style="color:#75715e"></span>            <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
                 <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
                 <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">FromTuples</span><span style="color:#111">(</span>
                     <span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;00001,00003&#34;</span>
@@ -172598,7 +172598,7 @@ Let’s start by navigating to the src/service directory and creating a persiste
             <span style="color:#111">Assert</span><span style="color:#111">.</span><span style="color:#111">Equal</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#111">page</span><span style="color:#111">.</span><span style="color:#111">Data</span><span style="color:#111">.</span><span style="color:#111">Count</span><span style="color:#111">);</span>
 
             <span style="color:#75715e">// Filter by site_id
-</span><span style="color:#75715e"></span>            <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
+</span><span style="color:#75715e"></span>            <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
                 <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
                 <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">FromTuples</span><span style="color:#111">(</span>
                     <span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1&#34;</span>
@@ -172616,34 +172616,34 @@ Let’s start by navigating to the src/service directory and creating a persiste
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MemoryBeaconsPersistenceTest</span><span style="color:#111">:</span> <span style="color:#111">IDisposable</span>
     <span style="color:#111">{</span>
-        <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsMemoryPersistence</span> <span style="color:#111">_persistence</span><span style="color:#111">;</span>
-        <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsPersistenceFixture</span> <span style="color:#111">_fixture</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsMemoryPersistence</span> <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsPersistenceFixture</span> <span style="color:#ae81ff">_f</span><span style="color:#111">ixture</span><span style="color:#111">;</span>
 
         <span style="color:#00a8c8">public</span> <span style="color:#111">MemoryBeaconsPersistenceTest</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
-            <span style="color:#111">_persistence</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BeaconsMemoryPersistence</span><span style="color:#111">();</span>
-            <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">ConfigParams</span><span style="color:#111">());</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BeaconsMemoryPersistence</span><span style="color:#111">();</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">ConfigParams</span><span style="color:#111">());</span>
 
-            <span style="color:#111">_fixture</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BeaconsPersistenceFixture</span><span style="color:#111">(</span><span style="color:#111">_persistence</span><span style="color:#111">);</span>
+            <span style="color:#ae81ff">_f</span><span style="color:#111">ixture</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BeaconsPersistenceFixture</span><span style="color:#111">(</span><span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">);</span>
 
-            <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">).</span><span style="color:#111">Wait</span><span style="color:#111">();</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">).</span><span style="color:#111">Wait</span><span style="color:#111">();</span>
         <span style="color:#111">}</span>
 
         <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Dispose</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
-            <span style="color:#111">_persistence</span><span style="color:#111">.</span><span style="color:#111">CloseAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">).</span><span style="color:#111">Wait</span><span style="color:#111">();</span>    
+            <span style="color:#ae81ff">_</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">CloseAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">).</span><span style="color:#111">Wait</span><span style="color:#111">();</span>    
         <span style="color:#111">}</span>
 <span style="color:#75af00">
 </span><span style="color:#75af00">        [Fact]</span>
         <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">TestCrudOperationsAsync</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
-            <span style="color:#00a8c8">await</span> <span style="color:#111">_fixture</span><span style="color:#111">.</span><span style="color:#111">TestCrudOperationsAsync</span><span style="color:#111">();</span>
+            <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_f</span><span style="color:#111">ixture</span><span style="color:#111">.</span><span style="color:#111">TestCrudOperationsAsync</span><span style="color:#111">();</span>
         <span style="color:#111">}</span>
 <span style="color:#75af00">
 </span><span style="color:#75af00">        [Fact]</span>
         <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">TestGetWithFiltersAsync</span><span style="color:#111">()</span>
         <span style="color:#111">{</span>
-            <span style="color:#00a8c8">await</span> <span style="color:#111">_fixture</span><span style="color:#111">.</span><span style="color:#111">TestGetWithFiltersAsync</span><span style="color:#111">();</span>
+            <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_f</span><span style="color:#111">ixture</span><span style="color:#111">.</span><span style="color:#111">TestGetWithFiltersAsync</span><span style="color:#111">();</span>
         <span style="color:#111">}</span>
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>

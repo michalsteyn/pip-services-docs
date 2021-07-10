@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.81.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../python/getting_started/your_first_microservice/index.xml">
+<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../python/getting_started/your_first_microservice/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -171863,7 +171863,7 @@ pip_services3_rpc
 </code></pre></div><h3 id="step-2-controller">Step 2. Controller</h3>
 <p>The controller will be a simple class that implements a single business method, which receives a name and generates a greeting. In general, business methods can call other built-in services or work with a database.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">):</span>        
-    <span style="color:#00a8c8">return</span> <span style="color:#111">f</span><span style="color:#d88200">&#34;Hello, {name if name is not None else self.__defaultName} !&#34;</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#d88200">f</span><span style="color:#d88200">&#34;Hello, </span><span style="color:#d88200">{</span><span style="color:#111">name</span> <span style="color:#00a8c8">if</span> <span style="color:#111">name</span> <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#00a8c8">None</span> <span style="color:#00a8c8">else</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__defaultName</span><span style="color:#d88200">}</span><span style="color:#d88200"> !&#34;</span>
 </code></pre></div><p>To demonstrate the dynamic configuration of a component, the recipient name will be specified by the parameter “__default_name”. To get the configuration, the component must implement the interface “IConfigurable” with the method “configure”.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">):</span>        
     <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__default_name</span> <span style="color:#f92672">=</span> <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">get_as_string_with_default</span><span style="color:#111">(</span><span style="color:#d88200">&#34;default_name&#34;</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__default_name</span><span style="color:#111">)</span>
@@ -171876,7 +171876,7 @@ pip_services3_rpc
 <p><strong>/HelloWorldController.py</strong></p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># -*- coding: utf-8 -*- </span>
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldController</span><span style="color:#111">:</span>
-    <span style="color:#111">__default_name</span> <span style="color:#f92672">=</span> <span style="color:#111">None</span>
+    <span style="color:#111">__default_name</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">None</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__default_name</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;Pip User&#34;</span>
@@ -171885,7 +171885,7 @@ pip_services3_rpc
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__default_name</span> <span style="color:#f92672">=</span> <span style="color:#111">config</span><span style="color:#f92672">.</span><span style="color:#111">get_as_string_with_default</span><span style="color:#111">(</span><span style="color:#d88200">&#34;default_name&#34;</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__default_name</span><span style="color:#111">)</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">f</span><span style="color:#d88200">&#34;Hello, {name if name is not None else self.__default_name} !&#34;</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#d88200">f</span><span style="color:#d88200">&#34;Hello, </span><span style="color:#d88200">{</span><span style="color:#111">name</span> <span style="color:#00a8c8">if</span> <span style="color:#111">name</span> <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#00a8c8">None</span> <span style="color:#00a8c8">else</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__default_name</span><span style="color:#d88200">}</span><span style="color:#d88200"> !&#34;</span>
 
 </code></pre></div><h3 id="step-3-rest-service">Step 3. REST service</h3>
 <p>One of the most popular ways of transferring data between microservices is using the synchronous HTTP REST protocol. The HelloWorldRestService will be used to implement an external REST interface. This component extends the abstract RestService of the Pip.Services toolkit, which implements all the necessary functionality for processing REST HTTP requests.</p>
@@ -171925,7 +171925,7 @@ pip_services3_rpc
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_controller</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_dependency_resolver</span><span style="color:#f92672">.</span><span style="color:#111">get_one_required</span><span style="color:#111">(</span><span style="color:#d88200">&#39;controller&#39;</span><span style="color:#111">)</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">register</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route</span><span style="color:#111">(</span><span style="color:#111">method</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;GET&#34;</span><span style="color:#111">,</span> <span style="color:#111">route</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_route</span><span style="color:#111">,</span> <span style="color:#111">handler</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">greeting</span><span style="color:#111">,</span> <span style="color:#111">schema</span><span style="color:#f92672">=</span><span style="color:#111">None</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route</span><span style="color:#111">(</span><span style="color:#111">method</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;GET&#34;</span><span style="color:#111">,</span> <span style="color:#111">route</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_route</span><span style="color:#111">,</span> <span style="color:#111">handler</span><span style="color:#f92672">=</span><span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">greeting</span><span style="color:#111">,</span> <span style="color:#111">schema</span><span style="color:#f92672">=</span><span style="color:#00a8c8">None</span><span style="color:#111">)</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">):</span>
         <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_controller</span><span style="color:#f92672">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span>
@@ -172034,11 +172034,11 @@ pip_services3_rpc
 
 <span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
     <span style="color:#111">runner</span> <span style="color:#f92672">=</span> <span style="color:#111">HelloWorldProcess</span><span style="color:#111">()</span>
-    <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;run&#34;</span><span style="color:#111">)</span>
+    <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;run&#34;</span><span style="color:#111">)</span>
     <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
         <span style="color:#111">runner</span><span style="color:#f92672">.</span><span style="color:#111">run</span><span style="color:#111">()</span>
     <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">ex</span><span style="color:#111">:</span>
-        <span style="color:#00a8c8">print</span><span style="color:#111">(</span><span style="color:#111">ex</span><span style="color:#111">)</span>
+        <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#111">ex</span><span style="color:#111">)</span>
 
 </code></pre></div><p>When a microservice starts up, the following sequence of events takes place:</p>
 <ol>

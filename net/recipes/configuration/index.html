@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.81.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../net/recipes/configuration/index.xml">
+<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../net/recipes/configuration/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -172316,16 +172316,16 @@
 <p>Below is an example of a configurable component:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">DataController</span><span style="color:#111">:</span> <span style="color:#111">IConfigurable</span>
 <span style="color:#111">{</span>
-	<span style="color:#00a8c8">int</span> <span style="color:#111">_maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span>
+	<span style="color:#00a8c8">int</span> <span style="color:#ae81ff">_</span><span style="color:#111">maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">5</span><span style="color:#111">;</span>
 
    	<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">)</span>
    	<span style="color:#111">{</span>
-		<span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_maxPageSize</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">GetAsIntegerWithDefault</span><span style="color:#111">(</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#111">max_page_size</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_maxPageSize</span><span style="color:#111">);</span>
+		<span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#ae81ff">_</span><span style="color:#111">maxPageSize</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">GetAsIntegerWithDefault</span><span style="color:#111">(</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#111">max_page_size</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#ae81ff">_</span><span style="color:#111">maxPageSize</span><span style="color:#111">);</span>
    	<span style="color:#111">}</span>
 		
    	<span style="color:#00a8c8">public</span> <span style="color:#111">DataPage</span> <span style="color:#111">get_data</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">)</span>
    	<span style="color:#111">{</span>
-		<span style="color:#111">paging</span><span style="color:#111">.</span><span style="color:#111">Take</span> <span style="color:#111">=</span> <span style="color:#111">Math</span><span style="color:#111">.</span><span style="color:#111">Min</span><span style="color:#111">(</span><span style="color:#111">paging</span><span style="color:#111">.</span><span style="color:#111">Take</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_maxPageSize</span><span style="color:#111">);</span>
+		<span style="color:#111">paging</span><span style="color:#111">.</span><span style="color:#111">Take</span> <span style="color:#111">=</span> <span style="color:#111">Math</span><span style="color:#111">.</span><span style="color:#111">Min</span><span style="color:#111">(</span><span style="color:#111">paging</span><span style="color:#111">.</span><span style="color:#111">Take</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#ae81ff">_</span><span style="color:#111">maxPageSize</span><span style="color:#111">);</span>
 		<span style="color:#75715e">// Get data using max page size constraint.
 </span><span style="color:#75715e"></span>   	<span style="color:#111">}</span>
 	        
