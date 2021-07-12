@@ -158,5 +158,62 @@ To make it easier to follow along, we’ve broken up the tutorial on writing you
       </description>
     </item>
     
+    <item>
+      <title>Net: Microservice Facade</title>
+      <link>/net/tutorials/microservice_facade/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/tutorials/microservice_facade/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;A Facade is a microservice that serves as a point of entry to a system for external clients. The facade provides a stable external interface and hides the inner workings of a system. All requests made by external clients first arrive at the facade, which then forwards them to the appropriate microservices. The facade can also implement additional functionality, such as: authenticating and authorizing users, caching and aggregating requests, logging, etc.&lt;/p&gt;
+&lt;p&gt;Microservice-based systems change quickly and chaotically. During development, the relationships between microservices can usually be tracked and fixed as needed. When intentional and/or accidental changes to an interface are rolled out to production though, they can break external clients and lead to serious business problems. This is why it’s so critical to have a facade, providing a stable interface, by hiding any and all internal changes.&lt;/p&gt;
+&lt;p&gt;Oftentimes, developers use 3rd party API gateways to implement an external interface. This approach isn’t half bad and does have certain advantages, such as faster development time, existing documentation, and integration with cloud services. However, 3rd party API gateways bring along considerable limitations and are extremely inconvenient for test system deployment. Because of this, additional facade implementations still make sense, even when using API Gateways.&lt;/p&gt;
+&lt;p&gt;Routing requests is one of the key functions of a facade. Some API calls can simply be redirected to the appropriate service. However, a facade doesn’t stop at just routing requests. Oftentimes there occurs the need to perform complex requests, when data must be extracted from a number of microservices, aggregated in the facade, and sent to the client as one object. This approach significantly simplifies the development of clients and speeds up the process of receiving data. For example: a mobile app can make a request to the facade, which extracts order data from various services, and send an already aggregated response.&lt;/p&gt;
+&lt;p&gt;Facades can also be used to switch between protocols. For example: HTTP/RESTful, being one of the most popular external client protocols, can be used between the service and the client, while intra-microservice communication might utilize REST, gRPC, asynchronous messages, etc.&lt;/p&gt;
+&lt;p&gt;A facade can additionally be used for the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Authentication — verifying the identity of the user making the request;&lt;/li&gt;
+&lt;li&gt;Authorization — making sure that a client is allowed to perform a certain operation;&lt;/li&gt;
+&lt;li&gt;Limiting the frequency of request — controlling how many request a certain client (or all clients together) can make per - second;&lt;/li&gt;
+&lt;li&gt;Caching — caching responses to reduce the number of requests actually being made to services;&lt;/li&gt;
+&lt;li&gt;Analytics — collecting API usage statistics for analytics that can be used for billing;&lt;/li&gt;
+&lt;li&gt;Keeping a request journal — writing requests to a journal.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The general architecture of a system that uses a facade is presented in the diagram below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../images/tutorials/microservice_facade/facade_architecture_diagram1.png&#34; alt=&#34;facade architecture diagram&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Large systems that have a vast external interface might include a number of facades, each of which provides a logically isolated API. Moreover, specialized facades can be developed for specific clients, providing operations that are optimized for a specific user interface.&lt;/p&gt;
+&lt;h3 id=&#34;creating-a-facade&#34;&gt;Creating a Facade&lt;/h3&gt;
+&lt;p&gt;In this tutorial, we will be taking a look at how to implement a simple facade that will provide a versioned external API for the microservice implemented in &lt;a href=&#34;../data_microservice&#34;&gt;the Data Microservice&lt;/a&gt; tutorial. Additionally, our facade will implement client authentication and authorization using microservices from the Pip.Services Library.&lt;/p&gt;
+&lt;p&gt;To make it easier to follow along, this tutorial is broken up into the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;step1&#34;&gt;Step 1. Creating the project’s structure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step2&#34;&gt;Step 2. Business operations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step3&#34;&gt;Step 3. Authentication and sessions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step4&#34;&gt;Step 4. Authorization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step5&#34;&gt;Step 5. Service and version support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step6&#34;&gt;Step 6. Testing operations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step7&#34;&gt;Step 7. Running the facade&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;step7&#34;&gt;Step 8. Manually Testing the Facade&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The code for this tutorial can be found on &lt;a href=&#34;https://github.com/pip-services-samples/&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To start developing your first facade, head on over to &lt;a href=&#34;../step1&#34;&gt;Step 1. Creating the project’s structure.&lt;/a&gt;&lt;/p&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;step-1-creating-the-projects-structurestep1&#34;&gt;&lt;a href=&#34;step1&#34;&gt;Step 1. Creating the project’s structure&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-2-business-operationsstep2&#34;&gt;&lt;a href=&#34;step2&#34;&gt;Step 2. Business operations&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-3-authentication-and-sessionsstep3&#34;&gt;&lt;a href=&#34;step3&#34;&gt;Step 3. Authentication and sessions&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-4-authorizationstep4&#34;&gt;&lt;a href=&#34;step4&#34;&gt;Step 4. Authorization&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-5-service-and-version-supportstep5&#34;&gt;&lt;a href=&#34;step5&#34;&gt;Step 5. Service and version support&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-6-testing-operationsstep6&#34;&gt;&lt;a href=&#34;step6&#34;&gt;Step 6. Testing operations&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-7-running-the-facadestep7&#34;&gt;&lt;a href=&#34;step7&#34;&gt;Step 7. Running the facade&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&#34;step-8-manually-testing-the-facadestep7&#34;&gt;&lt;a href=&#34;step7&#34;&gt;Step 8. Manually Testing the Facade&lt;/a&gt;&lt;/h4&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>
