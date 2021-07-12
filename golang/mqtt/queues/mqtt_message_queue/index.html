@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/mqtt/queues/mqtt_message_queue/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-07-12T10:54:30+03:00" />
+<meta property="article:modified_time" content="2021-07-12T11:35:07+03:00" />
 
 <meta itemprop="name" content="MqttMessageQueue">
 <meta itemprop="description" content="Message queue that sends and receives messages via an MQTT message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-12T10:54:30+03:00" />
-<meta itemprop="wordCount" content="1197">
+<meta itemprop="dateModified" content="2021-07-12T11:35:07+03:00" />
+<meta itemprop="wordCount" content="1255">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MqttMessageQueue"/>
 <meta name="twitter:description" content="Message queue that sends and receives messages via an MQTT message broker.
@@ -125922,7 +125922,7 @@
           style="padding-left:20px;">
           
           <div class="col  "> 
-            MqttMessageQueueFactory!
+            MqttMessageQueueFactory
           </div>
           
         </div>
@@ -126129,7 +126129,7 @@
           style="padding-left:20px;">
           
           <div class="col  "> 
-            IMqttMessageListener!
+            IMqttMessageListener
           </div>
           
         </div>
@@ -126230,7 +126230,7 @@
           style="padding-left:20px;">
           
           <div class="col  "> 
-            MqttConnection!
+            MqttConnection
           </div>
           
         </div>
@@ -126432,7 +126432,7 @@
           style="padding-left:20px;">
           
           <div class="col  "> 
-            MqttSubscription!
+            MqttSubscription
           </div>
           
         </div>
@@ -174635,9 +174635,15 @@
             </li>
             <li><a href="#fields">Fields</a>
               <ul>
-                <li><a href="#optionsresolver">optionsResolver</a></li>
-                <li><a href="#messages">messages</a></li>
+                <li><a href="#autosubscribe">autoSubscribe</a></li>
+                <li><a href="#connection">Connection</a></li>
+                <li><a href="#dependencyresolver">DependencyResolver</a></li>
+                <li><a href="#logger">Logger</a></li>
+                <li><a href="#config">config</a></li>
+                <li><a href="#_messages">_messages</a></li>
+                <li><a href="#qos">qos</a></li>
                 <li><a href="#receiver">receiver</a></li>
+                <li><a href="#serializeenvelope">serializeEnvelope</a></li>
                 <li><a href="#subscribed">subscribed</a></li>
                 <li><a href="#topic">topic</a></li>
               </ul>
@@ -174648,22 +174654,25 @@
                 <li><a href="#clear">Clear</a></li>
                 <li><a href="#close">Close</a></li>
                 <li><a href="#complete">Complete</a></li>
+                <li><a href="#configure">Configure</a></li>
                 <li><a href="#endlisten">EndListen</a></li>
-                <li><a href="#frommessage">FromMessage!</a></li>
-                <li><a href="#gettopic">GetTopic!</a></li>
+                <li><a href="#frommessage">FromMessage</a></li>
+                <li><a href="#gettopic">GetTopic</a></li>
                 <li><a href="#isopen">IsOpen</a></li>
                 <li><a href="#listen">Listen</a></li>
                 <li><a href="#movetodeadletter">MoveToDeadLetter</a></li>
-                <li><a href="#onmessage">OnMessage!</a></li>
-                <li><a href="#openwithparams">OpenWithParams</a></li>
+                <li><a href="#onmessage">OnMessage</a></li>
+                <li><a href="#open">Open</a></li>
                 <li><a href="#peek">Peek</a></li>
                 <li><a href="#peekbatch">PeekBatch</a></li>
                 <li><a href="#readmessagecount">ReadMessageCount</a></li>
                 <li><a href="#receive">Receive</a></li>
                 <li><a href="#renewlock">RenewLock</a></li>
                 <li><a href="#send">Send</a></li>
+                <li><a href="#setreferences">SetReferences</a></li>
                 <li><a href="#subscribe">Subscribe</a></li>
                 <li><a href="#tomessage">ToMessage</a></li>
+                <li><a href="#unsetreferences">UnsetReferences</a></li>
               </ul>
             </li>
             <li><a href="#examples">Examples</a></li>
@@ -174768,7 +174777,7 @@
 	
     <div class="lead">Message queue that sends and receives messages via an MQTT message broker.</div>
 	       
-	<p><strong>Extends:</strong> <a href="../../../messaging/queues/message_queue">MessageQueue</a></p>
+	<p><strong>Implements:</strong> <a href="../../../messaging/queues/message_queue">MessageQueue</a></p>
 <h3 id="description">Description</h3>
 <p>The MqttMessageQueue class allows you to create message queues that send and receive messages via an MQTT message broker.</p>
 <h4 id="configuration-parameters">Configuration parameters</h4>
@@ -174821,20 +174830,50 @@
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
-<h4 id="optionsresolver">optionsResolver</h4>
-<p>Connection resolver</p>
+<h4 id="autosubscribe">autoSubscribe</h4>
+<p>Auto-subscribe option</p>
 <blockquote>
-<p><strong>optionsResolver</strong>: <a href="../../connect/mqtt_connection_resolver">MqttConnectionResolver</a></p>
+<p><strong>autoSubscribe</strong>: bool</p>
 </blockquote>
-<h4 id="messages">messages</h4>
+<h4 id="connection">Connection</h4>
+<p>MQTT connection component</p>
+<blockquote>
+<p><strong>Connection</strong>: <a href="../../connect/mqtt_connection">*MqttConnection</a></p>
+</blockquote>
+<h4 id="dependencyresolver">DependencyResolver</h4>
+<p>Dependency resolver</p>
+<blockquote>
+<p><strong>DependencyResolver</strong>: <a href="../../../commons/refer/dependency_resolver">*DependencyResolver</a></p>
+</blockquote>
+<h4 id="logger">Logger</h4>
+<p>Logger</p>
+<blockquote>
+<p><strong>Logger</strong>: <a href="../../../components/log/composite_logger">*CompositeLogger</a></p>
+</blockquote>
+<h4 id="config">config</h4>
+<p>Configuration options</p>
+<blockquote>
+<p><strong>config</strong>: <a href="../../../commons/config/config_params">*ConfigParams</a></p>
+</blockquote>
+<h4 id="_messages">_messages</h4>
 <p>Message</p>
 <blockquote>
-<p><strong>messages</strong>: <a href="../../../messaging/queues/message_envelope">[]MessageEnvelope</a></p>
+<p><strong>_messages</strong>: <a href="../../../messaging/queues/message_envelope">MessageEnvelope[]</a> = []</p>
+</blockquote>
+<h4 id="qos">qos</h4>
+<p>Quality of service</p>
+<blockquote>
+<p><strong>qos</strong>: byte</p>
 </blockquote>
 <h4 id="receiver">receiver</h4>
 <p>Message receiver</p>
 <blockquote>
 <p><strong>receiver</strong>: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a></p>
+</blockquote>
+<h4 id="serializeenvelope">serializeEnvelope</h4>
+<p>Serialization option</p>
+<blockquote>
+<p><strong>serializeEnvelope</strong>: bool</p>
 </blockquote>
 <h4 id="subscribed">subscribed</h4>
 <p>Subscribe option</p>
@@ -174857,25 +174896,25 @@ or/and send to dead letter queue.</p>
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
 <blockquote>
-<p>(c *MqttMessageQueue) Abandon(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Abandon(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) error</p>
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to return.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
 </ul>
 <h4 id="clear">Clear</h4>
 <p>Clears a component&rsquo;s state.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) Clear(correlationId string) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Clear(correlationId string) error</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
 </ul>
 <h4 id="close">Close</h4>
 <p>Closes a component and frees used resources.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) Close(correlationId string) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Close(correlationId string) (err error)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
@@ -174888,36 +174927,42 @@ This method is usually used to remove the message after successful processing.</
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
 <blockquote>
-<p>(c *MqttMessageQueue) Complete(message *msgqueues.MessageEnvelope) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Complete(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) error</p>
 </blockquote>
 <ul>
-<li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a> - message to remove.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to remove.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+</ul>
+<h4 id="configure">Configure</h4>
+<p>Configures a component by passing its configuration parameters.</p>
+<blockquote>
+<p>(c <a href="">*MqttMessageQueue</a>) Configure(config <a href="../../../commons/config/config_params">*ConfigParams</a>)</p>
+</blockquote>
+<ul>
+<li><strong>config:</strong>: <a href="../../../commons/config/config_params">*ConfigParams</a> - configuration parameters to be set.</li>
 </ul>
 <h4 id="endlisten">EndListen</h4>
 <p>Ends listening for incoming messages.
 When this method is call, <a href="#listen">Listen</a> unblocks the thread and execution continues.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) EndListen(correlationId string)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) EndListen(correlationId string)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
-<h4 id="frommessage">FromMessage!</h4>
-<p><strong>TODO: method is not implemented</strong></p>
+<h4 id="frommessage">FromMessage</h4>
 <p>Returns the topic and the data of a message.</p>
 <blockquote>
-<p><code>protected</code> fromMessage(message: <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>): any</p>
+<p>(c <a href="">*MqttMessageQueue</a>) fromMessage(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) ([]byte, error)</p>
 </blockquote>
 <ul>
-<li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a> - message</li>
-<li><strong>returns</strong>: any - topic and data</li>
+<li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message</li>
+<li><strong>returns</strong>: ([]byte, error) - topic and data</li>
 </ul>
-<h4 id="gettopic">GetTopic!</h4>
-<p><strong>TODO: method is not implemented</strong></p>
+<h4 id="gettopic">GetTopic</h4>
 <p>Obtains the topic.</p>
 <blockquote>
-<p><code>protected</code> getTopic(): string</p>
+<p>(c <a href="">*MqttMessageQueue</a>) getTopic() string</p>
 </blockquote>
 <ul>
 <li><strong>returns</strong>: string - topic</li>
@@ -174925,7 +174970,7 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <h4 id="isopen">IsOpen</h4>
 <p>Checks if the component is open.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) IsOpen() bool</p>
+<p>(c <a href="">*MqttMessageQueue</a>) IsOpen() bool</p>
 </blockquote>
 <ul>
 <li><strong>returns</strong>: bool - true if the component is open and false otherwise.</li>
@@ -174934,11 +174979,12 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <p>Listens for incoming messages and blocks the current thread until the queue is closed.</p>
 <p>See <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a></p>
 <blockquote>
-<p>(c *MqttMessageQueue) Listen(correlationId string, receiver <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a>)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Listen(correlationId string, receiver <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a>) error</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>receiver</strong>: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a> - receiver used to receive incoming messages.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
 </ul>
 <h4 id="movetodeadletter">MoveToDeadLetter</h4>
 <p>Permanently removes a message from the queue and sends it to dead letter queue.</p>
@@ -174946,43 +174992,38 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
 <blockquote>
-<p>(c *MqttMessageQueue) MoveToDeadLetter(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) MoveToDeadLetter(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) error</p>
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to be removed.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
 </ul>
-<h4 id="onmessage">OnMessage!</h4>
-<p><strong>TODO: method is not implemented</strong></p>
+<h4 id="onmessage">OnMessage</h4>
 <p>Checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it&rsquo;s set. Otherwise, puts it into the queue.</p>
 <blockquote>
-<p><code>public</code> onMessage(topic: string, data: any, packet: any): void</p>
+<p>(c <a href="">*MqttMessageQueue</a>) OnMessage(msg mqtt.Message)</p>
 </blockquote>
 <ul>
-<li><strong>topic</strong>: string - topic</li>
-<li><strong>data</strong>: any - data</li>
-<li><strong>packet</strong>: any - packet</li>
+<li><strong>msg</strong>: mqtt.Message - MQTT message with data and topic</li>
 </ul>
-<h4 id="openwithparams">OpenWithParams</h4>
-<p>Opens the component with given connection and credential parameters.</p>
+<h4 id="open">Open</h4>
+<p>Opens the component.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) OpenWithParams(correlationId string, connection *ccon.ConnectionParams, credential *cauth.CredentialParams) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Open(correlationId string) (err error)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>connection</strong>: <a href="../../../components/connect/connection_params">*ConnectionParams</a> - connection parameters</li>
-<li><strong>credential</strong>: <a href="../../../components/auth/credential_params">*CredentialParams</a> - credential parameters</li>
 <li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
 </ul>
 <h4 id="peek">Peek</h4>
 <p>Peeks a single incoming message from the queue without removing it.
 If there are no messages available in the queue, it returns null.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) Peek(correlationId string) (result <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Peek(correlationId string) (<a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, error)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: (result <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, err error) - peeked message.</li>
+<li><strong>returns</strong>: (<a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, error) - peeked message.</li>
 </ul>
 <h4 id="peekbatch">PeekBatch</h4>
 <p>Peeks multiple incoming messages from the queue without removing them.
@@ -174991,30 +175032,30 @@ If there are no messages available in the queue, it returns an empty list.</p>
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
 <blockquote>
-<p>(c *MqttMessageQueue) PeekBatch(correlationId string, messageCount int64) (result <a href="../../../messaging/queues/message_envelope">[]MessageEnvelope</a>, err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) PeekBatch(correlationId string, messageCount int64) (<a href="../../../messaging/queues/message_envelope">[]*MessageEnvelope</a>, error)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>messageCount</strong>: int64 - maximum number of messages to peek.</li>
-<li><strong>returns</strong>: (result <a href="../../../messaging/queues/message_envelope">[]MessageEnvelope</a>, err error) - list with peeked messages.</li>
+<li><strong>returns</strong>: (<a href="../../../messaging/queues/message_envelope">[]*MessageEnvelope</a>, error) - list with peeked messages.</li>
 </ul>
 <h4 id="readmessagecount">ReadMessageCount</h4>
 <p>Reads the current number of messages in the queue to be delivered.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) ReadMessageCount() (count int64, err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) ReadMessageCount() (int64, error)</p>
 </blockquote>
 <ul>
-<li>*<strong>returns</strong>: (count int64, err error)&gt; - number of messages in the queue.</li>
+<li>*<strong>returns</strong>: (int64, error) - number of messages in the queue.</li>
 </ul>
 <h4 id="receive">Receive</h4>
 <p>Receives an incoming message and removes it from the queue.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) Receive(correlationId string, waitTimeout time.Duration) (result <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Receive(correlationId string, waitTimeout time.Duration) (<a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, error)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>waitTimeout</strong>: time.Duration - timeout in milliseconds to wait for a message to come.</li>
-<li><strong>returns</strong>: (result <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, err error) - received message or null if nothing was received.</li>
+<li><strong>returns</strong>: (<a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, error) - received message or null if nothing was received.</li>
 </ul>
 <h4 id="renewlock">RenewLock</h4>
 <p>Renews a lock on a message that makes it invisible from other receivers in the queue.
@@ -175023,7 +175064,7 @@ This method is usually used to extend the message processing time.</p>
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
 <blockquote>
-<p>(c *MqttMessageQueue) RenewLock(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, lockTimeout time.Duration) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) RenewLock(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, lockTimeout time.Duration) (err error)</p>
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to extend its lock.</li>
@@ -175033,31 +175074,48 @@ This method is usually used to extend the message processing time.</p>
 <h4 id="send">Send</h4>
 <p>Sends a message into the queue.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) Send(correlationId string, envelop <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) (err error)</p>
+<p>(c <a href="">*MqttMessageQueue</a>) Send(correlationId string, envelop <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) error</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>envelop</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message envelop to be sent.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message envelop to be sent.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+</ul>
+<h4 id="setreferences">SetReferences</h4>
+<p>Sets references to dependent components.</p>
+<blockquote>
+<p>(c <a href="">*MqttMessageQueue</a>) SetReferences(references <a href="../../../commons/refer/ireferences">IReferences</a>)</p>
+</blockquote>
+<ul>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="subscribe">Subscribe</h4>
 <p>Subscribes to a topic.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) Subscribe()</p>
+<p>(c <a href="">*MqttMessageQueue</a>) subscribe(correlationId string) error</p>
 </blockquote>
+<ul>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+</ul>
 <h4 id="tomessage">ToMessage</h4>
 <p>If the message has no data, it returns null. Otherwise, it returns the message.</p>
 <blockquote>
-<p>(c *MqttMessageQueue) toMessage(msg mqtt.Message) <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a></p>
+<p>(c <a href="">*MqttMessageQueue</a>) toMessage(msg mqtt.Message) (<a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, error)</p>
 </blockquote>
 <ul>
 <li><strong>msg</strong>: mqtt.Message - MQTT message with data and topic</li>
-<li><strong>returns</strong>: <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a> - null if the message has no data. Otherwise, it returns the message.</li>
+<li><strong>returns</strong>: (<a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>, error) - Null if the message has no data. Otherwise, it returns the message.</li>
 </ul>
+<h4 id="unsetreferences">UnsetReferences</h4>
+<p>Unsets (clears) previously set references to dependent components.</p>
+<blockquote>
+<p>(c <a href="">*MqttMessageQueue</a>) UnsetReferences()</p>
+</blockquote>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">queue</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">NewMqttMessageQueue</span><span style="color:#111">(</span><span style="color:#d88200">&#34;myqueue&#34;</span><span style="color:#111">)</span>
 <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">NewConfigParamsFromTuples</span><span style="color:#111">(</span>
-  <span style="color:#d88200">&#34;topic&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mytopic&#34;</span><span style="color:#111">,</span>
+  <span style="color:#d88200">&#34;subject&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mytopic&#34;</span><span style="color:#111">,</span>
   <span style="color:#d88200">&#34;connection.protocol&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mqtt&#34;</span>
   <span style="color:#d88200">&#34;connection.host&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;localhost&#34;</span>
   <span style="color:#d88200">&#34;connection.port&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">1883</span>
@@ -175068,8 +175126,8 @@ This method is usually used to extend the message processing time.</p>
 <span style="color:#75af00">message</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">Receive</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">)</span>
 
 <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">message</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-   <span style="color:#f92672">...</span>
-   <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">Complete</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">message</span><span style="color:#111">);</span>
+	<span style="color:#f92672">...</span>
+	<span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">Complete</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">message</span><span style="color:#111">);</span>
 <span style="color:#111">}</span>
 </code></pre></div><h3 id="see-also">See also</h3>
 <ul>
