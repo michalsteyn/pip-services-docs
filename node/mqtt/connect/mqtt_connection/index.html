@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/mqtt/connect/mqtt_connection/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-12T04:42:53+02:00" />
+<meta property="article:modified_time" content="2021-07-12T04:52:08+02:00" />
 
 <meta itemprop="name" content="MqttConnection">
 <meta itemprop="description" content="MQTT connection using the default driver.
 ">
-<meta itemprop="dateModified" content="2021-07-12T04:42:53+02:00" />
-<meta itemprop="wordCount" content="573">
+<meta itemprop="dateModified" content="2021-07-12T04:52:08+02:00" />
+<meta itemprop="wordCount" content="566">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MqttConnection"/>
 <meta name="twitter:description" content="MQTT connection using the default driver.
@@ -175671,13 +175671,13 @@
 	<p><strong>Implements:</strong> <a href="../../../messaging/connect/imessage_queue_connection">IMessageQueueConnection</a>, <a href="../../../commons/refer/ireferenceable">IReferenceable</a>, <a href="../../../commons/config/iconfigurable">IConfigurable</a>,
 <a href="../../../commons/run/iopenable">IOpenable</a></p>
 <h3 id="description">Description</h3>
-<p>MQTT is a popular light-weight protocol to communicate IoT devices.</p>
+<p>The MqttConnection class allows you to create MQTT connections using the default driver.</p>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>client_id</strong>: (optional) name of the client id</li>
 <li><strong>connection(s)</strong>:
 <ul>
-<li><strong>discovery_key</strong>: (optional) a key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
+<li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
 <li><strong>host</strong>: host name or IP address</li>
 <li><strong>port</strong>: port number</li>
 <li><strong>uri</strong>: resource URI or connection string with all parameters in it</li>
@@ -175685,9 +175685,9 @@
 </li>
 <li><strong>credential(s)</strong>:
 <ul>
-<li><strong>store_key</strong>: (optional) a key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
-<li><strong>username</strong>: user name</li>
-<li><strong>password</strong>: user password</li>
+<li><strong>store_key</strong>: (optional) key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
+<li><strong>username</strong>: username</li>
+<li><strong>password</strong>: user&rsquo;s password</li>
 </ul>
 </li>
 <li><strong>options</strong>:
@@ -175719,42 +175719,42 @@
 <p><code>protected</code> <strong>_clientId</strong>: string</p>
 </blockquote>
 <h4 id="_connecttimeout">_connectTimeout</h4>
-<p>TODO: add description</p>
+<p>Connection timeout</p>
 <blockquote>
 <p><code>protected</code> <strong>_connectTimeout</strong>: number = 30000</p>
 </blockquote>
 <h4 id="_connection">_connection</h4>
-<p>The MQTT connection pool object.</p>
+<p>MQTT connection pool object.</p>
 <blockquote>
 <p><code>protected</code> <strong>_connection</strong>: any</p>
 </blockquote>
 <h4 id="_connectionresolver">_connectionResolver</h4>
-<p>The connection resolver.</p>
+<p>Connection resolver.</p>
 <blockquote>
 <p><code>protected</code> <strong>_connectionResolver</strong>: <a href="../mqtt_connection_resolver">MqttConnectionResolver</a></p>
 </blockquote>
 <h4 id="_keepalivetimeout">_keepAliveTimeout</h4>
-<p>TODO: add description</p>
+<p>Keep alive timeout</p>
 <blockquote>
 <p><code>protected</code> <strong>_keepAliveTimeout</strong>: number = 60000</p>
 </blockquote>
 <h4 id="_logger">_logger</h4>
-<p>The logger.</p>
+<p>Logger.</p>
 <blockquote>
 <p><code>protected</code> <strong>_logger</strong>: <a href="../../../components/log/composite_logger">CompositeLogger</a> = new <a href="../../../components/log/composite_logger">CompositeLogger()</a></p>
 </blockquote>
 <h4 id="_options">_options</h4>
-<p>TODO: add description</p>
+<p>Connection options</p>
 <blockquote>
 <p><code>protected</code> <strong>_options</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> = new <a href="../../../commons/config/config_params">ConfigParams()</a></p>
 </blockquote>
 <h4 id="_reconnecttimeout">_reconnectTimeout</h4>
-<p>TODO: add description</p>
+<p>Reconnect timeout</p>
 <blockquote>
 <p><code>protected</code> <strong>_reconnectTimeout</strong>: number = 1000</p>
 </blockquote>
 <h4 id="_retryconnect">_retryConnect</h4>
-<p>TODO: add description</p>
+<p>Retry option</p>
 <blockquote>
 <p><code>protected</code> <strong>_retryConnect</strong>: boolean = true</p>
 </blockquote>
@@ -175766,21 +175766,21 @@
 </span>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="checkopen">checkOpen</h4>
-<p>Checks if connection is open.<br>
+<p>Checks if the connection is open.<br>
 Raise an error is connection is closed.</p>
 <blockquote>
 <p><code>protected</code> checkOpen(): void</p>
 </blockquote>
 <h4 id="close">close</h4>
-<p>Closes component and frees used resources.</p>
+<p>Closes a component and frees used resources.</p>
 <blockquote>
 <p><code>public</code> close(correlationId: string): Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
-<p>Configures the component by passing configuration parameters.</p>
+<p>Configures the component by passing its configuration parameters.</p>
 <blockquote>
 <p><code>public</code> configure(config: <a href="../../../commons/config/config_params">ConfigParams</a>): void</p>
 </blockquote>
@@ -175789,21 +175789,21 @@ Raise an error is connection is closed.</p>
 </ul>
 <h4 id="createqueue">createQueue</h4>
 <p>Creates a message queue.
-If connection doesn&rsquo;t support this function it exists without error.</p>
+If the connection doesn&rsquo;t support this function, it exists without error.</p>
 <blockquote>
 <p><code>public</code> createQueue(name: string): Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>name</strong>: string - the name of the queue to be created.</li>
+<li><strong>name</strong>: string - name of the queue to be created.</li>
 </ul>
 <h4 id="deletequeue">deleteQueue</h4>
 <p>Deletes a message queue.
-If connection doesn&rsquo;t support this function it exists without error.</p>
+If connection doesn&rsquo;t support this function, it exists without error.</p>
 <blockquote>
 <p><code>public</code> deleteQueue(name: string): Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>name</strong>: string - the name of the queue to be deleted.</li>
+<li><strong>name</strong>: string - name of the queue to be deleted.</li>
 </ul>
 <h4 id="getconnection">getConnection</h4>
 <p>Gets the connection.</p>
@@ -175814,12 +175814,12 @@ If connection doesn&rsquo;t support this function it exists without error.</p>
 <li><strong>returns</strong>: any - connection to a MySQL database</li>
 </ul>
 <h4 id="isopen">isOpen</h4>
-<p>Checks if the component is opened.</p>
+<p>Checks if the component is open.</p>
 <blockquote>
 <p><code>public</code> isOpen(): boolean</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: boolean - True if the component has been opened and False otherwise.</li>
+<li><strong>returns</strong>: boolean - true if the component has been opened and false otherwise.</li>
 </ul>
 <h4 id="open">open</h4>
 <p>Opens the component.</p>
@@ -175830,18 +175830,18 @@ If connection doesn&rsquo;t support this function it exists without error.</p>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="publish">publish</h4>
-<p>Publish a message to a specified topic</p>
+<p>Publish a message to a specified topic.</p>
 <blockquote>
 <p><code>public</code> publish(topic: string, data: Buffer, options: any): Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>topic</strong>: string - a topic name</li>
-<li><strong>data</strong>: Buffer - a message to be published</li>
+<li><strong>topic</strong>: string - topic name</li>
+<li><strong>data</strong>: Buffer - message to be published</li>
 <li><strong>options</strong>: any - publishing options</li>
 </ul>
 <h4 id="readqueuenames">readQueueNames</h4>
 <p>Reads a list of registered queue names.
-If connection doesn&rsquo;t support this function returnes an empty list.</p>
+If the connection doesn&rsquo;t support this function, it returns an empty list.</p>
 <blockquote>
 <p><code>public</code> readQueueNames(): Promise&lt;string[]&gt;</p>
 </blockquote>
@@ -175857,23 +175857,23 @@ If connection doesn&rsquo;t support this function returnes an empty list.</p>
 <li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
 </ul>
 <h4 id="subscribe">subscribe</h4>
-<p>Subscribe to a topic</p>
+<p>Subscribes to a topic</p>
 <blockquote>
 <p><code>public</code> subscribe(topic: string, options: any, listener: <a href="../imqtt_message_listener">IMqttMessageListener</a>): Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>topic</strong>: string - a topic name</li>
+<li><strong>topic</strong>: string - topic name</li>
 <li><strong>options</strong>: any - subscription options</li>
-<li><strong>listener</strong>: <a href="../imqtt_message_listener">IMqttMessageListener</a> - a message listener</li>
+<li><strong>listener</strong>: <a href="../imqtt_message_listener">IMqttMessageListener</a> - message listener</li>
 </ul>
 <h4 id="unsubscribe">unsubscribe</h4>
-<p>Unsubscribe from a previously subscribed topic</p>
+<p>Unsubscribes from a previously subscribed topic.</p>
 <blockquote>
 <p><code>public</code> unsubscribe(topic: string, listener: <a href="../imqtt_message_listener">IMqttMessageListener</a>: Promise&lt;void&gt;</p>
 </blockquote>
 <ul>
-<li><strong>topic</strong>: string - a topic name</li>
-<li><strong>listener</strong>: <a href="../imqtt_message_listener">IMqttMessageListener</a> - a message listener</li>
+<li><strong>topic</strong>: string - topic name</li>
+<li><strong>listener</strong>: <a href="../imqtt_message_listener">IMqttMessageListener</a> - message listener</li>
 </ul>
 <h3 id="see-also">See also</h3>
 <ul>
