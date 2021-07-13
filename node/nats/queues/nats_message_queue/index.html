@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/nats/queues/nats_message_queue/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-12T23:36:19+02:00" />
+<meta property="article:modified_time" content="2021-07-13T04:44:50+02:00" />
 
 <meta itemprop="name" content="NatsMessageQueue">
 <meta itemprop="description" content="Message queue that sends and receives messages via the NATS message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-12T23:36:19+02:00" />
-<meta itemprop="wordCount" content="728">
+<meta itemprop="dateModified" content="2021-07-13T04:44:50+02:00" />
+<meta itemprop="wordCount" content="731">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="NatsMessageQueue"/>
 <meta name="twitter:description" content="Message queue that sends and receives messages via the NATS message broker.
@@ -182554,9 +182554,9 @@
 </li>
 <li><strong>options</strong>:
 <ul>
-<li><strong>serialize_message</strong>: (optional) true to serialize entire message as JSON, false to send only message payload (default: true)</li>
-<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is log (default: true)</li>
-<li><strong>max_reconnect</strong>: (optional) maximum reconnection attempts (default: 3)</li>
+<li><strong>serialize_message</strong>: (optional) true to serialize entire message as JSON, false to send only the message payload (default: true)</li>
+<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is lost (default: true)</li>
+<li><strong>max_reconnect</strong>: (optional) maximum number of reconnection attempts (default: 3)</li>
 <li><strong>reconnect_timeout</strong>: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)</li>
 <li><strong>flush_timeout</strong>: (optional) number of milliseconds to wait on flushing messages (default: 3000)</li>
 </ul>
@@ -182619,7 +182619,7 @@
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
-<p>Configures component by passing its configuration parameters.</p>
+<p>Configures a component by passing its configuration parameters.</p>
 <blockquote>
 <p><code>public</code> configure(config: <a href="../../../commons/config/config_params">ConfigParams</a>): void</p>
 </blockquote>
@@ -182692,7 +182692,7 @@ If there are no messages available in the queue, it returns an empty list.</p>
 <p><code>public</code> readMessageCount(): Promise&lt;number&gt;</p>
 </blockquote>
 <ul>
-<li>*<strong>returns</strong>: Promise&lt;number&gt; - a number of messages in the queue.</li>
+<li>*<strong>returns</strong>: Promise&lt;number&gt; - number of messages in the queue.</li>
 </ul>
 <h4 id="receive">receive</h4>
 <p>Receives an incoming message and removes it from the queue.</p>
@@ -182700,7 +182700,7 @@ If there are no messages available in the queue, it returns an empty list.</p>
 <p><code>public</code> receive(correlationId: string, waitTimeout: number): Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - Checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it’s set. Otherwise, puts it into the queue.</li>
+<li><strong>correlationId</strong>: string - checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it’s set. Otherwise, puts it into the queue.</li>
 <li><strong>waitTimeout</strong>: number - timeout (milliseconds) to wait for a message to come.</li>
 <li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt; - received message or null if nothing was received.</li>
 </ul>

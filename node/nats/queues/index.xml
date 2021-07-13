@@ -411,9 +411,9 @@ If there are no messages available in the queue, it returns an empty list.&lt;/p
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;serialize_message&lt;/strong&gt;: (optional) true to serialize entire message as JSON, false to send only message payload (default: true)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is log (default: true)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum reconnection attempts (default: 3)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;serialize_message&lt;/strong&gt;: (optional) true to serialize entire message as JSON, false to send only the message payload (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is lost (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum number of reconnection attempts (default: 3)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;flush_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on flushing messages (default: 3000)&lt;/li&gt;
 &lt;/ul&gt;
@@ -476,7 +476,7 @@ If there are no messages available in the queue, it returns an empty list.&lt;/p
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
-&lt;p&gt;Configures component by passing its configuration parameters.&lt;/p&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -549,7 +549,7 @@ If there are no messages available in the queue, it returns an empty list.&lt;/p
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; readMessageCount(): Promise&amp;lt;number&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;*&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;number&amp;gt; - a number of messages in the queue.&lt;/li&gt;
+&lt;li&gt;*&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;number&amp;gt; - number of messages in the queue.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;receive&#34;&gt;receive&lt;/h4&gt;
 &lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
@@ -557,7 +557,7 @@ If there are no messages available in the queue, it returns an empty list.&lt;/p
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; receive(correlationId: string, waitTimeout: number): Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - Checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it’s set. Otherwise, puts it into the queue.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it’s set. Otherwise, puts it into the queue.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;waitTimeout&lt;/strong&gt;: number - timeout (milliseconds) to wait for a message to come.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Promise&amp;lt;&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt;&amp;gt; - received message or null if nothing was received.&lt;/li&gt;
 &lt;/ul&gt;
