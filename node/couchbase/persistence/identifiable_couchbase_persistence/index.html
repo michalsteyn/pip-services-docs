@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/couchbase/persistence/identifiable_couchbase_persistence/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-08T01:45:20+03:00" />
+<meta property="article:modified_time" content="2021-07-13T01:42:54+02:00" />
 
 <meta itemprop="name" content="IdentifiableCouchbasePersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;">
 <meta itemprop="description" content="Abstract persistence component that stores data in Couchbase and implements a number of CRUD operations over data items with unique ids.
 ">
-<meta itemprop="dateModified" content="2021-07-08T01:45:20+03:00" />
-<meta itemprop="wordCount" content="873">
+<meta itemprop="dateModified" content="2021-07-13T01:42:54+02:00" />
+<meta itemprop="wordCount" content="901">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IdentifiableCouchbasePersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;"/>
 <meta name="twitter:description" content="Abstract persistence component that stores data in Couchbase and implements a number of CRUD operations over data items with unique ids.
@@ -182519,18 +182519,29 @@
 	<p><strong>Extends:</strong> <a href="../couchbase_persistence">CouchbasePersistence<T></a></p>
 <p><strong>Implements:</strong> <a href="../../../data/core/iwriter">IWriter&lt;T, K&gt;</a>, <a href="../../../data/core/igetter">IGetter&lt;T, K&gt;</a>, <a href="../../../data/core/isetter">ISetter<T></a></p>
 <h3 id="description">Description</h3>
+<p>The IdentifiableCouchbasePersistence class allows you to create abstract persistence components that store data in Couchbase and implement a number of CRUD operations over data items with unique ids.</p>
+<p><strong>Important points</strong></p>
+<ul>
+<li>
 <p>The data items must implement <a href="../../../commons/data/iidentifiable">IIdentifiable</a> interface.</p>
-<p>In basic scenarios child classes shall only override <a href="../couchbase_persistence/#getpagebyfilter">getPageByFilter</a>, <a href="../couchbase_persistence/#getlistbyfilter">getListByFilter</a> or <a href="../couchbase_persistence/#deletebyfilter">deleteByFilter</a> operations with specific filter function.
-All other operations can be used out of the box.</p>
-<p>In complex scenarios child classes can implement additional operations by
-accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</p>
+</li>
+<li>
+<p>In basic scenarios child classes shall only override <a href="../couchbase_persistence/#getpagebyfilter">getPageByFilter</a>, <a href="../couchbase_persistence/#getlistbyfilter">getListByFilter</a> or <a href="../couchbase_persistence/#deletebyfilter">deleteByFilter</a> operations with specific filter functions.</p>
+</li>
+<li>
+<p>All other operations can be used out of the box.</p>
+</li>
+<li>
+<p>In complex scenarios child classes can implement additional operations by accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</p>
+</li>
+</ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>bucket</strong>: (optional) Couchbase bucket name</li>
 <li><strong>collection</strong>: (optional) Couchbase collection name</li>
 <li><strong>connection(s)</strong>:
 <ul>
-<li><strong>discovery_key</strong>: (optional) a key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
+<li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
 <li><strong>host</strong>: host name or IP address</li>
 <li><strong>port</strong>: port number (default: 27017)</li>
 <li><strong>uri</strong>: resource URI or connection string with all parameters in it</li>
@@ -182538,9 +182549,9 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </li>
 <li><strong>credential(s)</strong>:
 <ul>
-<li><strong>store_key</strong>: (optional) a key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
-<li><strong>username</strong>: (optional) user name</li>
-<li><strong>password</strong>: (optional) user password</li>
+<li><strong>store_key</strong>: (optional) key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
+<li><strong>username</strong>: (optional) username</li>
+<li><strong>password</strong>: (optional) user&rsquo;s password</li>
 </ul>
 </li>
 <li><strong>options</strong>:
@@ -182566,12 +182577,12 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <p><code>public</code> constructor(tableName: string, keyspaceName?: string)</p>
 </blockquote>
 <ul>
-<li><strong>tableName</strong>: string - (optional) collection name.</li>
-<li><strong>keyspaceName</strong>: string - (optional) a keyspace name.</li>
+<li><strong>tableName</strong>: string - (optional) collection&rsquo;s name.</li>
+<li><strong>keyspaceName</strong>: string - (optional) keyspace&rsquo;s name.</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
-<p>Flag to turn on automated string ID generation</p>
+<p>Flag used to turn on automated string ID generation.</p>
 <blockquote>
 <p><code>protected</code> <strong>_autoGenerateId</strong>: boolean = true</p>
 </blockquote>
@@ -182627,13 +182638,13 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <li><strong>returns</strong>: Promise&lt;T&gt; - data item</li>
 </ul>
 <h4 id="generatebucketids">generateBucketIds</h4>
-<p>Generates a list of unique ids for specific collection in the bucket</p>
+<p>Generates a list of unique ids for a specific collection in the bucket.</p>
 <blockquote>
 <p><code>protected</code> generateBucketIds(value: K[]): string[]</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: K[] - a public unique ids.</li>
-<li><strong>returns</strong>: string[] - a unique bucket ids.</li>
+<li><strong>value</strong>: K[] - public unique ids.</li>
+<li><strong>returns</strong>: string[] - unique bucket ids.</li>
 </ul>
 <h4 id="getlistbyids-1">getListByIds</h4>
 <p>Gets a list of data items retrieved by given unique ids.</p>
@@ -182641,9 +182652,9 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <p><code>public</code> getListByIds(correlationId: string, ids: K[]): Promise&lt;T[]&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>ids</strong>: K[] - ids of data items to be retrieved</li>
-<li><strong>returns</strong>: Promise&lt;T[]&gt; - a list with requested data items.</li>
+<li><strong>returns</strong>: Promise&lt;T[]&gt; - list with requested data items.</li>
 </ul>
 <h4 id="getonebyid-1">getOneById</h4>
 <p>Gets a data item by its unique id.</p>
@@ -182651,13 +182662,13 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <p><code>public</code> getOneById(correlationId: string, id: K): Promise<T></p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>id</strong>: K - an id of data item to be retrieved.</li>
-<li><strong>returns</strong>: Promise<T> - a found data item.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction used id to trace execution through the call chain.</li>
+<li><strong>id</strong>: K - id of data item to be retrieved.</li>
+<li><strong>returns</strong>: Promise<T> - found data item.</li>
 </ul>
 <h4 id="set">set</h4>
-<p>Sets a data item. If the data item exists it updates it,
-otherwise it creates a new data item.</p>
+<p>Sets a data item. If the data item exists, it updates it.
+Otherwise, it creates a new data item.</p>
 <blockquote>
 <p><code>public</code> set(correlationId: string, item: T): Promise&lt;T&gt;</p>
 </blockquote>
@@ -182672,7 +182683,7 @@ otherwise it creates a new data item.</p>
 <p><code>public</code> setReferences(references: <a href="../../../commons/refer/ireferences">IReferences</a>): void</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="unsetreferences">unsetReferences</h4>
 <p>Unsets (clears) previously set references to dependent components.</p>
@@ -182696,7 +182707,7 @@ otherwise it creates a new data item.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>id</strong>: any - id of data item to be updated.</li>
+<li><strong>id</strong>: any - id of the data item to be updated.</li>
 <li><strong>data</strong>: <a href="../../../commons/data/any_value_map">AnyValueMap</a> - map with fields to be updated.</li>
 <li><strong>returns</strong>: Promise&lt;T&gt; - updated item</li>
 </ul>
