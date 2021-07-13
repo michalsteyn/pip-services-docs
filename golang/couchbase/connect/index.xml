@@ -1,0 +1,295 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Connect</title>
+    <link>/golang/couchbase/connect/</link>
+    <description>Recent content in Connect on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/couchbase/connect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: CouchbaseConnection</title>
+      <link>/golang/couchbase/connect/couchbase_connection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/couchbase/connect/couchbase_connection/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CouchbaseConnection class allows you to create connections to a Couchbase database using the default Couchbase driver.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is the most basic persistence component that is only able to store data items of any type.&lt;/li&gt;
+&lt;li&gt;Specific CRUD operations over the data items must be implemented in child classes by accessing &lt;strong&gt;c._collection&lt;/strong&gt; or &lt;strong&gt;c._model&lt;/strong&gt; properties.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;bucket&lt;/strong&gt;: (optional) Couchbase bucket&amp;rsquo;s name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number (default: 27017)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: (optional) username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: (optional) user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;auto_create&lt;/strong&gt;: (optional) automatically create a missing bucket (default: false)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;auto_index&lt;/strong&gt;: (optional) automatically create a primary index (default: false)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;flush_enabled&lt;/strong&gt;: (optional) bucket flush enabled (default: false)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;bucket_type&lt;/strong&gt;: (optional) bucket type (default: couchbase)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ram_quota&lt;/strong&gt;: (optional) RAM quota in MB (default: 100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; (optional) credential stores to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newcouchbaseconnection&#34;&gt;NewCouchbaseConnection&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the connection component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewCouchbaseConnection(bucketName string) &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;bucketName&lt;/strong&gt;: string - the name of couchbase bucket&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;connection&#34;&gt;Connection&lt;/h4&gt;
+&lt;p&gt;Couchbase cluster connection object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Connection&lt;/strong&gt;: *gocb.Cluster&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connectionresolver&#34;&gt;ConnectionResolver&lt;/h4&gt;
+&lt;p&gt;Connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ConnectionResolver&lt;/strong&gt;: &lt;a href=&#34;../couchbase_connection_resolver&#34;&gt;*CouchbaseConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;logger&#34;&gt;Logger&lt;/h4&gt;
+&lt;p&gt;Logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;*CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;options&#34;&gt;Options&lt;/h4&gt;
+&lt;p&gt;Configuration options.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;bucketname&#34;&gt;BucketName&lt;/h4&gt;
+&lt;p&gt;Couchbase bucket&amp;rsquo;s name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;BucketName&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;bucket&#34;&gt;Bucket&lt;/h4&gt;
+&lt;p&gt;Couchbase bucket&amp;rsquo;s object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Bucket&lt;/strong&gt;: *gocb.Bucket&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) Close(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getbucket&#34;&gt;GetBucket&lt;/h4&gt;
+&lt;p&gt;Gets the Couchbase bucket&amp;rsquo;s object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) GetBucket() *gocb.Bucket&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: *gocb.Bucket - Couchbase bucket&amp;rsquo;s object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getbucketname&#34;&gt;GetBucketName&lt;/h4&gt;
+&lt;p&gt;Gets Couchbase bucket&amp;rsquo;s name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) GetBucketName() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - Couchbase bucket&amp;rsquo;s name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getconnection&#34;&gt;getConnection&lt;/h4&gt;
+&lt;p&gt;Gets the connection.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) GetConnection() *gocb.Cluster&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: *gocb.Cluster - connection to a Couchbase database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: boolean - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) Open(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnection&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: CouchbaseConnectionParams</title>
+      <link>/golang/couchbase/connect/couchbase_connection_params/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/couchbase/connect/couchbase_connection_params/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CouchbaseConnectionParams class defines the parameters used to connect to a Couchbase database.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;uri&#34;&gt;uri&lt;/h4&gt;
+&lt;p&gt;Database&amp;rsquo;s URI&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Uri&lt;/strong&gt;: string;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;username&#34;&gt;username&lt;/h4&gt;
+&lt;p&gt;Username&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Username&lt;/strong&gt;: string;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;password&#34;&gt;password&lt;/h4&gt;
+&lt;p&gt;User&amp;rsquo;s password&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Password&lt;/strong&gt;: string;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: CouchbaseConnectionResolver</title>
+      <link>/golang/couchbase/connect/couchbase_connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/couchbase/connect/couchbase_connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CouchbaseConnectionResolver class is used to resolve Couchbase connections and credential parameters, validate them and generate connection URIs/&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is able to process multiple connections to Couchbase cluster nodes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number (default: 27017)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;database&lt;/strong&gt;: database (bucket) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; stores to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;connectionresolver&#34;&gt;ConnectionResolver&lt;/h4&gt;
+&lt;p&gt;Connection resolver&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ConnectionResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/connect/connection_resolver&#34;&gt;*ConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;credentialresolver&#34;&gt;CredentialResolver&lt;/h4&gt;
+&lt;p&gt;Credential resolver&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CredentialResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_resolver&#34;&gt;*CredentialResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newcouchbaseconnectionresolver&#34;&gt;NewCouchbaseConnectionResolver&lt;/h4&gt;
+&lt;p&gt;Creates an instance of this class.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewCouchbaseConnectionResolver() &lt;a href=&#34;&#34;&gt;*CouchbaseConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;resolve&#34;&gt;resolve&lt;/h4&gt;
+&lt;p&gt;Merges connection options with connection parameters.
+This method can be overriden in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnectionResolver&lt;/a&gt;) Resolve(correlationId string) (connection &lt;a href=&#34;../couchbase_connection_params&#34;&gt;*CouchbaseConnectionParams&lt;/a&gt;, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (connection &lt;a href=&#34;../couchbase_connection_params&#34;&gt;*CouchbaseConnectionParams&lt;/a&gt;, err error) - resolved URI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CouchbaseConnectionResolver&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
