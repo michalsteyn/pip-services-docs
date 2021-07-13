@@ -1,0 +1,393 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Connect</title>
+    <link>/net/nats/connect/</link>
+    <description>Recent content in Connect on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/net/nats/connect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Net: INatsMessageListener</title>
+      <link>/net/nats/connect/inats_message_listener/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/nats/connect/inats_message_listener/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The INatsMessageListener interface defines a listener for NATS messages.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;onmessage&#34;&gt;OnMessage&lt;/h4&gt;
+&lt;p&gt;Defines the actions to be done after a message is received&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void OnMessage(object sender, MsgHandlerEventArgs e)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;sender&lt;/strong&gt;: object - sender&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;e&lt;/strong&gt;: any - message event handler&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: NatsConnection</title>
+      <link>/net/nats/connect/nats_connection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/nats/connect/nats_connection/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../../../messaging/connect/imessage_queue_connection&#34;&gt;IMessageQueueConnection&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;,
+&lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsConnection class is used to define NATS connections using the default driver.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;By defining a connection and sharing it through multiple message queues, you can reduce number of used database connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;client_id&lt;/strong&gt;: (optional) name of the client id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number (default: 27017)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when the connection is lost (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum number of reconnection attempts (default: 3)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;flush_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on flushing messages (default: 3000)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; (optional) credential stores to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the connection component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; NatsConnection()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_clientid&#34;&gt;_clientId&lt;/h4&gt;
+&lt;p&gt;Hostname as client id.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; &lt;strong&gt;_clientId&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_connection&#34;&gt;_connection&lt;/h4&gt;
+&lt;p&gt;NATS connection pool object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_connection&lt;/strong&gt;: IConnection&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_connectionresolver&#34;&gt;_connectionResolver&lt;/h4&gt;
+&lt;p&gt;Connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_connectionResolver&lt;/strong&gt;: &lt;a href=&#34;../nats_connection_resolver&#34;&gt;NatsConnectionResolver&lt;/a&gt; = new &lt;a href=&#34;../nats_connection_resolver&#34;&gt;NatsConnectionResolver()&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_flushtimeout&#34;&gt;_flushTimeout&lt;/h4&gt;
+&lt;p&gt;Number of milliseconds to wait on flushing messages (default: 3000)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; &lt;strong&gt;_flushTimeout&lt;/strong&gt;: int = 3000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_logger&#34;&gt;_logger&lt;/h4&gt;
+&lt;p&gt;Logger&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt; = new &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger()&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_maxreconnect&#34;&gt;_maxReconnect&lt;/h4&gt;
+&lt;p&gt;Maximum number of reconnection attempts (default: 3)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_maxReconnect&lt;/strong&gt;: number = 3&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_options&#34;&gt;_options&lt;/h4&gt;
+&lt;p&gt;Connection options&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; = new &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams()&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_reconnecttimeout&#34;&gt;_reconnectTimeout&lt;/h4&gt;
+&lt;p&gt;Number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; &lt;strong&gt;_reconnectTimeout&lt;/strong&gt;: int = 3000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_retryconnect&#34;&gt;_retryConnect&lt;/h4&gt;
+&lt;p&gt;Retry to connect option&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_retryConnect&lt;/strong&gt;: bool = true&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_subscriptions&#34;&gt;_subscriptions&lt;/h4&gt;
+&lt;p&gt;Topic subscriptions&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_subscriptions&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../nats_subscription&#34;&gt;NatsSubscription&lt;/a&gt;&amp;gt; = new List&amp;lt;&lt;a href=&#34;../nats_subscription&#34;&gt;NatsSubscription&lt;/a&gt;&amp;gt;()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;checkopen&#34;&gt;CheckOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the connection is open.&lt;br&gt;
+Raises an error if the connection is closed.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; void CheckOpen()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;closeasync&#34;&gt;CloseAsync&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task CloseAsync(string correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;createqueueasync&#34;&gt;CreateQueueAsync&lt;/h4&gt;
+&lt;p&gt;Creates a message queue.
+If the connection doesn&amp;rsquo;t support this function, it exists without error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task CreateQueueAsync(string name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the queue to be created.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;deletequeueasync&#34;&gt;DeleteQueueAsync&lt;/h4&gt;
+&lt;p&gt;Deletes a message queue.
+If connection doesn&amp;rsquo;t support this function, it exists without error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task DeleteQueueAsync(string name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the queue to be deleted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getconnection&#34;&gt;GetConnection&lt;/h4&gt;
+&lt;p&gt;Gets the connection.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; IConnection GetConnection()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: IConnection - connection to NATS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; bool IsOpen()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;openasync&#34;&gt;OpenAsync&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task OpenAsync(string correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;publishasync&#34;&gt;PublishAsync&lt;/h4&gt;
+&lt;p&gt;Publishes a message to a specified topic.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task PublishAsync(string subject, Msg message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;subject&lt;/strong&gt;: string - subject(topic) where the message will be placed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: Msg - message to be published&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readqueuenames&#34;&gt;ReadQueueNames&lt;/h4&gt;
+&lt;p&gt;Reads a list of registered queue names.
+If the connection doesn&amp;rsquo;t support this function, it returns an empty list.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task&amp;lt;List&amp;lt;string&amp;gt;&amp;gt; ReadQueueNamesAsync()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;List&amp;lt;string&amp;gt;&amp;gt; - queue names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;subscribeasync&#34;&gt;SubscribeAsync&lt;/h4&gt;
+&lt;p&gt;Subscribes to a topic.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task SubscribeAsync(string subject, string queue, &lt;a href=&#34;../inats_message_listener&#34;&gt;INatsMessageListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;subject&lt;/strong&gt;: string - subject(topic) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;: string - subscription options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../inats_message_listener&#34;&gt;INatsMessageListener&lt;/a&gt; - message listener&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsubsunsubscribeasynccribe&#34;&gt;UnsubsUnsubscribeAsynccribe&lt;/h4&gt;
+&lt;p&gt;Unsubscribes from a previously subscribed topic.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task UnsubscribeAsync(string subject, string queue, &lt;a href=&#34;../inats_message_listener&#34;&gt;INatsMessageListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;subject&lt;/strong&gt;: string - subject (topic) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;queue&lt;/strong&gt;: string - TODO: add desscription&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../inats_message_listener&#34;&gt;INatsMessageListener&lt;/a&gt; - message listener&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: NatsConnectionResolver</title>
+      <link>/net/nats/connect/nats_connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/nats/connect/nats_connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;ImpInherits:&lt;/strong&gt; &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsConnectionResolver class is used to resolve NATS connections and credential parameters, validate them and generate connection options.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) credential stores to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_connectionresolver&#34;&gt;_connectionResolver&lt;/h4&gt;
+&lt;p&gt;Connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; &lt;strong&gt;_connectionResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/connect/connection_resolver&#34;&gt;ConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_credentialresolver&#34;&gt;_credentialResolver&lt;/h4&gt;
+&lt;p&gt;Credential resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;private&lt;/code&gt; &lt;strong&gt;_credentialResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_resolver&#34;&gt;CredentialResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;compose&#34;&gt;Compose&lt;/h4&gt;
+&lt;p&gt;Composes NATS connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; Compose(string correlationId, List&amp;lt;&lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; connections, &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; credential)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - resolved NATS connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolveasync&#34;&gt;ResolveAsync&lt;/h4&gt;
+&lt;p&gt;Resolves NATS connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; Task&amp;lt;&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&amp;gt; ResolveAsync(string correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&amp;gt; - resolved NATS connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void SetReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Net: NatsSubscription</title>
+      <link>/net/nats/connect/nats_subscription/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/net/nats/connect/nats_subscription/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsSubscription class defines the fields for NATS subscriptions.&lt;/p&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;subject&#34;&gt;Subject&lt;/h4&gt;
+&lt;p&gt;Subject&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Subject { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;queue&#34;&gt;Queue&lt;/h4&gt;
+&lt;p&gt;Queue&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; string Queue { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;handler&#34;&gt;Handler&lt;/h4&gt;
+&lt;p&gt;Handler&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; IAsyncSubscription Handler { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;listener&#34;&gt;Listener&lt;/h4&gt;
+&lt;p&gt;Listener&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; &lt;a href=&#34;../inats_message_listener&#34;&gt;INatsMessageListener&lt;/a&gt; Listener { get; set; }&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

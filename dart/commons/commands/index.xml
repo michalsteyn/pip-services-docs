@@ -1,0 +1,749 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Commands</title>
+    <link>/dart/commons/commands/</link>
+    <description>Recent content in Commands on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/dart/commons/commands/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Dart: Command</title>
+      <link>/dart/commons/commands/command/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/command/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Command class allows you to call a method or a function.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new command object and assigns it&amp;rsquo;s parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Command(String name, &lt;a href=&#34;../../validate/schema&#34;&gt;Schema&lt;/a&gt; schema, func)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - command name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../validate/schema&#34;&gt;Schema&lt;/a&gt; - schema to validate command arguments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;func&lt;/strong&gt;:  dynamyc - function to be executed by this command.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;execute&#34;&gt;Execute&lt;/h4&gt;
+&lt;p&gt;Executes the command. Before execution it validates &lt;a href=&#34;../../run/parameters&#34;&gt;args&lt;/a&gt; using the defined schema.&lt;/p&gt;
+&lt;p&gt;Raise &lt;a href=&#34;../../errors/application_exception&#34;&gt;ApplicationException&lt;/a&gt; when execution fails for whatever reason.&lt;br&gt;
+See &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;dynamic&amp;gt; execute(String correlationId, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to pass to this command for execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;dynamic&amp;gt; - execution result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Gets the command name.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - name of this command.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the command &lt;a href=&#34;../../run/parameters&#34;&gt;args&lt;/a&gt; before execution using the defined schema.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; validate(&lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to validate using this command&amp;rsquo;s schema.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - array of ValidationResults or an empty array (if no schema is set).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;add&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;param1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getAsFloat&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;param2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getAsFloat&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;param1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;param2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;)).&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;catch&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;2 + 2 = &amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icommandicommand&#34;&gt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;commandsetcommand_set&#34;&gt;&lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: CommandSet</title>
+      <link>/dart/commons/commands/command_set/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/command_set/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CommandSet class allows you to create a set of commands and events supported by a &lt;a href=&#34;../icommandable&#34;&gt;commandable&lt;/a&gt; object. In addition, it supports command interceptors and command call chains.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CommandSets can be used as an alternative commandable interface to a business object.&lt;/li&gt;
+&lt;li&gt;This class can be used to auto generate multiple external services for a business object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates an empty CommandSet object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CommandSet()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;addcommand&#34;&gt;addCommand&lt;/h4&gt;
+&lt;p&gt;Adds a &lt;a href=&#34;../icommand&#34;&gt;command&lt;/a&gt; to this command set.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addCommand(&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; command)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;command&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - command to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addcommandset&#34;&gt;addCommandSet&lt;/h4&gt;
+&lt;p&gt;Adds all of the commands and events from a specified &lt;a href=&#34;../command_set&#34;&gt;command set&lt;/a&gt;
+into this one.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addCommandSet(&lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt; commandSet)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;commandSet&lt;/strong&gt;: &lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt; - CommandSet to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addcommands&#34;&gt;addCommands&lt;/h4&gt;
+&lt;p&gt;Adds multiple &lt;a href=&#34;../icommand&#34;&gt;commands&lt;/a&gt; to this command set.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addCommands(List&amp;lt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; commands)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;commands&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; - array of commands to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addevent&#34;&gt;addEvent&lt;/h4&gt;
+&lt;p&gt;Adds an &lt;a href=&#34;../ievent&#34;&gt;event&lt;/a&gt; to this command set.&lt;br&gt;
+See &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addEvent(&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt; event)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;event&lt;/strong&gt;: &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt; - event to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addevents&#34;&gt;addEvents&lt;/h4&gt;
+&lt;p&gt;Adds multiple &lt;a href=&#34;../ievent&#34;&gt;events&lt;/a&gt; to this command set.&lt;br&gt;
+See &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addEvents(List&amp;lt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&amp;gt; events)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;event&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&amp;gt; - array of events to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addinterceptor&#34;&gt;addInterceptor&lt;/h4&gt;
+&lt;p&gt;Adds a &lt;a href=&#34;../icommand_interceptor&#34;&gt;command interceptor&lt;/a&gt; to this command set.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addInterceptor(&lt;a href=&#34;../icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt; interceptor)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interceptor&lt;/strong&gt;: &lt;a href=&#34;../icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt; interceptor to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addlistener&#34;&gt;addListener&lt;/h4&gt;
+&lt;p&gt;Adds a &lt;a href=&#34;../ievent_listener&#34;&gt;listener&lt;/a&gt; to receive notifications on fired events.&lt;br&gt;
+See &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addListener(&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; - listener to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;execute&#34;&gt;execute&lt;/h4&gt;
+&lt;p&gt;Executes a &lt;a href=&#34;../icommand&#34;&gt;command&lt;/a&gt; specificed by its name.&lt;br&gt;
+See &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;\dynamic&amp;gt; execute(String correlationId, String commandName, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;commandName&lt;/strong&gt;: String - name of the command that is to be executed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to pass to the command for execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;\dynamic&amp;gt; - execution result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;findcommand&#34;&gt;findCommand&lt;/h4&gt;
+&lt;p&gt;Searches for a command by its name.&lt;br&gt;
+See &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; findCommand(String commandName)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;commandName&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - name of the command to search for.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - command, whose name matches the provided name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;findevent&#34;&gt;findEvent&lt;/h4&gt;
+&lt;p&gt;Searches for an event by its name in this command set.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt; findEvent(String eventName)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;eventName&lt;/strong&gt;: String - name of the event to search for.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt; - event, whose name matches the provided name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getcommands&#34;&gt;getCommands&lt;/h4&gt;
+&lt;p&gt;Gets all commands registered in this command set.&lt;br&gt;
+See &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; getCommands()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&amp;gt; - list of commands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getevents&#34;&gt;getEvents&lt;/h4&gt;
+&lt;p&gt;Gets all events registred in this command set.&lt;br&gt;
+See &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&amp;gt; getEvents()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&amp;gt; - list of events.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;notify&#34;&gt;notify&lt;/h4&gt;
+&lt;p&gt;Fires an event specified by its name and notifies all registered
+&lt;a href=&#34;../ievent_listener&#34;&gt;listeners&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void notify(String correlationId, String eventName, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;eventName&lt;/strong&gt;: String - name of the event that is to be fired.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - event arguments (parameters).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;removelistener&#34;&gt;removeListener&lt;/h4&gt;
+&lt;p&gt;Removes a previosly added &lt;a href=&#34;../ievent_listener&#34;&gt;listener&lt;/a&gt;.&lt;br&gt;
+See &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void removeListener(&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; - listener to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the &lt;a href=&#34;../../run/parameters&#34;&gt;args&lt;/a&gt; for a command specified by its name using a defined schema.
+If the validation schema is not defined, then the methods returns no errors.
+It returns a validation error if the command is not found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; validate(String commandName, Parameters args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;commandName&lt;/strong&gt;: String - name of the command for which the &amp;lsquo;args&amp;rsquo; must be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to validate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - array of ValidationResults. If no command is found by the given name, then the returned array of ValidationResults will contain a single entry, whose type will be &lt;a href=&#34;../../validate/validation_result_type&#34;&gt;ValidationResultType.Error&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyDataCommandSet&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CommandSet&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color:#111&#34;&gt;IMyDataController&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;MyDataCommandSet&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IMyDataController&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// Any data controller interface
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;addCommand&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;makeGetMyDataCommand&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;ICommand&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_makeGetMyDataCommand&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+          &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;get_mydata&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+          &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+          &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+              &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;param&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getAsString&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+              &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getMyData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;param&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+          &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;commandcommand&#34;&gt;&lt;a href=&#34;../command&#34;&gt;Command&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icommandableicommandable&#34;&gt;&lt;a href=&#34;../icommandable&#34;&gt;ICommandable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;eventevent&#34;&gt;&lt;a href=&#34;../event&#34;&gt;Event&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Event</title>
+      <link>/dart/commons/commands/event/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/event/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Event class allows you to create events.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It allows you to send asynchronous notifications to multiple subscribed listeners.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new event and assigns its name.&lt;br&gt;
+Throws an Error if the name is null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Event(String name)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - name of the event that is to be created.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;addlistener&#34;&gt;addListener&lt;/h4&gt;
+&lt;p&gt;Adds a listener to receive notifications when this event is fired.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void addListener(&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; - listener reference to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlisteners&#34;&gt;getListeners&lt;/h4&gt;
+&lt;p&gt;Gets all listeners registred in this event.&lt;/p&gt;
+&lt;p&gt;@override&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&amp;gt; getListeners()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&amp;gt; - list of listeners.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Gets the name of the event.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - name of this event.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;notify&#34;&gt;notify&lt;/h4&gt;
+&lt;p&gt;Fires this event and notifies all registred listeners.&lt;br&gt;
+Throws an &lt;a href=&#34;../errors/invocation_exception&#34;&gt;InvocationException&lt;/a&gt; if the event fails to be raised.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void notify(String correlationId, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters to raise this event with.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;removelistener&#34;&gt;RemoveListener&lt;/h4&gt;
+&lt;p&gt;Removes a listener, so that it no longer receives notifications for this event.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void removeListener(&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; - listener reference to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;my_event&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;addListener&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;myListener&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;notify&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ieventievent&#34;&gt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ieventlistenerievent_listener&#34;&gt;&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ICommand</title>
+      <link>/dart/commons/commands/icommand/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/icommand/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../run/iexecutable&#34;&gt;IExecutable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ICommand interface is used to define Commands. Each command wraps a method or function and allows calling them in a uniform and safe manner.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Gets the command name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - command name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates command arguments before execution using a defined schema.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; validate(&lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to validate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - command name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;commandcommand&#34;&gt;&lt;a href=&#34;../command&#34;&gt;Command&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iexecutableruniexecutable&#34;&gt;&lt;a href=&#34;../../run/iexecutable&#34;&gt;IExecutable&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icommandinterceptoricommand_interceptor&#34;&gt;&lt;a href=&#34;../icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;interceptedcommandintercepted_command&#34;&gt;&lt;a href=&#34;../intercepted_command&#34;&gt;InterceptedCommand&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ICommandable</title>
+      <link>/dart/commons/commands/icommandable/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/icommandable/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ICommandable interface allows you to expose the functionality of commandable objects as commands and events grouped into a &lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt; object.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This interface is typically implemented by controllers and is used to auto generate external interfaces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getcommandset&#34;&gt;getCommandSet&lt;/h4&gt;
+&lt;p&gt;Gets a command set with all supported commands and events.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt; getCommandSet()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt; - command set with commands and events.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyDataController&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ICommandable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IMyDataController&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;MyDataCommandSet&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_commandSet&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;CommandSet&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;getCommandSet&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_commandSet&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+      &lt;span style=&#34;color:#111&#34;&gt;_commandSet&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;MyDataCommandSet&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_commandSet&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;commandsetcommand_set&#34;&gt;&lt;a href=&#34;../command_set&#34;&gt;CommandSet&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ICommandInterceptor</title>
+      <link>/dart/commons/commands/icommand_interceptor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/icommand_interceptor/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ICommandInterceptor interface is used for stackable command interceptors, which can extend and modify the command call chain.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This technique can be used for authentication, logging, and several other functions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Gets the name of the wrapped command.&lt;/p&gt;
+&lt;p&gt;The interceptor can use this method to override the command name.
+Otherwise, it shall just delegate the call to the wrapped command.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName(&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; command)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;command&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - next command in the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - name of the wrapped command.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;execute&#34;&gt;execute&lt;/h4&gt;
+&lt;p&gt;Executes the wrapped command with specified arguments.&lt;/p&gt;
+&lt;p&gt;The interceptor can use this method to intercept and alter the command execution.
+Otherwise, it shall just delete the call to the wrapped command.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;dynamic&amp;gt; execute(String correlationId, &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; command, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to used trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;command&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - next command in the call chain that is to be executed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to pass to the command for execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;dynamic&amp;gt; - execution result.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the arguments of the wrapped command before its execution.&lt;/p&gt;
+&lt;p&gt;The interceptor can use this method to intercept and alter validation of the command arguments.
+Otherwise, it shall just delegate the call to the wrapped command.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; validate(&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; command, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;command&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - next command in the call chain to be validated against.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to validate.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - array of ValidationResults.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icommandicommand&#34;&gt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;interceptedcommandintercepted_command&#34;&gt;&lt;a href=&#34;../intercepted_command&#34;&gt;InterceptedCommand&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: IEvent</title>
+      <link>/dart/commons/commands/ievent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/ievent/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../run/inotifiable&#34;&gt;INotifiable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IEvent interface allows you to define events that can send asynchronous notifications to multiple subscribed listeners.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Gets the event name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - name of the event.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlisteners&#34;&gt;getListeners&lt;/h4&gt;
+&lt;p&gt;Gets all subscribed listeners.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&amp;gt; getListeners()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&amp;gt; - list of listeners.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;addlistener&#34;&gt;addListener&lt;/h4&gt;
+&lt;p&gt;Adds a listener to receive notifications for this event.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;avoid addListener(&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; - listener reference to add.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;removelistener&#34;&gt;removeListener&lt;/h4&gt;
+&lt;p&gt;Removes a listener, so that it no longer receives notifications for this event.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void removeListener(&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; listener)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt; - listener reference to remove.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ieventlistenerievent_listener&#34;&gt;&lt;a href=&#34;../ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: IEventListener</title>
+      <link>/dart/commons/commands/ievent_listener/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/ievent_listener/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IEventListener interface allows you to define actions to be taken by listener objects after receiving a notification on a fired event.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;onevent&#34;&gt;onEvent&lt;/h4&gt;
+&lt;p&gt;A method called when events this listener is subscribed to are fired.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void onEvent(String correlationId, &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt; event, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - fired evemt&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;event&lt;/strong&gt;: &lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt; - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - event arguments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyListener&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IEventListener&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_onEvent&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IEvent&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Fired event &amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;myevent&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;addListener&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyListener&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;event&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;notify&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;param1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// Console output: Fired event myevent
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ieventievent&#34;&gt;&lt;a href=&#34;../ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;eventevent&#34;&gt;&lt;a href=&#34;../event&#34;&gt;Event&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: InterceptedCommand</title>
+      <link>/dart/commons/commands/intercepted_command/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/intercepted_command/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InterceptedCommand allows you  to implement a &lt;a href=&#34;../icommand&#34;&gt;command&lt;/a&gt; wrapped by an interceptor. Thus, it allows you to build command call chains, where the interceptor can alter execution and delegate calls to a next command, which can then be intercepted or not.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new &lt;a href=&#34;&#34;&gt;InterceptedCommand&lt;/a&gt;, which serves as a link in an execution chain. Contains information
+about the interceptor that is being used and the next command in the chain.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InterceptedCommand(&lt;a href=&#34;../icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt; interceptor, &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; next)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interceptor&lt;/strong&gt;: &lt;a href=&#34;../icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt; - interceptor that is intercepting the command.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;next&lt;/strong&gt;: &lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt; - (link to) the next command in the command&amp;rsquo;s execution chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;execute&#34;&gt;execute&lt;/h4&gt;
+&lt;p&gt;Executes the next command in the execution chain using the given &lt;a href=&#34;../../run/parameters&#34;&gt;parameters&lt;/a&gt; (arguments).&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;dynamic&amp;gt; execute(String correlationId, &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - unique transaction id used to trace calls across components.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to pass to the command for execution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;dynamic&amp;gt; - execution result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Returns a string with the name of the command that is being intercepted.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - name of the command that is being intercepted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the &lt;a href=&#34;../../run/parameters&#34;&gt;parameters&lt;/a&gt; (arguments) that are to be passed to the command that is next
+in the execution chain.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt;, &lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; validate(&lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; args)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: &lt;a href=&#34;../../run/parameters&#34;&gt;Parameters&lt;/a&gt; - parameters (arguments) to validate for the next command.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../../validate/validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - array of ValidationResults.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CommandLogger&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ICommandInterceptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;getName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ICommand&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ICommand&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Executed command &amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;execute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;List&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ValidationResult&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ICommand&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Parameters&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;CommandLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;loggedCommand&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;InterceptedCommand&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// Each called command will output: Executed command &amp;lt;command name&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icommandicommand&#34;&gt;&lt;a href=&#34;../icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icommandinterceptoricommand_interceptor&#34;&gt;&lt;a href=&#34;../icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

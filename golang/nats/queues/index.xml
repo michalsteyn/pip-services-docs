@@ -1,0 +1,604 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Queues</title>
+    <link>/golang/nats/queues/</link>
+    <description>Recent content in Queues on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/nats/queues/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: NatsAbstractMessageQueue</title>
+      <link>/golang/nats/queues/nats_abstract_message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/nats/queues/nats_abstract_message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../messaging/queues/message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsAbstractMessageQueue class allows you to define abstract NATS message queues with the ability to connect to NATS servers.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritnatsabstractmessagequeue&#34;&gt;InheritNatsAbstractMessageQueue&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritNatsAbstractMessageQueue(overrides cqueues.IMessageQueueOverrides, name string, capabilities &lt;a href=&#34;../../../messaging/queues/messaging_capabilities&#34;&gt;*MessagingCapabilities&lt;/a&gt;) &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;overrides&lt;/strong&gt;: cqueues.IMessageQueueOverrides - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) queue name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;capabilities&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/messaging_capabilities&#34;&gt;*MessagingCapabilities&lt;/a&gt; - supported capabilities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;client&#34;&gt;Client&lt;/h4&gt;
+&lt;p&gt;NATS connection pool object&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Client&lt;/strong&gt;: *nats.Conn&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connection&#34;&gt;Connection&lt;/h4&gt;
+&lt;p&gt;NATS connection component&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Connection&lt;/strong&gt;: &lt;a href=&#34;../../connect/nats_connection&#34;&gt;*NatsConnection&lt;/a&gt;;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;dependencyresolver&#34;&gt;DependencyResolver&lt;/h4&gt;
+&lt;p&gt;Dependency resolver&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;*DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;logger&#34;&gt;Logger&lt;/h4&gt;
+&lt;p&gt;Logger&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;*CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;queuegroup&#34;&gt;QueueGroup&lt;/h4&gt;
+&lt;p&gt;Queue group&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;QueueGroup&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;subject&#34;&gt;Subject&lt;/h4&gt;
+&lt;p&gt;Subject&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Subject&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;abandon&#34;&gt;Abandon&lt;/h4&gt;
+&lt;p&gt;Returnes a message into the queue and makes it available for all subscribers to receive it again.
+This method is usually used to return a message which could not be processed at the moment
+to repeat the attempt. Messages that cause unrecoverable errors shall be removed
+permanently or/and send to dead letter queue.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by NATS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Abandon(message &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message to return.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;clear&#34;&gt;Clear&lt;/h4&gt;
+&lt;p&gt;Clears a component&amp;rsquo;s state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Clear(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees the used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Close(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;complete&#34;&gt;Complete&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue.
+This method is usually used to remove the message after successful processing.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by NATS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Complete(message &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message to remove.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config:&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;frommessage&#34;&gt;FromMessage&lt;/h4&gt;
+&lt;p&gt;Returns the headers and data from a message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) FromMessage(message &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;) (*nats.Msg, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (*nats.Msg, error) - message headers and data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;movetodeadletter&#34;&gt;MoveToDeadLetter&lt;/h4&gt;
+&lt;p&gt;Permanently removes a message from the queue and sends it to the dead letter queue.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by NATS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) MoveToDeadLetter(message *cqueues.MessageEnvelope) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;MessageEnvelope&lt;/a&gt; - message to be removed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Open(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readmessagecount&#34;&gt;ReadMessageCount&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) ReadMessageCount() (int64, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;*&lt;strong&gt;returns&lt;/strong&gt;: (int64, error) - number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;renewlock&#34;&gt;RenewLock&lt;/h4&gt;
+&lt;p&gt;Renews a lock on a message that makes it invisible from other receivers in the queue.
+This method is usually used to extend the message processing time.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by NATS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) RenewLock(message &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, lockTimeout time.Duration) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message to extend its lock.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;lockTimeout&lt;/strong&gt;: time.Duration - locking timeout in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;send&#34;&gt;Send&lt;/h4&gt;
+&lt;p&gt;Sends a message into the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) Send(correlationId string, envelop &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message envelop to be sent.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tomessage&#34;&gt;ToMessage&lt;/h4&gt;
+&lt;p&gt;If the message is nil, it returns nil. Otherwise, it returns the message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) ToMessage(msg *nats.Msg) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;msg&lt;/strong&gt;: *nats.Msg - message&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error)  - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsetreferences&#34;&gt;UnsetReferences&lt;/h4&gt;
+&lt;p&gt;Unsets (clears) previously set references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NatsAbstractMessageQueue&lt;/a&gt;) UnsetReferences()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagequeuemessagingqueuesmessage_queue&#34;&gt;&lt;a href=&#34;../../../messaging/queues/message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagingcapabilitiesmessagingqueuesmessaging_capabilities&#34;&gt;&lt;a href=&#34;../../../messaging/queues/messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: NatsBareMessageQueue</title>
+      <link>/golang/nats/queues/nats_bare_message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/nats/queues/nats_bare_message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../nats_abstract_message_queue&#34;&gt;NatsAbstractMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsBareMessageQueue class allows you to create message queues that send and receive messages via NATS message broker.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;subject&lt;/strong&gt;: name of NATS topic (subject) to subscribe&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;queue_group&lt;/strong&gt;: name of NATS queue group&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from [IDiscovery](../../../components/connect/idiscovery&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from [ICredentialStore](../../../components/auth/icredential_store&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;serialize_message&lt;/strong&gt;: (optional) true to serialize the entire message as JSON, false to only send the message payload (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is lost (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum number of reconnection attempts (default: 3)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;flush_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on flushing messages (default: 3000)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; to resolve credentials&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:connection:nats:*:1.0&lt;/strong&gt; - (optional) Shared connection to NATS service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newnatsbaremessagequeue&#34;&gt;NewNatsBareMessageQueue&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the message queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewNatsBareMessageQueue(name string) &lt;a href=&#34;&#34;&gt;*NatsBareMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) a queue name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;endlisten&#34;&gt;EndListen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages.
+When this method is call, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsBareMessageQueue) EndListen(correlationId string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until the queue is closed.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsBareMessageQueue) Listen(correlationId string, receiver &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;Peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it.
+If there are no messages available in the queue, it returns nil.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsBareMessageQueue) Peek(correlationId string) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error) - peeked message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peekbatch&#34;&gt;PeekBatch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them.
+If there are no messages available in the queue, it returns an empty list.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by NATS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsBareMessageQueue) PeekBatch(correlationId string, messageCount int64) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;[]*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;messageCount&lt;/strong&gt;: int64 - maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;[]*MessageEnvelope&lt;/a&gt;, error) - list with peeked messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;Receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsBareMessageQueue) Receive(correlationId string, waitTimeout time.Duration) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;waitTimeout&lt;/strong&gt;: time.Duration - timeout in milliseconds to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error) - received message or nil if nothing was received.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewNatsBareMessageQueue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myqueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;cconf&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewConfigParamsFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;subject&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mytopic&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;queue_group&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;nats&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1883&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Send&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMessageEnvelope&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymessage&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Receive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Complete&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagequeuemessagingqueuesmessage_queue&#34;&gt;&lt;a href=&#34;../../../messaging/queues/message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagingcapabilitiesmessagingqueuesmessaging_capabilities&#34;&gt;&lt;a href=&#34;../../../messaging/queues/messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: NatsMessageQueue</title>
+      <link>/golang/nats/queues/nats_message_queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/nats/queues/nats_message_queue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../nats_abstract_message_queue&#34;&gt;NatsAbstractMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsMessageQueue class allows you to create a message queue that sends and receives messages via the NATS message broker.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;subject&lt;/strong&gt;: name of NATS topic (subject) to subscribe&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;queue_group&lt;/strong&gt;: name of NATS queue group&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from [IDiscovery](../../../components/connect/idiscovery&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from [ICredentialStore](../../../components/auth/icredential_store&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;serialize_message&lt;/strong&gt;: (optional) true to serialize entire message as JSON, false to send only the message payload (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;autosubscribe&lt;/strong&gt;: (optional) true to automatically subscribe on option (default: false)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is lost (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum number of reconnection attempts (default: 3)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;flush_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on flushing messages (default: 3000)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt; to resolve credentials&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:connection:nats:*:1.0&lt;/strong&gt; - (optional) shared connection to NATS service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newnatsmessagequeue&#34;&gt;NewNatsMessageQueue&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the message queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewNatsMessageQueue(name string) &lt;a href=&#34;&#34;&gt;*NatsMessageQueue&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - (optional) queue name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;autosubscribe&#34;&gt;autoSubscribe&lt;/h4&gt;
+&lt;p&gt;Auto-subscribe option&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;autoSubscribe&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;messages&#34;&gt;messages&lt;/h4&gt;
+&lt;p&gt;Messages&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;messages&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;[]MessageEnvelope&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;receiver&#34;&gt;receiver&lt;/h4&gt;
+&lt;p&gt;Message receiver&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;subscribed&#34;&gt;subscribed&lt;/h4&gt;
+&lt;p&gt;Subscrie option&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;subscribed&lt;/strong&gt;: bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;clear&#34;&gt;Clear&lt;/h4&gt;
+&lt;p&gt;Clears a component&amp;rsquo;s state.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Clear(correlationId string) (err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Close(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config:&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;endlisten&#34;&gt;EndListen&lt;/h4&gt;
+&lt;p&gt;Ends listening for incoming messages.
+When this method is call, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) EndListen(correlationId string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;listen&#34;&gt;Listen&lt;/h4&gt;
+&lt;p&gt;Listens for incoming messages and blocks the current thread until the queue is closed.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Listen(correlationId string, receiver &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;onmessage&#34;&gt;OnMessage&lt;/h4&gt;
+&lt;p&gt;Checks if the message is not nil. If this is the case, deserializes and sends it to the receiver if it’s set. Otherwise, puts it into the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) OnMessage(msg *nats.Msg)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;msg&lt;/strong&gt;: *nats.Msg - message&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Open(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peek&#34;&gt;Peek&lt;/h4&gt;
+&lt;p&gt;Peeks a single incoming message from the queue without removing it.
+If there are no messages available in the queue, it returns nil.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Peek(correlationId string) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error) - peeked message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;peekbatch&#34;&gt;PeekBatch&lt;/h4&gt;
+&lt;p&gt;Peeks multiple incoming messages from the queue without removing them.
+If there are no messages available in the queue, it returns an empty list.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Important: This method is not supported by NATS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) PeekBatch(correlationId string, messageCount int64) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;[]*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;messageCount&lt;/strong&gt;: int64 - maximum number of messages to peek.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;[]*MessageEnvelope&lt;/a&gt;, error) - list with peeked messages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readmessagecount&#34;&gt;ReadMessageCount&lt;/h4&gt;
+&lt;p&gt;Reads the current number of messages in the queue to be delivered.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) ReadMessageCount() (count int64, err error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;*&lt;strong&gt;returns&lt;/strong&gt;: (count int64, err error) - number of messages in the queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;receive&#34;&gt;Receive&lt;/h4&gt;
+&lt;p&gt;Receives an incoming message and removes it from the queue.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) Receive(correlationId string, waitTimeout time.Duration) (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it’s set. Otherwise, puts it into the queue.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;waitTimeout&lt;/strong&gt;: time.Duration - timeout (milliseconds) to wait for a message to come.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt;, error) - received message or nil if nothing was received.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;subscribe&#34;&gt;Subscribe&lt;/h4&gt;
+&lt;p&gt;Subscribes to a subject.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *NatsMessageQueue) subscribe(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewNatsMessageQueue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;myqueue&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;cconf&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewConfigParamsFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;subject&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mytopic&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;queue_group&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;nats&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1883&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Send&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMessageEnvelope&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymessage&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Receive&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+	&lt;span style=&#34;color:#75af00&#34;&gt;queue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Complete&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagequeuemessagingqueuesmessage_queue&#34;&gt;&lt;a href=&#34;../../../messaging/queues/message_queue&#34;&gt;MessageQueue&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;messagingcapabilitiesmessagingqueuesmessaging_capabilities&#34;&gt;&lt;a href=&#34;../../../messaging/queues/messaging_capabilities&#34;&gt;MessagingCapabilities&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

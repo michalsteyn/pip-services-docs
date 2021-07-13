@@ -1,0 +1,512 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Commons module</title>
+    <link>/dart/commons/</link>
+    <description>Recent content in Commons module on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/dart/commons/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Dart: Commands</title>
+      <link>/dart/commons/commands/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/commands/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This package allows you to create &lt;a href=&#34;icommandable&#34;&gt;Commandable&lt;/a&gt; interfaces, which are completely universal. Thus, for example, if an object extends &lt;a href=&#34;icommandable&#34;&gt;ICommandable&lt;/a&gt; and returns a &lt;a href=&#34;command_set&#34;&gt;CommandSet&lt;/a&gt;, then you can implement a commandable client for this object, using various technologies and with minimal code.&lt;/p&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;br/&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The package main components are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;icommandable&#34;&gt;Commandable Interfaces&lt;/a&gt; – used to make classes with a certain logic and, which are capable of receiving and processing commands in this universal form.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;icommand_interceptor&#34;&gt;Command interceptors&lt;/a&gt; – modify the message execution pipeline. Command interceptors are used to intercept calls, perform a set of actions, and, optionally, cancel the command&amp;rsquo;s actual execution by simply returning a result. This logic is used in aspect-oriented programming. Aspect-oriented programming contains perpendicular logic (aspects, such as logging, caching, blocking), which can be removed from the business logic and added to these perpendicular calls.
+Moreover, when using interceptors, a command can pass through an execution chain, consisting of interceptors, which can:
+&lt;ul&gt;
+&lt;li&gt;simply take note of the command, notify, log, get metrics, or do some other passive task;&lt;/li&gt;
+&lt;li&gt;intercept the command completely and, for example, return a previous record of the call from the cache.&lt;/li&gt;
+&lt;li&gt;intercept a command’s return value and, for example, cache the result, so that the next call doesn’t have to be made.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;intercepted_command&#34;&gt;Intercepted commands&lt;/a&gt; are used as pattern decorators that allow behavior to be added to an individual object, dynamically and without affecting the behavior of other objects from the same class. They are represented as regular commands, but run their own logic before calling the actual command.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Typical uses of this package would be intercepting messages and various logging implementations.&lt;/p&gt;
+&lt;br/&gt;
+&lt;h3 id=&#34;interfaces&#34;&gt;Interfaces&lt;/h3&gt;
+&lt;h4 id=&#34;icommandinterceptoricommand_interceptor&#34;&gt;&lt;a href=&#34;icommand_interceptor&#34;&gt;ICommandInterceptor&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Implements a &lt;a href=&#34;icommand&#34;&gt;command&lt;/a&gt; wrapped by an interceptor.
+It allows to build command call chains. The interceptor can alter execution
+and delegate calls to a following command, which can be intercepted or concrete.&lt;/p&gt;
+&lt;h4 id=&#34;icommandicommand&#34;&gt;&lt;a href=&#34;icommand&#34;&gt;ICommand&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An interface for Commands, which are part of the Command design pattern. Each command wraps a method or function and allows
+to call them in a uniform and safe manner.&lt;/p&gt;
+&lt;h4 id=&#34;icommandableicommandable&#34;&gt;&lt;a href=&#34;icommandable&#34;&gt;ICommandable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An interface for commandable objects, which are part of the command design pattern.
+The commandable object exposes its functonality as commands and events grouped
+into a &lt;a href=&#34;command_set&#34;&gt;CommandSet&lt;/a&gt;.
+This interface is typically implemented by controllers and is used to auto generate
+external interfaces.&lt;/p&gt;
+&lt;h4 id=&#34;ieventlistenerievent_listener&#34;&gt;&lt;a href=&#34;ievent_listener&#34;&gt;IEventListener&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An interface for listener objects that receive notifications on fired events.&lt;/p&gt;
+&lt;h4 id=&#34;ieventievent&#34;&gt;&lt;a href=&#34;ievent&#34;&gt;IEvent&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An interface for Events, which are part of the Command design pattern.
+Events allows to send asynchronious notifications to multiple subscribed listeners.&lt;/p&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;commandsetcommand_set&#34;&gt;&lt;a href=&#34;command_set&#34;&gt;CommandSet&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Contains a set of commands and events supported by a &lt;a href=&#34;icommandable&#34;&gt;commandable&lt;/a&gt; object.
+The CommandSet supports command interceptors to extend and the command call chain.&lt;br&gt;
+CommandSets can be used as alternative commandable interface to a business object.
+It can be used to auto generate multiple external services for the business object
+without writing much code.&lt;/p&gt;
+&lt;h4 id=&#34;commandcommand&#34;&gt;&lt;a href=&#34;command&#34;&gt;Command&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Concrete implementation of &lt;a href=&#34;icommand&#34;&gt;ICommand&lt;/a&gt; interface. Command allows to call a method
+or function using Command pattern.&lt;/p&gt;
+&lt;h4 id=&#34;eventevent&#34;&gt;&lt;a href=&#34;event&#34;&gt;Event&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Concrete implementation of &lt;a href=&#34;ievent&#34;&gt;IEvent&lt;/a&gt; interface.
+It allows to send asynchronous notifications to multiple subscribed listeners.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Config</title>
+      <link>/dart/commons/config/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/config/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The config package contains a set of classes and interfaces that allows you to add configurations to components. These configurations can contain different sets of configuration paramters, which can be used to define things such as access control credentials.&lt;/p&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;interfaces&#34;&gt;Interfaces&lt;/h3&gt;
+&lt;h4 id=&#34;iconfigurableiconfigurable&#34;&gt;&lt;a href=&#34;iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An interface to set configuration parameters to an object.
+It can be added to any existing class by implementing a single &lt;strong&gt;configure()&lt;/strong&gt; method.
+If you need to emphasise the fact that &lt;strong&gt;configure()&lt;/strong&gt; method can be called multiple times
+to change an object configuration in runtime, use &lt;a href=&#34;ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt; interface instead.&lt;/p&gt;
+&lt;h4 id=&#34;ireconfigurableireconfigurable&#34;&gt;&lt;a href=&#34;ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;An interface to set configuration parameters to an object.&lt;br&gt;
+It is similar to &lt;a href=&#34;iconfigurable&#34;&gt;IConfigurable&lt;/a&gt; interface, but emphasises the fact
+that &lt;strong&gt;configure()&lt;/strong&gt; method can be called more than once to change an object configuration
+in runtime.&lt;/p&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;configparamsconfig_params&#34;&gt;&lt;a href=&#34;config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Contains a key-value map with configuration parameters.
+All values are stored as strings and can be serialized as JSON or string forms.
+When retrieved the values can be automatically converted on read using GetAsXXX methods.&lt;/p&gt;
+&lt;h4 id=&#34;nameresolvername_resolver&#34;&gt;&lt;a href=&#34;name_resolver&#34;&gt;NameResolver&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;A helper class that allows to extract a component&amp;rsquo;s name from configuration parameters.
+The name can be defined in &amp;ldquo;id&amp;rdquo;, &amp;ldquo;name&amp;rdquo; parameters or inside a component descriptor.&lt;/p&gt;
+&lt;h4 id=&#34;optionresolveroption_resolver&#34;&gt;&lt;a href=&#34;option_resolver&#34;&gt;OptionResolver&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;A helper class to extract parameters from the &amp;ldquo;options&amp;rdquo; configuration section.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Convert</title>
+      <link>/dart/commons/convert/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/convert/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;constants&#34;&gt;Constants&lt;/h3&gt;
+&lt;h4 id=&#34;typecodetype_code&#34;&gt;&lt;a href=&#34;type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Codes for the data types that can be
+converted using &lt;a href=&#34;type_converter&#34;&gt;TypeConverter&lt;/a&gt;.&lt;/p&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;arrayconverterarray_converter&#34;&gt;&lt;a href=&#34;array_converter&#34;&gt;ArrayConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into array objects.&lt;/p&gt;
+&lt;h4 id=&#34;booleanconverterboolean_converter&#34;&gt;&lt;a href=&#34;boolean_converter&#34;&gt;BooleanConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values to boolean values using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Numbers: &amp;lt;&amp;gt;0 are true, =0 are false&lt;/li&gt;
+&lt;li&gt;Strings: &amp;ldquo;true&amp;rdquo;, &amp;ldquo;yes&amp;rdquo;, &amp;ldquo;T&amp;rdquo;, &amp;ldquo;Y&amp;rdquo;, &amp;ldquo;1&amp;rdquo; are true; &amp;ldquo;false&amp;rdquo;, &amp;ldquo;no&amp;rdquo;, &amp;ldquo;F&amp;rdquo;, &amp;ldquo;N&amp;rdquo; are false&lt;/li&gt;
+&lt;li&gt;DateTime: &amp;lt;&amp;gt;0 total milliseconds are true, =0 are false&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;datetimeconverterdate_time_converter&#34;&gt;&lt;a href=&#34;date_time_converter&#34;&gt;DateTimeConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into Date values using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strings: converted using the ISO time format&lt;/li&gt;
+&lt;li&gt;Numbers: converted using milliseconds since unix epoch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;doubleconverterdouble_converter&#34;&gt;&lt;a href=&#34;double_converter&#34;&gt;DoubleConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into double using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strings are converted to double values&lt;/li&gt;
+&lt;li&gt;DateTime: total number of milliseconds since unix epoch&lt;/li&gt;
+&lt;li&gt;Boolean: 1 for true and 0 for false&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;floatconverterfloat_converter&#34;&gt;&lt;a href=&#34;float_converter&#34;&gt;FloatConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into float using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strings are converted to float values&lt;/li&gt;
+&lt;li&gt;DateTime: total number of milliseconds since unix epoch&lt;/li&gt;
+&lt;li&gt;Boolean: 1 for true and 0 for false&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;integerconverterinteger_converter&#34;&gt;&lt;a href=&#34;integer_converter&#34;&gt;IntegerConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into integers using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strings are converted to floats, then to integers&lt;/li&gt;
+&lt;li&gt;DateTime: total number of milliseconds since unix epoch&lt;/li&gt;
+&lt;li&gt;Boolean: 1 for true and 0 for false&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;jsonconverterjson_converter&#34;&gt;&lt;a href=&#34;json_converter&#34;&gt;JsonConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into longs using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strings are converted to floats, then to longs&lt;/li&gt;
+&lt;li&gt;DateTime: total number of milliseconds since unix epoch&lt;/li&gt;
+&lt;li&gt;Boolean: 1 for true and 0 for false&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;mapconvertermap_converter&#34;&gt;&lt;a href=&#34;map_converter&#34;&gt;MapConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into map objects using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Objects: property names as keys, property values as values&lt;/li&gt;
+&lt;li&gt;Arrays: element indexes as keys, elements as values&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;recursivemapconverterrecursive_map_converter&#34;&gt;&lt;a href=&#34;recursive_map_converter&#34;&gt;RecursiveMapConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into map objects using extended conversion rules.
+This class is similar to &lt;a href=&#34;map_converter&#34;&gt;MapConverter&lt;/a&gt;, but it recursively converts all values
+stored in objects and arrays.&lt;/p&gt;
+&lt;h4 id=&#34;stringconverterstring_converter&#34;&gt;&lt;a href=&#34;string_converter&#34;&gt;StringConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into strings using extended conversion rules:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Numbers: are converted with &amp;lsquo;.&amp;rsquo; as decimal point&lt;/li&gt;
+&lt;li&gt;DateTime: using ISO format&lt;/li&gt;
+&lt;li&gt;Boolean: &amp;ldquo;true&amp;rdquo; for true and &amp;ldquo;false&amp;rdquo; for false&lt;/li&gt;
+&lt;li&gt;Arrays: as comma-separated list&lt;/li&gt;
+&lt;li&gt;Other objects: using &lt;strong&gt;toString()&lt;/strong&gt; method&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;typeconvertertype_converter&#34;&gt;&lt;a href=&#34;type_converter&#34;&gt;TypeConverter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Converts arbitrary values into objects specific by TypeCodes.
+For each TypeCode this class calls its corresponding converter, which then applies
+extended conversion rules to convert the values.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Errors</title>
+      <link>/dart/commons/errors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/errors/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;There are three ways to use these classes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Using an existing exception class.&lt;/li&gt;
+&lt;li&gt;Creating a child class that extends &lt;a href=&#34;application_exception&#34;&gt;ApplicationException&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Wrapping an exception in an existing application exception.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Although the exception classes themselves are not serializable, they can be converted to ErrorDescriptions, which are serializable in one language, transferred to the receiving side, and deserialized in another language. After deserialization, the initial exception class can be restored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;When transferring an exception from one language to another, the exception type that is closest to the initial exception type is chosen from the exceptions available in the target language.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;applicationexceptionapplication_exception&#34;&gt;&lt;a href=&#34;application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Defines a base class used to define various application exceptions.
+Most languages have their own definition of base exception (error) types.
+However, this class is implemented symmetrically in all languages
+supported by the PipServices toolkit. It allows to create portable implementations
+and support proper error propagation in microservices calls.&lt;/p&gt;
+&lt;h4 id=&#34;applicationexceptionfactoryapplication_exception_factory&#34;&gt;&lt;a href=&#34;application_exception_factory&#34;&gt;ApplicationExceptionFactory&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Factory to recreate exceptions from &lt;a href=&#34;error_description&#34;&gt;ErrorDescription&lt;/a&gt; values passed through the wire.&lt;/p&gt;
+&lt;h4 id=&#34;badrequestexceptionbadrequest_exception&#34;&gt;&lt;a href=&#34;badRequest_exception&#34;&gt;BadRequestException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors due to improper user requests.
+For example: missing or incorrect parameters.&lt;/p&gt;
+&lt;h4 id=&#34;configexceptionconfig_exception&#34;&gt;&lt;a href=&#34;config_exception&#34;&gt;ConfigException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors related to mistakes in the microservice&amp;rsquo;s user-defined configurations.&lt;/p&gt;
+&lt;h4 id=&#34;conflictexceptionconflict_exception&#34;&gt;&lt;a href=&#34;conflict_exception&#34;&gt;ConflictException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors raised by conflicts between object versions that were
+posted by the user and those that are stored on the server.&lt;/p&gt;
+&lt;h4 id=&#34;connectionexceptionconnection_exception&#34;&gt;&lt;a href=&#34;connection_exception&#34;&gt;ConnectionException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors that occur during connections to remote services.
+They can be related to misconfiguration, network issues, or the remote service itself.&lt;/p&gt;
+&lt;h4 id=&#34;errorcategoryerror_category&#34;&gt;&lt;a href=&#34;error_category&#34;&gt;ErrorCategory&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Defines standard error categories supported by the PipServices toolkit.&lt;/p&gt;
+&lt;h4 id=&#34;errordescriptionerror_description&#34;&gt;&lt;a href=&#34;error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Serializeable error description. It is used to pass information about errors
+between microservices implemented in different languages. On the receiving side,
+&lt;a href=&#34;error_description&#34;&gt;ErrorDescription&lt;/a&gt; is used to recreate exception objects close to its original type
+without missing additional details.&lt;/p&gt;
+&lt;h4 id=&#34;errordescriptionfactoryerror_description_factory&#34;&gt;&lt;a href=&#34;error_description_factory&#34;&gt;ErrorDescriptionFactory&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Factory used to create serializeable &lt;a href=&#34;error_description&#34;&gt;ErrorDescription&lt;/a&gt; from
+&lt;a href=&#34;application_exception&#34;&gt;ApplicationException&lt;/a&gt; or from arbitrary errors.
+The ErrorDescriptions are used to pass errors through the wire between microservices
+implemented in different languages. They allow to restore exceptions on the receiving side
+close to the original type and preserve additional information.&lt;/p&gt;
+&lt;h4 id=&#34;fileexceptionfile_exception&#34;&gt;&lt;a href=&#34;file_exception&#34;&gt;FileException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;A helper class to parameters from &amp;ldquo;options&amp;rdquo; configuration section.&lt;/p&gt;
+&lt;h4 id=&#34;internalexceptioninternal_exception&#34;&gt;&lt;a href=&#34;internal_exception&#34;&gt;InternalException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors caused by programming mistakes.&lt;/p&gt;
+&lt;h4 id=&#34;invalidstateexceptioninvalid_state_exception&#34;&gt;&lt;a href=&#34;invalid_state_exception&#34;&gt;InvalidStateException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors related to calling operations, which require the component to be in a specific state.
+For instance: business calls when the component is not ready.&lt;/p&gt;
+&lt;h4 id=&#34;invocationexceptioninvocation_exception&#34;&gt;&lt;a href=&#34;invocation_exception&#34;&gt;InvocationException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors returned by remote services or by the network during call attempts.&lt;/p&gt;
+&lt;h4 id=&#34;notfoundexceptionnot_found_exception&#34;&gt;&lt;a href=&#34;not_found_exception&#34;&gt;NotFoundException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors caused by attempts to access missing objects.&lt;/p&gt;
+&lt;h4 id=&#34;unauthorizedexceptionunauthorized_exception&#34;&gt;&lt;a href=&#34;unauthorized_exception&#34;&gt;UnauthorizedException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Access errors caused by missing user identity (authentication error) or incorrect security permissions (authorization error).&lt;/p&gt;
+&lt;h4 id=&#34;unknownexceptionunknown_exception&#34;&gt;&lt;a href=&#34;unknown_exception&#34;&gt;UnknownException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Unknown or unexpected errors.&lt;/p&gt;
+&lt;h4 id=&#34;unsupportedexceptionunsupported_exception&#34;&gt;&lt;a href=&#34;unsupported_exception&#34;&gt;UnsupportedException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Errors caused by calls to unsupported or not yet implemented functionality.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Random</title>
+      <link>/dart/commons/random/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/random/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;randomarrayrandom_array&#34;&gt;&lt;a href=&#34;random_array&#34;&gt;RandomArray&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for array objects.&lt;/p&gt;
+&lt;h4 id=&#34;randombooleanrandom_boolean&#34;&gt;&lt;a href=&#34;random_boolean&#34;&gt;RandomBoolean&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for boolean values.&lt;/p&gt;
+&lt;h4 id=&#34;randomdatetimerandom_date_time&#34;&gt;&lt;a href=&#34;random_date_time&#34;&gt;RandomDateTime&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for Date time values.&lt;/p&gt;
+&lt;h4 id=&#34;randomdoublerandom_double&#34;&gt;&lt;a href=&#34;random_double&#34;&gt;RandomDouble&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for double values.&lt;/p&gt;
+&lt;h4 id=&#34;randomfloatrandom_float&#34;&gt;&lt;a href=&#34;random_float&#34;&gt;RandomFloat&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for float values.&lt;/p&gt;
+&lt;h4 id=&#34;randomintegerrandom_integer&#34;&gt;&lt;a href=&#34;random_integer&#34;&gt;RandomInteger&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for integer values.&lt;/p&gt;
+&lt;h4 id=&#34;randomstringrandom_string&#34;&gt;&lt;a href=&#34;random_string&#34;&gt;RandomString&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for string values.&lt;/p&gt;
+&lt;h4 id=&#34;randomtextrandom_text&#34;&gt;&lt;a href=&#34;random_text&#34;&gt;RandomText&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Random generator for various text values such as names, addresses or phone numbers.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Refer</title>
+      <link>/dart/commons/refer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/refer/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;interfaces&#34;&gt;Interfaces&lt;/h3&gt;
+&lt;h4 id=&#34;ireferenceableireferenceable&#34;&gt;&lt;a href=&#34;ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;h4 id=&#34;ireferencesireferences&#34;&gt;&lt;a href=&#34;ireferences&#34;&gt;IReferences&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for a map that holds component references and passes them to components
+to establish dependencies with each other.
+Together with the &lt;a href=&#34;ireferenceable&#34;&gt;IReferenceable&lt;/a&gt; and &lt;a href=&#34;iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt; interfaces, it implements
+a Locator pattern that is used by the PipServices toolkit for Inversion of Control
+to assign external dependencies to components.&lt;/p&gt;
+&lt;h4 id=&#34;iunreferenceableiunreferenceable&#34;&gt;&lt;a href=&#34;iunreferenceable&#34;&gt;IUnreferenceable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that require explicit clearing of references to dependent components.&lt;/p&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;dependencyresolverdependency_resolver&#34;&gt;&lt;a href=&#34;dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class for resolving component dependencies.
+The resolver is configured to resolve named dependencies by a specified locator.
+During deployment the dependency locator can be changed.&lt;/p&gt;
+&lt;h4 id=&#34;descriptordescriptor&#34;&gt;&lt;a href=&#34;descriptor&#34;&gt;Descriptor&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Locator type that is most often used in the PipServices toolkit.
+It locates components using several fields:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Group: package or named group of components like &amp;ldquo;pip-services&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Type: logical component type that defines it&amp;rsquo;s contract. like &amp;ldquo;persistence&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Kind: physical implementation type, like &amp;ldquo;mongodb&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Name: unique component name, like &amp;ldquo;default&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Version: version of the component contract like &amp;ldquo;1.0&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;referencereference&#34;&gt;&lt;a href=&#34;reference&#34;&gt;Reference&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Contains a reference to a component and locator to find it.
+It is used by &lt;a href=&#34;references&#34;&gt;References&lt;/a&gt; to store registered component references.&lt;/p&gt;
+&lt;h4 id=&#34;referenceexceptionreference_exception&#34;&gt;&lt;a href=&#34;reference_exception&#34;&gt;ReferenceException&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Error when required component dependency cannot be found.&lt;/p&gt;
+&lt;h4 id=&#34;referencerreferencer&#34;&gt;&lt;a href=&#34;referencer&#34;&gt;Referencer&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class that sets and unsets references to components.&lt;/p&gt;
+&lt;h4 id=&#34;referencesreferences&#34;&gt;&lt;a href=&#34;references&#34;&gt;References&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;The most basic implementation of &lt;a href=&#34;ireferences&#34;&gt;IReferences&lt;/a&gt; to store and locate component references.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Reflect</title>
+      <link>/dart/commons/reflect/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/reflect/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;methodreflectormethod_reflector&#34;&gt;&lt;a href=&#34;method_reflector&#34;&gt;MethodReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class used to perform method introspection and dynamic invocation.
+This class has symmetric implementation across all languages supported
+by Pip.Services toolkit and used to support dynamic data processing.
+Because all languages have different casing and case sensitivity rules,
+this MethodReflector treats all method names as case insensitive.&lt;/p&gt;
+&lt;h4 id=&#34;objectreaderobject_reader&#34;&gt;&lt;a href=&#34;object_reader&#34;&gt;ObjectReader&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class used to perform property introspection and dynamic reading.
+In contrast to &lt;a href=&#34;property_reflector&#34;&gt;PropertyReflector&lt;/a&gt; which only introspects regular objects,
+this ObjectReader is also able to handle maps and arrays.
+For maps, properties are key-pairs identified by string keys,
+For arrays, properties are elements identified by integer index.&lt;/p&gt;
+&lt;h4 id=&#34;objectwriterobject_writer&#34;&gt;&lt;a href=&#34;object_writer&#34;&gt;ObjectWriter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class used to perform property introspection and dynamic writing.
+In contrast to &lt;a href=&#34;property_reflector&#34;&gt;PropertyReflector&lt;/a&gt;, which only introspects regular objects,
+this ObjectWriter is also able to handle maps and arrays.
+For maps, properties are key-pairs identified by string keys,
+For arrays, properties are elements identified by integer index.&lt;/p&gt;
+&lt;h4 id=&#34;propertyreflectorproperty_reflector&#34;&gt;&lt;a href=&#34;property_reflector&#34;&gt;PropertyReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class used to perform property introspection and dynamic reading and writing.
+This class has symmetric implementation across all languages supported
+by the Pip.Services toolkit and used to support dynamic data processing.
+Because all languages have different casing and case sensitivity rules,
+this &lt;a href=&#34;property_reflector&#34;&gt;PropertyReflector&lt;/a&gt; treats all property names as case insensitive.&lt;/p&gt;
+&lt;h4 id=&#34;recursiveobjectreaderrecursive_object_reader&#34;&gt;&lt;a href=&#34;recursive_object_reader&#34;&gt;RecursiveObjectReader&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class used to perform property introspection and dynamic reading.
+It is similar to &lt;a href=&#34;object_reader&#34;&gt;ObjectReader&lt;/a&gt; but reads properties recursively
+through the entire object graph. Nested property names are defined
+using dot notation as &amp;ldquo;object.subobject.property&amp;rdquo;&lt;/p&gt;
+&lt;h4 id=&#34;recursiveobjectwriterrecursive_object_writer&#34;&gt;&lt;a href=&#34;recursive_object_writer&#34;&gt;RecursiveObjectWriter&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class to perform property introspection and dynamic writing.
+It is similar to &lt;a href=&#34;object_writer&#34;&gt;ObjectWriter&lt;/a&gt; but writes properties recursively
+through the entire object graph. Nested property names are defined
+using dot notation as &amp;ldquo;object.subobject.property&amp;rdquo;&lt;/p&gt;
+&lt;h4 id=&#34;typedescriptortype_descriptor&#34;&gt;&lt;a href=&#34;type_descriptor&#34;&gt;TypeDescriptor&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Descriptor that points to a specific object type by it&amp;rsquo;s name
+and optional library (or module) where this type is defined.
+This class has symmetric implementation across all languages supported
+by the Pip.Services toolkit and used to support dynamic data processing.&lt;/p&gt;
+&lt;h4 id=&#34;typematchertype_matcher&#34;&gt;&lt;a href=&#34;type_matcher&#34;&gt;TypeMatcher&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Descriptor that points to a specific object type by it&amp;rsquo;s name
+and optional library (or module) where this type is defined.
+This class has symmetric implementation across all languages supported
+by the Pip.Services toolkit and used to support dynamic data processing.&lt;/p&gt;
+&lt;h4 id=&#34;typereflectortype_reflector&#34;&gt;&lt;a href=&#34;type_reflector&#34;&gt;TypeReflector&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class used to perform object type introspection and object instantiation.
+This class has symmetric implementation across all languages supported
+by the Pip.Services toolkit and used to support dynamic data processing.
+Because all languages have different casing and case sensitivity rules,
+this TypeReflector treats all type names as case insensitive.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Run</title>
+      <link>/dart/commons/run/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/run/</guid>
+      <description>
+        
+        
+        &lt;hr&gt;
+&lt;div class=&#34;module-body&#34;&gt; 
+&lt;h3 id=&#34;interfaces&#34;&gt;Interfaces&lt;/h3&gt;
+&lt;h4 id=&#34;icleanableicleanable&#34;&gt;&lt;a href=&#34;icleanable&#34;&gt;ICleanable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that should clean their state.
+Cleaning state most often is used during testing.
+But there may be situations when it can be done in production.&lt;/p&gt;
+&lt;h4 id=&#34;iclosableiclosable&#34;&gt;&lt;a href=&#34;iclosable&#34;&gt;IClosable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that require explicit closure.
+For components that require opening as well as closing
+use the &lt;a href=&#34;iopenable&#34;&gt;IOpenable&lt;/a&gt; interface instead.&lt;/p&gt;
+&lt;h4 id=&#34;iexecutableiexecutable&#34;&gt;&lt;a href=&#34;iexecutable&#34;&gt;IExecutable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that can be called to execute work.&lt;/p&gt;
+&lt;h4 id=&#34;inotifiableinotifiable&#34;&gt;&lt;a href=&#34;inotifiable&#34;&gt;INotifiable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that can be asynchronously notified.
+The notification may include an optional argument that describes
+the occured event.&lt;/p&gt;
+&lt;h4 id=&#34;iopenableiopenable&#34;&gt;&lt;a href=&#34;iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that require explicit opening and closing.
+For components that perform opening on demand consider using the
+&lt;a href=&#34;iclosable&#34;&gt;IClosable&lt;/a&gt; interface instead.&lt;/p&gt;
+&lt;h4 id=&#34;iparameterizediparameterized&#34;&gt;&lt;a href=&#34;iparameterized&#34;&gt;IParameterized&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Interface for components that require execution parameters.&lt;/p&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;h4 id=&#34;cleanercleaner&#34;&gt;&lt;a href=&#34;cleaner&#34;&gt;Cleaner&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class that cleans a stored object state.&lt;/p&gt;
+&lt;h4 id=&#34;closercloser&#34;&gt;&lt;a href=&#34;closer&#34;&gt;Closer&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class that closes previously opened components.&lt;/p&gt;
+&lt;h4 id=&#34;executorexecutor&#34;&gt;&lt;a href=&#34;executor&#34;&gt;Executor&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class that executes components.&lt;/p&gt;
+&lt;h4 id=&#34;fixedratetimerfixed_rate_timer&#34;&gt;&lt;a href=&#34;fixed_rate_timer&#34;&gt;FixedRateTimer&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Timer that is triggered in equal time intervals.
+It has a symmetric cross-language implementation
+and is often used by Pip.Services toolkit to
+perform periodic processing and cleanup in microservices.&lt;/p&gt;
+&lt;h4 id=&#34;notifiernotifier&#34;&gt;&lt;a href=&#34;notifier&#34;&gt;Notifier&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class that notifies components.&lt;/p&gt;
+&lt;h4 id=&#34;openeropener&#34;&gt;&lt;a href=&#34;opener&#34;&gt;Opener&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Helper class that opens components.&lt;/p&gt;
+&lt;h4 id=&#34;parametersparameters&#34;&gt;&lt;a href=&#34;parameters&#34;&gt;Parameters&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Contains a map with execution parameters.
+In general, this map may contain non-serializable values.
+And in contrast with other maps, its getters and setters
+support dot notation and are able to access properties
+in the entire object graph.
+This class is often use to pass execution and notification
+arguments, and parameterize classes before execution.&lt;/p&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

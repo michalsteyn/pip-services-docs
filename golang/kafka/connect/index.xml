@@ -1,0 +1,454 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Connect</title>
+    <link>/golang/kafka/connect/</link>
+    <description>Recent content in Connect on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/kafka/connect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: IKafkaMessageListener</title>
+      <link>/golang/kafka/connect/ikafka_message_listener/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/kafka/connect/ikafka_message_listener/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; kafka.ConsumerGroupHandler&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IKafkaMessageListener interface defines a Kafka message listener.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: KafkaConnection</title>
+      <link>/golang/kafka/connect/kafka_connection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/kafka/connect/kafka_connection/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;By defining a connection and sharing it through multiple message queues
+you can reduce the number of used database connections.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;client_id&lt;/strong&gt;: (optional) name of the client id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number (default: 27017)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;log_level&lt;/strong&gt;: (optional) log level 0 - None, 1 - Error, 2 - Warn, 3 - Info, 4 - Debug (default: 1)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connect_timeout&lt;/strong&gt;: (optional) number of milliseconds to connect to broker (default: 1000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_retries&lt;/strong&gt;: (optional) maximum retry attempts (default: 5)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 30000)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;request_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on flushing messages (default: 30000)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; (optional) credential stores to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newkafkaconnection&#34;&gt;NewKafkaConnection&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the connection component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewKafkaConnection() &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;adminclient&#34;&gt;adminClient&lt;/h4&gt;
+&lt;p&gt;Kafka admin client object;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;adminClient&lt;/strong&gt;: kafka.Client&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;options&#34;&gt;Options&lt;/h4&gt;
+&lt;p&gt;Kafka connection properties&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_clientConfig&lt;/strong&gt;: any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;clientid&#34;&gt;clientId&lt;/h4&gt;
+&lt;p&gt;Hostname as client id.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;clientId&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connecttimeout&#34;&gt;connectTimeout&lt;/h4&gt;
+&lt;p&gt;Connection time out&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;connectTimeout&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connection&#34;&gt;connection&lt;/h4&gt;
+&lt;p&gt;The Kafka connection object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;connection&lt;/strong&gt;: kafka.SyncProducer&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;connectionresolver&#34;&gt;ConnectionResolver&lt;/h4&gt;
+&lt;p&gt;Connection resolver&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ConnectionResolver&lt;/strong&gt;: &lt;a href=&#34;../kafka_connection_resolver&#34;&gt;*KafkaConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;loglevel&#34;&gt;logLevel&lt;/h4&gt;
+&lt;p&gt;Log level&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;logLevel&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;logger&#34;&gt;Logger&lt;/h4&gt;
+&lt;p&gt;Logger&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;*CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;maxretries&#34;&gt;maxRetries&lt;/h4&gt;
+&lt;p&gt;Maximum number of entries.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;maxRetries&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;options-1&#34;&gt;Options&lt;/h4&gt;
+&lt;p&gt;Connection options&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;requesttimeout&#34;&gt;requestTimeout&lt;/h4&gt;
+&lt;p&gt;Number of milliseconds to wait on flushing messages (default: 30000)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;requestTimeout&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;retrytimeout&#34;&gt;retryTimeout&lt;/h4&gt;
+&lt;p&gt;Number of milliseconds to wait on each reconnection attempt (default: 30000)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;retryTimeout&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;subscriptions&#34;&gt;subscriptions&lt;/h4&gt;
+&lt;p&gt;Topic subscriptions&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;subscriptions&lt;/strong&gt;: &lt;a href=&#34;../kafka_subscription&#34;&gt;[]*KafkaSubscription&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;checkopen&#34;&gt;CheckOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the connection is open.&lt;br&gt;
+Raises an error is the connection is closed.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) checkOpen(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) Close(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;commit&#34;&gt;Commit!&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Commit a message offset.&lt;/p&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;connecttoadmin&#34;&gt;connectToAdmin&lt;/h4&gt;
+&lt;p&gt;Connects an admin client on demand.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) connectToAdmin(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;createqueue&#34;&gt;CreateQueue&lt;/h4&gt;
+&lt;p&gt;Creates a message queue.
+If the connection doesn&amp;rsquo;t support this function, it exists without error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) CreateQueue() error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the queue to be created.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;deletequeue&#34;&gt;DeleteQueue&lt;/h4&gt;
+&lt;p&gt;Deletes a message queue.
+If the connection doesn&amp;rsquo;t support this function, it exists without error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) DeleteQueue() error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the queue to be deleted.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getconnection&#34;&gt;GetConnection&lt;/h4&gt;
+&lt;p&gt;Gets the connection.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) GetConnection() kafka.SyncProducer&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: kafka.SyncProducer - connection to a MySQL database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is opened.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) Open(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;publish&#34;&gt;Publish&lt;/h4&gt;
+&lt;p&gt;Publish a message to a specified topic.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) Publish(topic string, messages []*kafka.ProducerMessage, config *kafka.Config) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - topic where the message will be placed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;messages&lt;/strong&gt;: []*kafka.ProducerMessage - list of messages to be published.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: *kafka.Config - publishing options.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readqueuenames&#34;&gt;ReadQueueNames&lt;/h4&gt;
+&lt;p&gt;Reads a list of registered queue names.
+If the connection doesn&amp;rsquo;t support this function, it returns an empty list.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) ReadQueueNames() ([]string, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: ([]string, error) - queue names.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;seek&#34;&gt;Seek!&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Seeks a message offset.&lt;/p&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;subscribe&#34;&gt;Subscribe&lt;/h4&gt;
+&lt;p&gt;Subscribes to a topic&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) Subscribe(topic string, groupId string, config *kafka.Config, listener &lt;a href=&#34;../ikafka_message_listener&#34;&gt;IKafkaMessageListener&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - subject(topic) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;groupId&lt;/strong&gt;: string - (optional) consumer group id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: *kafka.Config - subscription options&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ikafka_message_listener&#34;&gt;IKafkaMessageListener&lt;/a&gt; - message listener&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;unsubscribe&#34;&gt;Unsubscribe&lt;/h4&gt;
+&lt;p&gt;Unsubscribes from a previously subscribed topic&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*KafkaConnection&lt;/a&gt;) Unsubscribe(topic string, groupId string, listener &lt;a href=&#34;../ikafka_message_listener&#34;&gt;IKafkaMessageListener&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - topic name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;groupId&lt;/strong&gt;: string - (optional) consumer group id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../ikafka_message_listener&#34;&gt;IKafkaMessageListener&lt;/a&gt; - message listener&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: KafkaConnectionResolver</title>
+      <link>/golang/kafka/connect/kafka_connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/kafka/connect/kafka_connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The KafkaConnectionResolver class is used to resolve Kafka connections and credential parameters, validate them and generate connection options.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) credential stores to resolve credentials&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newkafkaconnectionresolver&#34;&gt;NewKafkaConnectionResolver&lt;/h4&gt;
+&lt;p&gt;Method are creates a new instance of connection resolver component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewKafkaConnectionResolver() &lt;a href=&#34;&#34;&gt;*KafkaConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;connectionresolver&#34;&gt;ConnectionResolver&lt;/h4&gt;
+&lt;p&gt;Connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ConnectionResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/connect/connection_resolver&#34;&gt;*ConnectionResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;credentialresolver&#34;&gt;CredentialResolver&lt;/h4&gt;
+&lt;p&gt;Credential resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;CredentialResolver&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_resolver&#34;&gt;*CredentialResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;compose&#34;&gt;Compose&lt;/h4&gt;
+&lt;p&gt;Composes Kafka connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c [*KafkaConnectionResolver]) Compose(correlationId string, connections &lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;[]*ConnectionParams&lt;/a&gt;, credential &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;*CredentialParams&lt;/a&gt;) (&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: &lt;a href=&#34;../../../components/connect/connection_params&#34;&gt;[]*ConnectionParams&lt;/a&gt; - connection parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credential&lt;/strong&gt;: &lt;a href=&#34;../../../components/auth/credential_params&#34;&gt;*CredentialParams&lt;/a&gt; - credential parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;, error) - resolved Kafka connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c [*KafkaConnectionResolver]) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve&#34;&gt;Resolve&lt;/h4&gt;
+&lt;p&gt;Resolves Kafka connection options from connection and credential parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c [*KafkaConnectionResolver]) Resolve(correlationId string) (&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;, error) - resolved Kafka connection options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c [*KafkaConnectionResolver]) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: KafkaMessage</title>
+      <link>/golang/kafka/connect/kafka_message/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/kafka/connect/kafka_message/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;message&#34;&gt;Message&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Message&lt;/strong&gt; *kafka.ConsumerMessage&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;session&#34;&gt;Session&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Session&lt;/strong&gt; kafka.ConsumerGroupSession&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: KafkaSubscription</title>
+      <link>/golang/kafka/connect/kafka_subscription/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/kafka/connect/kafka_subscription/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The KafkaSubscription class defines fields for Kafka subscriptions.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;topic&#34;&gt;Topic&lt;/h4&gt;
+&lt;p&gt;Topic&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Topic&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;groupid&#34;&gt;GroupId&lt;/h4&gt;
+&lt;p&gt;Group id&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;GroupId&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;handler&#34;&gt;Handler&lt;/h4&gt;
+&lt;p&gt;Handler&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Handler&lt;/strong&gt;: *kafka.ConsumerGroup&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;listener&#34;&gt;Listener&lt;/h4&gt;
+&lt;p&gt;Listener&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Listener&lt;/strong&gt;: &lt;a href=&#34;../ikafka_message_listener&#34;&gt;IKafkaMessageListener&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
