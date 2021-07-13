@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>NatsBareMessageQueue | Services Docs</title><meta property="og:title" content="NatsBareMessageQueue" />
-<meta property="og:description" content="Message queue that sends and receives messages via NATS message broker.
+<meta property="og:description" content="Message queue that sends and receives messages via a NATS message broker.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/nats/queues/nats_bare_message_queue/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-09T00:22:57+03:00" />
+<meta property="article:modified_time" content="2021-07-13T04:29:43+02:00" />
 
 <meta itemprop="name" content="NatsBareMessageQueue">
-<meta itemprop="description" content="Message queue that sends and receives messages via NATS message broker.
+<meta itemprop="description" content="Message queue that sends and receives messages via a NATS message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-09T00:22:57+03:00" />
-<meta itemprop="wordCount" content="485">
+<meta itemprop="dateModified" content="2021-07-13T04:29:43+02:00" />
+<meta itemprop="wordCount" content="507">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="NatsBareMessageQueue"/>
-<meta name="twitter:description" content="Message queue that sends and receives messages via NATS message broker.
+<meta name="twitter:description" content="Message queue that sends and receives messages via a NATS message broker.
 "/>
 
 
@@ -182513,18 +182513,18 @@
 </div>
 
 	
-    <div class="lead">Message queue that sends and receives messages via NATS message broker.</div>
+    <div class="lead">Message queue that sends and receives messages via a NATS message broker.</div>
 	       
 	<p><strong>Extends:</strong> <a href="../nats_abstract_message_queue">NatsAbstractMessageQueue</a></p>
 <h3 id="description">Description</h3>
-<p>TODO: add description</p>
+<p>The NatsBareMessageQueue class allows you to create message queues that send and receive messages via NATS message broker.</p>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>subject</strong>: name of NATS topic (subject) to subscribe</li>
 <li><strong>queue_group</strong>: name of NATS queue group</li>
 <li><strong>connection(s)</strong>:
 <ul>
-<li><strong>discovery_key</strong>: (optional) a key to retrieve the connection from [IDiscovery](../../../components/connect/idiscovery</li>
+<li><strong>discovery_key</strong>: (optional) key to retrieve the connection from [IDiscovery](../../../components/connect/idiscovery</li>
 <li><strong>host</strong>: host name or IP address</li>
 <li><strong>port</strong>: port number</li>
 <li><strong>uri</strong>: resource URI or connection string with all parameters in it</li>
@@ -182532,16 +182532,16 @@
 </li>
 <li><strong>credential(s)</strong>:
 <ul>
-<li><strong>store_key</strong>: (optional) a key to retrieve the credentials from [ICredentialStore](../../../components/auth/icredential_store</li>
-<li><strong>username</strong>: user name</li>
-<li><strong>password</strong>: user password</li>
+<li><strong>store_key</strong>: (optional) key to retrieve the credentials from [ICredentialStore](../../../components/auth/icredential_store</li>
+<li><strong>username</strong>: username</li>
+<li><strong>password</strong>: user&rsquo;s password</li>
 </ul>
 </li>
 <li><strong>options</strong>:
 <ul>
-<li><strong>serialize_message</strong>: (optional) true to serialize entire message as JSON, false to send only message payload (default: true)</li>
-<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is log (default: true)</li>
-<li><strong>max_reconnect</strong>: (optional) maximum reconnection attempts (default: 3)</li>
+<li><strong>serialize_message</strong>: (optional) true to serialize the entire message as JSON, false to only send the message payload (default: true)</li>
+<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is lost (default: true)</li>
+<li><strong>max_reconnect</strong>: (optional) maximum number of reconnection attempts (default: 3)</li>
 <li><strong>reconnect_timeout</strong>: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)</li>
 <li><strong>flush_timeout</strong>: (optional) number of milliseconds to wait on flushing messages (default: 3000)</li>
 </ul>
@@ -182566,36 +182566,36 @@
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="endlisten">endListen</h4>
 <p>Ends listening for incoming messages.
-When this method is call <a href="#listen">listen</a> unblocks the thread and execution continues.</p>
+When this method is call, <a href="#listen">listen</a> unblocks the thread and execution continues.</p>
 <blockquote>
 <p><code>public</code> endListen(correlationId: string): void</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="listen">listen</h4>
-<p>Listens for incoming messages and blocks the current thread until queue is closed.</p>
+<p>Listens for incoming messages and blocks the current thread until the queue is closed.</p>
 <p>See <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a></p>
 <blockquote>
 <p><code>public</code> listen(correlationId: string, receiver: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a>): void</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>receiver</strong>: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a> - a receiver to receive incoming messages.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>receiver</strong>: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a> - receiver used to receive incoming messages.</li>
 </ul>
 <h4 id="peek">peek</h4>
 <p>Peeks a single incoming message from the queue without removing it.
-If there are no messages available in the queue it returns null.</p>
+If there are no messages available in the queue, it returns null.</p>
 <blockquote>
 <p><code>public</code> peek(correlationId: string): Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt; - a peeked message.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt; - peeked message.</li>
 </ul>
 <h4 id="peekbatch">peekBatch</h4>
 <p>Peeks multiple incoming messages from the queue without removing them.
-If there are no messages available in the queue it returns an empty list.</p>
+If there are no messages available in the queue, it returns an empty list.</p>
 <ul>
 <li>Important: This method is not supported by NATS.</li>
 </ul>
@@ -182603,9 +182603,9 @@ If there are no messages available in the queue it returns an empty list.</p>
 <p><code>public</code> peekBatch(correlationId: string, messageCount: number): Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope[]</a>&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>messageCount</strong>: number - a maximum number of messages to peek.</li>
-<li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope[]</a>&gt; - a list with peeked messages.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>messageCount</strong>: number - maximum number of messages to peek.</li>
+<li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope[]</a>&gt; - list with peeked messages.</li>
 </ul>
 <h4 id="receive">receive</h4>
 <p>Receives an incoming message and removes it from the queue.</p>
@@ -182613,9 +182613,9 @@ If there are no messages available in the queue it returns an empty list.</p>
 <p><code>public</code> receive(correlationId: string, waitTimeout: number): Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt;</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>waitTimeout</strong>: number - a timeout in milliseconds to wait for a message to come.</li>
-<li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt; - a received message or null if nothing was received.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>waitTimeout</strong>: number - timeout in milliseconds to wait for a message to come.</li>
+<li><strong>returns</strong>: Promise&lt;<a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>&gt; - received message or null if nothing was received.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">let</span> <span style="color:#75af00">queue</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">NatsBareMessageQueue</span><span style="color:#111">(</span><span style="color:#d88200">&#34;myqueue&#34;</span><span style="color:#111">);</span>
