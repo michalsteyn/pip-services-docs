@@ -51,9 +51,10 @@
         &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../messaging/connect/imessage_queue_connection&#34;&gt;IMessageQueueConnection&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;,
 &lt;a href=&#34;../../../commons/run/iopenable&#34;&gt;IOpenable&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NatsConnection class is used to define NATS connections using the default driver.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;By defining a connection and sharing it through multiple message queues you can reduce number of used database connections.&lt;/li&gt;
+&lt;li&gt;By defining a connection and sharing it through multiple message queues, you can reduce number of used database connections.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
 &lt;ul&gt;
@@ -75,8 +76,8 @@
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is log (default: true)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum reconnection attempts (default: 3)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when the connection is lost (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_reconnect&lt;/strong&gt;: (optional) maximum number of reconnection attempts (default: 3)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;flush_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on flushing messages (default: 3000)&lt;/li&gt;
 &lt;/ul&gt;
@@ -121,7 +122,7 @@
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt; = new &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger()&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_maxreconnect&#34;&gt;_maxReconnect&lt;/h4&gt;
-&lt;p&gt;Maximum reconnection attempts (default: 3)&lt;/p&gt;
+&lt;p&gt;Maximum number of reconnection attempts (default: 3)&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_maxReconnect&lt;/strong&gt;: number = 3&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -131,12 +132,12 @@
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_options&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; = new &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams()&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_reconnecttimeout&#34;&gt;_reconnectTimeout&lt;/h4&gt;
-&lt;p&gt;nNumber of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/p&gt;
+&lt;p&gt;Number of milliseconds to wait on each reconnection attempt (default: 3000)&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_reconnectTimeout&lt;/strong&gt;: number = 3000&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_retryconnect&#34;&gt;_retryConnect&lt;/h4&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;Retry to connect option&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_retryConnect&lt;/strong&gt;: boolean = true&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -171,7 +172,7 @@ Raises an error if the connection is closed.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;createqueue&#34;&gt;createQueue&lt;/h4&gt;
 &lt;p&gt;Creates a message queue.
-If connection doesn&amp;rsquo;t support this function, it exists without error.&lt;/p&gt;
+If the connection doesn&amp;rsquo;t support this function, it exists without error.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; createQueue(name: string): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -193,7 +194,7 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; getConnection(): any&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: any - connection to a MySQL database&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: any - connection to NATS&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;isopen&#34;&gt;isOpen&lt;/h4&gt;
 &lt;p&gt;Checks if the component is open.&lt;/p&gt;
@@ -212,7 +213,7 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;publish&#34;&gt;publish&lt;/h4&gt;
-&lt;p&gt;Publish a message to a specified topic.&lt;/p&gt;
+&lt;p&gt;Publishes a message to a specified topic.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; publish(subject: string, message: any): Promise&amp;lt;void&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -222,7 +223,7 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;/ul&gt;
 &lt;h4 id=&#34;readqueuenames&#34;&gt;readQueueNames&lt;/h4&gt;
 &lt;p&gt;Reads a list of registered queue names.
-If connection doesn&amp;rsquo;t support this function, it returns an empty list.&lt;/p&gt;
+If the connection doesn&amp;rsquo;t support this function, it returns an empty list.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; readQueueNames(): Promise&amp;lt;string[]&amp;gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -235,7 +236,7 @@ If connection doesn&amp;rsquo;t support this function, it returns an empty list.
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; setReferences(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;): void&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;subscribe&#34;&gt;subscribe&lt;/h4&gt;
 &lt;p&gt;Subscribes to a topic.&lt;/p&gt;

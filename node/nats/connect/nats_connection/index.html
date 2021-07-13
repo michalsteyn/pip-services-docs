@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/nats/connect/nats_connection/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-12T22:15:52+02:00" />
+<meta property="article:modified_time" content="2021-07-13T03:56:24+02:00" />
 
 <meta itemprop="name" content="NatsConnection">
 <meta itemprop="description" content="NATS connection using the default driver.
 ">
-<meta itemprop="dateModified" content="2021-07-12T22:15:52+02:00" />
-<meta itemprop="wordCount" content="574">
+<meta itemprop="dateModified" content="2021-07-13T03:56:24+02:00" />
+<meta itemprop="wordCount" content="593">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="NatsConnection"/>
 <meta name="twitter:description" content="NATS connection using the default driver.
@@ -182535,9 +182535,10 @@
 	<p><strong>Implements:</strong> <a href="../../../messaging/connect/imessage_queue_connection">IMessageQueueConnection</a>, <a href="../../../commons/refer/ireferenceable">IReferenceable</a>, <a href="../../../commons/config/iconfigurable">IConfigurable</a>,
 <a href="../../../commons/run/iopenable">IOpenable</a></p>
 <h3 id="description">Description</h3>
+<p>The NatsConnection class is used to define NATS connections using the default driver.</p>
 <p><strong>Important points</strong></p>
 <ul>
-<li>By defining a connection and sharing it through multiple message queues you can reduce number of used database connections.</li>
+<li>By defining a connection and sharing it through multiple message queues, you can reduce number of used database connections.</li>
 </ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
@@ -182559,8 +182560,8 @@
 </li>
 <li><strong>options</strong>:
 <ul>
-<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is log (default: true)</li>
-<li><strong>max_reconnect</strong>: (optional) maximum reconnection attempts (default: 3)</li>
+<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when the connection is lost (default: true)</li>
+<li><strong>max_reconnect</strong>: (optional) maximum number of reconnection attempts (default: 3)</li>
 <li><strong>reconnect_timeout</strong>: (optional) number of milliseconds to wait on each reconnection attempt (default: 3000)</li>
 <li><strong>flush_timeout</strong>: (optional) number of milliseconds to wait on flushing messages (default: 3000)</li>
 </ul>
@@ -182605,7 +182606,7 @@
 <p><code>protected</code> <strong>_logger</strong>: <a href="../../../components/log/composite_logger">CompositeLogger</a> = new <a href="../../../components/log/composite_logger">CompositeLogger()</a></p>
 </blockquote>
 <h4 id="_maxreconnect">_maxReconnect</h4>
-<p>Maximum reconnection attempts (default: 3)</p>
+<p>Maximum number of reconnection attempts (default: 3)</p>
 <blockquote>
 <p><code>protected</code> <strong>_maxReconnect</strong>: number = 3</p>
 </blockquote>
@@ -182615,12 +182616,12 @@
 <p><code>protected</code> <strong>_options</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> = new <a href="../../../commons/config/config_params">ConfigParams()</a></p>
 </blockquote>
 <h4 id="_reconnecttimeout">_reconnectTimeout</h4>
-<p>nNumber of milliseconds to wait on each reconnection attempt (default: 3000)</p>
+<p>Number of milliseconds to wait on each reconnection attempt (default: 3000)</p>
 <blockquote>
 <p><code>protected</code> <strong>_reconnectTimeout</strong>: number = 3000</p>
 </blockquote>
 <h4 id="_retryconnect">_retryConnect</h4>
-<p>TODO: add description</p>
+<p>Retry to connect option</p>
 <blockquote>
 <p><code>protected</code> <strong>_retryConnect</strong>: boolean = true</p>
 </blockquote>
@@ -182655,7 +182656,7 @@ Raises an error if the connection is closed.</p>
 </ul>
 <h4 id="createqueue">createQueue</h4>
 <p>Creates a message queue.
-If connection doesn&rsquo;t support this function, it exists without error.</p>
+If the connection doesn&rsquo;t support this function, it exists without error.</p>
 <blockquote>
 <p><code>public</code> createQueue(name: string): Promise&lt;void&gt;</p>
 </blockquote>
@@ -182677,7 +182678,7 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 <p><code>public</code> getConnection(): any</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: any - connection to a MySQL database</li>
+<li><strong>returns</strong>: any - connection to NATS</li>
 </ul>
 <h4 id="isopen">isOpen</h4>
 <p>Checks if the component is open.</p>
@@ -182696,7 +182697,7 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="publish">publish</h4>
-<p>Publish a message to a specified topic.</p>
+<p>Publishes a message to a specified topic.</p>
 <blockquote>
 <p><code>public</code> publish(subject: string, message: any): Promise&lt;void&gt;</p>
 </blockquote>
@@ -182706,7 +182707,7 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 </ul>
 <h4 id="readqueuenames">readQueueNames</h4>
 <p>Reads a list of registered queue names.
-If connection doesn&rsquo;t support this function, it returns an empty list.</p>
+If the connection doesn&rsquo;t support this function, it returns an empty list.</p>
 <blockquote>
 <p><code>public</code> readQueueNames(): Promise&lt;string[]&gt;</p>
 </blockquote>
@@ -182719,7 +182720,7 @@ If connection doesn&rsquo;t support this function, it returns an empty list.</p>
 <p><code>public</code> setReferences(references: <a href="../../../commons/refer/ireferences">IReferences</a>): void</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="subscribe">subscribe</h4>
 <p>Subscribes to a topic.</p>
