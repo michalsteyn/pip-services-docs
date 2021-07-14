@@ -1,0 +1,1392 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Validate</title>
+    <link>/dart/commons/validate/</link>
+    <description>Recent content in Validate on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/dart/commons/validate/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Dart: AndRule</title>
+      <link>/dart/commons/validate/and_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/and_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The AndRule class allows you to validate combinations of rules created with AND logical operations.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When one or more of the combined rules return errors, then this rule returns all the errors that appeared.&lt;/li&gt;
+&lt;li&gt;When none of the combined rules returns errors, then this rule also returns no errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AndRule(List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - list of rules to join with the AND operator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validate(String path, &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; schema, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: sString - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; - list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;example&#34;&gt;Example&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;AndRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+         &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;GTE&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt;
+         &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;LTE&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 0 must be greater or equal to 1
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no error
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 20 must be letter or equal 10
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ArraySchema</title>
+      <link>/dart/commons/validate/array_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/array_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ArraySchema class allows you to validate arrays based on a specified validation rule.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ArraySchema([dynamic valueType, bool req, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;valueType&lt;/strong&gt;: dynamic - a type of array elements. Null means that elements may have any type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-null values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getvaluetype&#34;&gt;getValueType&lt;/h4&gt;
+&lt;p&gt;Gets the type of array elements.
+Null means that elements may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic getValueType()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - type of array elements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performvalidation&#34;&gt;performValidation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setvaluetype&#34;&gt;setValueType&lt;/h4&gt;
+&lt;p&gt;Sets the type of array elements.
+Null means that elements may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setValueType(dynamic value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - type of array elements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;ArraySchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]);&lt;/span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: element type mismatch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;// Result: type mismatch         
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: AtLeastOneExistsRule</title>
+      <link>/dart/commons/validate/at_least_one_exists_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/at_least_one_exists_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The AtLeastOneExistsRule class allows you to check that given a set of properties, at least one of them exists.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AtLeastOneExistsRule(List&amp;lt;String&amp;gt; properties)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;properties&lt;/strong&gt;: List&amp;lt;String&amp;gt; - list of property names where at least one property must exist&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validate(String path, &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; schema, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;AtLeastOneExistsRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;field1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;field2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;                  &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;                            &lt;span style=&#34;color:#75715e&#34;&gt;// Result: at least one of properties field1, field2 must exist
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ExcludedRule</title>
+      <link>/dart/commons/validate/excluded_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/excluded_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ExcludedRule allows you to verify that none of the values specified in the rule is present in a list of constants.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ExcludedRule(List&amp;lt;dynamic&amp;gt; values)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: List&amp;lt;dynamic&amp;gt; - list of constants that value must be excluded from&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the given value. none of the values set in this ExcludedRule object must exist
+in the value that is given for validation to pass.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validate(String path, &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; schema, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value that is to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - (not used in this implementation).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value that is to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; - results of the validation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ExcludedRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 2 must not be one of 1, 2, 3
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: FilterParamsSchema</title>
+      <link>/dart/commons/validate/filter_params_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/filter_params_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../map_schema&#34;&gt;MapSchema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The FilterParamsSchema class allows you to create a schema to validate &lt;a href=&#34;../../data/filter_params&#34;&gt;FilterParams&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of FilterParamsSchema.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;FilterParamsSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;filterparamsdatafilter_params&#34;&gt;&lt;a href=&#34;../../data/filter_params&#34;&gt;FilterParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: IncludedRule</title>
+      <link>/dart/commons/validate/included_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/included_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The InclidedRule class allows you to check that a list contains only specified values.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;IncludedRule(List&amp;lt;dynamic&amp;gt; values)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: List&amp;lt;dynamic&amp;gt; - list of constants that value must be included to.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validate(String path, &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; schema, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IncludedRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 10 must be one of 1, 2, 3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: IValidationRule</title>
+      <link>/dart/commons/validate/ivalidation_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/ivalidation_rule/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IValidationRule interface allows you to implement custom validation rules.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validate(String path, &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; schema, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: MapSchema</title>
+      <link>/dart/commons/validate/map_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/map_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MapSchema class provides you with a schema to validate maps&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation schema and sets its values.
+See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;, &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MapSchema([dynamic keyType, dynamic valueType, bool req, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;keyType&lt;/strong&gt;: dynamic - type of map keys. Null means that keys may have any type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;valueType&lt;/strong&gt;: dynamic - type of map values. Null means that values may have any type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-null values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getkeytype&#34;&gt;getKeyType&lt;/h4&gt;
+&lt;p&gt;Gets the type of map keys.
+Null means that keys may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic getKeyType()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - type of map keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getvaluetype&#34;&gt;getValueType&lt;/h4&gt;
+&lt;p&gt;Gets the type of map values.
+Null means that values may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic getValueType()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - type of map values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performvalidation&#34;&gt;performValidation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setkeytype&#34;&gt;setKeyType&lt;/h4&gt;
+&lt;p&gt;Sets the type of map keys.
+Null means that keys may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setKeyType(dynamic value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - type of map keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setvaluetype&#34;&gt;setValueType&lt;/h4&gt;
+&lt;p&gt;Sets the type of map values.
+Null means that values may have any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setValueType(dynamic value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - type of map values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;MapSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Integer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;           &lt;span style=&#34;color:#75715e&#34;&gt;// Result: element type mismatch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;]);&lt;/span&gt;                        &lt;span style=&#34;color:#75715e&#34;&gt;// Result: type mismatch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: NotRule</title>
+      <link>/dart/commons/validate/not_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/not_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NotRule class allows you to negate a rule. Thus, when the embedded rule returns errors, then the negated rule returns no errors and vice versa.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NotRule(&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; rule)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rule&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - rule to be negated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validate(String path, &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; schema, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationRule&lt;/a&gt;&amp;gt; - list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;NotRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+         &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;EQ&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: error
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no error
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ObjectComparator</title>
+      <link>/dart/commons/validate/object_comparator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/object_comparator/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ObjectComparator class allows you to perform a comparison over two values of any type.&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;areequal&#34;&gt;areEqual&lt;/h4&gt;
+&lt;p&gt;Checks if two values are equal.
+The operation can be performed over values of any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; bool areEqual(dynamic value1, dynamic value2)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: dynamic - first value to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: dynamic - second value to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if values are equal and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;arenotequal&#34;&gt;areNotEqual&lt;/h4&gt;
+&lt;p&gt;Checks if two values are NOT equal.
+The operation can be performed over values of any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; bool areNotEqual(dynamic value1, dynamic value2)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: dynamic - first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: dynamic - second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if values are NOT equal and false otherwise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;compare&#34;&gt;compare&lt;/h4&gt;
+&lt;p&gt;Perform a comparison operation over two arguments.
+The operation can be performed over values of any type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; bool compare(dynamic value1, String operation, dynamic value2)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: dynamic - first argument to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: String - comparison operation: &lt;em&gt;&amp;quot;==&amp;quot; (&amp;quot;=&amp;quot;, &amp;ldquo;EQ&amp;rdquo;), &amp;ldquo;!= &amp;quot; (&amp;quot;&amp;lt;&amp;gt;&amp;rdquo;, &amp;ldquo;NE&amp;rdquo;); &amp;ldquo;&amp;lt;&amp;quot;/&amp;quot;&amp;gt;&amp;rdquo; (&amp;ldquo;LT&amp;rdquo;/&amp;ldquo;GT&amp;rdquo;), &amp;ldquo;&amp;lt;=&amp;quot;/&amp;quot;&amp;gt;=&amp;rdquo; (&amp;ldquo;LE&amp;rdquo;/&amp;ldquo;GE&amp;rdquo;); &amp;ldquo;LIKE&amp;rdquo;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: dynamic - the second argument to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - result of the comparison operation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isgreater&#34;&gt;isGreater&lt;/h4&gt;
+&lt;p&gt;Checks if the first value is greater than the second one.
+The operation can be performed over numbers or strings.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; bool isGreater(dynamic value1, dynamic value2)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: dynamic - first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: dynamic - second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the first value is greater than second and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isless&#34;&gt;isLess&lt;/h4&gt;
+&lt;p&gt;Checks if first value is less than the second one.
+The operation can be performed over numbers or strings.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; bool isLess(dynamic value1, dynamic value2)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value1&lt;/strong&gt;: dynamic - first value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value2&lt;/strong&gt;: dynamic - second value to compare&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the first value is less than second and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;match&#34;&gt;match&lt;/h4&gt;
+&lt;p&gt;Checks if a string matches a regular expression&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; bool match(dynamic value, dynamic regexp)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - string value to match.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;regexp&lt;/strong&gt;: dynamic - regular expression string.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the value matches the regular expression and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;ObjectComparator&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;compare&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;GT&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// Result: true
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ObjectComparator&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;areEqual&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;// Result: false
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ObjectSchema</title>
+      <link>/dart/commons/validate/object_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/object_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ObjectSchema class allows you to create a validation schema that can be used to validate user defined objects.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation schema and sets its values.
+See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ObjectSchema([bool allowUndefined, bool req, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;allowUndefined&lt;/strong&gt;: bool - true to allow properties undefined in the schema.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-null values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;properties&#34;&gt;Properties&lt;/h3&gt;
+&lt;h4 id=&#34;isundefinedallowed&#34;&gt;isUndefinedAllowed&lt;/h4&gt;
+&lt;p&gt;Gets a flag used to allow undefined properties.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;bool get isUndefinedAllowed&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true to allow undefined properties and false to disallow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sets a flag used to allow undefined properties.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set isUndefinedAllowed(bool value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: bool - true to allow undefined properties and false to disallow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;allowundefined&#34;&gt;allowUndefined&lt;/h4&gt;
+&lt;p&gt;Sets a flag used to allow undefined properties.
+This method returns a reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt; allowUndefined(bool value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: bool - true to allow undefined properties and false to disallow.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt; - validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getproperties&#34;&gt;getProperties&lt;/h4&gt;
+&lt;p&gt;Gets validation schemas for object properties.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&amp;gt; getProperties()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&amp;gt; - list of property validation schemas.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performvalidation&#34;&gt;performValidation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setproperties&#34;&gt;setProperties&lt;/h4&gt;
+&lt;p&gt;Sets validation schemas for object properties.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setProperties(List&amp;lt;&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&amp;gt; value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt; - list of property validation schemas.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withoptionalproperty&#34;&gt;withOptionalProperty&lt;/h4&gt;
+&lt;p&gt;Adds a validation schema for an optional object property.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt; withOptionalProperty(String name, [dynamic type, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - property name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: dynamic - (optional) property schema or type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list of property validation rules.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt; - returns Schema with added optional property&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withproperty&#34;&gt;withProperty&lt;/h4&gt;
+&lt;p&gt;Adds a validation schema for an object property.
+This method returns a reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic withProperty(&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt; schema)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt; - property validation schema to be added.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withrequiredproperty&#34;&gt;withRequiredProperty&lt;/h4&gt;
+&lt;p&gt;Adds a validation schema for a required object property.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt; withRequiredProperty(String name, [dynamic type, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - property name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: dynamic - (optional) property schema or type.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list of property validation rules.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ObjectSchema&lt;/a&gt; - validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;ObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withOptionalProperty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRequiredProperty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;// Result: id type mismatch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;// Result: name is missing, unexpected _name
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;                          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: type mismatch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: OnlyOneExistsRule</title>
+      <link>/dart/commons/validate/only_one_exists_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/only_one_exists_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OnlyOneExistsRule allows you to check that only one property of a list of properties exists in an object.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OnlyOneExistsRule(List&amp;lt;String&amp;gt; properties)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;properties&lt;/strong&gt;: List&amp;lt;String&amp;gt; - list of property names where only one property must exist&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;OnlyOneExistsRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;field1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;field2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;// Result: only one of properties field1, field2 must exist
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;                  &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;                            &lt;span style=&#34;color:#75715e&#34;&gt;// Result: only one of properties field1, field2 must exist
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: OrRule</title>
+      <link>/dart/commons/validate/or_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/or_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The OrRule class allows you to validate combinations of rules created with OR logical operations.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When one of the combined rules returns no errors, then this rule also returns no errors.&lt;/li&gt;
+&lt;li&gt;When all combined rules return errors, then this rule returns all the errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OrRule(List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - list of rules to join with an OR operator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;OrRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+         &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;LT&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt;
+         &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;GT&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no error
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 5 must be less than 1 or 5 must be more than 10
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no error
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: PagingParamsSchema</title>
+      <link>/dart/commons/validate/paging_params_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/paging_params_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PagingParamsSchema class allows you to create a schema to validate &lt;a href=&#34;../../data/paging_params&#34;&gt;PagingParams&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PagingParamsSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;pagingparamsdatapaging_params&#34;&gt;&lt;a href=&#34;../../data/paging_params&#34;&gt;PagingParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ProjectionParamsSchema</title>
+      <link>/dart/commons/validate/projection_params_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/projection_params_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../array_schema&#34;&gt;ArraySchema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ProjectionParamsSchema class allows you to create a schema to validate &lt;a href=&#34;../../data/projection_params&#34;&gt;ProjectionParams&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ProjectionParamsSchema()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;projectionparamsdataprojection_params&#34;&gt;&lt;a href=&#34;../../data/projection_params&#34;&gt;ProjectionParams&lt;/a&gt;.&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: PropertiesComparisonRule</title>
+      <link>/dart/commons/validate/properties_comparison_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/properties_comparison_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PropertiesComparisonRule class allows you to create a validation rule used to compare two object&amp;rsquo;s properties.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its arguments.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../object_comparator/#compare&#34;&gt;ObjectComparator.compare&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PropertiesComparisonRule(String property1, String operation, String property2)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;property1&lt;/strong&gt;: String - name of the first property to compare.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: String - comparison operation: &lt;em&gt;&amp;quot;==&amp;quot; (&amp;quot;=&amp;quot;, &amp;ldquo;EQ&amp;rdquo;), &amp;ldquo;!= &amp;quot; (&amp;quot;&amp;lt;&amp;gt;&amp;rdquo;, &amp;ldquo;NE&amp;rdquo;); &amp;ldquo;&amp;lt;&amp;quot;/&amp;quot;&amp;gt;&amp;rdquo; (&amp;ldquo;LT&amp;rdquo;/&amp;ldquo;GT&amp;rdquo;), &amp;ldquo;&amp;lt;=&amp;quot;/&amp;quot;&amp;gt;=&amp;rdquo; (&amp;ldquo;LE&amp;rdquo;/&amp;ldquo;GE&amp;rdquo;); &amp;ldquo;LIKE&amp;rdquo;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;property2&lt;/strong&gt;: String - name of the second property to compare.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;ObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;PropertyComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;field1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;NE&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;field2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field1:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;field2:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;// Result: field1 shall not be equal to field2
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({});&lt;/span&gt;                             &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: PropertySchema</title>
+      <link>/dart/commons/validate/property_schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/property_schema/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The PropertySchema class allows you to create schemas to validate object properties.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its arguments.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;, &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PropertySchema([String name, dynamic type, bool req, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - (optional) property name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: dynamic - (optional) property type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool -  (optional) true to always require non-null values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getname&#34;&gt;getName&lt;/h4&gt;
+&lt;p&gt;Gets the property name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getName()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - property name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;gettype&#34;&gt;getType&lt;/h4&gt;
+&lt;p&gt;Gets the property type.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic getType()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - property type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performvalidation&#34;&gt;performValidation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setname&#34;&gt;setName&lt;/h4&gt;
+&lt;p&gt;Sets the property name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setName(String value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: String - new property name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;settype&#34;&gt;setType&lt;/h4&gt;
+&lt;p&gt;Sets a new property type.
+The type can be defined as type, type name or &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setType(dynamic value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - new property type.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;ObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withProperty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PropertySchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;       &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;({&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;ABC&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;         &lt;span style=&#34;color:#75715e&#34;&gt;// Result: id type mismatch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;objectschemaobject_schema&#34;&gt;&lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Schema</title>
+      <link>/dart/commons/validate/schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/schema/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Schema class provides a basic schema to validate values against a set of validation rules.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This schema is used as a basis for specific schemas to validate objects, project properties, arrays and maps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation schema and sets its values.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Schema([bool req, List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; rules])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;required&lt;/strong&gt;: bool - (optional) true to always require non-null values.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rules&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - (optional) list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getrules&#34;&gt;getRules&lt;/h4&gt;
+&lt;p&gt;Gets validation rules to check values against.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; getRules()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isrequired&#34;&gt;isRequired&lt;/h4&gt;
+&lt;p&gt;Gets a flag that always requires non-null values.
+For null values, it raises a validation error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;bool isRequired()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true to always require non-null values and false to allow null values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;makeoptional&#34;&gt;makeOptional&lt;/h4&gt;
+&lt;p&gt;Makes validated values optional.
+Validation for null values will be skipped.
+This method returns a reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; makeOptional()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; - validation schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;makerequired&#34;&gt;makeRequired&lt;/h4&gt;
+&lt;p&gt;Makes validated values always required (non-null).
+For null values the schema will raise errors.
+This method returns a reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; makeRequired()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; - validation schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performtypevalidation&#34;&gt;performTypeValidation&lt;/h4&gt;
+&lt;p&gt;Validates a given value to match a specified type.
+The type can be defined as a Schema, type, a type name or &lt;a href=&#34;../convert/type_code&#34;&gt;TypeCode&lt;/a&gt;
+When type is a Schema, it executes validation recursively against that Schema.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performTypeValidation(String path, dynamic type, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: dynamic - type to match the value type&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;performvalidation&#34;&gt;performValidation&lt;/h4&gt;
+&lt;p&gt;Validates a given value against the schema and configured validation rules.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setrequired&#34;&gt;setRequired&lt;/h4&gt;
+&lt;p&gt;Sets a flag that always requires non-null values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setRequired(bool value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: bool - true to always require non-null values and false to allow null values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setrules&#34;&gt;setRules&lt;/h4&gt;
+&lt;p&gt;Sets validation rules to check values against.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setRules(List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&amp;gt; - list with validation rules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates the given value and returns a list with validation results.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; validate(dynamic value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validateandreturnexception&#34;&gt;validateAndReturnException&lt;/h4&gt;
+&lt;p&gt;Validates the given value and returns a &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; if errors were found.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; validateAndReturnException(String correlationId, dynamic value, [bool strict = false])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic -  value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool - true to treat warnings as errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; - validation exception.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;validateandthrowexception&#34;&gt;validateAndThrowException&lt;/h4&gt;
+&lt;p&gt;Validates the given value and throws a &lt;a href=&#34;../validation_exception&#34;&gt;ValidationException&lt;/a&gt; if errors were found.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../validation_exception/#throwexceptionifneeded&#34;&gt;ValidationException.throwExceptionIfNeeded&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void validateAndThrowException(String correlationId, dynamic value, [bool strict = false])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool - true to treat warnings as errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;withrule&#34;&gt;withRule&lt;/h4&gt;
+&lt;p&gt;Adds validation rule to this schema.
+This method returns a reference to this exception to implement the Builder pattern
+to chain additional calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; withRule(&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; rule)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rule&lt;/strong&gt;: &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt; - validation rule to be added.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;Schema&lt;/a&gt; - validation schema.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;objectschemaobject_schema&#34;&gt;&lt;a href=&#34;../object_schema&#34;&gt;ObjectSchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;propertyschemaproperty_schema&#34;&gt;&lt;a href=&#34;../property_schema&#34;&gt;PropertySchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;arrayschemaarray_schema&#34;&gt;&lt;a href=&#34;../array_schema&#34;&gt;ArraySchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;mapschemamap_schema&#34;&gt;&lt;a href=&#34;../map_schema&#34;&gt;MapSchema&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ValidationException</title>
+      <link>/dart/commons/validate/validation_exception/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/validation_exception/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../errors/bad_request_exception&#34;&gt;BadRequestException&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValidationException is used to define errors in a schema validation.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Validation errors are usually generated based in &lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;If using strict mode, warnings will also raise validation exceptions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of validation exception and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ValidationException(String correlationId, [String message, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) unique transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - (optional) human-readable description of the error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - (optional) list of validation results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;composemessage&#34;&gt;composeMessage&lt;/h4&gt;
+&lt;p&gt;Composes human readable error message based on validation results.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; String composeMessage(List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list of validation results.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - composed error message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;fromresults&#34;&gt;fromResults&lt;/h4&gt;
+&lt;p&gt;Creates a new ValidationException based on errors in validation results.
+If validation results have no errors, then null is returned.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ValidationException&lt;/a&gt; fromResults(String correlationId, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results, bool strict)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; -  list of validation results that may contain errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool - true to treat warnings as errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ValidationException&lt;/a&gt; - newly created ValidationException or null if no errors were found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;throwexceptionifneeded&#34;&gt;throwExceptionIfNeeded&lt;/h4&gt;
+&lt;p&gt;Throws ValidationException based on errors in validation results.
+If validation results have no errors, then no exception is thrown.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; void throwExceptionIfNeeded(String correlationId, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results, bool strict)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list of validation results that may contain errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;strict&lt;/strong&gt;: bool - true to treat warnings as errors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;badrequestexceptionerrorsbad_request_exception&#34;&gt;&lt;a href=&#34;../../errors/bad_request_exception&#34;&gt;BadRequestException&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;validationresultvalidation_result&#34;&gt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ValidationResult</title>
+      <link>/dart/commons/validate/validation_result/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/validation_result/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValidationResult class provides a representation of the result generated by a schema validation.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of a validation ressult and sets its values.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ValidationResult([String path, &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; type, String code, String message, dynamic expected, dynamic actual])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path of the validated element.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;: &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; - type of the validation result: Information, Warning, or Error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: String - error code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - human readable message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;expected&lt;/strong&gt;: dynamic - value expected by a schema validation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;actual&lt;/strong&gt;: dynamic - actual value found by a schema validation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getactual&#34;&gt;getActual&lt;/h4&gt;
+&lt;p&gt;Gets the actual value found by a schema validation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic getActual()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - actual value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getcode&#34;&gt;getCode&lt;/h4&gt;
+&lt;p&gt;Gets the error code.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getCode()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - error code&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getexpected&#34;&gt;getExpected&lt;/h4&gt;
+&lt;p&gt;Gets the value expected by a schema validation.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dynamic getExpected()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: dynamic - expected value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getmessage&#34;&gt;getMessage&lt;/h4&gt;
+&lt;p&gt;Gets the human readable message.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getMessage()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - result message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getpath&#34;&gt;getPath&lt;/h4&gt;
+&lt;p&gt;Gets the dot notation path of the validated element.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getPath()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - path of the validated element.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;gettype&#34;&gt;getType&lt;/h4&gt;
+&lt;p&gt;Gets the dot notation path of the validated element.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; getType()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../validation_result_type&#34;&gt;ValidationResultType&lt;/a&gt; - type of the validation result.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ValidationResultType</title>
+      <link>/dart/commons/validate/validation_result_type/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/validation_result_type/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValidationResultType class defines the types of validation results generated by validation schemas.&lt;/p&gt;
+&lt;h3 id=&#34;enumeration-members&#34;&gt;Enumeration members&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Information&lt;/strong&gt; = 0 - General information (not an error).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Warning&lt;/strong&gt; = 1 - Warning about something suspecious. In strict mode is treated as error&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error&lt;/strong&gt; = 2 - Validation error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;validationresultvalidation_result&#34;&gt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ValueComparisonRule</title>
+      <link>/dart/commons/validate/value_comparison_rule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/commons/validate/value_comparison_rule/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ValueComparisonRule class allows you to create a validation rule that compares a value to a constant.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new validation rule and sets its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ValueComparisonRule(String operation, dynamic value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;operation&lt;/strong&gt;: String - comparison operation: &lt;em&gt;&amp;quot;==&amp;quot; (&amp;quot;=&amp;quot;, &amp;ldquo;EQ&amp;rdquo;), &amp;ldquo;!= &amp;quot; (&amp;quot;&amp;lt;&amp;gt;&amp;rdquo;, &amp;ldquo;NE&amp;rdquo;); &amp;ldquo;&amp;lt;&amp;quot;/&amp;quot;&amp;gt;&amp;rdquo; (&amp;ldquo;LT&amp;rdquo;/&amp;ldquo;GT&amp;rdquo;), &amp;ldquo;&amp;lt;=&amp;quot;/&amp;quot;&amp;gt;=&amp;rdquo; (&amp;ldquo;LE&amp;rdquo;/&amp;ldquo;GE&amp;rdquo;); &amp;ldquo;LIKE&amp;rdquo;&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - constant value to compare to&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;validate&#34;&gt;validate&lt;/h4&gt;
+&lt;p&gt;Validates a given value against this rule.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void performValidation(String path, dynamic value, List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; results)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;path&lt;/strong&gt;: String - dot notation path to the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../schema&#34;&gt;Schema&lt;/a&gt; - schema this rule is called from&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - value to be validated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;results&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../validation_result&#34;&gt;ValidationResult&lt;/a&gt;&amp;gt; - list with validation results to add new results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;Schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;withRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ValueComparisonRule&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;EQ&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: no errors
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;validate&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;          &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 2 is not equal to 1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ivalidationruleivalidation_rule&#34;&gt;&lt;a href=&#34;../ivalidation_rule&#34;&gt;IValidationRule&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
