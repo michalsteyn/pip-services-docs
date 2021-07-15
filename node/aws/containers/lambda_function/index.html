@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/aws/containers/lambda_function/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-07T02:50:55+02:00" />
+<meta property="article:modified_time" content="2021-07-15T04:28:34+02:00" />
 
 <meta itemprop="name" content="LambdaFunction">
 <meta itemprop="description" content="Abstract AWS Lambda function that acts as a container to instantiate and run components,  and expose them via an external entry point. 
 ">
-<meta itemprop="dateModified" content="2021-07-07T02:50:55+02:00" />
-<meta itemprop="wordCount" content="548">
+<meta itemprop="dateModified" content="2021-07-15T04:28:34+02:00" />
+<meta itemprop="wordCount" content="551">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LambdaFunction"/>
 <meta name="twitter:description" content="Abstract AWS Lambda function that acts as a container to instantiate and run components,  and expose them via an external entry point. 
@@ -196935,10 +196935,10 @@
 	<p><strong>Extends:</strong> <a href="../../../container/containers/container">Container</a></p>
 <h3 id="description">Description</h3>
 <p>The LambdaFunction class allows you to create an abstract AWS Lambda function that acts as a container to instantiate and run components, and expose them via an external entry point.</p>
-<p>Important points</p>
+<p><strong>Important points</strong></p>
 <ul>
 <li>
-<p>When handling calls &ldquo;cmd&rdquo; parameter determines which what action shall be called, while other parameters are passed to the action itself.</p>
+<p>When handling calls the &ldquo;cmd&rdquo; parameter determines what action shall be called, while the other parameters are passed to the action itself.</p>
 </li>
 <li>
 <p>Container configuration for this Lambda function is stored in <em>&quot;./config/config.yml&quot;</em> file. But this path can be overriden by <em>CONFIG_PATH</em> environment variable.</p>
@@ -196958,7 +196958,7 @@
 </blockquote>
 <ul>
 <li><strong>name</strong>: string - (optional) a container name (accessible via <a href="../../../components/info/context_info">ContextInfo</a>).</li>
-<li><strong>description</strong>: string - (optional) a container description (accessible via <a href="../../../components/info/context_info">ContextInfo</a>).</li>
+<li><strong>description</strong>: string - (optional) container description (accessible via <a href="../../../components/info/context_info">ContextInfo</a>).</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
@@ -196973,7 +196973,7 @@
 <p><code>protected</code> <strong>_configPath</strong>: string = &lsquo;./config/config.yml&rsquo;</p>
 </blockquote>
 <h4 id="_counters">_counters</h4>
-<p>Performanc counters.</p>
+<p>Performance counters.</p>
 <blockquote>
 <p><code>protected</code> <strong>_counters</strong> = new <a href="../../../components/count/composite_counters">CompositeCounters()</a></p>
 </blockquote>
@@ -196996,7 +196996,7 @@
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="act">act</h4>
 <p>Calls registered action in this lambda function.
-&ldquo;cmd&rdquo; parameter in the action parameters determines
+The &ldquo;cmd&rdquo; parameter in the action parameters determines
 what action shall be called.</p>
 <ul>
 <li>This method shall only be used in testing.</li>
@@ -197011,7 +197011,7 @@ what action shall be called.</p>
 <h4 id="execute">execute</h4>
 <p>Executes this AWS Lambda function and returns the result.
 This method can be overloaded in child classes
-if they need to change the default behavior</p>
+if it is necessary to change the default behavior</p>
 <blockquote>
 <p><code>protected</code> execute(event: any): Promise&lt;any&gt;</p>
 </blockquote>
@@ -197064,7 +197064,7 @@ if they need to change the default behavior</p>
 <ul>
 <li><strong>cmd</strong>: string - action/command name.</li>
 <li><strong>schema</strong>: <a href="../../../commons/validate/schema">Schema</a> - validation schema used to validate received parameters.</li>
-<li><strong>action</strong>: (params: any) =&gt; Promise&lt;any&gt; - action function that is called when action is invoked.</li>
+<li><strong>action</strong>: (params: any) =&gt; Promise&lt;any&gt; - action function that is called when the action is invoked.</li>
 </ul>
 <h4 id="registerservices">registerServices</h4>
 <p>Registers all lambda services in the container.</p>
@@ -197073,8 +197073,8 @@ if they need to change the default behavior</p>
 </blockquote>
 <h4 id="run">run</h4>
 <p>Runs this lambda function, loads container configuration,
-instantiate components and manage their lifecycle,
-makes this function ready to access action calls.</p>
+instantiates components and manages their lifecycle.
+Makes this function ready to access action calls.</p>
 <blockquote>
 <p><code>public</code> run(): Promise&lt;void&gt;</p>
 </blockquote>
