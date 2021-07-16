@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/kafka/queues/kafka_message_queue/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-07-16T20:15:50+03:00" />
+<meta property="article:modified_time" content="2021-07-17T00:40:50+02:00" />
 
 <meta itemprop="name" content="KafkaMessageQueue">
 <meta itemprop="description" content="Message queue that sends and receives messages via the Kafka message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-16T20:15:50+03:00" />
-<meta itemprop="wordCount" content="1255">
+<meta itemprop="dateModified" content="2021-07-17T00:40:50+02:00" />
+<meta itemprop="wordCount" content="1265">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="KafkaMessageQueue"/>
 <meta name="twitter:description" content="Message queue that sends and receives messages via the Kafka message broker.
@@ -141412,7 +141412,7 @@
           style="padding-left:20px;">
           
           <div class="col  "> 
-            IMessageReceive
+            IMessageReceiver
           </div>
           
         </div>
@@ -204999,9 +204999,9 @@
 <h3 id="methods">Methods</h3>
 <h4 id="abandon">Abandon</h4>
 <p>Returns a message into the queue and makes it available for all subscribers to receive it again.
-This method is usually used to return a message which could not be processed at the moment
+This method is usually used to return a message which could not be processed at the moment,
 to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
-or/and sent to dead letter queue.</p>
+or/and sent to the dead letter queue.</p>
 <ul>
 <li>Important: This method is not supported by Kafka.</li>
 </ul>
@@ -205019,7 +205019,7 @@ or/and sent to dead letter queue.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="close">Close</h4>
 <p>Closes a component and frees used resources.</p>
@@ -205028,7 +205028,7 @@ or/and sent to dead letter queue.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="complete">Complete</h4>
 <p>Permanently removes a message from the queue.
@@ -205094,10 +205094,10 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>receiver</strong>: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a> - receiver used to receive incoming messages.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="movetodeadletter">MoveToDeadLetter</h4>
-<p>Permanently removes a message from the queue and sends it to dead letter queue.</p>
+<p>Permanently removes a message from the queue and sends it to the dead letter queue.</p>
 <ul>
 <li>Important: This method is not supported by Kafka.</li>
 </ul>
@@ -205106,7 +205106,7 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to be removed.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="onmessage">OnMessage</h4>
 <p>Deserializes a message. Then, sends it to a receiver if its set or puts it into the queue.</p>
@@ -205123,7 +205123,7 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="peek">Peek</h4>
 <p>Peeks a single incoming message from the queue without removing it.
@@ -205179,7 +205179,7 @@ This method is usually used to extend the message processing time.</p>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to extend its lock.</li>
 <li><strong>lockTimeout</strong>: time.Duration - locking timeout in milliseconds.</li>
-<li><strong>returns</strong>: (err error) - error or nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="send">Send</h4>
 <p>Sends a message into the queue.</p>
@@ -205189,7 +205189,7 @@ This method is usually used to extend the message processing time.</p>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message envelop to be sent.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="setreferences">SetReferences</h4>
 <p>Sets references to dependent components.</p>
@@ -205197,7 +205197,7 @@ This method is usually used to extend the message processing time.</p>
 <p>(c <a href="">*KafkaMessageQueue</a>) SetReferences(references <a href="../../../commons/refer/ireferences">IReferences</a>)</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="subscribe">subscribe</h4>
 <p>Subscribes to a topic.</p>
@@ -205206,7 +205206,7 @@ This method is usually used to extend the message processing time.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="tomessage">toMessage</h4>
 <p>Creates a new <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a>.</p>
