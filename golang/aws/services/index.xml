@@ -1,0 +1,419 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Services</title>
+    <link>/golang/aws/services/</link>
+    <description>Recent content in Services on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/aws/services/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: CommandableLambdaService</title>
+      <link>/golang/aws/services/commandable_lambda_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/aws/services/commandable_lambda_service/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../lambda_service&#34;&gt;LambdaService&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CommandableLambdaService allows you to create abstract services that receive commands via the AWS Lambda protocol to operations automatically generated for commands defined in &lt;a href=&#34;../../../commons/commands/icommandable&#34;&gt;ICommandable components&lt;/a&gt;. Each command is exposed as an invoke method that receives a command&amp;rsquo;s name and parameters.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This service is intended to work inside a LambdaFunction container that exploses registered actions externally.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;controller&lt;/strong&gt;: override for Controller dependency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritcommandablelambdaservice&#34;&gt;InheritCommandableLambdaService&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritCommandableLambdaService(overrides ILambdaServiceOverrides, name string) &lt;a href=&#34;&#34;&gt;*CommandableLambdaService&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;overrides&lt;/strong&gt;: ILambdaServiceOverrides - TODO: add desctiption&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - service name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Registers all actions in AWS Lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*CommandableLambdaService&lt;/a&gt;) Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyCommandableLambdaService&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;CommandableLambdaService&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMyCommandableLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;():&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyCommandableLambdaService&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;MyCommandableLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color:#75af00&#34;&gt;CommandableLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewCommandableLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;v1.service&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;DependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+       &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+       &lt;span style=&#34;color:#75af00&#34;&gt;cref&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMyCommandableLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewReferencesFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;fmt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Println&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The AWS Lambda &amp;#39;v1.service&amp;#39; service is running&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;commandablelambdaclientclientscommandable_lambda_client&#34;&gt;&lt;a href=&#34;../../clients/commandable_lambda_client&#34;&gt;CommandableLambdaClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;lambdaservicelambda_service&#34;&gt;&lt;a href=&#34;../lambda_service&#34;&gt;LambdaService&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: ILambdaService</title>
+      <link>/golang/aws/services/ilambda_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/aws/services/ilambda_service/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ILambdaService interface that allows to integrate lambda services into lambda function containers and connect their actions to the function calls.&lt;/p&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;getactions&#34;&gt;GetActions&lt;/h4&gt;
+&lt;p&gt;Gets all actions supported by the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GetActions() &lt;a href=&#34;../lambda_action&#34;&gt;[]*LambdaAction&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../lambda_action&#34;&gt;[]*LambdaAction&lt;/a&gt; - array with supported actions.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: LambdaAction</title>
+      <link>/golang/aws/services/lambda_action/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/aws/services/lambda_action/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LambdaAction class is used to define actions to be executed as Lambda functions.&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;cmd&#34;&gt;Cmd&lt;/h4&gt;
+&lt;p&gt;Command to call the action&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Cmd&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;schema&#34;&gt;Schema&lt;/h4&gt;
+&lt;p&gt;Schema to validate action parameters&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;action&#34;&gt;Action&lt;/h4&gt;
+&lt;p&gt;Action to be executed&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Action&lt;/strong&gt;: func(params map[string]interface{}) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: LambdaService</title>
+      <link>/golang/aws/services/lambda_service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/aws/services/lambda_service/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LambdaService class allows you to create abstract services that receive remove calls via the AWS Lambda protocol.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This service is intended to work inside LambdaFunction container that exploses registered actions externally.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dependencies&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;controller&lt;/strong&gt;: override for Controller dependency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;inheritlambdaservice&#34;&gt;InheritLambdaService&lt;/h4&gt;
+&lt;p&gt;Creates an instance of this service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InheritLambdaService(overrides ILambdaServiceOverrides, name string) &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;overrides&lt;/strong&gt;: ILambdaServiceOverrides - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - service name to generate action cmd.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;counters&#34;&gt;Counters&lt;/h4&gt;
+&lt;p&gt;Performance counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/composite_counters&#34;&gt;*CompositeCounters&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;dependencyresolver&#34;&gt;DependencyResolver&lt;/h4&gt;
+&lt;p&gt;Dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;DependencyResolver&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;*DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;logger&#34;&gt;Logger&lt;/h4&gt;
+&lt;p&gt;Dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;*CompositeLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;tracer&#34;&gt;Tracer&lt;/h4&gt;
+&lt;p&gt;Tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tracer&lt;/strong&gt;: &lt;a href=&#34;../../../components/trace/composite_tracer&#34;&gt;*CompositeTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;act&#34;&gt;Act&lt;/h4&gt;
+&lt;p&gt;Calls registered action in this lambda function.
+The &amp;ldquo;cmd&amp;rdquo; parameter in the action parameters determines
+the action shall be called.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This method shall only be used in testing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) Act(params map[string]interface{}) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;params&lt;/strong&gt;: map[string]interface{} - action parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (interface{}, error) - results&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;applyinterceptors&#34;&gt;ApplyInterceptors&lt;/h4&gt;
+&lt;p&gt;Applies given action to the interseptors&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) ApplyInterceptors(action func(map[string]interface{}) (interface{}, error)) func(map[string]interface{}) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: func(map[string]interface{}) (interface{}, error) - applied action.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (interface{}, error) - wrapped interceptors action.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;applyvalidation&#34;&gt;ApplyValidation&lt;/h4&gt;
+&lt;p&gt;Applies a validation according to a given schema.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) ApplyValidation(schema &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt;, action func(params map[string]interface{}) (interface{}, error)) func(map[string]interface{}) (interface{}, error)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt; - validation schema.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: func(params map[string]interface{}) (interface{}, error) - action.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: func(map[string]interface{}) (interface{}, error) - results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) Close(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;generateactioncmd&#34;&gt;GenerateActionCmd&lt;/h4&gt;
+&lt;p&gt;Adds .cmd to the name of the command.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) GenerateActionCmd(name string) string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the command&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - generated command&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getactions&#34;&gt;GetActions&lt;/h4&gt;
+&lt;p&gt;Gets all the actions supported by the service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) GetActions() &lt;a href=&#34;../lambda_action&#34;&gt;[]*LambdaAction&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../lambda_action&#34;&gt;[]*LambdaAction&lt;/a&gt; - array with supported actions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;instrument&#34;&gt;Instrument&lt;/h4&gt;
+&lt;p&gt;Adds instrumentation to log calls and measures call time.
+It returns a Timing object that is used to end the time measurement.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) Instrument(correlationId string, name string) &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;*InstrumentTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - method name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;*InstrumentTiming&lt;/a&gt; - InstrumentTiming object to end the time measurement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) Open(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;Register&lt;/h4&gt;
+&lt;p&gt;Registers all service routes in an HTTP endpoint.&lt;/p&gt;
+&lt;p&gt;This method is called by the service and must be overriden
+in child classes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) Register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;registeraction&#34;&gt;RegisterAction&lt;/h4&gt;
+&lt;p&gt;Registers an action in AWS Lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) RegisterAction(name string, schema &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt;, action func(params map[string]interface{}) (interface{}, error))&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - action name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt; - validation schema used to validate received parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: func(params map[string]interface{}) (interface{}, error) - action function that is called when an operation is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registeractionwithauth&#34;&gt;RegisterActionWithAuth&lt;/h4&gt;
+&lt;p&gt;Registers an action with authorization.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) RegisterActionWithAuth(name string, schema &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt;, authorize func(params map[string]interface{}, next func(map[string]interface{}) (interface{}, error)) (interface{}, error), action func(params map[string]interface{}) (interface{}, error))&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt;: string - action&amp;rsquo;s name&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;*Schema&lt;/a&gt; - validation schema used to validate received parameters.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;authorize&lt;/strong&gt;: func(params map[string]interface{}, next func(map[string]interface{}) (interface{}, error)) (interface{}, error) - authorization interceptor&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;action&lt;/strong&gt;: func(params map[string]interface{}) (interface{}, error) - action function that is called when an operation is invoked.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;registerinterceptor&#34;&gt;RegisterInterceptor&lt;/h4&gt;
+&lt;p&gt;Registers a middleware for actions in AWS Lambda service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) RegisterInterceptor(action func(params map[string]interface{}, next func(params map[string]interface{}) (interface{}, error)) (interface{}, error))&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: func(params map[string]interface{}, next func(params map[string]interface{}) (interface{}, error)) (interface{}, error) - action function that is called when middleware is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*LambdaService&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references used to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaService&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;struct&lt;/span&gt;  &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;LambdaService&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IMyController&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMyLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaService&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{}&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;LambdaService&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;v1.myservice&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;DependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+       &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+       &lt;span style=&#34;color:#75af00&#34;&gt;cref&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;LambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;  &lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;){&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;LambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;ref&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;DependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;GetRequired&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ref&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;IMyController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;LambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;  &lt;span style=&#34;color:#75af00&#34;&gt;Register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(){&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;RegisterAction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get_mydata&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;nil&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;  &lt;span style=&#34;color:#00a8c8&#34;&gt;func&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;params&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;map&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{})(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;interface&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{},&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;error&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+         &lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;GetAsString&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;correlation_id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+         &lt;span style=&#34;color:#75af00&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;params&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;GetAsString&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt;  &lt;span style=&#34;color:#75af00&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;GetMyData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMyLambdaService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewConfigParamsFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.protocol&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.host&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.port&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;cref&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewReferencesFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+   &lt;span style=&#34;color:#75af00&#34;&gt;cref&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;controller&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;fmt&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Println&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;The Lambda &amp;#39;v1.myservice&amp;#39; service is running on port 8080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;lambdaclientclientslambda_client&#34;&gt;&lt;a href=&#34;../../clients/lambda_client&#34;&gt;LambdaClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

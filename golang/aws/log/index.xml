@@ -1,0 +1,167 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Log</title>
+    <link>/golang/aws/log/</link>
+    <description>Recent content in Log on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/aws/log/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: CloudWatchLogger</title>
+      <link>/golang/aws/log/cloud_watch_logger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/aws/log/cloud_watch_logger/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../components/log/cached_logger&#34;&gt;CachedLogger&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CloudWatchLogger class allows you to create loggers that write log messages to AWS CloudWatch Log.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;stream&lt;/strong&gt;: (optional) CloudWatch Log stream (default: context name)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;group&lt;/strong&gt;: (optional) CloudWatch Log group (default: context instance ID or hostname)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;region&lt;/strong&gt;: (optional) AWS region&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;credentials&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../components/auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_id&lt;/strong&gt;: AWS access/client id&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;access_key&lt;/strong&gt;: AWS access/client id&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: interval in milliseconds to save current counters measurements (default: 5 mins)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;reset_timeout&lt;/strong&gt;: timeout in milliseconds to reset the counters. 0 disables the reset (default: 0)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify the counters&#39; source&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../../components/connect/idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) credential stores used to resolve credentials requests&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;h4 id=&#34;newcloudwatchlogger&#34;&gt;NewCloudWatchLogger&lt;/h4&gt;
+&lt;p&gt;Creates a new instance of this logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewCloudWatchLogger() &lt;a href=&#34;&#34;&gt;*CloudWatchLogger&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
+&lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
+&lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CloudWatchLogger) Close(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures a component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CloudWatchLogger) Configure(config &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;*ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
+&lt;p&gt;Checks if the component is open.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CloudWatchLogger) IsOpen() bool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if the component is open and false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;Open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CloudWatchLogger) Open(correlationId string) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;Save&lt;/h4&gt;
+&lt;p&gt;Saves the current counters&#39; measurements.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CloudWatchLogger) Save(messages &lt;a href=&#34;../../../components/log/log_message&#34;&gt;[]*LogMessage&lt;/a&gt;) error&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;messages&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/log_message&#34;&gt;[]*LogMessage&lt;/a&gt; - current counters&#39; measurements to be saved.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;`(c *CloudWatchLogger) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;write&#34;&gt;Write&lt;/h4&gt;
+&lt;p&gt;Writes a log message to the logger destination.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c *CloudWatchLogger) Write(level int, correlationId string, ex error, message string)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: int - log level (&lt;a href=&#34;../../../components/log/log_level&#34;&gt;LogLevel&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ex&lt;/strong&gt;: error - error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - human-readable message to log.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewConfigParamsFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;stream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mystream&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.region&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.access_id&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XXXXXXXXXXX&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;connection.access_key&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;XXXXXXXXXXX&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;NewReferencesFromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;NewDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;logger&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;console&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;),&lt;/span&gt;
+    &lt;span style=&#34;color:#75af00&#34;&gt;NewConsoleLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;err&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Open&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;SetLevel&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Error&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Error occured: %s&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Everything is OK.&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;countercomponentscountcounter&#34;&gt;&lt;a href=&#34;../../../components/count/counter&#34;&gt;Counter&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;cachedcounterscomponentscountcached_counters&#34;&gt;&lt;a href=&#34;../../../components/count/cached_counters&#34;&gt;CachedCounters&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositeloggercomponentslogcomposite_logger&#34;&gt;&lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
