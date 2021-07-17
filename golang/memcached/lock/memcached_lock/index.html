@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/memcached/lock/memcached_lock/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-07-16T20:15:50+03:00" />
+<meta property="article:modified_time" content="2021-07-17T05:43:06+02:00" />
 
 <meta itemprop="name" content="MemcachedLock">
 <meta itemprop="description" content="Distributed lock that is implemented based on Memcached&#39;s caching service.
 ">
-<meta itemprop="dateModified" content="2021-07-16T20:15:50+03:00" />
-<meta itemprop="wordCount" content="453">
+<meta itemprop="dateModified" content="2021-07-17T05:43:06+02:00" />
+<meta itemprop="wordCount" content="455">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MemcachedLock"/>
 <meta name="twitter:description" content="Distributed lock that is implemented based on Memcached&#39;s caching service.
@@ -205904,7 +205904,7 @@
 	<p><strong>Implements:</strong> <a href="../../../components/lock/lock">Lock</a></p>
 <h3 id="description">Description</h3>
 <p>The MemcachedLock class allows you to create a lock that is implemented based on the Memcached&rsquo;s caching service.</p>
-<p>Important points</p>
+<p><strong>Important points</strong></p>
 <ul>
 <li>The current implementation does not support authentication.</li>
 </ul>
@@ -205930,7 +205930,7 @@
 <li><strong>timeout</strong>: default caching timeout in milliseconds (default: 1 minute)</li>
 <li><strong>failures</strong>: number of failures before stop retrying (default: 5)</li>
 <li><strong>retry</strong>: retry timeout in milliseconds (default: 30 sec)</li>
-<li><strong>idle</strong>: idle timeout before disconnect in milliseconds (default: 5 sec)</li>
+<li><strong>idle</strong>: idle timeout (milliseconds) before disconnecting (default: 5 sec)</li>
 </ul>
 </li>
 </ul>
@@ -205946,7 +205946,7 @@
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred</li>
 </ul>
 <h4 id="configure">Configure</h4>
 <p>Configures a component by passing its configuration parameters.</p>
@@ -205970,8 +205970,8 @@
 <p>(c <a href="">*MemcachedLock</a>) Open(correlationId string) error</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id usd to trace execution through the call chain.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred</li>
 </ul>
 <h4 id="releaselock">ReleaseLock</h4>
 <p>Releases a prevously acquired lock by its key.</p>
@@ -205981,7 +205981,7 @@
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>key</strong>: string - unique lock key to release.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred</li>
 </ul>
 <h4 id="setreferences">SetReferences</h4>
 <p>Sets references to dependent components.</p>
@@ -206001,7 +206001,7 @@ It returns immediately a positive or negative result.</p>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>key</strong>: string - unique lock key to acquire.</li>
 <li><strong>ttl</strong>: int64 - lock timeout (time to live) in milliseconds.</li>
-<li><strong>returns</strong>: (result bool, err error) - <strong>true</strong> if lock was successfull and <strong>false</strong> otherwise.</li>
+<li><strong>returns</strong>: (result bool, err error) - true if lock was successfull and false otherwise.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">lock</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">NewMemcachedLock</span><span style="color:#111">();</span>

@@ -26,7 +26,7 @@
         &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../components/lock/lock&#34;&gt;Lock&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
 &lt;p&gt;The MemcachedLock class allows you to create a lock that is implemented based on the Memcached&amp;rsquo;s caching service.&lt;/p&gt;
-&lt;p&gt;Important points&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The current implementation does not support authentication.&lt;/li&gt;
 &lt;/ul&gt;
@@ -52,7 +52,7 @@
 &lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: default caching timeout in milliseconds (default: 1 minute)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;failures&lt;/strong&gt;: number of failures before stop retrying (default: 5)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;retry&lt;/strong&gt;: retry timeout in milliseconds (default: 30 sec)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;idle&lt;/strong&gt;: idle timeout before disconnect in milliseconds (default: 5 sec)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;idle&lt;/strong&gt;: idle timeout (milliseconds) before disconnecting (default: 5 sec)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -68,7 +68,7 @@
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
 &lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
@@ -92,8 +92,8 @@
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MemcachedLock&lt;/a&gt;) Open(correlationId string) error&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id usd to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;releaselock&#34;&gt;ReleaseLock&lt;/h4&gt;
 &lt;p&gt;Releases a prevously acquired lock by its key.&lt;/p&gt;
@@ -103,7 +103,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - unique lock key to release.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
 &lt;p&gt;Sets references to dependent components.&lt;/p&gt;
@@ -123,7 +123,7 @@ It returns immediately a positive or negative result.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - unique lock key to acquire.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int64 - lock timeout (time to live) in milliseconds.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result bool, err error) - &lt;strong&gt;true&lt;/strong&gt; if lock was successfull and &lt;strong&gt;false&lt;/strong&gt; otherwise.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (result bool, err error) - true if lock was successfull and false otherwise.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;lock&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;NewMemcachedLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
