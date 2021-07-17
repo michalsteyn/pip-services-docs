@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/kafka/connect/kafka_connection/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-07-12T13:08:46+03:00" />
+<meta property="article:modified_time" content="2021-07-17T01:53:50+02:00" />
 
 <meta itemprop="name" content="KafkaConnection">
 <meta itemprop="description" content="Kafka connection using the default driver.
 ">
-<meta itemprop="dateModified" content="2021-07-12T13:08:46+03:00" />
-<meta itemprop="wordCount" content="705">
+<meta itemprop="dateModified" content="2021-07-17T01:53:50+02:00" />
+<meta itemprop="wordCount" content="718">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="KafkaConnection"/>
 <meta name="twitter:description" content="Kafka connection using the default driver.
@@ -203526,8 +203526,11 @@
 	<p><strong>Implements:</strong> <a href="../../../messaging/connect/imessage_queue_connection">IMessageQueueConnection</a>, <a href="../../../commons/refer/ireferenceable">IReferenceable</a>, <a href="../../../commons/config/iconfigurable">IConfigurable</a>,
 <a href="../../../commons/run/iopenable">IOpenable</a></p>
 <h3 id="description">Description</h3>
-<p>By defining a connection and sharing it through multiple message queues
-you can reduce the number of used database connections.</p>
+<p>The KafkaConnection class allows you to create connections to Kafka using the default driver.</p>
+<p><strong>Important points</strong></p>
+<ul>
+<li>By defining a connection and sharing it through multiple message queues you can reduce the number of used database connections.</li>
+</ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>client_id</strong>: (optional) name of the client id</li>
@@ -203542,8 +203545,8 @@ you can reduce the number of used database connections.</p>
 <li><strong>credential(s)</strong>:
 <ul>
 <li><strong>store_key</strong>: (optional) a key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
-<li><strong>username</strong>: user name</li>
-<li><strong>password</strong>: user password</li>
+<li><strong>username</strong>: username</li>
+<li><strong>password</strong>: user&rsquo;s password</li>
 </ul>
 </li>
 <li><strong>options</strong>:
@@ -203572,12 +203575,12 @@ you can reduce the number of used database connections.</p>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="_adminclient">_adminClient</h4>
-<p>Kafka admin client object;</p>
+<p>Kafka admin client object</p>
 <blockquote>
 <p><code>protected</code> <strong>_adminClient</strong>: IAdminClient</p>
 </blockquote>
 <h4 id="_clientid">_clientId</h4>
-<p>Hostname as client id.</p>
+<p>Hostname as client id</p>
 <blockquote>
 <p><code>protected</code> <strong>_clientId</strong>: string</p>
 </blockquote>
@@ -203634,7 +203637,7 @@ you can reduce the number of used database connections.</p>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="сheckopen">СheckOpen!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Checks if the connection is open.<br>
 Raises an error is the connection is closed.</p>
 <h4 id="closeasync">CloseAsync</h4>
@@ -203646,7 +203649,7 @@ Raises an error is the connection is closed.</p>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="commit">Commit!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Commit a message offset.</p>
 <h4 id="configure">Configure</h4>
 <p>Configures the component by passing its configuration parameters.</p>
@@ -203657,7 +203660,7 @@ Raises an error is the connection is closed.</p>
 <li><strong>config</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters to be set.</li>
 </ul>
 <h4 id="connecttoadmin">ConnectToAdmin!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Connects an admin client on demand.</p>
 <h4 id="createqueueasync">CreateQueueAsync</h4>
 <p>Creates a message queue.
@@ -203683,10 +203686,10 @@ If the connection doesn&rsquo;t support this function, it exists without error.<
 <p><code>public</code> IProducer&lt;byte[], byte[]&gt; GetConnection()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: IProducer&lt;byte[], byte[]&gt; - connection to a MySQL database</li>
+<li><strong>returns</strong>: IProducer&lt;byte[], byte[]&gt; - connection to Kafka.</li>
 </ul>
 <h4 id="isopen">IsOpen</h4>
-<p>Checks if the component is opened.</p>
+<p>Checks if the component is open.</p>
 <blockquote>
 <p><code>public</code> bool IsOpen()</p>
 </blockquote>
@@ -203720,7 +203723,7 @@ If the connection doesn&rsquo;t support this function, it returns an empty list.
 <li><strong>returns</strong>: Task&lt;List&lt;string&gt;&gt; - queue names.</li>
 </ul>
 <h4 id="seek">Seek!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Seeks a message offset.</p>
 <h4 id="setreferences">SetReferences</h4>
 <p>Sets references to dependent components.</p>
@@ -203728,10 +203731,10 @@ If the connection doesn&rsquo;t support this function, it returns an empty list.
 <p><code>public</code> void SetReferences(<a href="../../../commons/refer/ireferences">IReferences</a> references)</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="subscribeasync">SubscribeAsync</h4>
-<p>Subscribes to a topic</p>
+<p>Subscribes to a topic.</p>
 <blockquote>
 <p><code>public</code> Task SubscribeAsync(string topic, string groupId, ConsumerConfig config, <a href="../ikafka_message_listener">IKafkaMessageListener</a> listener)</p>
 </blockquote>
@@ -203742,7 +203745,7 @@ If the connection doesn&rsquo;t support this function, it returns an empty list.
 <li><strong>listener</strong>: <a href="../ikafka_message_listener">IKafkaMessageListener</a> - message listener</li>
 </ul>
 <h4 id="unsubscribeasync">UnsubscribeAsync</h4>
-<p>Unsubscribes from a previously subscribed topic</p>
+<p>Unsubscribes from a previously subscribed topic.</p>
 <blockquote>
 <p><code>public</code> Task UnsubscribeAsync(string topic, string groupId, <a href="../ikafka_message_listener">IKafkaMessageListener</a> listener)</p>
 </blockquote>
