@@ -1,0 +1,845 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Log</title>
+    <link>/dart/components/log/</link>
+    <description>Recent content in Log on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/dart/components/log/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Dart: CachedLogger</title>
+      <link>/dart/components/log/cached_logger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/cached_logger/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../logger&#34;&gt;Logger&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CachedLogger class allows you to create a logger that caches captured log messages in memory and periodically dumps them.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Child classes implement saving cached messages to their specified destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: maximum log level to capture&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;: source (context) name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;interval&lt;/strong&gt;: interval in milliseconds to save log messages (default: 10 seconds)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;max_cache_size&lt;/strong&gt;: maximum number of messages stored in this cache (default: 100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CachedLogger()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;cache&#34;&gt;cache&lt;/h4&gt;
+&lt;p&gt;List containing log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;cache&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../log_message&#34;&gt;LogMessage&lt;/a&gt;&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;updated&#34;&gt;updated&lt;/h4&gt;
+&lt;p&gt;Boolean variable indicating whether there has been an update or not.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;updated&lt;/strong&gt;: bool = false&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;interval&#34;&gt;interval&lt;/h4&gt;
+&lt;p&gt;Interval in milliseconds to save log messages (default: 10 seconds)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;interval&lt;/strong&gt;: int = 10000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;lastdumptime&#34;&gt;lastDumpTime&lt;/h4&gt;
+&lt;p&gt;Time of the last dump&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;lastDumpTime&lt;/strong&gt;: int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;maxcachesize&#34;&gt;maxCacheSize&lt;/h4&gt;
+&lt;p&gt;Maximum number of messages stored in the cache (default: 100)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;maxCacheSize&lt;/strong&gt;: int = 100&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
+&lt;p&gt;Clears (removes) all cached log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void clear()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;dump&#34;&gt;dump&lt;/h4&gt;
+&lt;p&gt;Dumps (writes) the currently cached log messages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void dump()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;update&#34;&gt;update&lt;/h4&gt;
+&lt;p&gt;Sets message cache as updated and dumps it when timeout expires.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void update()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;abstract-methods&#34;&gt;Abstract methods&lt;/h3&gt;
+&lt;h4 id=&#34;save&#34;&gt;save&lt;/h4&gt;
+&lt;p&gt;Saves log messages from the cache.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future save(List&amp;lt;&lt;a href=&#34;../log_message&#34;&gt;LogMessage&lt;/a&gt;&amp;gt; messages)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;messages&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../log_message&#34;&gt;LogMessage&lt;/a&gt;&amp;gt; - a list with log messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;loggerlogger&#34;&gt;&lt;a href=&#34;../logger&#34;&gt;Logger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iloggerilogger&#34;&gt;&lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;logmessagelog_message&#34;&gt;&lt;a href=&#34;../log_message&#34;&gt;LogMessage&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: CompositeLogger</title>
+      <link>/dart/components/log/composite_logger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/composite_logger/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../logger&#34;&gt;Logger&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeLogger class allows you to aggregate loggers from component references into a single component.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It allows to log messages and conveniently send them to multiple destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CompositeLogger([&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;write&#34;&gt;write&lt;/h4&gt;
+&lt;p&gt;Writes a log message to the logger destination.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void write(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; level, String correlationId, Exception error, String message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IConfigurable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IReferenceable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;CompositeLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+   &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;_logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+   &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IReferences&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;_logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;myMethod&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;_logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Called method mycomponent.mymethod&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+       &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iloggerilogger&#34;&gt;&lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ConsoleLogger</title>
+      <link>/dart/components/log/console_logger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/console_logger/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../logger&#34;&gt;Logger&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The  ConsoleLogger class provides a logger that writes log messages to console.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Errors are written to standard err stream and all other messages to standard out stream.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: maximum log level to capture&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;: source (context) name&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the logger.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ConsoleLogger()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;write&#34;&gt;write&lt;/h4&gt;
+&lt;p&gt;Writes a log message to the logger destination.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void write(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; level, String correlationId, Exception error, String message)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;logger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConsoleLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setLevel&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;LogLevel&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;error&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Error occured: %s&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;message&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Everything is OK.&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;loggerlogger&#34;&gt;&lt;a href=&#34;../logger&#34;&gt;Logger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: DefaultLoggerFactory</title>
+      <link>/dart/components/log/default_logger_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/default_logger_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultLoggerFactory class provides a factory used to create &lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt; components based on  their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DefaultLoggerFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nullloggernull_logger&#34;&gt;&lt;a href=&#34;../null_logger&#34;&gt;NullLogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;consoleloggerconsole_logger&#34;&gt;&lt;a href=&#34;../console_logger&#34;&gt;ConsoleLogger&lt;/a&gt;,&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;compositeloggercomposite_logger&#34;&gt;&lt;a href=&#34;../composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ILogger</title>
+      <link>/dart/components/log/ilogger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/ilogger/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ILogger interface provides a set of methods for logger components that capture log messages.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;debug&#34;&gt;debug&lt;/h4&gt;
+&lt;p&gt;Logs high-level debug information for troubleshooting.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void debug(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;error&#34;&gt;error&lt;/h4&gt;
+&lt;p&gt;Logs recoverable application error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void error(String correlationId, Exception error, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;fatal&#34;&gt;fatal&lt;/h4&gt;
+&lt;p&gt;Logs fatal (unrecoverable) message that caused the process to crash.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void fatal(String correlationId, Exception error, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlevel&#34;&gt;getLevel&lt;/h4&gt;
+&lt;p&gt;Gets the maximum log level. Messages with higher log level are filtered out.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; getLevel()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; -  the maximum log level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;info&#34;&gt;info&lt;/h4&gt;
+&lt;p&gt;Logs an important information message&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void info(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;log&#34;&gt;log&lt;/h4&gt;
+&lt;p&gt;Logs a message at a specified log level.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void log(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; level, String correlationId, Exception error, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setlevel&#34;&gt;setLevel&lt;/h4&gt;
+&lt;p&gt;Set the maximum log level.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setLevel(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a new maximum log level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Logs low-level debug information for troubleshooting.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void trace(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;warn&#34;&gt;warn&lt;/h4&gt;
+&lt;p&gt;Logs a warning that may or may not have a negative impact.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void warn(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Logger</title>
+      <link>/dart/components/log/logger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/logger/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Logger class allows you to create a logger that captures and formats logs messages.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Child classes take the captured messages and write them to their specific destinations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;Parameters to pass to the &lt;a href=&#34;#configure&#34;&gt;configure&lt;/a&gt; method for component configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: maximum log level to capture&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;source&lt;/strong&gt;: source (context) name&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:context-info:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../../info/context_info&#34;&gt;ContextInfo&lt;/a&gt; to detect the context id and specify counters source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_level&#34;&gt;_level&lt;/h4&gt;
+&lt;p&gt;Maximum log level to capture&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; = LogLevel.Info&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_source&#34;&gt;_source&lt;/h4&gt;
+&lt;p&gt;source (context) name&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_source&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;composeerror&#34;&gt;composeError&lt;/h4&gt;
+&lt;p&gt;Composes an human-readable error description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; composeError(error: Error): string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Error - an error to format.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string - a human-redable error description.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;debug&#34;&gt;debug&lt;/h4&gt;
+&lt;p&gt;Logs high-level debug information for troubleshooting.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; debug(correlationId: string, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;error&#34;&gt;error&lt;/h4&gt;
+&lt;p&gt;Logs recoverable application error.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; error(correlationId: string, error: Error, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Error - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;fatal&#34;&gt;fatal&lt;/h4&gt;
+&lt;p&gt;Logs fatal (unrecoverable) messages that caused the process to crash.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; fatal(correlationId: string, error: Error, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Error - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;formatandwrite&#34;&gt;formatAndWrite&lt;/h4&gt;
+&lt;p&gt;Formats the log message and writes it to the logger destination.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;protected&lt;/code&gt; formatAndWrite(level: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt;, correlationId: string, error: Error, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Error - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlevel&#34;&gt;getLevel&lt;/h4&gt;
+&lt;p&gt;Gets the maximum log level. Messages with higher log level are filtered out.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getLevel(): &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; -  the maximum log level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getsource&#34;&gt;getSource&lt;/h4&gt;
+&lt;p&gt;Gets the source (context) name.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; getSource(): string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: string -  the source (context) name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;info&#34;&gt;info&lt;/h4&gt;
+&lt;p&gt;Logs an important information message&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; info(correlationId: string, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;log&#34;&gt;log&lt;/h4&gt;
+&lt;p&gt;Logs a message at a specified log level.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; log(level: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt;, correlationId: string, error: Error, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Error - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setlevel&#34;&gt;setLevel&lt;/h4&gt;
+&lt;p&gt;Set the maximum log level.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; setLevel(level: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt;): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a new maximum log level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Logs a low-level debug information for troubleshooting.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; trace(correlationId: string, message: string, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;warn&#34;&gt;warn&lt;/h4&gt;
+&lt;p&gt;Logs a warning that may or may not have a negative impact.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; warn(correlationId: string, message: Error, &amp;hellip;args: any[]): void&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: string - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: any[]- arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iloggerilogger&#34;&gt;&lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: LogLevel</title>
+      <link>/dart/components/log/log_level/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/log_level/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LogLevel class provides an enumeration of standard log levels.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Logs at debug and trace levels are usually captured only locally for troubleshooting and never sent to consolidated log services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;enumeration-members&#34;&gt;Enumeration members&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Null&lt;/strong&gt; = 0 - Nothing to be logged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fatal&lt;/strong&gt; = 1 - Logs only fatal errors that cause microservice to fail&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error&lt;/strong&gt; = 2 - Logs all errors - fatal or recoverable&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Warn&lt;/strong&gt; = 3 - Logs errors and warnings&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Info&lt;/strong&gt; = 4 - Logs errors and important information messages&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Debug&lt;/strong&gt; = 5 - Logs everything up to high-level debugging information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trace&lt;/strong&gt; = 6 - Logs everything down to fine-granular debugging messages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: LogLevelConverter</title>
+      <link>/dart/components/log/log_level_converter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/log_level_converter/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LogLevelConverter class is used to convert log level values.&lt;/p&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;tointeger&#34;&gt;toInteger&lt;/h4&gt;
+&lt;p&gt;Converts log level to a number.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; int toInteger(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; level)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level to convert.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - log level number value.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tologlevel&#34;&gt;toLogLevel&lt;/h4&gt;
+&lt;p&gt;Converts numbers and strings to standard log level values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; LogLevel toLogLevel(dynamic value, [&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; defaultValue = &lt;a href=&#34;../log_level&#34;&gt;LogLevel.Info&lt;/a&gt;])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: dynamic - a value to be converted&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;defaultValue&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a default value if conversion is not possible&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - converted log level&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tostring2&#34;&gt;toString2&lt;/h4&gt;
+&lt;p&gt;Converts log level to a string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; String toString2(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; level)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level to convert&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - log level name string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;loglevellog_level&#34;&gt;&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: LogMessage</title>
+      <link>/dart/components/log/log_message/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/log_message/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LogMessage class allows you to create data objects used to store captured log messages.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This object is used by &lt;a href=&#34;../cached-logger&#34;&gt;CachedLogger&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;time&#34;&gt;time&lt;/h4&gt;
+&lt;p&gt;The time the message was generated&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;time&lt;/strong&gt;: DateTime&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;level&#34;&gt;level&lt;/h4&gt;
+&lt;p&gt;This log level&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;level&lt;/strong&gt;: String&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;source&#34;&gt;source&lt;/h4&gt;
+&lt;p&gt;The source (context name)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;source&lt;/strong&gt;: String&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;correlation_id&#34;&gt;correlation_id&lt;/h4&gt;
+&lt;p&gt;The transaction id to trace execution through a call chain.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: String&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;error&#34;&gt;error&lt;/h4&gt;
+&lt;p&gt;The transaction id to trace execution through a call chain.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;, &lt;a href=&#34;../../../commons/errors/application_exception&#34;&gt;ApplicationException&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;error&lt;/strong&gt;: &lt;a href=&#34;../../../commons/errors/error_description&#34;&gt;ErrorDescription&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;message&#34;&gt;message&lt;/h4&gt;
+&lt;p&gt;The human-readable message&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;message&lt;/strong&gt;: String&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: NullLogger</title>
+      <link>/dart/components/log/null_logger/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/log/null_logger/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NullLogger class provides a dummy logger with no real effect.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It can be used in testing or in situations when a logger is required but must be disabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;debug&#34;&gt;debug&lt;/h4&gt;
+&lt;p&gt;Logs high-level debug information for troubleshooting.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void debug(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;error&#34;&gt;error&lt;/h4&gt;
+&lt;p&gt;Logs recoverable application error.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void error(String correlationId, Exception error, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;fatal&#34;&gt;fatal&lt;/h4&gt;
+&lt;p&gt;Logs fatal (unrecoverable) message that caused the process to crash.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void fatal(String correlationId, Exception error, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlevel&#34;&gt;getLevel&lt;/h4&gt;
+&lt;p&gt;Gets the maximum log level. Messages with higher log level are filtered out.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; getLevel()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; -  the maximum log level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;info&#34;&gt;info&lt;/h4&gt;
+&lt;p&gt;Logs an important information message&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void info(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;log&#34;&gt;log&lt;/h4&gt;
+&lt;p&gt;Logs a message at a specified log level.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void log(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; level, String correlationId, Exception error, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a log level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;error&lt;/strong&gt;: Exception - an error object associated with this message.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setlevel&#34;&gt;setLevel&lt;/h4&gt;
+&lt;p&gt;Set the maximum log level.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setLevel(&lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;level&lt;/strong&gt;: &lt;a href=&#34;../log_level&#34;&gt;LogLevel&lt;/a&gt; - a new maximum log level.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;trace&#34;&gt;trace&lt;/h4&gt;
+&lt;p&gt;Logs low-level debug information for troubleshooting.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void trace(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;warn&#34;&gt;warn&lt;/h4&gt;
+&lt;p&gt;Logs a warning that may or may not have a negative impact.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void warn(String correlationId, String message, [List args])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - a human-readable message to log.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;args&lt;/strong&gt;: List - arguments to parameterize the message.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;iloggerilogger&#34;&gt;&lt;a href=&#34;../ilogger&#34;&gt;ILogger&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

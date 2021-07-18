@@ -1,0 +1,605 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Connect</title>
+    <link>/dart/components/connect/</link>
+    <description>Recent content in Connect on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/dart/components/connect/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Dart: CompositeConnectionResolver!</title>
+      <link>/dart/components/connect/composite_connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/composite_connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/iconfigurable&#34;&gt;IConfigurable&lt;/a&gt;, &lt;a href=&#34;../../../commons/refer/ireferenceable&#34;&gt;IReferenceable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CompositeConnectionResolver class allows you to resolve connection and credential parameters, validate them and generate connection options.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: communication protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) a key to retrieve the credentials from &lt;a href=&#34;../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: user name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user password&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:credential-store:*:*:1.0&lt;/strong&gt; - (optional) Credential stores to resolve credentials &lt;a href=&#34;../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ConnectionParams</title>
+      <link>/dart/components/connect/connection_params/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/connection_params/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionParams class allows you to create connection parameters used to connect to external services.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Usually, connection parameters are used together with credential parameters, but are stored
+separately from these more protected and sensitive values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: key to retrieve parameters from discovery service&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;protocol&lt;/strong&gt;: connection protocol like http, https, tcp, udp&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to standard parameters ConnectionParams may contain any number of custom parameters.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new connection parameters and fills it with values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ConnectionParams([values])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;values&lt;/strong&gt;: dynamic - (optional) an object to be converted into key-value pairs to initialize this connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getdiscoverykey&#34;&gt;getDiscoveryKey&lt;/h4&gt;
+&lt;p&gt;Gets the key to retrieve this connection from DiscoveryService.
+If this key is null, then all parameters are already present.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getDiscoveryKey()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - resolved options or error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;gethost&#34;&gt;getHost&lt;/h4&gt;
+&lt;p&gt;Gets the host name or IP address.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getHost()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - the host name or IP address.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getport&#34;&gt;getPort&lt;/h4&gt;
+&lt;p&gt;Gets the port number.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;int getPort()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: int - the port number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getportwithdefault&#34;&gt;getPortWithDefault!&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Gets the port number with default value.&lt;/p&gt;
+&lt;h4 id=&#34;getprotocol&#34;&gt;getProtocol&lt;/h4&gt;
+&lt;p&gt;Gets the connection protocol.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getProtocol([String defaultValue])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;defaultValue&lt;/strong&gt;: String - (optional) the default protocol&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - the connection protocol or the default value if it&amp;rsquo;s not set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;geturi&#34;&gt;getUri&lt;/h4&gt;
+&lt;p&gt;Gets the resource URI or connection string. Usually it includes all connection parameters in it.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;String getUri()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: String - the resource URI or connection string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setdiscoverykey&#34;&gt;setDiscoveryKey&lt;/h4&gt;
+&lt;p&gt;Sets the key to retrieve these parameters from DiscoveryService.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setDiscoveryKey(String value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: String - a new key to retrieve connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;sethost&#34;&gt;setHost&lt;/h4&gt;
+&lt;p&gt;Sets the host name or IP address.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setHost(String value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: String - a new host name or IP address.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setport&#34;&gt;setPort&lt;/h4&gt;
+&lt;p&gt;Sets the port number.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setPort(int value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: int - a new port number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setprotocol&#34;&gt;setProtocol&lt;/h4&gt;
+&lt;p&gt;Sets the connection protocol.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setProtocol(String value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: String - a new connection protocol.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;seturi&#34;&gt;setUri&lt;/h4&gt;
+&lt;p&gt;Sets the resource URI or connection string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setUri(String value)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: String - a new resource URI or connection string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;usediscovery&#34;&gt;useDiscovery&lt;/h4&gt;
+&lt;p&gt;Checks if these connection parameters shall be retrieved from DiscoveryService.
+The connection parameters are redirected to DiscoveryService when discovery_key parameter is set.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;bool useDiscovery()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: bool - true if connection shall be retrieved from DiscoveryService&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
+&lt;h4 id=&#34;fromconfig&#34;&gt;fromConfig&lt;/h4&gt;
+&lt;p&gt;Retrieves a single ConnectionParams from configuration parameters
+from &amp;ldquo;connection&amp;rdquo; section. If &amp;ldquo;connections&amp;rdquo; section is present instead,
+then it returns only the first connection element.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; List&amp;lt;&lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; manyFromConfig(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - ConnectionParams, containing a section named &amp;ldquo;connection(s)&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - the generated ConnectionParams object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;fromstring&#34;&gt;fromString&lt;/h4&gt;
+&lt;p&gt;Creates a new ConnectionParams object filled with key-value pairs serialized as a string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; fromString(String line)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;line&lt;/strong&gt;: String - a string with serialized key-value pairs as &lt;strong&gt;&amp;ldquo;key1=value1;key2=value2;&amp;hellip;&amp;quot;&lt;/strong&gt;
+Example: &lt;strong&gt;&amp;ldquo;Key1=123;Key2=ABC;Key3=2016-09-16T00:00:00.00Z&amp;rdquo;&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; - a new ConnectionParams object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;fromtuples&#34;&gt;fromTuples&lt;/h4&gt;
+&lt;p&gt;Creates a new ConnectionParams object filled with provided key-value pairs called tuples.
+Tuples parameters contain a sequence of key1, value1, key2, value2, &amp;hellip; pairs.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; fromTuples(List&amp;lt;dynamic&amp;gt; tuples)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;tuples&lt;/strong&gt;: List&amp;lt;dynamic&amp;gt; - the tuples to fill a new ConnectionParams object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt; - a new ConnectionParams object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;manyfromconfig&#34;&gt;manyFromConfig&lt;/h4&gt;
+&lt;p&gt;Retrieves all ConnectionParams from configuration parameters
+from &amp;ldquo;connections&amp;rdquo; section. If &amp;ldquo;connection&amp;rdquo; section is present instead,
+then it returns a list with only one ConnectionParams.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;static&lt;/code&gt; List&amp;lt;&lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; manyFromConfig(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - a configuration parameters to retrieve connections&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - a list of retrieved ConnectionParams&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConnectionParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;([&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;protocol&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;10.1.1.100&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;port&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;8080&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;cluster&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;mycluster&amp;#39;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;]);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;host&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getHost&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;                             &lt;span style=&#34;color:#75715e&#34;&gt;// Result: &amp;#39;10.1.1.100&amp;#39;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;port&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getPort&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;                             &lt;span style=&#34;color:#75715e&#34;&gt;// Result: 8080
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;cluster&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getAsNullableString&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;cluster&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;     &lt;span style=&#34;color:#75715e&#34;&gt;// Result: &amp;#39;mycluster&amp;#39;   
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;configparamscommonsconfigconfig_params&#34;&gt;&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;credentialparamsauthcredential_params&#34;&gt;&lt;a href=&#34;../../auth/credential_params&#34;&gt;CredentialParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;connectionresolverconnection_resolver&#34;&gt;&lt;a href=&#34;../connection_resolver&#34;&gt;ConnectionResolver&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ConnectionResolver</title>
+      <link>/dart/components/connect/connection_resolver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/connection_resolver/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionResolver class is used to retrieve component connections.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If the connections are configured to be retrieved from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;, the connection resolver will automatically locate &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; in component references and retrieve the connections from there using the discovery_key parameter.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;connection&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) a key to retrieve the connection from &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : other connection parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;connections&lt;/strong&gt;:  alternative to connection&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[connection params 1]&lt;/strong&gt;: first connection parameters
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; :  connection parameters for key 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[connection params N]&lt;/strong&gt;: Nth connection parameters
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : connection parameters for key N&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:discovery:*:*:1.0&lt;/strong&gt; - (optional) &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; services to resolve connections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of connection resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ConnectionResolver([&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config, &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - (optional) component configuration parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - (optional) component references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;add&#34;&gt;add&lt;/h4&gt;
+&lt;p&gt;Adds a new connection to component connections&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void add(&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; connection)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - new connection parameters to be added&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getall&#34;&gt;getAll&lt;/h4&gt;
+&lt;p&gt;Gets all connections configured in component configuration.
+Redirect to Discovery services is not done at this point.
+If you need fully fleshed connection use &lt;strong&gt;resolve&lt;/strong&gt; method instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; getAll()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a list with connection parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;register&lt;/h4&gt;
+&lt;p&gt;Registers the given connection in all referenced discovery services.
+This method can be used for dynamic service discovery.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; register(String correlationId, &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; connection)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - a connection to register.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - Future that receives registered connection or throws error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolve&#34;&gt;resolve&lt;/h4&gt;
+&lt;p&gt;Resolves a single component connection. If connections are configured to be retrieved
+from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; and resolves the connection there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; resolve(String correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - resolved connection parameters or null if nothing was found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolveall&#34;&gt;resolveAll&lt;/h4&gt;
+&lt;p&gt;Resolves all component connection. If connections are configured to be retrieved
+from Discovery service it finds a &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; and resolves the connection there.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt;&amp;gt; resolveAll(String correlationId)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt;&amp;gt; - a list of resolved connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void setReferences(&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;connection.host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;10.1.1.100&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;connection.port&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConnectionResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connectionResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;resolve&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Now use connection...
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;connectionparamsconnection_params&#34;&gt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ConnectionUtils!</title>
+      <link>/dart/components/connect/connection_utils/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/connection_utils/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ConnectionUtils class provides a set of utility functions used to process connection parameters.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: DefaultDiscoveryFactory</title>
+      <link>/dart/components/connect/default_discovery_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/default_discovery_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultDiscoveryFactory class allows you to create an instance of &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt; to create &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt; components based on their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create a new instance of factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DefaultDiscoveryFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;memorydiscoverymemory_discovery&#34;&gt;&lt;a href=&#34;../memory_discovery&#34;&gt;MemoryDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: IDiscovery</title>
+      <link>/dart/components/connect/idiscovery/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/idiscovery/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The IDiscovery interface is used to create discovery services which are used to store and resolve connection parameters used to connect to external services.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;register&#34;&gt;register&lt;/h4&gt;
+&lt;p&gt;Registers connection parameters into the discovery service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;&lt;a href=&#34;../%5BConnectionParams%5D(../connection_params)&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; register(String correlationId, String key, &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; connection)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a key to uniquely identify the connection parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a connection to be registered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - the registered connection parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolveall&#34;&gt;resolveAll&lt;/h4&gt;
+&lt;p&gt;Resolves all connection parameters by their key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt;&amp;gt; resolveAll(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a key to uniquely identify the connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt;&amp;gt; - a list with resolved connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolveone&#34;&gt;resolveOne&lt;/h4&gt;
+&lt;p&gt;Resolves a single connection parameters by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; resolveOne(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a key to uniquely identify the connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - a resolved connection.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: MemoryDiscovery</title>
+      <link>/dart/components/connect/memory_discovery/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/connect/memory_discovery/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MemoryDiscovery class allows you to create discovery services that keep connections in memory.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;[connection key 1]&lt;/strong&gt;:&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : connection parameters for key 1&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;[connection key 2]&lt;/strong&gt;:&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;hellip;&lt;/strong&gt; : connection parameters for key N&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of discovery service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;MemoryDiscovery([&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - (optional) configuration with connection parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;readconnections&#34;&gt;readConnections&lt;/h4&gt;
+&lt;p&gt;Reads connections from configuration parameters.
+Each section represents an individual Connection params&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void readConnections(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;connections&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be read&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;register&#34;&gt;register&lt;/h4&gt;
+&lt;p&gt;Registers connection parameters into the discovery service.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; register(String correlationId, String key, &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; connection)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a key to uniquely identify the connection parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;connection&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - a connection to be registered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt; - the registered connection parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolveall&#34;&gt;resolveAll&lt;/h4&gt;
+&lt;p&gt;Resolves all connection parameters by their key.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt;&amp;gt; resolveAll(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a key to uniquely identify the connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;List&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt;&amp;gt; - a list with resolved connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;resolveone&#34;&gt;resolveOne&lt;/h4&gt;
+&lt;p&gt;Resolves a single connection parameters by its key.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; resolveOne(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a key to uniquely identify the connection.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&amp;gt; - a resolved connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key1.host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;10.1.1.100&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key1.port&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;8080&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key2.host&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;10.1.1.100&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+    &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key2.port&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;8082&amp;#39;&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;discovery&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MemoryDiscovery&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;discovery&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;readConnections&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;connection&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;discovery&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;resolve&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;123&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;key1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Result: host=10.1.1.100;port=8080
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;idiscoveryidiscovery&#34;&gt;&lt;a href=&#34;../idiscovery&#34;&gt;IDiscovery&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;connectionparamsconnection_params&#34;&gt;&lt;a href=&#34;../connection_params&#34;&gt;ConnectionParams&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

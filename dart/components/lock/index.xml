@@ -1,0 +1,310 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Lock</title>
+    <link>/dart/components/lock/</link>
+    <description>Recent content in Lock on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/dart/components/lock/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Dart: DefaultLockFactory</title>
+      <link>/dart/components/lock/default_lock_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/lock/default_lock_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The DefaultLockFactory class allows you to create a factory used to create &lt;a href=&#34;../ilock&#34;&gt;ILock&lt;/a&gt; components based on their descriptors.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DefaultLockFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ifactorybuildifactory&#34;&gt;&lt;a href=&#34;../../build/ifactory&#34;&gt;IFactory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;memorylockmemory_lock&#34;&gt;&lt;a href=&#34;../memory_lock&#34;&gt;MemoryLock&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nulllocknull_lock&#34;&gt;&lt;a href=&#34;../null_lock&#34;&gt;NullLock&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: ILock</title>
+      <link>/dart/components/lock/ilock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/lock/ilock/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The ILock interface provides the methods to create locks used to synchronize work or parallel processes and to prevent collisions.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The interface allows to manage multiple locks identified by unique keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;acquirelock&#34;&gt;acquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future acquireLock(String correlationId, String key, int ttl, int timeout)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String -(optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: int - a lock acquisition timeout.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tryacquirelock&#34;&gt;tryAcquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;bool&amp;gt; tryAcquireLock(String correlationId, String key, int ttl)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String -(optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Future&amp;lt;bool&amp;gt; - lock result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;releaselock&#34;&gt;releaseLock&lt;/h4&gt;
+&lt;p&gt;Releases prevously acquired lock by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future releaseLock(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to release.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Lock</title>
+      <link>/dart/components/lock/lock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/lock/lock/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ilock&#34;&gt;ILock&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Lock class represents an abstract lock that implements the defaul lock acquisition routine.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;retry_timeout&lt;/strong&gt;: timeout in milliseconds to retry lock acquisition. (Default: 100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;acquirelock&#34;&gt;acquireLock&lt;/h4&gt;
+&lt;p&gt;Makes multiple attempts to acquire a lock by its key within a given time interval.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future acquireLock(String correlationId, String key, int ttl, int timeout)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String -(optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: int - a lock acquisition timeout.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;releaselock&#34;&gt;releaseLock&lt;/h4&gt;
+&lt;p&gt;Releases a prevously acquired lock by its key.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future releaseLock(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tryacquirelock&#34;&gt;tryAcquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;bool&amp;gt; tryAcquireLock(String correlationId, String key, int ttl)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;bool&amp;gt; - lock result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ilockilock&#34;&gt;&lt;a href=&#34;../ilock&#34;&gt;ILock&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: MemoryLock</title>
+      <link>/dart/components/lock/memory_lock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/lock/memory_lock/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../lock&#34;&gt;Lock&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The MemoryLock class is used to synchronize the execution of a process using shared memory.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This implementation is not suitable for synchronization of distributed processes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;retry_timeout&lt;/strong&gt;: timeout in milliseconds to retry lock acquisition. (Default: 100)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;releaselock&#34;&gt;releaseLock&lt;/h4&gt;
+&lt;p&gt;Releases prevously acquired lock by its key.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future releaseLock(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tryacquirelock&#34;&gt;tryAcquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;bool&amp;gt; tryAcquireLock(String correlationId, String key, int ttl)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Future&amp;lt;bool&amp;gt; - lock result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MemoryLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;acquire&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+            &lt;span style=&#34;color:#75715e&#34;&gt;// Processing...
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;releaseLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+                &lt;span style=&#34;color:#75715e&#34;&gt;// Continue...
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ilockilock&#34;&gt;&lt;a href=&#34;../ilock&#34;&gt;ILock&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;locklock&#34;&gt;&lt;a href=&#34;../lock&#34;&gt;Lock&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: NullLock</title>
+      <link>/dart/components/lock/null_lock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/lock/null_lock/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../ilock&#34;&gt;ILock&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The NullLock allows you to create a dummy lock with no real effect.&lt;/p&gt;
+&lt;p&gt;Important points&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It can be used in testing or in situations when a lock is required but must be disabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;acquirelock&#34;&gt;acquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future acquireLock(String correlationId, String key, int ttl, int timeout)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String -(optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: int - a lock acquisition timeout.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;tryacquirelock&#34;&gt;tryAcquireLock&lt;/h4&gt;
+&lt;p&gt;Makes a single attempt to acquire a lock by its key.
+It returns immediately a positive or negative result.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future&amp;lt;bool&amp;gt; tryAcquireLock(String correlationId, String key, int ttl)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String -(optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to acquire.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ttl&lt;/strong&gt;: int - a lock timeout (time to live) in milliseconds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Future&amp;lt;bool&amp;gt; - lock result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;releaselock&#34;&gt;releaseLock&lt;/h4&gt;
+&lt;p&gt;Releases prevously acquired lock by its key.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Future releaseLock(String correlationId, String key)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: String - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: String - a unique lock key to release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;ilockilock&#34;&gt;&lt;a href=&#34;../ilock&#34;&gt;ILock&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
