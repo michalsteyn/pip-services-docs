@@ -31,7 +31,7 @@
 &lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: name of MQTT topic to subscribe&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;connection(s)&lt;/strong&gt;:
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from &lt;a href=&#34;https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/connect.idiscovery.html&#34;&gt;IDiscovery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;discovery_key&lt;/strong&gt;: (optional) key to retrieve the connection from [IDiscovery]../../../components/connect/idiscovery)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;host&lt;/strong&gt;: host name or IP address&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;: port number&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;uri&lt;/strong&gt;: resource URI or connection string with all parameters in it&lt;/li&gt;
@@ -39,7 +39,7 @@
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;credential(s)&lt;/strong&gt;:
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/auth.icredentialstore.html&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;store_key&lt;/strong&gt;: (optional) key to retrieve the credentials from &lt;a href=&#34;../../../auth/icredential_store&#34;&gt;ICredentialStore&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;username&lt;/strong&gt;: username&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;password&lt;/strong&gt;: user&amp;rsquo;s password&lt;/li&gt;
 &lt;/ul&gt;
@@ -135,9 +135,9 @@
 &lt;h3 id=&#34;methods&#34;&gt;Methods&lt;/h3&gt;
 &lt;h4 id=&#34;abandon&#34;&gt;Abandon&lt;/h4&gt;
 &lt;p&gt;Returnes a message into the queue and makes it available for all subscribers to receive it again.
-This method is usually used to return a message which could not be processed at the moment
+This method is usually used to return a message which could not be processed at the moment,
 to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
-or/and send to dead letter queue.&lt;/p&gt;
+or/and send to the dead letter queue.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
 &lt;/ul&gt;
@@ -155,7 +155,7 @@ or/and send to dead letter queue.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
 &lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
@@ -164,7 +164,7 @@ or/and send to dead letter queue.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;complete&#34;&gt;Complete&lt;/h4&gt;
 &lt;p&gt;Permanently removes a message from the queue.
@@ -177,7 +177,7 @@ This method is usually used to remove the message after successful processing.&l
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message to remove.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
 &lt;p&gt;Configures a component by passing its configuration parameters.&lt;/p&gt;
@@ -189,7 +189,7 @@ This method is usually used to remove the message after successful processing.&l
 &lt;/ul&gt;
 &lt;h4 id=&#34;endlisten&#34;&gt;EndListen&lt;/h4&gt;
 &lt;p&gt;Ends listening for incoming messages.
-When this method is call, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
+When this method is called, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblocks the thread and execution continues.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttMessageQueue&lt;/a&gt;) EndListen(correlationId string)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -230,10 +230,10 @@ When this method is call, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblo
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;receiver&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/imessage_receiver&#34;&gt;IMessageReceiver&lt;/a&gt; - receiver used to receive incoming messages.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;movetodeadletter&#34;&gt;MoveToDeadLetter&lt;/h4&gt;
-&lt;p&gt;Permanently removes a message from the queue and sends it to dead letter queue.&lt;/p&gt;
+&lt;p&gt;Permanently removes a message from the queue and sends it to the dead letter queue.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Important: This method is not supported by MQTT.&lt;/li&gt;
 &lt;/ul&gt;
@@ -242,10 +242,10 @@ When this method is call, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblo
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message to be removed.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;onmessage&#34;&gt;OnMessage&lt;/h4&gt;
-&lt;p&gt;Checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it&amp;rsquo;s set. Otherwise, puts it into the queue.&lt;/p&gt;
+&lt;p&gt;Checks if the message comes from the right topic. If this is the case, it deserializes and sends the message to the receiver if it&amp;rsquo;s set. Otherwise, it puts the message into the queue.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttMessageQueue&lt;/a&gt;) OnMessage(msg mqtt.Message)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -259,7 +259,7 @@ When this method is call, &lt;a href=&#34;#listen&#34;&gt;Listen&lt;/a&gt; unblo
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;peek&#34;&gt;Peek&lt;/h4&gt;
 &lt;p&gt;Peeks a single incoming message from the queue without removing it.
@@ -315,7 +315,7 @@ This method is usually used to extend the message processing time.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message to extend its lock.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;lockTimeout&lt;/strong&gt;: time.Duration - locking timeout in milliseconds.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: (err error) - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;send&#34;&gt;Send&lt;/h4&gt;
 &lt;p&gt;Sends a message into the queue.&lt;/p&gt;
@@ -325,7 +325,7 @@ This method is usually used to extend the message processing time.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: &lt;a href=&#34;../../../messaging/queues/message_envelope&#34;&gt;*MessageEnvelope&lt;/a&gt; - message envelop to be sent.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setreferences&#34;&gt;SetReferences&lt;/h4&gt;
 &lt;p&gt;Sets references to dependent components.&lt;/p&gt;
@@ -342,7 +342,7 @@ This method is usually used to extend the message processing time.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;tomessage&#34;&gt;ToMessage&lt;/h4&gt;
 &lt;p&gt;If the message has no data, it returns nil. Otherwise, it returns the message.&lt;/p&gt;
