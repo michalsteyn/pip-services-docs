@@ -71,7 +71,7 @@
 &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;options&lt;/strong&gt;:
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is log (default: true)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;retry_connect&lt;/strong&gt;: (optional) turns on/off automated reconnect when connection is lost (default: true)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;connect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait for connection (default: 30000)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;reconnect_timeout&lt;/strong&gt;: (optional) number of milliseconds to wait on each reconnection attempt (default: 1000)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;keepalive_timeout&lt;/strong&gt;: (optional) number of milliseconds to ping broker while inactive (default: 3000)&lt;/li&gt;
@@ -94,7 +94,7 @@
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h4 id=&#34;clientid&#34;&gt;clientId&lt;/h4&gt;
-&lt;p&gt;The hostname as client id&lt;/p&gt;
+&lt;p&gt;Hostname as client id&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;clientId&lt;/strong&gt;: string&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -152,7 +152,7 @@ Raises an error if the connection is closed.&lt;/p&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttConnection&lt;/a&gt;) checkOpen() error&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;close&#34;&gt;Close&lt;/h4&gt;
 &lt;p&gt;Closes a component and frees used resources.&lt;/p&gt;
@@ -161,7 +161,7 @@ Raises an error if the connection is closed.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
 &lt;p&gt;Configures the component by passing its configuration parameters.&lt;/p&gt;
@@ -189,7 +189,7 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: string - name of the queue to be deleted.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;getconnection&#34;&gt;GetConnection&lt;/h4&gt;
 &lt;p&gt;Gets the connection.&lt;/p&gt;
@@ -197,7 +197,7 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttConnection&lt;/a&gt;) GetConnection() mqtt.Client&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: mqtt.Client - connection to a MySQL database&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: mqtt.Client - connection to an MQTT broker.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;isopen&#34;&gt;IsOpen&lt;/h4&gt;
 &lt;p&gt;Checks if the component is open.&lt;/p&gt;
@@ -214,10 +214,10 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;publish&#34;&gt;Publish&lt;/h4&gt;
-&lt;p&gt;Publish a message to a specified topic.&lt;/p&gt;
+&lt;p&gt;Publishes a message to a specified topic.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttConnection&lt;/a&gt;) Publish(topic string, qos byte, retained bool, data []byte) error&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -225,8 +225,8 @@ If connection doesn&amp;rsquo;t support this function, it exists without error.&
 &lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - topic name&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;qos&lt;/strong&gt;: Buffer - quality of service (QOS) for the message&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;retained&lt;/strong&gt;: bool - retained flag for the message&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: []byte - a message to be published&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data&lt;/strong&gt;: []byte - message to be published&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;readqueuenames&#34;&gt;ReadQueueNames&lt;/h4&gt;
 &lt;p&gt;Reads a list of registered queue names.
@@ -243,7 +243,7 @@ If the connection doesn&amp;rsquo;t support this function, it returns an empty l
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttConnection&lt;/a&gt;) SetReferences(references &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;subscribe&#34;&gt;Subscribe&lt;/h4&gt;
 &lt;p&gt;Subscribes to a topic&lt;/p&gt;
@@ -251,10 +251,10 @@ If the connection doesn&amp;rsquo;t support this function, it returns an empty l
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttConnection&lt;/a&gt;) Subscribe(topic string, qos byte, listener &lt;a href=&#34;../imqtt_message_listener&#34;&gt;IMqttMessageListener&lt;/a&gt;) error&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - topic name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - name of the topic&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;qos&lt;/strong&gt;: byte - quality of service (QOS) for the subscription&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../imqtt_message_listener&#34;&gt;IMqttMessageListener&lt;/a&gt; - message listener&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;unsubscribe&#34;&gt;Unsubscribe&lt;/h4&gt;
 &lt;p&gt;Unsubscribes from a previously subscribed topic.&lt;/p&gt;
@@ -262,9 +262,9 @@ If the connection doesn&amp;rsquo;t support this function, it returns an empty l
 &lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MqttConnection&lt;/a&gt;) Unsubscribe(topic string, listener &lt;a href=&#34;../imqtt_message_listener&#34;&gt;IMqttMessageListener&lt;/a&gt;) error&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - topic name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;topic&lt;/strong&gt;: string - name of the topic&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;listener&lt;/strong&gt;: &lt;a href=&#34;../imqtt_message_listener&#34;&gt;IMqttMessageListener&lt;/a&gt; - message listener&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil no errors occured.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: error - error or nil if no errors occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
 &lt;ul&gt;

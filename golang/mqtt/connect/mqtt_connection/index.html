@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/mqtt/connect/mqtt_connection/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-07-16T20:15:50+03:00" />
+<meta property="article:modified_time" content="2021-07-19T03:36:14+02:00" />
 
 <meta itemprop="name" content="MqttConnection">
 <meta itemprop="description" content="MQTT connection using the default driver.
 ">
-<meta itemprop="dateModified" content="2021-07-16T20:15:50+03:00" />
-<meta itemprop="wordCount" content="646">
+<meta itemprop="dateModified" content="2021-07-19T03:36:14+02:00" />
+<meta itemprop="wordCount" content="655">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MqttConnection"/>
 <meta name="twitter:description" content="MQTT connection using the default driver.
@@ -220882,7 +220882,7 @@
 </li>
 <li><strong>options</strong>:
 <ul>
-<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is log (default: true)</li>
+<li><strong>retry_connect</strong>: (optional) turns on/off automated reconnect when connection is lost (default: true)</li>
 <li><strong>connect_timeout</strong>: (optional) number of milliseconds to wait for connection (default: 30000)</li>
 <li><strong>reconnect_timeout</strong>: (optional) number of milliseconds to wait on each reconnection attempt (default: 1000)</li>
 <li><strong>keepalive_timeout</strong>: (optional) number of milliseconds to ping broker while inactive (default: 3000)</li>
@@ -220905,7 +220905,7 @@
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="clientid">clientId</h4>
-<p>The hostname as client id</p>
+<p>Hostname as client id</p>
 <blockquote>
 <p><strong>clientId</strong>: string</p>
 </blockquote>
@@ -220963,7 +220963,7 @@ Raises an error if the connection is closed.</p>
 <p>(c <a href="">*MqttConnection</a>) checkOpen() error</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="close">Close</h4>
 <p>Closes a component and frees used resources.</p>
@@ -220972,7 +220972,7 @@ Raises an error if the connection is closed.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="configure">Configure</h4>
 <p>Configures the component by passing its configuration parameters.</p>
@@ -221000,7 +221000,7 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: string - name of the queue to be deleted.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="getconnection">GetConnection</h4>
 <p>Gets the connection.</p>
@@ -221008,7 +221008,7 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 <p>(c <a href="">*MqttConnection</a>) GetConnection() mqtt.Client</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: mqtt.Client - connection to a MySQL database</li>
+<li><strong>returns</strong>: mqtt.Client - connection to an MQTT broker.</li>
 </ul>
 <h4 id="isopen">IsOpen</h4>
 <p>Checks if the component is open.</p>
@@ -221025,10 +221025,10 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="publish">Publish</h4>
-<p>Publish a message to a specified topic.</p>
+<p>Publishes a message to a specified topic.</p>
 <blockquote>
 <p>(c <a href="">*MqttConnection</a>) Publish(topic string, qos byte, retained bool, data []byte) error</p>
 </blockquote>
@@ -221036,8 +221036,8 @@ If connection doesn&rsquo;t support this function, it exists without error.</p>
 <li><strong>topic</strong>: string - topic name</li>
 <li><strong>qos</strong>: Buffer - quality of service (QOS) for the message</li>
 <li><strong>retained</strong>: bool - retained flag for the message</li>
-<li><strong>data</strong>: []byte - a message to be published</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>data</strong>: []byte - message to be published</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="readqueuenames">ReadQueueNames</h4>
 <p>Reads a list of registered queue names.
@@ -221054,7 +221054,7 @@ If the connection doesn&rsquo;t support this function, it returns an empty list.
 <p>(c <a href="">*MqttConnection</a>) SetReferences(references <a href="../../../commons/refer/ireferences">IReferences</a>)</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="subscribe">Subscribe</h4>
 <p>Subscribes to a topic</p>
@@ -221062,10 +221062,10 @@ If the connection doesn&rsquo;t support this function, it returns an empty list.
 <p>(c <a href="">*MqttConnection</a>) Subscribe(topic string, qos byte, listener <a href="../imqtt_message_listener">IMqttMessageListener</a>) error</p>
 </blockquote>
 <ul>
-<li><strong>topic</strong>: string - topic name</li>
+<li><strong>topic</strong>: string - name of the topic</li>
 <li><strong>qos</strong>: byte - quality of service (QOS) for the subscription</li>
 <li><strong>listener</strong>: <a href="../imqtt_message_listener">IMqttMessageListener</a> - message listener</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="unsubscribe">Unsubscribe</h4>
 <p>Unsubscribes from a previously subscribed topic.</p>
@@ -221073,9 +221073,9 @@ If the connection doesn&rsquo;t support this function, it returns an empty list.
 <p>(c <a href="">*MqttConnection</a>) Unsubscribe(topic string, listener <a href="../imqtt_message_listener">IMqttMessageListener</a>) error</p>
 </blockquote>
 <ul>
-<li><strong>topic</strong>: string - topic name</li>
+<li><strong>topic</strong>: string - name of the topic</li>
 <li><strong>listener</strong>: <a href="../imqtt_message_listener">IMqttMessageListener</a> - message listener</li>
-<li><strong>returns</strong>: error - error or nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h3 id="see-also">See also</h3>
 <ul>
