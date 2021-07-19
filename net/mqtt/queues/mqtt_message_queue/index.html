@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/mqtt/queues/mqtt_message_queue/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-07-12T12:27:34+03:00" />
+<meta property="article:modified_time" content="2021-07-19T05:48:46+02:00" />
 
 <meta itemprop="name" content="MqttMessageQueue">
 <meta itemprop="description" content="Message queue that sends and receives messages via an MQTT message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-12T12:27:34+03:00" />
-<meta itemprop="wordCount" content="987">
+<meta itemprop="dateModified" content="2021-07-19T05:48:46+02:00" />
+<meta itemprop="wordCount" content="989">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MqttMessageQueue"/>
 <meta name="twitter:description" content="Message queue that sends and receives messages via an MQTT message broker.
@@ -221643,7 +221643,7 @@
 <li><strong>topic</strong>: name of MQTT topic to subscribe</li>
 <li><strong>connection(s)</strong>:
 <ul>
-<li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/connect.idiscovery.html">IDiscovery</a></li>
+<li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
 <li><strong>host</strong>: host name or IP address</li>
 <li><strong>port</strong>: port number</li>
 <li><strong>uri</strong>: resource URI or connection string with all parameters in it</li>
@@ -221651,7 +221651,7 @@
 </li>
 <li><strong>credential(s)</strong>:
 <ul>
-<li><strong>store_key</strong>: (optional) key to retrieve the credentials from <a href="https://pip-services3-nodex.github.io/pip-services3-components-nodex/interfaces/auth.icredentialstore.html">ICredentialStore</a></li>
+<li><strong>store_key</strong>: (optional) key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
 <li><strong>username</strong>: username</li>
 <li><strong>password</strong>: user&rsquo;s password</li>
 </ul>
@@ -221721,7 +221721,7 @@
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="abandonasync">AbandonAsync</h4>
 <p>Returnes a message into the queue and makes it available for all subscribers to receive it again.
-This method is usually used to return a message which could not be processed at the moment
+This method is usually used to return a message which could not be processed at the moment,
 to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
 or/and send to dead letter queue.</p>
 <ul>
@@ -221765,9 +221765,9 @@ This method is usually used to remove the message after successful processing.</
 <li><strong>config:</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters to be set.</li>
 </ul>
 <h4 id="endlisten">EndListen!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Ends listening for incoming messages.
-When this method is call, <a href="#listen">Listen</a> unblocks the thread and execution continues.</p>
+When this method is called, <a href="#listen">Listen</a> unblocks the thread and execution continues.</p>
 <h4 id="frommessage">FromMessage</h4>
 <p>Returns the topic and the data of a message.</p>
 <blockquote>
@@ -221786,7 +221786,7 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <li><strong>returns</strong>: string - topic</li>
 </ul>
 <h4 id="listen">Listen!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Listens for incoming messages and blocks the current thread until the queue is closed.</p>
 <p>See <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a></p>
 <h4 id="isopen">IsOpen</h4>
@@ -221798,7 +221798,7 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <li><strong>returns</strong>: bool - true if the component is open and false otherwise.</li>
 </ul>
 <h4 id="movetodeadletterasync">MoveToDeadLetterAsync</h4>
-<p>Permanently removes a message from the queue and sends it to dead letter queue.</p>
+<p>Permanently removes a message from the queue and sends it to the dead letter queue.</p>
 <ul>
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
@@ -221809,12 +221809,12 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a> - message to be removed.</li>
 </ul>
 <h4 id="onmessage">OnMessage</h4>
-<p>Checks if the message comes from the right topic. If this is the case, deserializes and sends it to the receiver if it&rsquo;s set. Otherwise, puts it into the queue.</p>
+<p>Checks if the message comes from the right topic. If this is the case, it deserializes and sends the message to the receiver if it&rsquo;s set. Otherwise, puts it into the queue.</p>
 <blockquote>
 <p><code>public</code> void OnMessage(MqttApplicationMessage msg)</p>
 </blockquote>
 <ul>
-<li><strong>msg</strong>: MqttApplicationMessage - the message</li>
+<li><strong>msg</strong>: MqttApplicationMessage - message</li>
 </ul>
 <h4 id="openasync">OpenAsync</h4>
 <p>Opens the component.</p>
@@ -221825,21 +221825,21 @@ When this method is call, <a href="#listen">Listen</a> unblocks the thread and e
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="peek">Peek!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Peeks a single incoming message from the queue without removing it.
 If there are no messages available in the queue, it returns null.</p>
 <h4 id="peekbatch">PeekBatch!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Peeks multiple incoming messages from the queue without removing them.
 If there are no messages available in the queue, it returns an empty list.</p>
 <ul>
 <li>Important: This method is not supported by MQTT.</li>
 </ul>
 <h4 id="readmessagecount">ReadMessageCount!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Reads the current number of messages in the queue to be delivered.</p>
 <h4 id="receive">Receive!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Receives an incoming message and removes it from the queue.</p>
 <h4 id="renewlockasync">RenewLockAsync</h4>
 <p>Renews a lock on a message that makes it invisible from other receivers in the queue.
@@ -221889,7 +221889,7 @@ This method is usually used to extend the message processing time.</p>
 <li><strong>returns</strong>: <a href="../../../messaging/queues/message_envelope">MessageEnvelope</a> - Null if the message has no data. Otherwise, it returns the message.</li>
 </ul>
 <h4 id="unsetreferences">UnsetReferences!</h4>
-<p><strong>TODO: this method is not implemented</strong></p>
+<p><strong>Note: this method is not implemented</strong></p>
 <p>Unsets (clears) previously set references to dependent components.</p>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">var</span> <span style="color:#111">queue</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MqttMessageQueue</span><span style="color:#111">(</span><span style="color:#d88200">&#34;myqueue&#34;</span><span style="color:#111">);</span>
