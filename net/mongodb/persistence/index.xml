@@ -29,7 +29,8 @@
 &lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The data items must implement the &lt;a href=&#34;../../../commons/data/iidentifiable&#34;&gt;IIdentifiable&lt;/a&gt; interface.&lt;/li&gt;
-&lt;li&gt;In basic scenarios child classes shall only override &lt;a href=&#34;../mongodb_persistence/#getpagebyfilterasync&#34;&gt;GetPageByFilterAsync&lt;/a&gt;, &lt;a href=&#34;../mongodb_persistence/#getlistbyfilterasync&#34;&gt;GetListByFilter&lt;/a&gt; or &lt;a href=&#34;../mongodb_persistence/#deletebyfilterasync&#34;&gt;GeleteByFilter&lt;/a&gt;  operations with specific filter functions. All other operations can be used out of the box.&lt;/li&gt;
+&lt;li&gt;In basic scenarios child classes shall only override &lt;a href=&#34;../mongodb_persistence/#getpagebyfilterasync&#34;&gt;GetPageByFilterAsync&lt;/a&gt;, &lt;a href=&#34;../mongodb_persistence/#getlistbyfilterasync&#34;&gt;GetListByFilter&lt;/a&gt; or &lt;a href=&#34;../mongodb_persistence/#deletebyfilterasync&#34;&gt;DeleteByFilter&lt;/a&gt;  operations with specific filter functions.&lt;/li&gt;
+&lt;li&gt;All other operations can be used out of the box.&lt;/li&gt;
 &lt;li&gt;In complex scenarios child classes can implement additional operations by accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._model&lt;/strong&gt; properties.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
@@ -125,7 +126,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: K - id of data item to be retrieved.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - data item by id.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - data item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setasync&#34;&gt;SetAsync&lt;/h4&gt;
 &lt;p&gt;Sets a data item. If the data item exists, it updates it. Otherwise, it creates a new data item.&lt;/p&gt;
@@ -354,7 +355,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;/ul&gt;
 &lt;h4 id=&#34;getonerandomasync&#34;&gt;GetOneRandomAsync&lt;/h4&gt;
 &lt;p&gt;Gets a random item from items that match to a given filter.&lt;/p&gt;
-&lt;p&gt;This method shall be called by a public &lt;a href=&#34;#getonerandomasync&#34;&gt;GetOneRandomAsync&lt;/a&gt; method from the child class
+&lt;p&gt;This method shall be called by a public &lt;strong&gt;GetOneRandomAsync&lt;/strong&gt; method from the child class
 that receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParams&lt;/a&gt; and converts them into a filter function.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public virtual&lt;/code&gt; async Task&amp;lt;T&amp;gt; GetOneRandomAsync(string correlationId, FilterDefinition&amp;lt;T&amp;gt; filterDefinition)&lt;/p&gt;
@@ -373,7 +374,7 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;filterDefinition&lt;/strong&gt;: FilterDefinition&amp;lt;T&amp;gt; - (optional) filter JSON object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filterDefinition&lt;/strong&gt;: FilterDefinition&amp;lt;T&amp;gt; - (optional) filter for JSON object&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;paging&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/paging_params&#34;&gt;PagingParams&lt;/a&gt; - (optional) paging parameters&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;sortDefinition&lt;/strong&gt;: SortDefinition&amp;lt;T&amp;gt; - (optional) sorting JSON object&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;&lt;a href=&#34;../../../commons/data/data_page&#34;&gt;DataPage&lt;/a&gt;&amp;lt;T&amp;gt;&amp;gt; - data page obtained by filtering&lt;/li&gt;
@@ -442,12 +443,12 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
       <description>
         
         
-        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../persistence/identifiable_mongodb_persistence&#34;&gt;IdentifiableMongoDbPersistence&amp;lt;T, K&amp;gt;&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../identifiable_mongodb_persistence&#34;&gt;IdentifiableMongoDbPersistence&amp;lt;T, K&amp;gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
 &lt;p&gt;The MongoDbPersistence class allows you to create persistence components that store data in MongoDB databases using the official MongoDB driver.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;In basic scenarios child classes shall only override &lt;strong&gt;GetPageByFilterAsync()&lt;/strong&gt;, &lt;strong&gt;GetListByFilterAsync()&lt;/strong&gt; or &lt;strong&gt;DeleteByFilterAsync()&lt;/strong&gt; operations with specific filter function.&lt;/li&gt;
+&lt;li&gt;In basic scenarios child classes shall only override &lt;a href=&#34;../mongodb_persistence/#getpagebyfilterasync&#34;&gt;GetPageByFilterAsync&lt;/a&gt;, &lt;a href=&#34;../mongodb_persistence/#getlistbyfilterasync&#34;&gt;GetListByFilter&lt;/a&gt; or &lt;a href=&#34;../mongodb_persistence/#deletebyfilterasync&#34;&gt;DeleteByFilter&lt;/a&gt;  operations with specific filter functions.&lt;/li&gt;
 &lt;li&gt;All other operations can be used out of the box.&lt;/li&gt;
 &lt;li&gt;In complex scenarios child classes can implement additional operations by accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._model&lt;/strong&gt; properties.&lt;/li&gt;
 &lt;/ul&gt;
