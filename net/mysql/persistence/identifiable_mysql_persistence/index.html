@@ -25,14 +25,14 @@ Abstract persistence component that stores data in MySQL and implements a number
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/mysql/persistence/identifiable_mysql_persistence/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-28T01:41:01+03:00" />
+<meta property="article:modified_time" content="2021-07-20T03:20:18+02:00" />
 
 <meta itemprop="name" content="IdentifiableMySqlPersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;">
 <meta itemprop="description" content="
 Abstract persistence component that stores data in MySQL and implements a number of CRUD operations over data items with unique ids.
 ">
-<meta itemprop="dateModified" content="2021-06-28T01:41:01+03:00" />
-<meta itemprop="wordCount" content="711">
+<meta itemprop="dateModified" content="2021-07-20T03:20:18+02:00" />
+<meta itemprop="wordCount" content="706">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IdentifiableMySqlPersistence&lt;T extends IIdentifiable&lt;K&gt;, K&gt;"/>
 <meta name="twitter:description" content="
@@ -229626,8 +229626,6 @@ Abstract persistence component that stores data in MySQL and implements a number
 <h3 id="description">Description</h3>
 <p>The IdentifiableMySqlPersistence class allows you to create persistence components that store data in MySQL databases and implement a number of CRUD operations over data items with unique ids.</p>
 <p>Important points</p>
-<p>where T : <a href="../../../commons/data/iidentifiable">IIdentifiable<K></a>, new()<br>
-where K : class.</p>
 <ul>
 <li>The data items must implement the <a href="../../../commons/data/iidentifiable">IIdentifiable</a> interface.</li>
 <li>In basic scenarios, child classes shall only override <a href="../mysql_persistence/#getpagebyfilterasync">GetPageByFilterAsync</a>, <a href="../memory_persistence/#getlistbyfilterasync">GetListByFilterAsync</a> or <a href="../mysql_persistence/#deletebyfilterasync">DeleteByFilterAsync</a> operations with the specific filter function.</li>
@@ -229653,10 +229651,10 @@ where K : class.</p>
 </ul>
 <p><strong>options</strong>:</p>
 <ul>
-<li><strong>max_pool_size</strong>: (optional) maximum connection pool size (default</li>
-<li><strong>keep_alive</strong>: (optional) enable connection keep alive (default</li>
-<li><strong>connect_timeout</strong>: (optional) connection timeout in milliseconds (d</li>
-<li><strong>auto_reconnect</strong>: (optional) enable auto reconnection (default: tr</li>
+<li><strong>max_pool_size</strong>: (optional) maximum connection pool size (default: 2)</li>
+<li><strong>keep_alive</strong>: (optional) enable connection keep alive (default: true)</li>
+<li><strong>connect_timeout</strong>: (optional) connection timeout in milliseconds (default: 5 sec)</li>
+<li><strong>auto_reconnect</strong>: (optional) enable auto reconnection (default: true)</li>
 <li><strong>max_page_size</strong>: (optional) maximum page size (default: 100)</li>
 <li><strong>debug</strong>: (optional) enable debug output (default: false).</li>
 </ul>
@@ -229664,7 +229662,7 @@ where K : class.</p>
 <ul>
 <li><strong>*:logger:*:*:1.0</strong> - (optional) <a href="../../../components/log/ilogger">ILogger</a> components to pass log messages</li>
 <li><strong>*:discovery:*:*:1.0</strong> - (optional) <a href="../../../components/connect/idiscovery">IDiscovery</a> services</li>
-<li><strong>*:credential-store:*:*:1.0</strong> - (optional) Credential stores to resolve credentials (<a href="../../../components/auth/icredential_store">ICredentialStore</a>)</li>
+<li><strong>*:credential-store:*:*:1.0</strong> - (optional) credential stores to resolve credentials (<a href="../../../components/auth/icredential_store">ICredentialStore</a>)</li>
 </ul>
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of the persistence component.</p>
@@ -229672,7 +229670,7 @@ where K : class.</p>
 <p><code>public</code> IdentifiableMySqlPersistence(tableName: string)</p>
 </blockquote>
 <ul>
-<li><strong>tableName</strong>: string - (optional) collection name.</li>
+<li><strong>tableName</strong>: string - (optional) collection&rsquo;s name.</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="createasync">CreateAsync</h4>
@@ -229725,8 +229723,8 @@ where K : class.</p>
 <li><strong>returns</strong>: Task&lt;T&gt; - data item</li>
 </ul>
 <h4 id="setasync">SetAsync</h4>
-<p>Sets a data item. If the data item exists it updates it,
-otherwise it creates a new data item.</p>
+<p>Sets a data item. If the data item exists, it updates it.
+Otherwise, it creates a new data item.</p>
 <blockquote>
 <p><code>public virtual</code> async Task&lt;T&gt; SetAsync(string correlationId, T item)</p>
 </blockquote>
