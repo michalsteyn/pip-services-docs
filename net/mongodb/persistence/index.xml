@@ -442,17 +442,15 @@ receives &lt;a href=&#34;../../../commons/data/filter_params&#34;&gt;FilterParam
       <description>
         
         
-        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../../identifiable_mongodb_persistence&#34;&gt;IdentifiableMongoDbPersistence&amp;lt;T, K&amp;gt;&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Inherits:&lt;/strong&gt; &lt;a href=&#34;../persistence/identifiable_mongodb_persistence&#34;&gt;IdentifiableMongoDbPersistence&amp;lt;T, K&amp;gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The MongoDbPersistence class allows you to create persistence components that store data in MongoDBs using the official MongoDB driver.&lt;/p&gt;
-&lt;p&gt;Important points&lt;/p&gt;
-&lt;p&gt;Where T : &lt;a href=&#34;../../../commons/data/iidentifiable&#34;&gt;IIdentifiable&lt;K&gt;&lt;/a&gt;.
-Where K : class.&lt;/p&gt;
-&lt;p&gt;In basic scenarios child classes shall only override &lt;strong&gt;GetPageByFilterAsync()&lt;/strong&gt;,
-&lt;strong&gt;GetListByFilterAsync()&lt;/strong&gt; or &lt;strong&gt;DeleteByFilterAsync()&lt;/strong&gt; operations with specific filter function.
-All other operations can be used out of the box.&lt;/p&gt;
-&lt;p&gt;In complex scenarios child classes can implement additional operations by
-accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._model&lt;/strong&gt; properties.&lt;/p&gt;
+&lt;p&gt;The MongoDbPersistence class allows you to create persistence components that store data in MongoDB databases using the official MongoDB driver.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In basic scenarios child classes shall only override &lt;strong&gt;GetPageByFilterAsync()&lt;/strong&gt;, &lt;strong&gt;GetListByFilterAsync()&lt;/strong&gt; or &lt;strong&gt;DeleteByFilterAsync()&lt;/strong&gt; operations with specific filter function.&lt;/li&gt;
+&lt;li&gt;All other operations can be used out of the box.&lt;/li&gt;
+&lt;li&gt;In complex scenarios child classes can implement additional operations by accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._model&lt;/strong&gt; properties.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;collection&lt;/strong&gt;: (optional) MongoDB collection name&lt;/li&gt;
@@ -492,12 +490,12 @@ accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;collectionName&lt;/strong&gt;: string - (optional) collection name.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;partitionKey&lt;/strong&gt;: string - TODO add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;partitionKey&lt;/strong&gt;: string - partition key&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h4 id=&#34;_partitionkey&#34;&gt;_partitionKey&lt;/h4&gt;
-&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;p&gt;Partition key&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;protected&lt;/code&gt; &lt;strong&gt;_partitionKey&lt;/strong&gt;: string&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -506,19 +504,19 @@ accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._
 &lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
 &lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void Configure(&lt;a href=&#34;../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;public&lt;/code&gt; void Configure(&lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; config)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;deletebyidasync&#34;&gt;DeleteByIdAsync&lt;/h4&gt;
-&lt;p&gt;Deleted a data item by it&amp;rsquo;s unique id.&lt;/p&gt;
+&lt;p&gt;Deletes a data item by it&amp;rsquo;s unique id.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public override&lt;/code&gt; Task&amp;lt;T&amp;gt; DeleteByIdAsync(string correlationId, K id)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - object to convert from the public partial format.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: K - an id of the item to be deleted&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: K - id of the item to be deleted&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;getonebyfilterasync&#34;&gt;GetOneByFilterAsync&lt;/h4&gt;
 &lt;p&gt;Gets one first data item by filter.&lt;/p&gt;
@@ -527,8 +525,8 @@ accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used  to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;filterDefinition&lt;/strong&gt;: FilterDefinition&amp;lt;T&amp;gt; - (optional) a filter JSON object&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - a data item by id.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filterDefinition&lt;/strong&gt;: FilterDefinition&amp;lt;T&amp;gt; - (optional) filter for JSON object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - data item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Gets one first data item by filter.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -536,29 +534,29 @@ accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used  to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;filterDefinition&lt;/strong&gt;: FilterDefinition&amp;lt;T&amp;gt; - (optional) a filter JSON object.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;filterDefinition&lt;/strong&gt;: FilterDefinition&amp;lt;T&amp;gt; - (optional) filter for JSON object.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;projection&lt;/strong&gt;: &lt;a href=&#34;../../../commons/data/projection_params&#34;&gt;ProjectionParams&lt;/a&gt; - (optional) projection parameters.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;object&amp;gt; - a data item by id.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;object&amp;gt; - data item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;modifybyidasync&#34;&gt;ModifyByIdAsync&lt;/h4&gt;
-&lt;p&gt;Modify a data item by it&amp;rsquo;s unique id.&lt;/p&gt;
+&lt;p&gt;Modifies a data item by it&amp;rsquo;s unique id.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public override&lt;/code&gt; Task&amp;lt;T&amp;gt; ModifyByIdAsync(string correlationId, K id, UpdateDefinition&amp;lt;T&amp;gt; updateDefinition)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;id&lt;/strong&gt;: K - (optional) filter function used to filter items.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;updateDefinition&lt;/strong&gt;: UpdateDefinition&amp;lt;T&amp;gt; - (optional) a JSON object to update&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;updateDefinition&lt;/strong&gt;: UpdateDefinition&amp;lt;T&amp;gt; - (optional) JSON object to update&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - updated item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setasync&#34;&gt;SetAsync&lt;/h4&gt;
-&lt;p&gt;Sets a data item. If the data item exists it updates it, otherwise it create a new data item.&lt;/p&gt;
+&lt;p&gt;Sets a data item. If the data item exists, it updates it. Otherwise, it create a new data item.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;public override&lt;/code&gt; Task&amp;lt;T&amp;gt; SetAsync(string correlationId, T item)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: T - an item to be set.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: T - item to be set.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - updated item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;updateasync&#34;&gt;UpdateAsync&lt;/h4&gt;
@@ -568,7 +566,7 @@ accessing &lt;strong&gt;this._collection&lt;/strong&gt; and &lt;strong&gt;this._
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: T - an item to be updated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;item&lt;/strong&gt;: T - item to be updated.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Task&amp;lt;T&amp;gt; - updated item.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;

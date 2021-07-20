@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>PartitionMongoDbPersistence&lt;T, K&gt; | Services Docs</title><meta property="og:title" content="PartitionMongoDbPersistence&lt;T, K&gt;" />
-<meta property="og:description" content="Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement IIdentifiable interface.  
+<meta property="og:description" content="Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement the [IIdentifiable&lt;K&gt;](../../../commons/data/iidentifiable) interface.  
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/mongodb/persistence/partition_mongodb_persistence/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-07-20T18:09:59+02:00" />
+<meta property="article:modified_time" content="2021-07-20T19:16:58+02:00" />
 
 <meta itemprop="name" content="PartitionMongoDbPersistence&lt;T, K&gt;">
-<meta itemprop="description" content="Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement IIdentifiable interface.  
+<meta itemprop="description" content="Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement the [IIdentifiable&lt;K&gt;](../../../commons/data/iidentifiable) interface.  
 ">
-<meta itemprop="dateModified" content="2021-07-20T18:09:59+02:00" />
-<meta itemprop="wordCount" content="637">
+<meta itemprop="dateModified" content="2021-07-20T19:16:58+02:00" />
+<meta itemprop="wordCount" content="618">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="PartitionMongoDbPersistence&lt;T, K&gt;"/>
-<meta name="twitter:description" content="Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement IIdentifiable interface.  
+<meta name="twitter:description" content="Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement the [IIdentifiable&lt;K&gt;](../../../commons/data/iidentifiable) interface.  
 "/>
 
 
@@ -234079,19 +234079,17 @@
 </div>
 
 	
-    <div class="lead">Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement IIdentifiable interface.</div>
+    <div class="lead">Abstract persistence component that stores data in MongoDB and implements a number of CRUD operations over data items with partitionKey. The data items must implement the <a href="../../../commons/data/iidentifiable">IIdentifiable<K></a> interface.</div>
 	       
-	<p><strong>Inherits:</strong> <a href="../../identifiable_mongodb_persistence">IdentifiableMongoDbPersistence&lt;T, K&gt;</a></p>
+	<p><strong>Inherits:</strong> <a href="../persistence/identifiable_mongodb_persistence">IdentifiableMongoDbPersistence&lt;T, K&gt;</a></p>
 <h3 id="description">Description</h3>
-<p>The MongoDbPersistence class allows you to create persistence components that store data in MongoDBs using the official MongoDB driver.</p>
-<p>Important points</p>
-<p>Where T : <a href="../../../commons/data/iidentifiable">IIdentifiable<K></a>.
-Where K : class.</p>
-<p>In basic scenarios child classes shall only override <strong>GetPageByFilterAsync()</strong>,
-<strong>GetListByFilterAsync()</strong> or <strong>DeleteByFilterAsync()</strong> operations with specific filter function.
-All other operations can be used out of the box.</p>
-<p>In complex scenarios child classes can implement additional operations by
-accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</p>
+<p>The MongoDbPersistence class allows you to create persistence components that store data in MongoDB databases using the official MongoDB driver.</p>
+<p><strong>Important points</strong></p>
+<ul>
+<li>In basic scenarios child classes shall only override <strong>GetPageByFilterAsync()</strong>, <strong>GetListByFilterAsync()</strong> or <strong>DeleteByFilterAsync()</strong> operations with specific filter function.</li>
+<li>All other operations can be used out of the box.</li>
+<li>In complex scenarios child classes can implement additional operations by accessing <strong>this._collection</strong> and <strong>this._model</strong> properties.</li>
+</ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
 <li><strong>collection</strong>: (optional) MongoDB collection name</li>
@@ -234131,12 +234129,12 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </blockquote>
 <ul>
 <li><strong>collectionName</strong>: string - (optional) collection name.</li>
-<li><strong>partitionKey</strong>: string - TODO add description</li>
+<li><strong>partitionKey</strong>: string - partition key</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="_partitionkey">_partitionKey</h4>
-<p>TODO: add description</p>
+<p>Partition key</p>
 <blockquote>
 <p><code>protected</code> <strong>_partitionKey</strong>: string</p>
 </blockquote>
@@ -234145,19 +234143,19 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 <h4 id="configure">Configure</h4>
 <p>Configures component by passing configuration parameters.</p>
 <blockquote>
-<p><code>public</code> void Configure(<a href="../../commons/config/config_params">ConfigParams</a> config)</p>
+<p><code>public</code> void Configure(<a href="../../../commons/config/config_params">ConfigParams</a> config)</p>
 </blockquote>
 <ul>
-<li><strong>config</strong>: <a href="../../commons/config/config_params">ConfigParams</a> - configuration parameters to be set.</li>
+<li><strong>config</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters to be set.</li>
 </ul>
 <h4 id="deletebyidasync">DeleteByIdAsync</h4>
-<p>Deleted a data item by it&rsquo;s unique id.</p>
+<p>Deletes a data item by it&rsquo;s unique id.</p>
 <blockquote>
 <p><code>public override</code> Task&lt;T&gt; DeleteByIdAsync(string correlationId, K id)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - object to convert from the public partial format.</li>
-<li><strong>id</strong>: K - an id of the item to be deleted</li>
+<li><strong>id</strong>: K - id of the item to be deleted</li>
 </ul>
 <h4 id="getonebyfilterasync">GetOneByFilterAsync</h4>
 <p>Gets one first data item by filter.</p>
@@ -234166,8 +234164,8 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used  to trace execution through the call chain.</li>
-<li><strong>filterDefinition</strong>: FilterDefinition&lt;T&gt; - (optional) a filter JSON object</li>
-<li><strong>returns</strong>: Task&lt;T&gt; - a data item by id.</li>
+<li><strong>filterDefinition</strong>: FilterDefinition&lt;T&gt; - (optional) filter for JSON object</li>
+<li><strong>returns</strong>: Task&lt;T&gt; - data item.</li>
 </ul>
 <p>Gets one first data item by filter.</p>
 <blockquote>
@@ -234175,29 +234173,29 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used  to trace execution through the call chain.</li>
-<li><strong>filterDefinition</strong>: FilterDefinition&lt;T&gt; - (optional) a filter JSON object.</li>
+<li><strong>filterDefinition</strong>: FilterDefinition&lt;T&gt; - (optional) filter for JSON object.</li>
 <li><strong>projection</strong>: <a href="../../../commons/data/projection_params">ProjectionParams</a> - (optional) projection parameters.</li>
-<li><strong>returns</strong>: Task&lt;object&gt; - a data item by id.</li>
+<li><strong>returns</strong>: Task&lt;object&gt; - data item.</li>
 </ul>
 <h4 id="modifybyidasync">ModifyByIdAsync</h4>
-<p>Modify a data item by it&rsquo;s unique id.</p>
+<p>Modifies a data item by it&rsquo;s unique id.</p>
 <blockquote>
 <p><code>public override</code> Task&lt;T&gt; ModifyByIdAsync(string correlationId, K id, UpdateDefinition&lt;T&gt; updateDefinition)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>id</strong>: K - (optional) filter function used to filter items.</li>
-<li><strong>updateDefinition</strong>: UpdateDefinition&lt;T&gt; - (optional) a JSON object to update</li>
+<li><strong>updateDefinition</strong>: UpdateDefinition&lt;T&gt; - (optional) JSON object to update</li>
 <li><strong>returns</strong>: Task&lt;T&gt; - updated item.</li>
 </ul>
 <h4 id="setasync">SetAsync</h4>
-<p>Sets a data item. If the data item exists it updates it, otherwise it create a new data item.</p>
+<p>Sets a data item. If the data item exists, it updates it. Otherwise, it create a new data item.</p>
 <blockquote>
 <p><code>public override</code> Task&lt;T&gt; SetAsync(string correlationId, T item)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>item</strong>: T - an item to be set.</li>
+<li><strong>item</strong>: T - item to be set.</li>
 <li><strong>returns</strong>: Task&lt;T&gt; - updated item.</li>
 </ul>
 <h4 id="updateasync">UpdateAsync</h4>
@@ -234207,7 +234205,7 @@ accessing <strong>this._collection</strong> and <strong>this._model</strong> pro
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>item</strong>: T - an item to be updated.</li>
+<li><strong>item</strong>: T - item to be updated.</li>
 <li><strong>returns</strong>: Task&lt;T&gt; - updated item.</li>
 </ul>
 <h3 id="examples">Examples</h3>
