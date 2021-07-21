@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/messaging/queues/message_queue/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-25T01:46:33+03:00" />
+<meta property="article:modified_time" content="2021-07-21T05:08:42+02:00" />
 
 <meta itemprop="name" content="MessageQueue">
 <meta itemprop="description" content="Abstract message queue that is used as a basis for specific message queue implementations.
 ">
-<meta itemprop="dateModified" content="2021-06-25T01:46:33+03:00" />
-<meta itemprop="wordCount" content="994">
+<meta itemprop="dateModified" content="2021-07-21T05:08:42+02:00" />
+<meta itemprop="wordCount" content="995">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MessageQueue"/>
 <meta name="twitter:description" content="Abstract message queue that is used as a basis for specific message queue implementations.
@@ -235911,7 +235911,7 @@
 <h4 id="references">References</h4>
 <ul>
 <li><strong>*:logger:*:*:1.0</strong> - (optional) <a href="../../../components/log/ilogger">ILogger</a> components to pass log messages</li>
-<li><strong>*:counters:*:*:1.0</strong> - (optional) <a href="../../../components/count/ilogger">ICounters</a> components to pass collected measurements</li>
+<li><strong>*:counters:*:*:1.0</strong> - (optional) <a href="../../../components/count/icounters">ICounters</a> components to pass collected measurements</li>
 <li><strong>*:discovery:*:*:1.0</strong> - (optional) <a href="../../../components/connect/idiscovery">IDiscovery</a> components to discover connection(s)</li>
 <li><strong>*:credential-store:*:*:1.0</strong> - (optional) <a href="../../../components/auth/icredential_store">ICredentialStore</a> componetns to lookup credential(s)</li>
 </ul>
@@ -235958,7 +235958,7 @@
 </blockquote>
 <h3 id="abstract-methods">Abstract methods</h3>
 <h4 id="abandonasync">AbandonAsync</h4>
-<p>Returns a message into the queue and makes it available for all subscribers to receive it again. This method is usually used to return a message which could not be processed at the moment to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently or/and sent to dead letter queue.</p>
+<p>Returns a message into the queue and makes it available for all subscribers to receive it again. This method is usually used to return a message which could not be processed at the moment, to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently or/and sent to the dead letter queue.</p>
 <blockquote>
 <p><code>public abstract</code> Task AbandonAsync(<a href="../message_envelope">MessageEnvelope</a> message);</p>
 </blockquote>
@@ -235998,12 +235998,12 @@
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="isopen">IsOpen</h4>
-<p>Checks if the component is opened.</p>
+<p>Checks if the component is open.</p>
 <blockquote>
 <p><code>public abstract</code> bool IsOpen()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: bool - True if the component has been opened and False otherwise.</li>
+<li><strong>returns</strong>: bool - true if the component is open and false otherwise.</li>
 </ul>
 <h4 id="listenasync">ListenAsync</h4>
 <p>Listens for incoming messages and blocks the current thread until the queue is closed.<br>
@@ -236016,7 +236016,7 @@ See also <a href="../imessage_receiver">IMessageReceiver</a>, <a href="#receivea
 <li><strong>receiver</strong>: <a href="../imessage_receiver">IMessageReceiver</a> - receiver used to receive incoming messages.</li>
 </ul>
 <h4 id="movetodeadletter">MoveToDeadLetter</h4>
-<p>Permanently removes a message from the queue and sends it to dead letter queue.</p>
+<p>Permanently removes a message from the queue and sends it to the dead letter queue.</p>
 <blockquote>
 <p><code>public abstract</code> Task MoveToDeadLetterAsync(<a href="../message_envelope">MessageEnvelope</a> message)</p>
 </blockquote>
@@ -236026,11 +236026,11 @@ See also <a href="../imessage_receiver">IMessageReceiver</a>, <a href="#receivea
 <h4 id="peekasync">PeekAsync</h4>
 <p>Peeks a single incoming message from the queue without removing it. If there are no messages available in the queue, it returns null.</p>
 <blockquote>
-<p><code>public abstract</code> Task&lt;[MessageEnvelope](../message_envelope)&gt; PeekAsync(string correlationId)</p>
+<p><code>public abstract</code> Task <a href="../message_envelope">MessageEnvelope</a> PeekAsync(string correlationId)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: Task&lt;[MessageEnvelope](../message_envelope)&gt; - peeked message or <em>null</em>.</li>
+<li><strong>returns</strong>: Task <a href="../message_envelope">MessageEnvelope</a> - peeked message or <em>null</em>.</li>
 </ul>
 <h4 id="peekbatch">PeekBatch</h4>
 <p>Peeks multiple incoming messages from the queue without removing them. If there are no messages available in the queue, it returns an empty list.</p>
@@ -236100,14 +236100,14 @@ See also <a href="#listenasync">ListenAsync</a>, <a href="../imessage_receiver">
 </ul>
 <h4 id="sendasobjectasync">SendAsObjectAsync</h4>
 <p>Sends an object into the queue.
-Before sending the object is converted into JSON string and wrapped in a <a href="../message_mnvelope">MessageEnvelope</a>.</p>
+Before sending, the object is converted into JSON string and wrapped in a <a href="../message_envelope">MessageEnvelope</a>.</p>
 <blockquote>
 <p><code>public</code> Task SendAsObjectAsync(string correlationId, string messageType, object message)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>messageType</strong>: string - a message type</li>
-<li><strong>message</strong>: object - an object value to be sent</li>
+<li><strong>messageType</strong>: string - message type</li>
+<li><strong>message</strong>: object - object value to be sent</li>
 </ul>
 <h4 id="setreferences">SetReferences</h4>
 <p>Sets references to dependent components.</p>
