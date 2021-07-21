@@ -19,22 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Step 1. Build | Services Docs</title><meta property="og:title" content="Step 1. Build" />
-<meta property="og:description" content="TODO: rewrite for Dart
-Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use." />
+<meta property="og:description" content="Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/tutorials/microservice_dockerization/step1/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-07-20T20:25:28+03:00" />
+<meta property="article:modified_time" content="2021-07-21T18:10:29+03:00" />
 
 <meta itemprop="name" content="Step 1. Build">
-<meta itemprop="description" content="TODO: rewrite for Dart
-Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.">
-<meta itemprop="dateModified" content="2021-07-20T20:25:28+03:00" />
-<meta itemprop="wordCount" content="742">
+<meta itemprop="description" content="Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.">
+<meta itemprop="dateModified" content="2021-07-21T18:10:29+03:00" />
+<meta itemprop="wordCount" content="672">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 1. Build"/>
-<meta name="twitter:description" content="TODO: rewrite for Dart
-Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use."/>
+<meta name="twitter:description" content="Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use."/>
 
 
 
@@ -231291,24 +231288,27 @@ Some of the programming languages used in the Pip.Services Toolkit require a pro
 	
     
 	       
-	<p><strong>TODO: rewrite for Dart</strong></p>
-<p>Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.</p>
-<p>To perform the build process for a Node.js project, we’ll be creating a Docker container build scenario in a file named <strong>Dockerfile.build</strong>. Copy the following into this file:</p>
+	<p>Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.</p>
+<p>Dart is an interpreted language and does not require compilation. But to save an identical pipeline, a stub script is used.</p>
+<p>To perform the build process for a Dart project, we’ll be creating a Docker container build scenario in a file named <strong>Dockerfile.build</strong>. Copy the following into this file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#00a8c8">FROM</span><span style="color:#d88200"> google/dart</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># set working directory</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">WORKDIR</span><span style="color:#d88200"> /app</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy all project</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">COPY</span> pubspec.* .<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># get all dependencies</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Install all dependencies</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">RUN</span> pub get<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">RUN</span> pub get --offline<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># copy all project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
 </span></code></pre></div><p>This file, along with the others we will be creating, should be placed in the docker folder at the root of the project.</p>
-<p>Let’s have a look at what this Docker script will be doing. The standard Node.JS v.8 image is going to be used as the base image, and TypeScript is going to be installed on top of it. Next, /app is set as the working directory and our project’s package.json file is copied there. This file contains a list of dependencies that are required to build the project, which are installed using the npm install command. The last steps of the script simply copies the rest of the project to the image and performs compilation using the tsc command.</p>
-<p>Note that the file package.json is copied first, then the dependencies are installed, and only after that do we copy the rest of the source code. This is done to speed up container creation during future runs, as the steps that haven’t changed from the last run are simply taken from Docker’s cache. In other words, unless we add or remove a dependency, Docker can use the cached image with all of the dependencies already installed, and only has to perform the “copy” and “compile” steps when we change the project’s source code.</p>
+<p>Let’s have a look at what this Docker script will be doing. The standard Dart v2 image is going to be used as the base image. Next, /app is set as the working directory and our project’s <strong>pubspec.yaml</strong> file is copied there. This file contains a list of dependencies that are required to build the project, which are installed using the <strong>pub get</strong> command. The last steps of the script simply copies the rest of the project to the image.</p>
+<p>Note that the file <strong>pubspec.yaml</strong> is copied first, then the dependencies are installed, and only after that do we copy the rest of the source code. This is done to speed up container creation during future runs, as the steps that haven’t changed from the last run are simply taken from Docker’s cache. In other words, unless we add or remove a dependency, Docker can use the cached image with all of the dependencies already installed, and only has to perform the “copy” steps when we change the project’s source code.</p>
 <p>In our projects, we strive to make our scripts as universal as possible. Because of this, all variable values are defined in a separate file named <strong>component.json</strong>, which looks like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
     <span style="color:#f92672">&#34;name&#34;</span><span style="color:#111">:</span>  <span style="color:#d88200">&#34;component-name&#34;</span><span style="color:#111">,</span>
@@ -231316,7 +231316,6 @@ Some of the programming languages used in the Pip.Services Toolkit require a pro
     <span style="color:#f92672">&#34;version&#34;</span><span style="color:#111">:</span>  <span style="color:#d88200">&#34;1.0.0&#34;</span><span style="color:#111">,</span>
     <span style="color:#f92672">&#34;build&#34;</span><span style="color:#111">:</span>    <span style="color:#d88200">&#34;1&#34;</span>
 <span style="color:#111">}</span>
-
 </code></pre></div><p>This file contains basic information about the component we are dealing with: its name, Docker Hub registry, version, and build number.</p>
 <p>We’ve developed a special script called <strong>build.ps1</strong> for building our projects. This script is written in PowerShell - a scripting language used for creating system scripts. Since version 6.0, PowerShell is supported by most platforms that are used for development, such as Windows, Mac, and Linux. If for some reason PowerShell can’t be used, you can rewrite the script using bash or any other scripting language.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ps1" data-lang="ps1"><span style="color:#75715e">#!/usr/bin/env pwsh</span>
@@ -231334,11 +231333,6 @@ Some of the programming languages used in the Pip.Services Toolkit require a pro
 <span style="color:#111">$component</span><span style="color:#111">.</span><span style="color:#111">build</span> <span style="color:#111">=</span> <span style="color:#111">$env:BUILD_NUMBER</span>
 <span style="color:#111">Set-Content</span> <span style="color:#111">-Path</span> <span style="color:#d88200">&#34;component.json&#34;</span> <span style="color:#111">-Value</span> <span style="color:#111">$(</span><span style="color:#111">$component</span> <span style="color:#111">|</span> <span style="color:#111">ConvertTo-Json</span><span style="color:#111">)</span>
 
-<span style="color:#75715e"># Remove build files</span>
-<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">Test-Path</span> <span style="color:#d88200">&#34;obj&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">Remove-Item</span> <span style="color:#111">-Recurse</span> <span style="color:#111">-Force</span> <span style="color:#111">-Path</span> <span style="color:#d88200">&#34;obj&#34;</span>
-<span style="color:#111">}</span>
-
 <span style="color:#75715e"># Copy private keys to access git repo</span>
 <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">-not</span> <span style="color:#111">(</span><span style="color:#111">Test-Path</span> <span style="color:#111">-Path</span> <span style="color:#d88200">&#34;docker/id_rsa&#34;</span><span style="color:#111">))</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">$env:GIT_PRIVATE_KEY</span> <span style="color:#f92672">-ne</span> <span style="color:#111">$null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
@@ -231351,20 +231345,9 @@ Some of the programming languages used in the Pip.Services Toolkit require a pro
 <span style="color:#75715e"># Build docker image</span>
 <span style="color:#111">docker</span> <span style="color:#111">build</span> <span style="color:#f92672">-f</span> <span style="color:#111">docker</span><span style="color:#111">/</span><span style="color:#111">Dockerfile</span><span style="color:#111">.</span><span style="color:#111">build</span> <span style="color:#111">-t</span> <span style="color:#111">$buildImage</span> <span style="color:#111">.</span>
 
-<span style="color:#75715e"># Create and copy compiled files, then destroy</span>
+<span style="color:#75715e"># Create container, then destroy</span>
 <span style="color:#111">docker</span> <span style="color:#111">create</span> <span style="color:#111">-</span><span style="color:#111">-name</span> <span style="color:#111">$container</span> <span style="color:#111">$buildImage</span>
-<span style="color:#111">docker</span> <span style="color:#111">cp </span><span style="color:#d88200">&#34;</span><span style="color:#111">$(</span><span style="color:#111">$container</span><span style="color:#111">)</span><span style="color:#d88200">:/app/obj&#34;</span> <span style="color:#111">./</span><span style="color:#111">obj</span>
 <span style="color:#111">docker</span> <span style="color:#111">rm </span><span style="color:#111">$container</span>
-
-<span style="color:#00a8c8">if</span> <span style="color:#111">(!(</span><span style="color:#111">Test-Path</span> <span style="color:#111">./</span><span style="color:#111">obj</span><span style="color:#111">)</span> <span style="color:#f92672">-and</span> <span style="color:#111">$env:RETRY</span> <span style="color:#f92672">-eq</span> <span style="color:#111">$true</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#75715e"># if build failed and retries enabled run build again</span>
-    <span style="color:#111">Write-Host</span> <span style="color:#d88200">&#34;Build failed, but retries enabled, so restarting build script again...&#34;</span>
-    <span style="color:#111">./</span><span style="color:#111">build</span><span style="color:#111">.</span><span style="color:#111">ps1</span>
-<span style="color:#111">}</span> <span style="color:#00a8c8">elseif</span> <span style="color:#111">(!(</span><span style="color:#111">Test-Path</span> <span style="color:#111">./</span><span style="color:#111">obj</span><span style="color:#111">))</span> <span style="color:#111">{</span>
-    <span style="color:#111">Write-Host</span> <span style="color:#d88200">&#34;obj folder doesn&#39;t exist in root dir. Build failed. Watch logs above.&#34;</span>
-    <span style="color:#111">exit</span> <span style="color:#111">1</span>
-<span style="color:#111">}</span>
-
 </code></pre></div><p>This script generates a name for the image using the data in the component.json file, cleans the project of files from previous compilations, runs the Docker build scenario, and then copies the compiled files from the image back into the project. Once the files are copied, the container is deleted, and the script outputs the results of the build to the console.</p>
 <p>If the build was successful, the project will have an /obj directory added, containing the newly compiled files.</p>
 <p>This finishes up the build process. Continue on to <a href="../step2">Step 2 to dockerize the testing process.</a></p>

@@ -19,22 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Step 1. Build | Services Docs</title><meta property="og:title" content="Step 1. Build" />
-<meta property="og:description" content="TODO rewrite this step for Python (Python is an interpreted language and not a compiled one)
-Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container." />
+<meta property="og:description" content="Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/tutorials/microservice_dockerization/step1/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-07-20T20:25:28+03:00" />
+<meta property="article:modified_time" content="2021-07-21T18:10:29+03:00" />
 
 <meta itemprop="name" content="Step 1. Build">
-<meta itemprop="description" content="TODO rewrite this step for Python (Python is an interpreted language and not a compiled one)
-Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container.">
-<meta itemprop="dateModified" content="2021-07-20T20:25:28+03:00" />
-<meta itemprop="wordCount" content="686">
+<meta itemprop="description" content="Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.">
+<meta itemprop="dateModified" content="2021-07-21T18:10:29+03:00" />
+<meta itemprop="wordCount" content="676">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 1. Build"/>
-<meta name="twitter:description" content="TODO rewrite this step for Python (Python is an interpreted language and not a compiled one)
-Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container."/>
+<meta name="twitter:description" content="Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use."/>
 
 
 
@@ -231791,9 +231788,9 @@ Some of the programming languages used in the Pip.Services Toolkit require a pro
 	
     
 	       
-	<p><strong>TODO rewrite this step for Python (Python is an interpreted language and not a compiled one)</strong></p>
-<p>Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.</p>
-<p>To perform the build process for a Node.js project, we’ll be creating a Docker container build scenario in a file named <strong>Dockerfile.build</strong>. Copy the following into this file:</p>
+	<p>Some of the programming languages used in the Pip.Services Toolkit require a project to be built, yielding executable files. A separate stage is used for this, which builds a special “build” Docker image. The project’s source code is copied to the image, after which the container is run and the project is compiled from inside the container. If the project compiles successfully, the generated files will be copied from the container back to the project for further use.</p>
+<p>Python is an interpreted language and does not require compilation. But to save an identical pipeline, a stub script is used.</p>
+<p>To perform the build process for a Python project, we’ll be creating a Docker container build scenario in a file named <strong>Dockerfile.build</strong>. Copy the following into this file:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">FROM python:3
 
 <span style="color:#75715e"># set working directory</span>
@@ -231809,7 +231806,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 </code></pre></div><p>This file, along with the others we will be creating, should be placed in the docker folder at the root of the project.</p>
-<p>Let’s have a look at what this Docker script will be doing. The standard Python v.3 image is going to be used as the base image, and Python is going to be installed on top of it. Next, /app is set as the working directory and our project’s requirements.txt file is copied there. This file contains a list of dependencies that are required to build the project, which are installed using the npm install command. The last steps of the script simply copies the rest of the project to the image.</p>
+<p>Let’s have a look at what this Docker script will be doing. The standard Python v.3 image is going to be used as the base image, and Python is going to be installed on top of it. Next, /app is set as the working directory and our project’s requirements.txt file is copied there. This file contains a list of dependencies that are required to build the project, which are installed using the <strong>pip install -r requirements.txt</strong> command. The last steps of the script simply copies the rest of the project to the image.</p>
 <p>Note that the file requirements.txt is copied first, then the dependencies are installed, and only after that do we copy the rest of the source code. This is done to speed up container creation during future runs, as the steps that haven’t changed from the last run are simply taken from Docker’s cache. In other words, unless we add or remove a dependency, Docker can use the cached image with all of the dependencies already installed, and only has to perform the “copy” steps when we change the project’s source code.</p>
 <p>In our projects, we strive to make our scripts as universal as possible. Because of this, all variable values are defined in a separate file named <strong>component.json</strong>, which looks like this:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
@@ -231836,11 +231833,6 @@ COPY . .
 <span style="color:#111">$component</span><span style="color:#111">.</span><span style="color:#111">build</span> <span style="color:#111">=</span> <span style="color:#111">$env:BUILD_NUMBER</span>
 <span style="color:#111">Set-Content</span> <span style="color:#111">-Path</span> <span style="color:#d88200">&#34;component.json&#34;</span> <span style="color:#111">-Value</span> <span style="color:#111">$(</span><span style="color:#111">$component</span> <span style="color:#111">|</span> <span style="color:#111">ConvertTo-Json</span><span style="color:#111">)</span>
 
-<span style="color:#75715e"># Remove build files</span>
-<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">Test-Path</span> <span style="color:#d88200">&#34;obj&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">Remove-Item</span> <span style="color:#111">-Recurse</span> <span style="color:#111">-Force</span> <span style="color:#111">-Path</span> <span style="color:#d88200">&#34;obj&#34;</span>
-<span style="color:#111">}</span>
-
 <span style="color:#75715e"># Copy private keys to access git repo</span>
 <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">-not</span> <span style="color:#111">(</span><span style="color:#111">Test-Path</span> <span style="color:#111">-Path</span> <span style="color:#d88200">&#34;docker/id_rsa&#34;</span><span style="color:#111">))</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">$env:GIT_PRIVATE_KEY</span> <span style="color:#f92672">-ne</span> <span style="color:#111">$null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
@@ -231853,7 +231845,7 @@ COPY . .
 <span style="color:#75715e"># Build docker image</span>
 <span style="color:#111">docker</span> <span style="color:#111">build</span> <span style="color:#f92672">-f</span> <span style="color:#111">docker</span><span style="color:#111">/</span><span style="color:#111">Dockerfile</span><span style="color:#111">.</span><span style="color:#111">build</span> <span style="color:#111">-t</span> <span style="color:#111">$buildImage</span> <span style="color:#111">.</span>
 
-<span style="color:#75715e"># Create and copy compiled files, then destroy</span>
+<span style="color:#75715e"># Create container, then destroy</span>
 <span style="color:#111">docker</span> <span style="color:#111">create</span> <span style="color:#111">-</span><span style="color:#111">-name</span> <span style="color:#111">$container</span> <span style="color:#111">$buildImage</span>
 <span style="color:#111">docker</span> <span style="color:#111">rm </span><span style="color:#111">$container</span>
 
