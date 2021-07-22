@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>RabbitMQMessageQueue | Services Docs</title><meta property="og:title" content="RabbitMQMessageQueue" />
-<meta property="og:description" content="Message queue that sends and receives messages via RabbitMQ message broker.
+<meta property="og:description" content="Message queue that sends and receives messages via a RabbitMQ message broker.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/rabbitmq/queues/rabbitmq_message_queue/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-07-20T18:08:09+03:00" />
+<meta property="article:modified_time" content="2021-07-22T03:40:22+02:00" />
 
 <meta itemprop="name" content="RabbitMQMessageQueue">
-<meta itemprop="description" content="Message queue that sends and receives messages via RabbitMQ message broker.
+<meta itemprop="description" content="Message queue that sends and receives messages via a RabbitMQ message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-20T18:08:09+03:00" />
-<meta itemprop="wordCount" content="973">
+<meta itemprop="dateModified" content="2021-07-22T03:40:22+02:00" />
+<meta itemprop="wordCount" content="971">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RabbitMQMessageQueue"/>
-<meta name="twitter:description" content="Message queue that sends and receives messages via RabbitMQ message broker.
+<meta name="twitter:description" content="Message queue that sends and receives messages via a RabbitMQ message broker.
 "/>
 
 
@@ -235123,23 +235123,26 @@
 </div>
 
 	
-    <div class="lead">Message queue that sends and receives messages via RabbitMQ message broker.</div>
+    <div class="lead">Message queue that sends and receives messages via a RabbitMQ message broker.</div>
 	       
 	<p><strong>Implements:</strong> <a href="../../../messaging/queues/message_queue">MessageQueue</a></p>
 <h3 id="description">Description</h3>
-<p>The RabbitMQMessageQueue class allows you to create message queues that send and receive messages via an RabbitMQ message broker.</p>
+<p>The RabbitMQMessageQueue class allows you to create message queues that send and receive messages via a RabbitMQ message broker.</p>
 <h4 id="configuration-parameters">Configuration parameters</h4>
-<p><strong>connection(s)</strong>:
-- <strong>discovery_key</strong>:               (optional) a key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a>
-- <strong>host</strong>:                        host name or IP address
-- <strong>port</strong>:                        port number
-- <strong>uri</strong>:                         resource URI or connection string with all parameters in it</p>
 <ul>
+<li><strong>connection(s)</strong>:
+<ul>
+<li><strong>discovery_key</strong>:               (optional) a key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
+<li><strong>host</strong>:                        host name or IP address</li>
+<li><strong>port</strong>:                        port number</li>
+<li><strong>uri</strong>:                         resource URI or connection string with all parameters in it</li>
+</ul>
+</li>
 <li><strong>credential(s)</strong>:
 <ul>
 <li><strong>store_key</strong>:                   (optional) a key to retrieve the credentials from <a href="../../../components/auth/icredential_store">ICredentialStore</a></li>
-<li><strong>username</strong>:                    user name</li>
-<li><strong>password</strong>:                    user password</li>
+<li><strong>username</strong>:                    username</li>
+<li><strong>password</strong>:                    user&rsquo;s password</li>
 </ul>
 </li>
 </ul>
@@ -235169,14 +235172,14 @@
 <li><strong>config</strong>: <a href="../../../commons/config/config_params">*ConfigParams</a> - configuration parameters</li>
 </ul>
 <h4 id="newrabbitmqmessagequeue">NewRabbitMQMessageQueue</h4>
-<p>TODO: add description</p>
+<p>Creates a new instance of the message queue.</p>
 <blockquote>
 <p>NewRabbitMQMessageQueue(name string, mqChanel *rabbitmq.Channel, queue string) <a href="">*RabbitMQMessageQueue</a></p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: string - (optional) queue&rsquo;s name.</li>
-<li><strong>mqChanel</strong>: rabbitmq.Channel - TODO: add description</li>
-<li><strong>queue</strong>: string - TODO: add description</li>
+<li><strong>mqChanel</strong>: rabbitmq.Channel - mq channel</li>
+<li><strong>queue</strong>: string - queue</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
@@ -235188,16 +235191,16 @@
 </span>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="abandon">Abandon</h4>
-<p>Returnes message into the queue and makes it available for all subscribers to receive it again.
+<p>Returnes a message into the queue and makes it available for all subscribers to receive it again.
 This method is usually used to return a message which could not be processed at the moment
 to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
-or/and send to dead letter queue.</p>
+or/and send to the dead letter queue.</p>
 <blockquote>
 <p>(c <a href="">*RabbitMQMessageQueue</a>) Abandon(message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) (err error)</p>
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to return.</li>
-<li><strong>returns</strong>: (err error) - error or if nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or if nil if no errors occurred.</li>
 </ul>
 <h4 id="clear">Clear</h4>
 <p>Clears a component&rsquo;s state.</p>
@@ -235206,7 +235209,7 @@ or/and send to dead letter queue.</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>returns</strong>: (err error) - error or if nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="close">Close</h4>
 <p>Closes a component and frees used resources.</p>
@@ -235228,7 +235231,7 @@ This method is usually used to remove the message after successful processing.</
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to remove.</li>
-<li><strong>returns</strong>: (err error) - error or if nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="configure">Configure</h4>
 <p>Configures the component by passing its configuration parameters.</p>
@@ -235266,7 +235269,7 @@ When this method is call, <a href="#listen">listen</a> unblocks the thread and e
 <li><strong>receiver</strong>: <a href="../../../messaging/queues/imessage_receiver">IMessageReceiver</a> - receiver used to receive incoming messages.</li>
 </ul>
 <h4 id="movetodeadletter">MoveToDeadLetter</h4>
-<p>Permanently removes a message from the queue and sends it to dead letter queue.</p>
+<p>Permanently removes a message from the queue and sends it to the dead letter queue.</p>
 <ul>
 <li>Important: This method is not supported by RabbitMQ.</li>
 </ul>
@@ -235275,7 +235278,7 @@ When this method is call, <a href="#listen">listen</a> unblocks the thread and e
 </blockquote>
 <ul>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message to be removed.</li>
-<li><strong>returns</strong>: (err error) - error or if nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="openwithparams">OpenWithParams</h4>
 <p>Opens the component with given connection and credential parameters.</p>
@@ -235286,7 +235289,7 @@ When this method is call, <a href="#listen">listen</a> unblocks the thread and e
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>connection</strong>: <a href="../../../components/connect/connection_params">[]*ConnectionParams</a> - connection parameters</li>
 <li><strong>credential</strong>: <a href="../../../components/auth/credential_params">[]*CredentialParams</a> - credential parameters</li>
-<li><strong>returns</strong>: error - error or if nil no errors occured.</li>
+<li><strong>returns</strong>: error - error or nil if no errors occurred.</li>
 </ul>
 <h4 id="peek">Peek</h4>
 <p>Peeks a single incoming message from the queue without removing it.
@@ -235347,14 +235350,14 @@ This method is usually used to extend the message processing time.</p>
 <li><strong>lockTimeout</strong>: time.Duration - locking timeout in milliseconds.</li>
 </ul>
 <h4 id="send">Send</h4>
-<p>Send method are sends a message into the <strong>_queue</strong>.</p>
+<p>Sends a message into the queue.</p>
 <blockquote>
 <p>(c <a href="">*RabbitMQMessageQueue</a>) Send(correlationId string, message <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a>) (err error)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>message</strong>: <a href="../../../messaging/queues/message_envelope">*MessageEnvelope</a> - message envelop to be sent.</li>
-<li><strong>returns</strong>: (err error) - error or if nil no errors occured.</li>
+<li><strong>returns</strong>: (err error) - error or nil if no errors occured.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">TODO</span><span style="color:#111">:</span> <span style="color:#75af00">example</span>
