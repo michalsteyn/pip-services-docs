@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../dart/recipes/mongodb_persistence/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../dart/recipes/mongodb_persistence/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -231274,7 +231274,7 @@ The most basic implementation of this component is the MongoDbPersistence class 
 <h3 id="mongodbpersistence">MongoDBPersistence</h3>
 <p>This is a basic component that stores data items of any type. Some basic operations for creating, getting, and deleting are already included. More advanced CRUD operations over the data items can be implemented in child classes by accessing the <strong>this._collection</strong> or <strong>this._model</strong> properties. This component also contains methods for opening and closing connections using the credentials provided.</p>
 <p>The example below demonstrates a class that implements the MongoDB persistence component for the <a href="../../tutorials/data_microservice/step2/">Beacon data model</a>.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:mongo_dart_query/mongo_dart_query.dart&#39;</span> <span style="color:#00a8c8">as</span> <span style="color:#111">mngquery</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_mongodb/pip_services3_mongodb.dart&#39;</span><span style="color:#111">;</span>
@@ -231312,7 +231312,7 @@ The most basic implementation of this component is the MongoDbPersistence class 
   <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>And this is how we could use such a class:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">persistence</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">persistence</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
 <span style="color:#00a8c8">await</span> <span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;test&#34;</span><span style="color:#111">);</span>
 
 <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">(</span>
@@ -231331,7 +231331,7 @@ The most basic implementation of this component is the MongoDbPersistence class 
 <p>The <a href="../../mongodb/connect/mongodb_connection/">MongoDbConnection</a> class provides MongoDB connectivity using a plain driver. To reduce the number of database connections needed, a connection can be defined and then shared through multiple persistence components.</p>
 <p>By default, <strong>MongoDbPersistence</strong> tries to establish a local connection on MongoDb’s default port - 27017. If the desired MongoDb server is located elsewhere, the persistence should be configured with the corresponding host and port information. Persistence configuration can be performed in a number of ways.</p>
 <p>The example below demonstrates how the <a href="../../commons/config/config_params/">ConfigParams</a> class can be used for persistence configuration. To learn more about this class, and about microservice configuration in general, be sure to read <a href="../configuration">this</a>.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">persistence</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">persistence</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
 <span style="color:#75715e">// Let&#39;s say we need to connect to a local MongoDb, but on a non-standard port - 30000
 </span><span style="color:#75715e"></span>
 <span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
@@ -231348,7 +231348,7 @@ The most basic implementation of this component is the MongoDbPersistence class 
 <p><code>pip-services:connection:mongodb:*:1.0 or pip-services3:connection:mongodb:*:1.0.</code></p>
 <p>To learn more about references, descriptors, and component references, follow <a href="../component_references">this link</a>.<br>
 First, add an element with the “pip-services” descriptor to the configuration file.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">...</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">...</span>
 <span style="color:#75715e"># MongoDb Connection</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:connection:mongodb:default:1.0&#34;</span>
   <span style="color:#f92672">connection</span><span style="color:#111">:</span>
@@ -231356,7 +231356,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
     <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">30000</span>
 <span style="color:#111">...</span>
 </code></pre></div><p>Next, register the persistence as a component in the microservice’s <strong>Factory</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsServiceFactory</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Factory</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsServiceFactory</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">Factory</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">MemoryPersistenceDescriptor</span> <span style="color:#f92672">=</span>
       <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;beacons&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;persistence&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;memory&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">);</span>
   <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">FilePersistenceDescriptor</span> <span style="color:#f92672">=</span>
@@ -231384,7 +231384,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
 <span style="color:#111">}</span>
 
 </code></pre></div><p>And add the <a href="../../mongodb/build/default_mongodb_factory/">DefaultMongoDbFactory</a> to the microservice’s ProcessContainer:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsProcess</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">ProcessContainer</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsProcess</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">ProcessContainer</span> <span style="color:#111">{</span>
   <span style="color:#111">BeaconsProcess</span><span style="color:#111">()</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;beacons&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Beacons microservice&#39;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#111">factories</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">BeaconsServiceFactory</span><span style="color:#111">());</span>
     <span style="color:#111">factories</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">DefaultRpcFactory</span><span style="color:#111">());</span>
@@ -231393,7 +231393,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
 
 
 </code></pre></div><p>If we’re configuring just a single connection to the Beacons MongoDB persistence, the connection configuration should use the “beacons” descriptor:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">...</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">...</span>
 <span style="color:#75715e"># MongoDb persistence</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;beacons:persistence:mongodb:default:1.0&#34;</span>
   <span style="color:#f92672">connection</span><span style="color:#111">:</span>
@@ -231403,13 +231403,13 @@ First, add an element with the “pip-services” descriptor to the configuratio
 
 </code></pre></div><h3 id="identifiable-data-objects-and-identifiablemongodbpersistence">Identifiable data objects and IdentifiableMongoDBPersistence</h3>
 <p>The implementation we will be working with going forward is called the <a href="../../mongodb/persistence/identifiable_mongodb_persistence/">IdentifiableMongoDbPersistence</a>. It stores and processes data objects that have a unique ID field and implement the <a href="../../ommons/data/iidentifiable/">IIdentifiable</a> interface defined in <a href="../commons">the Commons module</a>.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IIdentifiable</span><span style="color:#f92672">&lt;</span><span style="color:#111">K</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IIdentifiable</span><span style="color:#f92672">&lt;</span><span style="color:#111">K</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
 
   <span style="color:#111">K</span> <span style="color:#111">id</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
 
 </code></pre></div><p><strong>IdentifiableMongoDbPersistence</strong> implements a number of CRUD operations that are based on working with the model&rsquo;s id in a predefined manner. In addition, it provides methods for getting paginated results and listing data using detailed filter, sort, and even projection parameters.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">IdentifiableMongoDbPersistence</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">IIdentifiable</span><span style="color:#f92672">&lt;</span><span style="color:#111">K</span><span style="color:#f92672">&gt;</span><span style="color:#111">,</span> <span style="color:#111">K</span><span style="color:#f92672">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">IdentifiableMongoDbPersistence</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">IIdentifiable</span><span style="color:#f92672">&lt;</span><span style="color:#111">K</span><span style="color:#f92672">&gt;</span><span style="color:#111">,</span> <span style="color:#111">K</span><span style="color:#f92672">&gt;</span>
     <span style="color:#00a8c8">extends</span> <span style="color:#111">MongoDbPersistence</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span>
     <span style="color:#00a8c8">implements</span> <span style="color:#111">IWriter</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#111">,</span> <span style="color:#111">K</span><span style="color:#f92672">&gt;</span><span style="color:#111">,</span> <span style="color:#111">IGetter</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#111">,</span> <span style="color:#111">K</span><span style="color:#f92672">&gt;</span><span style="color:#111">,</span> <span style="color:#111">ISetter</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
 
@@ -231435,7 +231435,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
 <span style="color:#111">}</span>
 
 </code></pre></div><p>We can build upon the <strong>IdentifiableMongoDbPersistence</strong> by overriding its <strong>ComposeFilter</strong> method:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span>
     <span style="color:#00a8c8">extends</span> <span style="color:#111">IdentifiableMongoDbPersistence</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span>
     <span style="color:#00a8c8">implements</span> <span style="color:#111">IBeaconsPersistence</span> <span style="color:#111">{</span>
 
@@ -231499,14 +231499,14 @@ First, add an element with the “pip-services” descriptor to the configuratio
 </code></pre></div><p>In most scenarios, child classes only need to override the <strong>getPageByFilter()</strong>, <strong>getListByFilter()</strong>, or <strong>deleteByFilter()</strong> operations using a custom filter function (like the <strong>composeFilter</strong> function in the example above). All of the other operations can be used straight out of the box. Developers can implement custom methods by directly accessing the data objects, which are stored in the _collection property. See <a href="../../mongodb">the MongoDb module’s API</a> documentation for more details.</p>
 <h3 id="filtering">Filtering</h3>
 <p>Persistence components in the Pip.Services Toolkit use a number of data patterns. <strong>IdentifiableMongoDbPersistence</strong>, for example, supports Filtering. This pattern allows clients to use a <a href="../../commons/data/filter_params/">FilterParams</a> object to describe a subset of data using key-value pairs. These <strong>FilterParams</strong> can then be used for retrieving data in accordance with the specified search criteria <a href="../../commons">(see the Commons module)</a>.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#f92672">=</span> <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#f92672">=</span> <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
     <span style="color:#d88200">&#34;name&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;ABC&#39;</span>
 <span style="color:#111">);</span>
 
 <span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">getPageByFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
 
 </code></pre></div><p>In the persistence component, the developer is responsible for parsing <strong>FilterParams</strong> and passing a filter function to the persistence’s methods of the base class.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">composeFilter</span><span style="color:#111">(</span><span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">composeFilter</span><span style="color:#111">(</span><span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#111">filter</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span> <span style="color:#f92672">??</span> <span style="color:#111">FilterParams</span><span style="color:#111">();</span>
 
     <span style="color:#00a8c8">var</span> <span style="color:#111">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">[];</span>
@@ -231552,12 +231552,12 @@ First, add an element with the “pip-services” descriptor to the configuratio
 
 </code></pre></div><h3 id="paging">Paging</h3>
 <p>Another common data pattern is Paging. It is used to retrieve large datasets in chunks, through multiple calls to the storage. A client can ask for the results to be paged by specifying a set of <a href="../../commons/data/paging_params/">PagingParams</a>, which include the starting position and the number of objects to return. Clients can also request the total number of items in the dataset using <strong>PagingParams</strong>, but this parameter is optional. A DataPage object with a subset of the data will be returned as the result.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">//skip = 25, take = 50, total = False
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#75715e">//skip = 25, take = 50, total = False
 </span><span style="color:#75715e"></span><span style="color:#00a8c8">var</span> <span style="color:#111">paging</span> <span style="color:#f92672">=</span> <span style="color:#111">PagingParams</span><span style="color:#111">(</span><span style="color:#ae81ff">25</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">,</span> <span style="color:#00a8c8">false</span><span style="color:#111">);</span>
 <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">getPageByFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">paging</span><span style="color:#111">)</span>
 </code></pre></div><h3 id="custom-persistence-methods">Custom Persistence Methods</h3>
 <p>As mentioned above, developers can also implement custom persistence methods. The <strong>_collection</strong> property can be used to access data objects from within such methods. Below is an example of a custom <strong>getOneByUdi</strong> persistence method.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
   <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getOneByUdi</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">udi</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;udi&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">udi</span><span style="color:#111">};</span>
     <span style="color:#00a8c8">var</span> <span style="color:#111">query</span> <span style="color:#f92672">=</span> <span style="color:#111">mngquery</span><span style="color:#111">.</span><span style="color:#111">SelectorBuilder</span><span style="color:#111">();</span>
@@ -231583,7 +231583,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
   <span style="color:#111">}</span>
 
 </code></pre></div><p>When we put everything together, we end up with the following component:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span>
     <span style="color:#00a8c8">extends</span> <span style="color:#111">IdentifiableMongoDbPersistence</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span>
     <span style="color:#00a8c8">implements</span> <span style="color:#111">IBeaconsPersistence</span> <span style="color:#111">{</span>
 
@@ -231665,7 +231665,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
   <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>The following example demonstrates how we can use our newly created persistence for writing and reading Beacon objects to a MongoDB:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">persistence</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">persistence</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
 <span style="color:#00a8c8">await</span> <span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">);</span>
 <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">(</span>
     <span style="color:#111">id:</span> <span style="color:#d88200">&#39;1&#39;</span><span style="color:#111">;</span>

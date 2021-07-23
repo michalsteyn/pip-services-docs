@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/data_microservice/step6/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/data_microservice/step6/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -236200,7 +236200,7 @@ When a container is started, it starts composing the microservice out of the com
 	<p>Our service is pretty much done - all that is left is to place the components we’ve developed into a process container and configure it.</p>
 <p>When a container is started, it starts composing the microservice out of the components indicated in the configuration file. For the container to be able to build these components, it will need a component factory. In the <strong>build</strong> directory, create a <code>BeaconsServiceFactory</code> class and populate it with the following code:</p>
 <p><strong>/src/build/BeaconsServiceFactory.ts</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">Factory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-components-node&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">Factory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-components-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">Descriptor</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#960050;background-color:#1e0010">‍</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconsMemoryPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../../src/persistence/BeaconsMemoryPersistence&#39;</span><span style="color:#111">;</span>
@@ -236228,7 +236228,7 @@ When a container is started, it starts composing the microservice out of the com
 
 </code></pre></div><p>As shown in the code above, we start by creating descriptors for all of our components, and then, in the constructor, we register each component in the factory using its descriptor.</p>
 <p>Now let’s move on to creating the container itself. In the <strong>container</strong> directory, create a BeaconsProcess file with the following code:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ProcessContainer</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-container-node&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ProcessContainer</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-container-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DefaultRpcFactory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#960050;background-color:#1e0010">‍</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span><span style="color:#75af00">BeaconsServiceFactory</span><span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../build/BeaconsServiceFactory&#39;</span><span style="color:#111">;</span>
@@ -236245,7 +236245,7 @@ When a container is started, it starts composing the microservice out of the com
 </code></pre></div><p>Next, add the factories that are missing from the standard container (the one from the pip-services3-container module), so that we can build all the objects our service needs. In our case, this means adding the factory for the components we’ve written, as well as the default RPC factory (from the pip-services3-rpc module), which is needed for the HTTP service to work.</p>
 <p>Before we run the microservice, we need to prepare an initial configuration for it. In the <strong>config</strong> folder, create a <strong>config.yml</strong> file with the following configuration:</p>
 <p><strong>/config/config.yml</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
 <span style="color:#75715e"># Container descriptor</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span>
   <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;beacons&#34;</span>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../golang/getting_started/your_first_microservice/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../golang/getting_started/your_first_microservice/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -235046,7 +235046,7 @@
 </ul>
 <h3 id="step-1-project-setup">Step 1. Project setup</h3>
 <p>Create a folder for the project and run the following command in the command line:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go mod init quickstart
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go mod init quickstart
 </code></pre></div><p>Update the generated /go.mod file to add there dependencies to Pip.Services toolkit.</p>
 <p><strong>/go.mod</strong></p>
 <pre><code>module quickstart
@@ -235058,27 +235058,27 @@ require (
 	github.com/pip-services3-go/pip-services3-rpc-go v1.0.0
 )
 </code></pre><p>In the command line execute the following command to install the dependencies:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go get -u
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go get -u
 </code></pre></div><h3 id="step-2-controller">Step 2. Controller</h3>
 <p>The controller will be a simple class that implements a single business method, which receives a name and generates a greeting. In general, business methods can call other built-in services or work with a database.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldController</span><span style="color:#111">)</span> <span style="color:#75af00">Greeting</span><span style="color:#111">(</span><span style="color:#75af00">name</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">result</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldController</span><span style="color:#111">)</span> <span style="color:#75af00">Greeting</span><span style="color:#111">(</span><span style="color:#75af00">name</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">result</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">if</span> <span style="color:#75af00">name</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#34;&#34;</span> <span style="color:#111">{</span> 
         <span style="color:#75af00">name</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">defaultName</span>
     <span style="color:#111">}</span>
     <span style="color:#00a8c8">return</span> <span style="color:#d88200">&#34;Hello, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">name</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;!&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>To demonstrate the dynamic configuration of a component, the recipient name will be specified by the parameter “default_name”. To get the configuration, the component must implement the interface “IConfigurable” with the method “configure”.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldController</span><span style="color:#111">)</span> <span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span> <span style="color:#f92672">*</span><span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">ConfigParams</span><span style="color:#111">)</span> <span style="color:#111">{</span>	
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldController</span><span style="color:#111">)</span> <span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span> <span style="color:#f92672">*</span><span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">ConfigParams</span><span style="color:#111">)</span> <span style="color:#111">{</span>	
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">defaultName</span> <span style="color:#111">=</span> <span style="color:#75af00">config</span><span style="color:#111">.</span><span style="color:#75af00">GetAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;default_name&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">defaultName</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>Parameters will be read by the microservice from the configuration file and passed to the “configure” method of the corresponding component. Here’s an example of the configuration:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e"># Controller</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e"># Controller</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span>
   <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span>
 </code></pre></div><p>More details on this mechanism can be found in <a href="../../recipes/configuration">The Configuration recipe</a>.</p>
 <p>This is all the code of the controller in the file:</p>
 <p><strong>/HelloWorldController.go</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">(</span> 
     <span style="color:#75af00">cconf</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/config&#34;</span>
@@ -235106,12 +235106,12 @@ require (
 
 </code></pre></div><h3 id="step-3-rest-service">Step 3. REST service</h3>
 <p>One of the most popular ways of transferring data between microservices is using the synchronous HTTP REST protocol. The HelloWorldRestService will be used to implement an external REST interface. This component extends the abstract RestService of the Pip.Services toolkit, which implements all the necessary functionality for processing REST HTTP requests.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">HelloWorldRestService</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">HelloWorldRestService</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
     <span style="color:#f92672">*</span><span style="color:#75af00">rpc</span><span style="color:#111">.</span><span style="color:#75af00">RestService</span>
     <span style="color:#75af00">controller</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldController</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>Next, we’ll need to register the REST operations that we’ll be using in the class’s Register method. In this microservice, we’ll only be needing to implement a single GET command: “/greeting”. This command receives a “name” parameter, calls the controller’s “greeting” method, and returns the generated result to the client.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldRestService</span><span style="color:#111">)</span> <span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#75af00">res</span> <span style="color:#75af00">http</span><span style="color:#111">.</span><span style="color:#75af00">ResponseWriter</span><span style="color:#111">,</span> <span style="color:#75af00">req</span> <span style="color:#f92672">*</span><span style="color:#75af00">http</span><span style="color:#111">.</span><span style="color:#75af00">Request</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldRestService</span><span style="color:#111">)</span> <span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#75af00">res</span> <span style="color:#75af00">http</span><span style="color:#111">.</span><span style="color:#75af00">ResponseWriter</span><span style="color:#111">,</span> <span style="color:#75af00">req</span> <span style="color:#f92672">*</span><span style="color:#75af00">http</span><span style="color:#111">.</span><span style="color:#75af00">Request</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#75af00">name</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">URL</span><span style="color:#111">.</span><span style="color:#75af00">Query</span><span style="color:#111">().</span><span style="color:#75af00">Get</span><span style="color:#111">(</span><span style="color:#d88200">&#34;name&#34;</span><span style="color:#111">)</span>
     <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">Greeting</span><span style="color:#111">(</span><span style="color:#75af00">name</span><span style="color:#111">)</span>
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">SendResult</span><span style="color:#111">(</span><span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
@@ -235121,7 +235121,7 @@ require (
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">RegisterRoute</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;/greeting&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">greeting</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>To get a reference to the controller, add its handle to the DependencyResolver under the name “controller”. And for the registration mechanism to work correctly, you must pass a pointer to RestService on the component that implements the IRegistrable interface. Let&rsquo;s do it in the component constructing method:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">NewHelloWorldRestService</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldRestService</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">NewHelloWorldRestService</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldRestService</span> <span style="color:#111">{</span>
     <span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">HelloWorldRestService</span><span style="color:#111">{}</span>
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">RestService</span> <span style="color:#111">=</span> <span style="color:#75af00">rpc</span><span style="color:#111">.</span><span style="color:#75af00">NewRestService</span><span style="color:#111">()</span>
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">RestService</span><span style="color:#111">.</span><span style="color:#75af00">IRegisterable</span> <span style="color:#111">=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">c</span>
@@ -235135,7 +235135,7 @@ require (
 <p><code>GET /hello_world/greeting?name=John</code></p>
 <p>Full listing for the REST service found in the file:</p>
 <p><strong>/HelloWorldRestService.go</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">(</span>
     <span style="color:#d88200">&#34;net/http&#34;</span>
@@ -235176,11 +235176,11 @@ require (
 <span style="color:#111">}</span>
 </code></pre></div><h3 id="step-4-component-factory">Step 4. Component factory</h3>
 <p>When a microservice is being populated by components based on the configuration being used, it requires a special factory to create components in accordance with their descriptors. To do this, use the HelloWorldServiceFactory structure into which the Factory from the Pip.Services toolkit will be embedded.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
     <span style="color:#75af00">cbuild</span><span style="color:#111">.</span><span style="color:#75af00">Factory</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>Next, in the factory’s constructor, we’ll be registering descriptors and their corresponding component types.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">NewHelloWorldServiceFactory</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">NewHelloWorldServiceFactory</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#111">{</span>
     <span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">HelloWorldServiceFactory</span><span style="color:#111">{}</span>
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">Factory</span> <span style="color:#111">=</span> <span style="color:#f92672">*</span><span style="color:#75af00">cbuild</span><span style="color:#111">.</span><span style="color:#75af00">NewFactory</span><span style="color:#111">()</span>
     <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">RegisterType</span><span style="color:#111">(</span>
@@ -235196,7 +235196,7 @@ require (
 </code></pre></div><p>For more info on how this works, be sure to check out <a href="../../recipes/container">The Container recipe</a>.</p>
 <p>Full listing of the factory’s code found in the file:</p>
 <p><strong>‍/HelloWorldServiceFactory.go</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">(</span>
     <span style="color:#75af00">cref</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/refer&#34;</span>
@@ -235224,7 +235224,7 @@ require (
 <p>Although containers can be populated by components manually, we’ll be using dynamic configuration to do this. By default, ProcessContainer reads the configuration from an external config.yml file. All we have left to do is register the factory for creating components from their descriptors.</p>
 <p>Full listing of the container’s code found in the file:</p>
 <p><strong>‍/HelloWorldProcess.go</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">(</span>
     <span style="color:#75af00">cproc</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-container-go/container&#34;</span>
@@ -235245,7 +235245,7 @@ require (
 <span style="color:#111">}</span>
 </code></pre></div><p>The dynamic configuration is defined in the file:</p>
 <p><strong>‍/config.yml</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
 <span style="color:#75715e"># Container context</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
   <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
@@ -235291,7 +235291,7 @@ require (
 <h3 id="step-6-run-and-test-the-microservice">Step 6. Run and test the microservice</h3>
 <p>In Golang, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line. Let&rsquo;s place it separately from the rest in the folder bin.</p>
 <p><strong>/bin/run.go</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">(</span>
     <span style="color:#d88200">&#34;os&#34;</span>
@@ -235331,7 +235331,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 <li>The container is stopped.</li>
 </ol>
 <p>To start the microservice, run the following command from a terminal:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go run ./bin/run.go
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go run ./bin/run.go
 </code></pre></div><p>If the microservice started up successfully, you should see the following result in the terminal:</p>
 <pre><code>[echo:INFO:2018-09-25T15:15:30.284Z] Press Control-C to stop the microservice...
 [echo:DEBUG:2018-09-25T15:15:30.542Z] Opened REST service at http://0.0.0.0:8080

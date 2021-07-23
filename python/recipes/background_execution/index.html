@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../python/recipes/background_execution/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../python/recipes/background_execution/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -231784,7 +231784,7 @@ This article explains how to tackle those three approaches through the use of a 
 <p>Let’s now take a look at how we can approach this task using the strategies mentioned above.</p>
 <h3 id="1-using-a-timer-and-distributed-lock">1. Using a timer and distributed lock.</h3>
 <p>When creating the controller, we can add in a timer and structure the processing of requests in the following manner:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">__timer</span> <span style="color:#f92672">=</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">()</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">__timer</span> <span style="color:#f92672">=</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">()</span>
 
 <span style="color:#f92672">...</span>
 
@@ -231796,7 +231796,7 @@ This article explains how to tackle those three approaches through the use of a 
     <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__logger</span><span style="color:#f92672">.</span><span style="color:#111">trace</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller opened&#34;</span><span style="color:#111">)</span>
 
 </code></pre></div><p>As long as the execution time of the task does not exceed the timer’s interval, this implementation will work as expected. However, if there’s a large amount of files to process and the task takes too long, the timer will create another thread for running the task. This would result in an error, as we’d end up processing the data more than once. To prevent this from happening, the controller should expose distributed locks (e.g. <strong>CloudStorageTableLock</strong> from pip-services-azure) while it’s executing the task:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">perform_analysis</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">):</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">def</span> <span style="color:#75af00">perform_analysis</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">):</span>
 
     <span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">ImageBatchProcessor</span><span style="color:#f92672">.</span><span style="color:#111">__name__</span>
     <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">Lock</span><span style="color:#f92672">.</span><span style="color:#111">try_acquire_lock</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">key</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span><span style="color:#f92672">.</span><span style="color:#111">get_as_integer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;interval&#34;</span><span style="color:#111">)):</span>
@@ -231807,7 +231807,7 @@ This article explains how to tackle those three approaches through the use of a 
 
 </code></pre></div><h3 id="2-using-message-queues">2. Using message queues</h3>
 <p>In this case, task execution is triggered by a message/signal that is received from a message queue (preferably with guaranteed delivery). A simple listener can be used to watch the queue and initiate the task. Once the listener receives a message, it starts the task, but leaves the message/signal in the queue as a lock for the duration of the processing event. Once the task has been processed, the message/signal is deleted from the queue. This method guarantees that the task will be executed once and only once.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
 <span style="color:#00a8c8">def</span> <span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">):</span>
    <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_message_queue</span><span style="color:#f92672">.</span><span style="color:#111">begin_listen</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">perform_analysis</span><span style="color:#111">)</span>
 
@@ -231823,7 +231823,7 @@ This article explains how to tackle those three approaches through the use of a 
 <li>the Jobs service’s client, and</li>
 <li>a type for the job/task being executed.</li>
 </ol>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Step 1 – Create a timer, the Jobs service’s client,  and a type for the job/task being executed</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Step 1 – Create a timer, the Jobs service’s client,  and a type for the job/task being executed</span>
 <span style="color:#111">__timer</span> <span style="color:#f92672">=</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">()</span>
 <span style="color:#111">__jobs_client</span><span style="color:#111">:</span> <span style="color:#111">IJobsClientV1</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">None</span>
 <span style="color:#111">__job_type</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;AnalysisOfNewFiles&#34;</span>
@@ -231838,7 +231838,7 @@ This article explains how to tackle those three approaches through the use of a 
 
 </code></pre></div><p>Now, in the task’s method, we need to add some code that checks whether or not a job of this type is already running or not. If it is, then no processing is required. If it isn’t, then a job is created, started, and eventually completed, once all processing has been performed.</p>
 <p>TODO: complete it for Python</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#111">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#111">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
 <span style="color:#111">{</span>
 <span style="color:#f92672">//</span> <span style="color:#111">Step</span> <span style="color:#ae81ff">1</span><span style="color:#111">:</span> <span style="color:#111">check</span> <span style="color:#111">whether</span> <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> <span style="color:#111">a</span> <span style="color:#111">job</span> <span style="color:#111">of</span> <span style="color:#111">this</span> <span style="color:#111">type</span> <span style="color:#f92672">is</span> <span style="color:#111">already</span> <span style="color:#111">running</span> <span style="color:#f92672">or</span> <span style="color:#f92672">not</span>
    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#00a8c8">await</span> <span style="color:#111">JobsClient</span><span style="color:#f92672">.</span><span style="color:#111">IsJobExecutingAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">JobType</span><span style="color:#111">))</span>

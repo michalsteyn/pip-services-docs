@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../dart/tutorials/data_microservice/step2/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../dart/tutorials/data_microservice/step2/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -231320,7 +231320,7 @@ Now, in the version1 folder, create a BeaconV1 class that implements IStringIden
 	<p>We’ll start the development of our microservice with defining and implementing the data model that it is going to be working with. We’ll start by adding some folders to our project’s directory structure. In the <strong>src</strong> folder, create a <strong>data</strong> folder and, inside it, a <strong>version1</strong> folder. This is done to allow us to create new versions of the data model later on, without breaking the old one.</p>
 <p>Now, in the version1 folder, create a <strong>BeaconV1</strong> class that implements <code>IStringIdentifiable</code>. By implementing the <code>IStringIdentifiable</code> interface, we can be sure that all objects of that given class have a string key by which they can be identified. Below is a listing of this class’s code:</p>
 <p><strong>/src/data/version1/BeaconV1.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconV1</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IStringIdentifiable</span> <span style="color:#111">{</span>
   <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
@@ -231378,7 +231378,7 @@ Now, in the version1 folder, create a BeaconV1 class that implements IStringIden
 
 </code></pre></div><p>All fields are of simple data types, and their names give us a good idea of their purpose. The only exception to this is the center field, in which we are going to be storing data of type GeoJSON. The beacon’s type will be represented by a string, but we’re going to have a separate class be responsible for managing the available types, using static fields. This class is going to be called <strong>BeaconTypeV1</strong>, and it’s going to simply contain a list of beacon types:</p>
 <p><strong>/src/data/version1/BeaconTypeV1.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconTypeV1</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconTypeV1</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">unknown</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;unknown&#39;</span><span style="color:#111">;</span>
   <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">altBeacon</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;altbeacon&#39;</span><span style="color:#111">;</span>
   <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">final</span> <span style="color:#111">iBeacon</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;ibeacon&#39;</span><span style="color:#111">;</span>
@@ -231388,7 +231388,7 @@ Now, in the version1 folder, create a BeaconV1 class that implements IStringIden
 
 </code></pre></div><p>For checking the validity of the data we are going to be receiving, let’s create a data validation schema in a class called <strong>BeaconV1Schema</strong>:</p>
 <p><strong>/src/data/version1/BeaconV1Schema.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconV1Schema</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">ObjectSchema</span> <span style="color:#111">{</span>
   <span style="color:#111">BeaconV1Schema</span><span style="color:#111">()</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">super</span><span style="color:#111">()</span> <span style="color:#111">{</span>

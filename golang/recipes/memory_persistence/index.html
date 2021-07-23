@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../golang/recipes/memory_persistence/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../golang/recipes/memory_persistence/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -235054,10 +235054,10 @@
 <h3 id="the-memorypersistence-class">The MemoryPersistence class</h3>
 <p>The most basic implementation is the <a href="../../data/persistence/memory_persistence/">MemoryPersistence</a> class defined in the <a href="../../data">Data module</a>. It is only capable of storing a collection of objects, opening, and closing. It does not provide any data access methods.</p>
 <p>The implementation we will be working with is called <a href="../../data/persistence/identifiable_memory_persistence/">IdentifiableMemoryPersistence</a>. It stores and processes data objects that have a unique ID field and implement the <a href="../../commons/data/iidentifiable/">IIdentifiable</a> interface defined in the <a href="../../commons">Commons module</a>.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">TODO</span><span style="color:#111">:</span> <span style="color:#75af00">need</span> <span style="color:#75af00">add</span> <span style="color:#75af00">IIdentifiable</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">TODO</span><span style="color:#111">:</span> <span style="color:#75af00">need</span> <span style="color:#75af00">add</span> <span style="color:#75af00">IIdentifiable</span>
 
 </code></pre></div><p>The <strong>IdentifiableMemoryPersistence</strong> implements a number of CRUD methods:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">IdentifiableMemoryPersistence</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">type</span> <span style="color:#75af00">IdentifiableMemoryPersistence</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
 	<span style="color:#75af00">MemoryPersistence</span>
 <span style="color:#111">}</span>
 
@@ -235087,13 +235087,13 @@
 </code></pre></div><p>In most scenarios, child classes only need to override the <strong>GetPageByFilter()</strong>, <strong>GetListByFilter()</strong>, or <strong>DeleteByFilter()</strong> operations using a custom filter function. All other operations can be used right out of the box. Developers can implement custom methods by accessing stored data objects via the <strong>this._items</strong> property and complete transactions by calling the <strong>Save()</strong> method. See the <a href="../../data">Data module’s API</a> documentation for more details.</p>
 <h3 id="filtering">Filtering</h3>
 <p>Persistent components in the Pip.Services Toolkit use a number of data patterns. <strong>IdentifiedMemoryPersistence</strong>, for example, supports Filtering. This pattern allows clients to use a <a href="../../commons/data/filter_params/">FilterParams</a> object to describe a subset of data as key-value pairs. These FilterParams can then be used for retrieving data in accordance with certain search criteria (see the <a href="../../commons">Commons module</a>).</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
 <span style="color:#75af00">filter</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">NewFilterParamsfromTuples</span><span style="color:#111">(</span>
     <span style="color:#d88200">&#34;name&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;ABC&#34;</span>
 <span style="color:#111">)</span>
 <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">GetPageFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span><span style="color:#111">);</span>
 </code></pre></div><p>In the persistence component, the developer is responsible for parsing the <strong>FilterParams</strong> and passing a filter function to the persistent methods of the base class.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">:</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#00a8c8">interface</span><span style="color:#111">{})</span> <span style="color:#00a8c8">bool</span> <span style="color:#111">)</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">:</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#00a8c8">interface</span><span style="color:#111">{})</span> <span style="color:#00a8c8">bool</span> <span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">if</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">filter</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
 		<span style="color:#75af00">filter</span> <span style="color:#111">=</span> <span style="color:#75af00">NewFilterParams</span><span style="color:#111">()</span>
 	<span style="color:#111">}</span>
@@ -235118,13 +235118,13 @@
 
 </code></pre></div><h3 id="paging">Paging</h3>
 <p>Another common data pattern is Paging. It is used to retrieve large datasets in chunks through multiple calls to the storage. To do this, a client specifies a set of <a href="../../commons/data/paging_params/">PagingParams</a>, which include the starting position and the number of objects to return. Clients can also request the total number of items in the dataset using <strong>PagingParams</strong>, but this parameter is optional. The service returns a subset of the data as a <a href="../../commons/data/data_page/">DataPage</a> object.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//skip = 25, take = 50, total = false
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//skip = 25, take = 50, total = false
 </span><span style="color:#75715e"></span><span style="color:#75af00">paging</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">NewPagingParams</span><span style="color:#111">(</span><span style="color:#ae81ff">25</span><span style="color:#111">,</span> <span style="color:#ae81ff">50</span><span style="color:#111">,</span> <span style="color:#00a8c8">false</span><span style="color:#111">);</span>
 <span style="color:#75af00">page</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">GetPageByFilter</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">NewFilterParamsFromTuples</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Name&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">),</span> <span style="color:#00a8c8">nil</span><span style="color:#111">)</span>
 </code></pre></div><h3 id="custom-persistence-methods">Custom Persistence Methods</h3>
 <p>As mentioned above, developers can also implement custom persistent methods. Inside those methods, they can access data objects via the <strong>Items</strong> property. When stored data is modified, developers must finish the transaction by calling the base class’s <strong>Save()</strong> method.
 Below is an example of a custom persistent method.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
 <span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">MyMemoryPersistence</span><span style="color:#111">)</span> <span style="color:#75af00">GetOneByName</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">name</span> <span style="color:#00a8c8">interface</span><span style="color:#111">{})</span> <span style="color:#111">(</span><span style="color:#75af00">result</span> <span style="color:#00a8c8">interface</span><span style="color:#111">{},</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     
     <span style="color:#00a8c8">var</span> <span style="color:#75af00">item</span> <span style="color:#f92672">*</span><span style="color:#00a8c8">interface</span><span style="color:#111">{}</span>
@@ -235146,7 +235146,7 @@ Below is an example of a custom persistent method.</p>
 	<span style="color:#00a8c8">return</span> <span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>When we put everything together, we get the following component:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
 <span style="color:#00a8c8">type</span> <span style="color:#75af00">MyMemoryPersistence</span> <span style="color:#00a8c8">struct</span><span style="color:#111">{</span>
   	<span style="color:#75af00">MemoryPersistence</span>
 <span style="color:#111">}</span>
@@ -235185,7 +235185,7 @@ Below is an example of a custom persistent method.</p>
     <span style="color:#00a8c8">return</span> <span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
 <span style="color:#111">});</span>
 </code></pre></div><p>A demonstration of how we can use our custom memory persistence is presented below:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">UseMemoryPersistence</span><span style="color:#111">():</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#00a8c8">func</span> <span style="color:#75af00">UseMemoryPersistence</span><span style="color:#111">():</span>
 
     <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#75af00">Create</span> <span style="color:#75af00">items</span>
     <span style="color:#75af00">persistence</span> <span style="color:#111">=</span> <span style="color:#75af00">NewMyMemoryPersistence</span><span style="color:#111">();</span>
@@ -235200,7 +235200,7 @@ Below is an example of a custom persistent method.</p>
 
 </code></pre></div><h3 id="filememorypersistence">FileMemoryPersistence</h3>
 <p>The memory persistence component actually has one more trick up its sleeve: it can easily be extended to create a <strong>FileMemoryPersistence</strong>. The only thing you’ll need to add is the assignment of a <strong>PersisterObject</strong> in the <strong>FileMemoryPersistence</strong>’s constructor. The File persistence can be used for certain system test scenarios.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
 <span style="color:#00a8c8">type</span> <span style="color:#75af00">MyJsonFilePersistence</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
     <span style="color:#75af00">FilePersistence</span>
 <span style="color:#111">}</span>

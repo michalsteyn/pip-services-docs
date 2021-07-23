@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../node/sqlserver/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../node/sqlserver/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -228026,9 +228026,9 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
 </ul>
 <h3 id="use">Use</h3>
 <p>Install the NPM package as</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install pip-services3-sqlserver-nodex --save
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install pip-services3-sqlserver-nodex --save
 </code></pre></div><p>As an example, lets create persistence for the following data object.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IIdentifiable</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IIdentifiable</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyObject</span> <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IIdentifiable</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">id</span>: <span style="color:#00a8c8">string</span><span style="color:#111">;</span>
@@ -228036,7 +228036,7 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">value</span>: <span style="color:#00a8c8">number</span><span style="color:#111">;</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>The persistence component shall implement the following interface with a basic set of CRUD operations.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IMyPersistence</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IMyPersistence</span> <span style="color:#111">{</span>
   <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">,</span>
     <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">page</span>: <span style="color:#00a8c8">DataPage</span><span style="color:#111">&lt;</span><span style="color:#f92672">MyObject</span><span style="color:#111">&gt;)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
     
@@ -228053,7 +228053,7 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
 </code></pre></div><p>To implement sql server persistence component you shall inherit <code>IdentifiableSqlServerPersistence</code>.
 Most CRUD operations will come from the base class. You only need to override <code>getPageByFilter</code> method with a custom filter function.
 And implement a <code>getOneByKey</code> custom persistence method that doesn&rsquo;t exist in the base class.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableSqlServerPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-sqlserver-nodex&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableSqlServerPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-sqlserver-nodex&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MySqlServerPersistence</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">IdentifableSqlServerPersistence</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -228115,7 +228115,7 @@ And implement a <code>getOneByKey</code> custom persistence method that doesn&rs
 </code></pre></div><p>Alternatively you can store data in non-relational format using <code>IdentificableJsonSqlServerPersistence</code>.
 It stores data in tables with two columns - <code>id</code> with unique object id and <code>data</code> with object data serialized as JSON.
 To access data fields you shall use <code>JSON_VALUE([data],'$.field')</code> expression.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableJsonSqlServerPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-sqlserver-nodex&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableJsonSqlServerPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-sqlserver-nodex&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">MySqlServerPersistence</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">IdentifableJsonSqlServerPersistence</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
@@ -228176,7 +228176,7 @@ To access data fields you shall use <code>JSON_VALUE([data],'$.field')</code> ex
 
 <span style="color:#111">}</span>
 </code></pre></div><p>Configuration for your microservice that includes sqlserver persistence may look the following way.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#111">...</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#111">...</span>
 {{<span style="color:#75715e">#if SQLSERVER_ENABLED}}</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#ae81ff">pip-services:connection:sqlserver:con1:1.0</span>
   <span style="color:#f92672">table</span><span style="color:#111">:</span> {{<span style="color:#ae81ff">SQLSERVER_TABLE}}{{#unless SQLSERVER_TABLE}}myobjects{{/unless}}</span>

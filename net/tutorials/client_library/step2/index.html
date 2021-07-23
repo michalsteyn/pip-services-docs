@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/client_library/step2/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/client_library/step2/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -80792,7 +80792,7 @@
           style="padding-left:10px;">
           
           <div class="col  "> 
-            Test!
+            Test
           </div>
           
         </div>
@@ -235834,7 +235834,7 @@
 <p>Direct clients are key to creating microservice-based monoliths. A direct client uses direct calls to the microservice’s controller from the shared address space, bypassing external interfaces in the process. On this step, we are going to create such a client. We’ll be placing our code in the <strong>src/version1</strong> folder.</p>
 <p>First off, let&rsquo;s define an interface for our clients to implement. This interface should contain a list of all the methods that are provided by our microservice’s API. As a result, we get the following code:</p>
 <p><strong>/src/version1/IBeaconClientV1.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IBeaconsClientV1</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IBeaconsClientV1</span>
 <span style="color:#111">{</span>
     <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#111">DataPage</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;&gt;</span> <span style="color:#111">GetBeaconsAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
     <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">GetBeaconByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">id</span><span style="color:#111">);</span>
@@ -235849,7 +235849,7 @@
 </code></pre></div><p>Let’s start writing our direct client. This will be a class that implements the interface we defined above, that has our controller set as a dependency in the controller, and that will call the controller’s methods when asked to. To learn more about the referencing and linking mechanisms, be sure to read <a href="../../recipes/component_references/">The Referenceable Recipes</a>. Ultimately, this will just be a wrapper class for the container.
 The direct client’s code is listed below:</p>
 <p><strong>src/version1/BeaconsDirectClientV1.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsDirectClientV1</span> <span style="color:#111">:</span> <span style="color:#111">DirectClient</span><span style="color:#111">&lt;</span><span style="color:#111">IBeaconsController</span><span style="color:#111">&gt;,</span> <span style="color:#111">IBeaconsClientV1</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsDirectClientV1</span> <span style="color:#111">:</span> <span style="color:#111">DirectClient</span><span style="color:#111">&lt;</span><span style="color:#111">IBeaconsController</span><span style="color:#111">&gt;,</span> <span style="color:#111">IBeaconsClientV1</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsDirectClientV1</span><span style="color:#111">()</span> <span style="color:#111">:</span> <span style="color:#00a8c8">base</span><span style="color:#111">()</span>
     <span style="color:#111">{</span>

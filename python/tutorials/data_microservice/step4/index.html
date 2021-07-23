@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../python/tutorials/data_microservice/step4/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../python/tutorials/data_microservice/step4/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -231816,7 +231816,7 @@
 	       
 	<p>Now that we know a bit about how we are going to be storing data and how microservice configuration works, it’s time to add some logic to our service. Our microservice needs to be able to calculate a device’s position based on the beacons it “sees”, as well as initiate CRUD operations for the data it handles. Let’s create a <strong>logic</strong> folder under the <strong>src</strong> directory and start by defining an interface:</p>
 <p><strong>/src/logic/IBeaconsController.py</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">Any</span><span style="color:#111">,</span> <span style="color:#111">List</span><span style="color:#111">,</span> <span style="color:#111">Optional</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">Any</span><span style="color:#111">,</span> <span style="color:#111">List</span><span style="color:#111">,</span> <span style="color:#111">Optional</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.data</span> <span style="color:#f92672">import</span> <span style="color:#111">PagingParams</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span><span style="color:#111">,</span> <span style="color:#111">DataPage</span>
 
@@ -231848,7 +231848,7 @@
 
 </code></pre></div><p>Once our interface is ready, we can move on to implementing the actual controller. Its code is also going to be quite simple, as all we need to write is one method for calculating a device’s position, and the other methods will just be wrappers for the methods we wrote in our persistence components.</p>
 <p><strong>/src/logic/BeaconsController.py</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">List</span><span style="color:#111">,</span> <span style="color:#111">Any</span><span style="color:#111">,</span> <span style="color:#111">Optional</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">List</span><span style="color:#111">,</span> <span style="color:#111">Any</span><span style="color:#111">,</span> <span style="color:#111">Optional</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.commands</span> <span style="color:#f92672">import</span> <span style="color:#111">ICommandable</span><span style="color:#111">,</span> <span style="color:#111">CommandSet</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.config</span> <span style="color:#f92672">import</span> <span style="color:#111">IConfigurable</span><span style="color:#111">,</span> <span style="color:#111">ConfigParams</span>
@@ -231928,7 +231928,7 @@
 <p>The first one sets a dependency upon a persistence using the descriptor <strong>beacons:persistence:<em>:</em>:1.0.</strong> This descriptor reads: we don’t necessarily care which persistence we are given, as long as it implements the IBeaconsPersistence interface via the Referenceable pattern. This way, our controller can be used with the memory persistence, the mongoDB one, or any other one that meets this requirement.</p>
 <p>The second method is used to get a set of commands, with which we can control this controller using the Commandable pattern. In our case, it will be used by the commandable HTTP service. If you’re not yet familiar with the Commandable pattern, make sure to find some time and read about it <a href="../../../commons/commands/icommandable">here</a>. To complete this pattern, lets implement a class called <code>BeaconsCommandSet</code>:</p>
 <p><strong>/src/logic/BeaconsCommandSet.py</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.commands</span> <span style="color:#f92672">import</span> <span style="color:#111">CommandSet</span><span style="color:#111">,</span> <span style="color:#111">Command</span><span style="color:#111">,</span> <span style="color:#111">ICommand</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.commands</span> <span style="color:#f92672">import</span> <span style="color:#111">CommandSet</span><span style="color:#111">,</span> <span style="color:#111">Command</span><span style="color:#111">,</span> <span style="color:#111">ICommand</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.convert</span> <span style="color:#f92672">import</span> <span style="color:#111">TypeCode</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.data</span> <span style="color:#f92672">import</span> <span style="color:#111">FilterParams</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.validate</span> <span style="color:#f92672">import</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">,</span> <span style="color:#111">FilterParamsSchema</span><span style="color:#111">,</span> <span style="color:#111">PagingParamsSchema</span><span style="color:#111">,</span> <span style="color:#111">ArraySchema</span>
@@ -232014,7 +232014,7 @@
 </ul>
 <p>To be sure that our new methods are working correctly, let’s add some tests for the controller. The code for testing the controller is listed below:</p>
 <p><strong>/test/logic/test_BeaconsController.py</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.data</span> <span style="color:#f92672">import</span> <span style="color:#111">FilterParams</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.data</span> <span style="color:#f92672">import</span> <span style="color:#111">FilterParams</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.refer</span> <span style="color:#f92672">import</span> <span style="color:#111">References</span><span style="color:#111">,</span> <span style="color:#111">Descriptor</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">src.data.version1</span> <span style="color:#f92672">import</span> <span style="color:#111">BeaconV1</span><span style="color:#111">,</span> <span style="color:#111">BeaconTypeV1</span>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/data_microservice/step4/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/data_microservice/step4/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -80796,7 +80796,7 @@
           style="padding-left:10px;">
           
           <div class="col  "> 
-            Test!
+            Test
           </div>
           
         </div>
@@ -235836,7 +235836,7 @@
 	       
 	<p>Now that we know a bit about how we are going to be storing data and how microservice configuration works, it’s time to add some logic to our service. Our microservice needs to be able to calculate a device’s position based on the beacons it “sees”, as well as initiate CRUD operations for the data it handles. Let’s create a <strong>logic</strong> folder under the <strong>src/interface</strong> directory and start by defining an interface:</p>
 <p><strong>/src/interface/logic/IBeaconsController.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IBeaconsController</span>
     <span style="color:#111">{</span>
@@ -235851,7 +235851,7 @@
 <span style="color:#111">}</span>
 </code></pre></div><p>Once our interface is ready, we can move on to implementing the actual controller. Its code is also going to be quite simple, as all we need to write is one method for calculating a device’s position, and the other methods will just be wrappers for the methods we wrote in our persistence components.</p>
 <p><strong>/src/interface/logic/BeaconsController.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsController</span> <span style="color:#111">:</span> <span style="color:#111">IBeaconsController</span><span style="color:#111">,</span> <span style="color:#111">IConfigurable</span><span style="color:#111">,</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">ICommandable</span>
     <span style="color:#111">{</span>
@@ -235961,7 +235961,7 @@
 <p>The first one sets a dependency upon a persistence using the descriptor <strong>beacons:persistence:<em>:</em>:1.0.</strong> This descriptor reads: we don’t necessarily care which persistence we are given, as long as it implements the IBeaconsPersistence interface via the Referenceable pattern. This way, our controller can be used with the memory persistence, the mongoDB one, or any other one that meets this requirement.</p>
 <p>The second method is used to get a set of commands, with which we can control this controller using the Commandable pattern. In our case, it will be used by the commandable HTTP service. If you’re not yet familiar with the Commandable pattern, make sure to find some time and read about it <a href="../../../commons/commands/icommandable">here</a>. To complete this pattern, lets implement a class called <code>BeaconsCommandSet</code>:</p>
 <p><strong>/src/interfaces/logic/BeaconsCommandSet.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsCommandSet</span> <span style="color:#111">:</span> <span style="color:#111">CommandSet</span>
     <span style="color:#111">{</span>
@@ -236096,7 +236096,7 @@
 </ul>
 <p>To be sure that our new methods are working correctly, let’s add some tests for the controller. The code for testing the controller is listed below:</p>
 <p><strong>/test/service.test/logic/BeaconsControllerTest.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsControllerTest</span><span style="color:#111">:</span> <span style="color:#111">IDisposable</span>
     <span style="color:#111">{</span>

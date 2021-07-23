@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/client_library/step4/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/client_library/step4/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -80795,7 +80795,7 @@ In our projects, we’ve come to the conclusion that it pays off to develop mock
           style="padding-left:10px;">
           
           <div class="col  "> 
-            Test!
+            Test
           </div>
           
         </div>
@@ -235839,7 +235839,7 @@ In our projects, we’ve come to the conclusion that it pays off to develop mock
 <p>The test client has to implement the same interface that the other clients did. However, the client’s methods are going to contain code that only imitates the microservice’s behavior.</p>
 <p>The code for this client is showed below:</p>
 <p><strong>/src/version1/BeaconsMockClientV1.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMockClientV1</span> <span style="color:#111">:</span> <span style="color:#111">IBeaconsClientV1</span>
     <span style="color:#111">{</span>
         <span style="color:#00a8c8">protected</span> <span style="color:#00a8c8">int</span> <span style="color:#111">maxPageSize</span> <span style="color:#111">=</span> <span style="color:#ae81ff">100</span><span style="color:#111">;</span>
@@ -235982,7 +235982,7 @@ In our projects, we’ve come to the conclusion that it pays off to develop mock
     
 </code></pre></div><p>Now let’s test the client we’ve created. We’ll be using the set of tests that we developed in one of the previous steps, and adding just one test file that will bring it all together. The source of this file is presented below:</p>
 <p><strong>/test/version1/test_BeaconsMockClientV1.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75af00">    [Collection(&#34;Sequential&#34;)]</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75af00">    [Collection(&#34;Sequential&#34;)]</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMockClientV1Test</span>
     <span style="color:#111">{</span>
         <span style="color:#00a8c8">private</span> <span style="color:#111">BeaconsMockClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">client</span><span style="color:#111">;</span>
@@ -236011,7 +236011,7 @@ In our projects, we’ve come to the conclusion that it pays off to develop mock
 </code></pre></div><p>Create a file with the tests and run them. All the tests should pass, even though the server-side code wasn’t actually used anywhere.</p>
 <p>This technique becomes very useful when developing microservices that bring together multiple microservices by means of their clients (e.g. a facade microservice). It allows us to perform functional testing without having to run the entire infrastructure.</p>
 <p>To performing non-fuctional testing, we need to generate a large amount of realistic data. Users usually don’t know the entire data structure with all of its variations and exceptions. The next component we will be adding to our client library is a random data generator. This component can be used by the microservice’s users to create quality tests. The implementation is usually done in the form of static methods that either return an entire object, or just some part of its parameters. Let’s take a look at what an implementation of such a generator for the <strong>BeaconsV1</strong> data object would look like. The generator’s code is listed below:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RandomBeaconV1</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">RandomBeaconV1</span>
 <span style="color:#111">{</span>
 	<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">static</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">NextBeacon</span><span style="color:#111">(</span><span style="color:#00a8c8">int</span> <span style="color:#111">siteCount</span> <span style="color:#111">=</span> <span style="color:#ae81ff">100</span><span style="color:#111">)</span>
 	<span style="color:#111">{</span>

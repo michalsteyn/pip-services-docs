@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../node/recipes/logging/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../node/recipes/logging/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -236159,7 +236159,7 @@ The Pip.Services Toolkit contains logging components that can either output mess
 <h3 id="logging">Logging</h3>
 <h4 id="the-logger-interface">The logger interface</h4>
 <p>The <a href="../../components/log/ilogger/">ILogger</a> interface is defined in the Log package of the Components module. This interface contains methods that are common for most logger implementations.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">
 <span style="color:#00a8c8">interface</span> <span style="color:#75af00">ILogger</span> <span style="color:#111">{</span>
     <span style="color:#75af00">LogLevel</span> <span style="color:#75af00">Level</span> <span style="color:#111">{</span> <span style="color:#00a8c8">get</span><span style="color:#111">;</span> <span style="color:#00a8c8">set</span><span style="color:#111">;</span> <span style="color:#111">}</span>
     <span style="color:#00a8c8">void</span> <span style="color:#75af00">Log</span><span style="color:#111">(</span><span style="color:#75af00">LogLevel</span> <span style="color:#75af00">level</span><span style="color:#111">,</span> <span style="color:#111">String</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">Exception</span> <span style="color:#75af00">error</span><span style="color:#111">,</span> <span style="color:#111">String</span> <span style="color:#75af00">message</span><span style="color:#111">,</span> <span style="color:#75af00">params</span> <span style="color:#111">Object</span><span style="color:#111">[]</span> <span style="color:#75af00">args</span><span style="color:#111">);</span>
@@ -236172,7 +236172,7 @@ The Pip.Services Toolkit contains logging components that can either output mess
 <span style="color:#111">}</span>
 </code></pre></div><p>The log method writes messages to the log, using the provided log level. The other methods collect messages at various logging levels and can be used in your code to add transparency.
 The level property can be used to optimize code. Generating log messages can cost you resources. We can optimize the use of these resources by only generating messages for the log level that is currently set, as is shown in the example below:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">Level</span> <span style="color:#f92672">&gt;=</span> <span style="color:#75af00">LogLevel</span><span style="color:#111">.</span><span style="color:#75af00">Trace</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">Level</span> <span style="color:#f92672">&gt;=</span> <span style="color:#75af00">LogLevel</span><span style="color:#111">.</span><span style="color:#75af00">Trace</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#75af00">message</span> <span style="color:#f92672">=</span> <span style="color:#111">...</span>  <span style="color:#75715e">// Costly message preparation
 </span><span style="color:#75715e"></span>    <span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">Trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">message</span><span style="color:#111">);</span>
 <span style="color:#111">}</span>
@@ -236205,7 +236205,7 @@ The <strong>Level</strong> property can be used to optimize code. Generating log
 <h4 id="adding-a-logger">Adding a logger</h4>
 <p>Loggers are usually added to microservices dynamically using a yml configuration:
 <strong>‍config.yml</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#ae81ff">. . . </span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#ae81ff">. . . </span>
 <span style="color:#75715e"># Console logger</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span>
   <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span>
@@ -236225,7 +236225,7 @@ The <strong>Level</strong> property can be used to optimize code. Generating log
 <p>It’s not rare for multiple loggers to be used simultaneously. One logger can be used to output messages to the console, allowing developers to debug the microservice, while another logger collects messages from all running microservices in a distributed storage, allowing technical support to monitor the system.
 To simplify the collection of log messages in situations when the amount of loggers and/or their configurations are bound to change, the <a href="../../components/log/composite_logger/">CompositeLogger</a> from the <a href="../../components/">Components</a> module is used. The <strong>CompositeLogger</strong>’s task is to pass along any messages it receives to all of the other loggers included in the container. Logger linking is performed in the <strong>setReferences</strong> method (<a href="../component_references">see the References Recipe</a>).</p>
 <p>The <strong>CompositeLogger</strong> is used in the following way:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">private</span> <span style="color:#75af00">_logger</span>: <span style="color:#00a8c8">CompositeLogger</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">CompositeLogger</span><span style="color:#111">();</span>
 
     <span style="color:#00a8c8">public</span> <span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span>: <span style="color:#00a8c8">IReferences</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>

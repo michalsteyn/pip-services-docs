@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../python/data/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../python/data/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -223675,15 +223675,15 @@ The persistence components come in two kinds. The first kind is a basic persiste
 </ul>
 <h3 id="use">Use</h3>
 <p>Install the Python package as</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pip-services3-data
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install pip-services3-data
 </code></pre></div><p>As an example, lets implement persistence for the following data object:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Dummy</span><span style="color:#111">(</span><span style="color:#111">IStringIdentifiable</span><span style="color:#111">):</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Dummy</span><span style="color:#111">(</span><span style="color:#111">IStringIdentifiable</span><span style="color:#111">):</span>
     <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#f92672">=</span><span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">key</span><span style="color:#f92672">=</span><span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">content</span><span style="color:#f92672">=</span><span style="color:#00a8c8">None</span><span style="color:#111">):</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">id</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">key</span> <span style="color:#f92672">=</span> <span style="color:#111">key</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">content</span> <span style="color:#f92672">=</span> <span style="color:#111">content</span>
 </code></pre></div><p>Our persistence component shall implement the following interface with a basic set of CRUD operations:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">IMyPersistence</span><span style="color:#111">(</span><span style="color:#111">ABC</span><span style="color:#111">):</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">IMyPersistence</span><span style="color:#111">(</span><span style="color:#111">ABC</span><span style="color:#111">):</span>
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_page_by_filter</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">:</span> <span style="color:#111">Optional</span><span style="color:#111">[</span><span style="color:#111">str</span><span style="color:#111">],</span> <span style="color:#111">filter</span><span style="color:#111">:</span> <span style="color:#111">Any</span><span style="color:#111">,</span>
                            <span style="color:#111">paging</span><span style="color:#111">:</span> <span style="color:#111">Union</span><span style="color:#111">[</span><span style="color:#111">PagingParams</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">])</span> <span style="color:#f92672">-&gt;</span> <span style="color:#111">DataPage</span><span style="color:#111">:</span>
         <span style="color:#00a8c8">raise</span> <span style="color:#111">NotImplemented</span><span style="color:#111">()</span>
@@ -223706,7 +223706,7 @@ The persistence components come in two kinds. The first kind is a basic persiste
 </code></pre></div><p>To implement in-memory persistence component you shall inherit <code>IdentifiableMemoryPersistence</code>.
 Most CRUD operations will come from the base class. You only need to override <code>get_page_by_filter</code> method with a custom filter function.
 And then, implement a <code>get_one_by_key</code> custom persistence method that doesn&rsquo;t exist in the base class.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.data</span> <span style="color:#f92672">import</span> <span style="color:#111">FilterParams</span><span style="color:#111">,</span> <span style="color:#111">DataPage</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.data</span> <span style="color:#f92672">import</span> <span style="color:#111">FilterParams</span><span style="color:#111">,</span> <span style="color:#111">DataPage</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_data.persistence.IdentifiableMemoryPersistence</span> <span style="color:#f92672">import</span> <span style="color:#111">IdentifiableMemoryPersistence</span>
 
 
@@ -223743,7 +223743,7 @@ And then, implement a <code>get_one_by_key</code> custom persistence method that
             <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
                 <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_logger</span><span style="color:#f92672">.</span><span style="color:#111">trace</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find by key=</span><span style="color:#d88200">{}</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">key</span><span style="color:#111">)</span>
 </code></pre></div><p>It is easy to create file persistence by adding a persister object to the implemented in-memory persistence component.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.config</span> <span style="color:#f92672">import</span> <span style="color:#111">ConfigParams</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.config</span> <span style="color:#f92672">import</span> <span style="color:#111">ConfigParams</span>
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_data.persistence</span> <span style="color:#f92672">import</span> <span style="color:#111">JsonFilePersister</span>
 
 
@@ -223760,7 +223760,7 @@ And then, implement a <code>get_one_by_key</code> custom persistence method that
         <span style="color:#111">super</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
         <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_persister</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
 </code></pre></div><p>Furthermore, the configuration of your microservice that includes memory and file persistence may look the following way:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#111">...</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#111">...</span>
 {{<span style="color:#75715e">#if MEMORY_ENABLED}}</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;myservice:persistence:memory:default:1.0&#34;</span>
 {{<span style="color:#ae81ff">/if}}</span>

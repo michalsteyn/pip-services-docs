@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../net/recipes/component_lifecycle/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../net/recipes/component_lifecycle/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -80777,7 +80777,7 @@
           style="padding-left:10px;">
           
           <div class="col  "> 
-            Test!
+            Test
           </div>
           
         </div>
@@ -235807,7 +235807,7 @@ One of the roles of the microservice’s container is to correctly initialize al
 <li><a href="../../commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
 <li><a href="../../commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
 </ul>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
 <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IConfigurable</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">);</span>
@@ -235833,7 +235833,7 @@ One of the roles of the microservice’s container is to correctly initialize al
 </code></pre></div><h3 id="implementation">Implementation</h3>
 <p>Microservice developers are free to implement just the interfaces needed by their components. When the container is started, all implemented methods will be called in the previously mentioned order.
 For example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">sealed</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CounterController</span> <span style="color:#111">:</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#111">IOpenable</span><span style="color:#111">,</span> <span style="color:#111">IExecutable</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">sealed</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CounterController</span> <span style="color:#111">:</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#111">IOpenable</span><span style="color:#111">,</span> <span style="color:#111">IExecutable</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">readonly</span> <span style="color:#111">CompositeLogger</span> <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CompositeLogger</span><span style="color:#111">();</span>
     <span style="color:#00a8c8">private</span> <span style="color:#111">FixedRateTimer</span> <span style="color:#111">Timer</span> <span style="color:#111">{</span> <span style="color:#00a8c8">get</span><span style="color:#111">;</span> <span style="color:#00a8c8">set</span><span style="color:#111">;</span> <span style="color:#111">}</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">();</span>
@@ -235884,7 +235884,7 @@ For example:</p>
 <li><a href="../../commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
 </ul>
 <p>For example:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">await</span> <span style="color:#111">Opener</span><span style="color:#111">.</span><span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">GetAll</span><span style="color:#111">());</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">await</span> <span style="color:#111">Opener</span><span style="color:#111">.</span><span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">GetAll</span><span style="color:#111">());</span>
 <span style="color:#111">...</span>
 <span style="color:#00a8c8">await</span> <span style="color:#111">Closer</span><span style="color:#111">.</span><span style="color:#111">CloseAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">GetAll</span><span style="color:#111">());</span>
 </code></pre></div>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/client_library/step5/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/client_library/step5/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -236179,7 +236179,7 @@
 	<p>In the previous steps, we were looking at the development of clients and at the clients themselves. However, both the client and the microservice were implemented in the same language, which allowed us to run components of the microservice from right inside the tests. In a multi-language environment, there are times when you need to create clients in a language that is different from the one that was used to write the microservice. In this last step, we will be demonstrating a similar situation, showing how to use Docker to link and run microservices and other infrastructure services, and describing how to integrate this into the development process.
 This step will be using the BeaconsCommandableHttpClientV1 class that we created in step 3, along with a new set of tests that still uses the Beacons microservice, but this time - one that is running in a separate Docker container. In other words, the Beacon microservice that is on DockerHub is written in Node.js, which may or may not be the language that you have been using throughout this tutorial.
 To run the microservice in Docker, we’ll first need to create a configuration file called  <strong>docker/docker-compose.dev.yml</strong>:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;3.3&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;3.3&#39;</span>
 <span style="color:#f92672">services</span><span style="color:#111">:</span>
   <span style="color:#f92672">app</span><span style="color:#111">:</span>    
     <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pipdevs/data-microservice-node:1.0&#34;</span>    
@@ -236201,7 +236201,7 @@ To run the microservice in Docker, we’ll first need to create a configuration 
 </code></pre></div><p>This configuration will run the microservice alongside a Mongo DB for data storage. HTTP services will also be started on port 8080 and will be made accessible from outside the container. You can set up the microservice to run with a memory persistence as well. To do this, comment out the MONGO environment variables, as well as any other Mongo-related parameters.
 The image parameter contains the name of the Docker image being hosted on DockerHub (pipdevs/data-microservice-node:1.0), which is the microservice we want to be testing with. Once we get our microservice up and running, it will be available at http://localhost:8080, and the client will be able to work with it using this address. Let’s design a test, in which the client will work with our new service. We’ll be basing this test off of the one we wrote in Step 3. Place the code below into a file named test_BeaconsHttpClientV1.ts.</p>
 <p><strong>/test/version1/BeaconsHttpClient.test.ts</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ConfigParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ConfigParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">Descriptor</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">References</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 
@@ -236286,13 +236286,13 @@ The image parameter contains the name of the Docker image being hosted on Docker
 
 </code></pre></div><p>This test differs from the previous one mainly in that we aren’t running the microservice’s components in the test itself. Instead, we are configuring our client to connect to the microservice, which will be running in our Docker container. Another difference is that we will be deleting all data from the microservice before each test, so that our test always starts off with a clean DB.
 Before we can start testing, we need to get our containerized microservice up and running. To do this, run the command:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose -f ./docker/docker-compose.dev.yml up 
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose -f ./docker/docker-compose.dev.yml up 
 
 </code></pre></div><p>In a separate console, run the test using the following command:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm run <span style="color:#111">test</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm run <span style="color:#111">test</span>
 
 </code></pre></div><p>The tests should all pass, and the container’s console should display information about what it was doing in the process:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>beacons:INFO:2020-06-24T15:27:42.747Z<span style="color:#f92672">]</span> Press Control-C to stop the microservice...
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>beacons:INFO:2020-06-24T15:27:42.747Z<span style="color:#f92672">]</span> Press Control-C to stop the microservice...
 <span style="color:#f92672">[</span>beacons:DEBUG:2020-06-24T15:27:42.982Z<span style="color:#f92672">]</span> Opened REST service at http://0.0.0.0:8080
 <span style="color:#f92672">[</span>beacons:INFO:2020-06-24T15:27:42.983Z<span style="color:#f92672">]</span> Container beacons started.
 <span style="color:#f92672">[</span>123:TRACE:2020-06-24T15:31:19.003Z<span style="color:#f92672">]</span> Executing v1/beacons.create_beacon method

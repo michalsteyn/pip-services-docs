@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/data_microservice/step7/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/tutorials/data_microservice/step7/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -80802,7 +80802,7 @@ namespace Process { class Program { static void Main(string[] args) { try { var 
           style="padding-left:10px;">
           
           <div class="col  "> 
-            Test!
+            Test
           </div>
           
         </div>
@@ -235828,7 +235828,7 @@ namespace Process { class Program { static void Main(string[] args) { try { var 
 	       
 	<p>To run our microservice, we need to add just one last bit of code. In the bin folder, create a <strong>Program.cs</strong> file with the following code:</p>
 <p><strong>/src/service/process/Program.cs</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Process</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Process</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">class</span> <span style="color:#75af00">Program</span>
     <span style="color:#111">{</span>
@@ -235849,20 +235849,20 @@ namespace Process { class Program { static void Main(string[] args) { try { var 
 <span style="color:#111">}</span>
 </code></pre></div><p>In the code above, all we’re doing is creating an instance of the container we described earlier, telling it where to find the configuration file, and running it using the <code>RunAsync()</code> method.</p>
 <p>To run the microservice, execute the following command from a terminal at the root of the project:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet build <span style="color:#75715e"># build</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet build <span style="color:#75715e"># build</span>
 
 dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml <span style="color:#75715e"># start with config file</span>
 </code></pre></div><p>You should get a result similar to the one shown below.</p>
 <p><img src="../../../../images/tutorials/data_microservice/python_console_screen1.png" alt="ConsoleScreen1"></p>
 <p>Since we opted for the console logger in our configuration file, all information is going to be printed to the console. The service is using the in-memory persistence by default. To switch over to the MongoDB persistence, the MONGO_ENABLED environment variable has to be set and MongoDB should be running. This can be done either by starting the service from a script, in which we set our environment variables beforehand, or by configuring them in the OS’s environment.</p>
 <p>Let’s use the following two commands to set our environment variable and start our microservice using the MongoDB persistence:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">export</span> <span style="color:#111">MONGO_ENABLED</span><span style="color:#f92672">=</span><span style="color:#111">true</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#111">export</span> <span style="color:#111">MONGO_ENABLED</span><span style="color:#f92672">=</span><span style="color:#111">true</span>
 
 dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml
 </code></pre></div><p>Make sure that you have MongoDB running locally (see <a href="../../../getting_started/setup_environment">Setup environment</a>) or in an accessible Docker container (i.e. whose ports are exposed), and that the connection parameters set in the configuration file are correct.</p>
 <p>We can use the following docker composer configuration to run MongoDB in Docker:</p>
 <p><strong>/docker/docker-compose.yml</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;3.3&#39;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;3.3&#39;</span>
 
 <span style="color:#f92672">services</span><span style="color:#111">:</span>
 
@@ -235872,10 +235872,10 @@ dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml
       - <span style="color:#d88200">&#34;27017:27017&#34;</span>
 
 </code></pre></div><p>And use the following command to get it up and running:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose -f ./docker/docker-compose.yml up
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose -f ./docker/docker-compose.yml up
 </code></pre></div><p>Once the microservice has started, we can check whether or not it is available by requesting the following URL from a browser: <code>http://localhost:8080/heartbeat</code>. If everything is working correctly, we should receive the current date and UTC time in the JSON format. This mechanism allows us to check whether or not our microservice is up and running at any given time.</p>
 <p>Now let’s request the status URL from our browser: <code>http://localhost:8080/status</code>. This should generate a response with information about the service in a JSON format, such as: its name, what modules are loaded, etc. This mechanism allows us to identify our microservices while they’re running.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;id&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;microservice-server&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;name&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;description&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;Beacons microservice&#34;</span><span style="color:#111">,</span>
@@ -235904,17 +235904,17 @@ dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml
 <p>We could use a REST client to test our microservice, but for the sake of this example, we’ll be using curl instead.</p>
 <p>Let’s check the availability of our commands - the very same ones we defined in our <a href="../../commons/commands/command_set/">CommandSet</a>.</p>
 <p>First, we’ll attempt to create a few beacons in the system:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;beacon\&#34;:{\&#34;id\&#34;: \&#34;1\&#34;, \&#34;udi\&#34;: \&#34;00001\&#34;,  \&#34;type\&#34;: \&#34;altbeacon\&#34;,  \&#34;site_id\&#34;: \&#34;1\&#34;, \&#34;label\&#34;: \&#34;TestBeacon1\&#34;, \&#34;center\&#34;: { \&#34;type\&#34;: \&#34;Point\&#34;, \&#34;coordinates\&#34;: [ 0, 0 ] },\&#34;radius\&#34;: 50}}&#34;</span> http://localhost:8080/v1/beacons/create_beacon
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;beacon\&#34;:{\&#34;id\&#34;: \&#34;1\&#34;, \&#34;udi\&#34;: \&#34;00001\&#34;,  \&#34;type\&#34;: \&#34;altbeacon\&#34;,  \&#34;site_id\&#34;: \&#34;1\&#34;, \&#34;label\&#34;: \&#34;TestBeacon1\&#34;, \&#34;center\&#34;: { \&#34;type\&#34;: \&#34;Point\&#34;, \&#34;coordinates\&#34;: [ 0, 0 ] },\&#34;radius\&#34;: 50}}&#34;</span> http://localhost:8080/v1/beacons/create_beacon
 ‍
 curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;beacon\&#34;:{\&#34;id\&#34;: \&#34;2\&#34;, \&#34;udi\&#34;: \&#34;00002\&#34;,  \&#34;type\&#34;: \&#34;altbeacon\&#34;,  \&#34;site_id\&#34;: \&#34;1\&#34;,    \&#34;label\&#34;: \&#34;TestBeacon2\&#34;, \&#34;center\&#34;: { \&#34;type\&#34;: \&#34;Point\&#34;, \&#34;coordinates\&#34;: [ 2, 2 ] },\&#34;radius\&#34;: 70}}&#34;</span> http://localhost:8080/v1/beacons/create_beacon
 
 </code></pre></div><p>Update the second beacon by changing its coordinates and radius:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;beacon\&#34;:{\&#34;id\&#34;: \&#34;2\&#34;, \&#34;udi\&#34;: \&#34;00002\&#34;, \&#34;type\&#34;: \&#34;altbeacon\&#34;, \&#34;site_id\&#34;: \&#34;1\&#34;, \&#34;label\&#34;: \&#34;TestBeacon2\&#34;, \&#34;center\&#34;: { \&#34;type\&#34;: \&#34;Point\&#34;, \&#34;coordinates\&#34;: [ 2, 4 ] },\&#34;radius\&#34;: 80}}&#34;</span> http://localhost:8080/v1/beacons/update_beacon
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;beacon\&#34;:{\&#34;id\&#34;: \&#34;2\&#34;, \&#34;udi\&#34;: \&#34;00002\&#34;, \&#34;type\&#34;: \&#34;altbeacon\&#34;, \&#34;site_id\&#34;: \&#34;1\&#34;, \&#34;label\&#34;: \&#34;TestBeacon2\&#34;, \&#34;center\&#34;: { \&#34;type\&#34;: \&#34;Point\&#34;, \&#34;coordinates\&#34;: [ 2, 4 ] },\&#34;radius\&#34;: 80}}&#34;</span> http://localhost:8080/v1/beacons/update_beacon
 
 </code></pre></div><p>Retrieve a list of all available beacons using the command below:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST http://localhost:8080/v1/beacons/get_beacons
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST http://localhost:8080/v1/beacons/get_beacons
 </code></pre></div><p>We should get the following JSON response with all of the beacons currently in the system:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;total&#34;</span><span style="color:#111">:</span><span style="color:#ae81ff">2</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;data&#34;</span><span style="color:#111">:[</span>
     <span style="color:#111">{</span>
@@ -235950,9 +235950,9 @@ curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&
   <span style="color:#111">]</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>Try to get the first beacon by its UDI using the command:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;udi\&#34;:\&#34;00001\&#34;}&#34;</span> http://localhost:8080/v1/beacons/get_beacon_by_udi
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;udi\&#34;:\&#34;00001\&#34;}&#34;</span> http://localhost:8080/v1/beacons/get_beacon_by_udi
 </code></pre></div><p>We should receive the following response:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;id&#34;</span><span style="color:#111">:</span><span style="color:#d88200">&#34;1&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;udi&#34;</span><span style="color:#111">:</span><span style="color:#d88200">&#34;00001&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;type&#34;</span><span style="color:#111">:</span><span style="color:#d88200">&#34;altbeacon&#34;</span><span style="color:#111">,</span>
@@ -235968,7 +235968,7 @@ curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&
   <span style="color:#f92672">&#34;radius&#34;</span><span style="color:#111">:</span><span style="color:#ae81ff">50</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>To calculate a device’s position, use the following request:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;site_id\&#34;: \&#34;1\&#34;,\&#34;udis\&#34;: [\&#34;00001\&#34;, \&#34;00002\&#34;]}&#34;</span> http://localhost:8080/v1/beacons/calculate_position
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST -H <span style="color:#d88200">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#d88200">&#34;{\&#34;site_id\&#34;: \&#34;1\&#34;,\&#34;udis\&#34;: [\&#34;00001\&#34;, \&#34;00002\&#34;]}&#34;</span> http://localhost:8080/v1/beacons/calculate_position
 </code></pre></div><p>As a result, you should get the following coordinates:</p>
 <p>``json
 {&ldquo;type&rdquo;:&ldquo;Point&rdquo;,&ldquo;coordinates&rdquo;:[1,2]}</p>
@@ -235978,7 +235978,7 @@ Now let’s delete a beacon by its id:
 ```bash
 curl -X POST -H &quot;Content-Type: application/json&quot; -d &quot;{\&quot;beacon_id\&quot;:\&quot;1\&quot;}&quot; http://localhost:8080/v1/beacons/delete_beacon_by_id
 </code></pre><p>The system will return the deleted beacon if deletion was successful:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;id&#34;</span><span style="color:#111">:</span><span style="color:#d88200">&#34;1&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;udi&#34;</span><span style="color:#111">:</span><span style="color:#d88200">&#34;00001&#34;</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;type&#34;</span><span style="color:#111">:</span><span style="color:#d88200">&#34;altbeacon&#34;</span><span style="color:#111">,</span>
@@ -235994,9 +235994,9 @@ curl -X POST -H &quot;Content-Type: application/json&quot; -d &quot;{\&quot;beac
   <span style="color:#f92672">&#34;radius&#34;</span><span style="color:#111">:</span><span style="color:#ae81ff">50</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>Let’s make sure that there’s only one beacon left in the system by asking again for a list of all available beacons:</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST  http://localhost:8080/v1/beacons/get_beacons
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X POST  http://localhost:8080/v1/beacons/get_beacons
 </code></pre></div><p>As a result, only the beacon with an id of “2” is returned.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
   <span style="color:#f92672">&#34;total&#34;</span><span style="color:#111">:</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span>
   <span style="color:#f92672">&#34;data&#34;</span><span style="color:#111">:[</span>
     <span style="color:#111">{</span>

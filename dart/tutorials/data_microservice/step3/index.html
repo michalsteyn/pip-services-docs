@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../dart/tutorials/data_microservice/step3/index.xml">
+<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../dart/tutorials/data_microservice/step3/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -231321,7 +231321,7 @@ Let’s start by navigating to the src directory and creating a persistence dire
 <p>Let’s start by navigating to the <strong>src</strong> directory and creating a <strong>persistence</strong> directory inside it. This directory is going to contain all of the files that relate to this step of the tutorial.</p>
 <p>The first thing we are going to do is define what functionality our persistent storage should have. We can define these in a form of an interface and name it <code>IBeaconsPersistence</code></p>
 <p><strong>/src/persistence/IBeaconsPersistence.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;../data/version1/BeaconV1.dart&#39;</span><span style="color:#111">;</span>
 
@@ -231344,7 +231344,7 @@ Let’s start by navigating to the src directory and creating a persistence dire
 </code></pre></div><p>The first persistence to implement this interface will be the memory persistence, which we will name <strong>BeaconsMemoryPersistence</strong>. This class will need to extend the <code>IdentifiableMemoryPersistence</code> class from the <strong>pip-services3-data</strong> module, and have a few additional functions added to it. One of these functions will be used to create filters for the <code>getPageByFilter</code> method that we’re going to override from the parent class. This function will be called <code>composeFilter</code>, as it’s going to allow us to filter data in accordance with the received filtering parameters. The overriding <code>getPageByFilter</code> method then simply calls the parent’s method, passing the <code>composeFilter</code> function as a filter parameter. The second function that we will need to implement is the <code>getOneByUdi</code> method, whose purpose will be to retrieve a beacon by its <code>udi</code>.</p>
 <p>The resulting code for this class is listed below:</p>
 <p><strong>/src/persistence/BeaconsMemoryPersistence.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_data/pip_services3_data.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;../data/version1/BeaconV1.dart&#39;</span><span style="color:#111">;</span>
@@ -231425,7 +231425,7 @@ Let’s start by navigating to the src directory and creating a persistence dire
 </code></pre></div><p>And that’s pretty much it for the memory persistence.</p>
 <p>Now let’s move on to something a bit more sophisticated - a MongoDB persistence. Here we’re also going to use an already existing base class, <code>IdentifiableMongoDbPersistence</code>, from the <strong>pip-services3-mongodb</strong> module, and write a few functions, the most important of which will be <code>composeFilter</code>. This time around, its implementation is going to contain syntax for creating database requests. The resulting code for this class is listed below:</p>
 <p><strong>/src/persistence/BeaconsMongoDbPersistence.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:mongo_dart_query/mongo_dart_query.dart&#39;</span> <span style="color:#00a8c8">as</span> <span style="color:#111">mngquery</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_mongodb/pip_services3_mongodb.dart&#39;</span><span style="color:#111">;</span>
@@ -231518,7 +231518,7 @@ Let’s start by navigating to the src directory and creating a persistence dire
 <p>To make sure that the code does just what we expect it to do, let’s add some tests. We’ll be placing the files with our tests in the <strong>test</strong> directory and organizing them into subdirectories, whose names will reflect the components they are testing.</p>
 <p>Thanks to the modular structure of microservices, each component is easily testable with the help of simple mock tests. We’ll start with creating a class that contains a set of testable commands and checks the results we receive with the help of standard testing libraries. This class will be accepting any persistence that implements our <code>IBeaconsPersistence</code> interface as a parameter. This way we can use the same set of commands to test both of our persistence implementations. This set of commands should contain standard CRUD operations, which are implemented in the parent class, as well as the methods we’ve added in the child classes.</p>
 <p><strong>/test/persistence/BeaconsPersistenceFixture.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:test/test.dart&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:test/test.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services_beacons_dart/pip_services_beacons_dart.dart&#39;</span><span style="color:#111">;</span>
@@ -231661,7 +231661,7 @@ Let’s start by navigating to the src directory and creating a persistence dire
 
 </code></pre></div><p>Now that we have a set of tests, we can dive into the testing itself. To do this, we’ll create files for testing each of our persistences and run them.</p>
 <p><strong>/test/persistence/BeaconsMemoryPersistence_test.dart</strong></p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:test/test.dart&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:test/test.dart&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services_beacons_dart/pip_services_beacons_dart.dart&#39;</span><span style="color:#111">;</span>
