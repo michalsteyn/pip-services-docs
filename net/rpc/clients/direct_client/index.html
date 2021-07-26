@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/rpc/clients/direct_client/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-07-23T17:42:00+03:00" />
+<meta property="article:modified_time" content="2021-07-26T20:20:44+02:00" />
 
 <meta itemprop="name" content="DirectClient&lt;T&gt;">
 <meta itemprop="description" content="Abstract client that calls a controller directly in the same memory space.
 ">
-<meta itemprop="dateModified" content="2021-07-23T17:42:00+03:00" />
-<meta itemprop="wordCount" content="438">
+<meta itemprop="dateModified" content="2021-07-26T20:20:44+02:00" />
+<meta itemprop="wordCount" content="433">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="DirectClient&lt;T&gt;"/>
 <meta name="twitter:description" content="Abstract client that calls a controller directly in the same memory space.
@@ -235860,7 +235860,7 @@
 	<p><strong>Inherits:</strong> <a href="../../../commons/config/iconfigurable">IConfigurable</a>, <a href="../../../commons/refer/ireferenceable">IReferenceable</a>, <a href="../../../commons/run/iopenable">IOpenable</a></p>
 <h3 id="description">Description</h3>
 <p>The DirectClientclass allows you to create clients that call a controller directly in the same memory space.</p>
-<p>Important points</p>
+<p><strong>Important points</strong></p>
 <ul>
 <li>It is used when multiple microservices are deployed in a single container (monolyth) and communication between them can be done by direct calls rather than through the network.</li>
 </ul>
@@ -235882,27 +235882,27 @@
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="_controller">_controller</h4>
-<p>The controller reference.</p>
+<p>Controller reference.</p>
 <blockquote>
 <p><code>protected</code> <strong>_controller</strong>: T</p>
 </blockquote>
 <h4 id="_opened">_opened</h4>
-<p>The open flag.</p>
+<p>Open flag.</p>
 <blockquote>
 <p><code>protected</code> <strong>_opened</strong>: boolean = True</p>
 </blockquote>
 <h4 id="_logger">_logger</h4>
-<p>The logger.</p>
+<p>Logger.</p>
 <blockquote>
 <p><code>protected</code> <strong>_logger</strong>: <a href="../../../components/log/composite_logger">CompositeLogger</a> = CompositeLogger()</p>
 </blockquote>
 <h4 id="_counters">_counters</h4>
-<p>The performance counters</p>
+<p>Performance counters</p>
 <blockquote>
 <p><code>protected</code> <strong>_counters</strong>: <a href="../../../components/count/composite_counters">CompositeCounters</a> = CompositeCounters()</p>
 </blockquote>
 <h4 id="_dependencyresolver">_dependencyResolver</h4>
-<p>The dependency resolver used to get the controller&rsquo;s reference.</p>
+<p>Dependency resolver used to get the controller&rsquo;s reference.</p>
 <blockquote>
 <p><code>protected</code> <strong>_dependencyResolver</strong>: <a href="../../../commons/refer/dependency_resolver">DependencyResolver</a> = DependencyResolver()</p>
 </blockquote>
@@ -235914,10 +235914,10 @@
 <p><code>public virtual</code> Task CloseAsync(string correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the a chain.</li>
 </ul>
 <h4 id="configure">Configure</h4>
-<p>Configures component by passing configuration parameters.</p>
+<p>Configures component by passing its configuration parameters.</p>
 <blockquote>
 <p><code>public virtual</code> void Configure(<a href="../../../commons/config/config_params">ConfigParams</a> config)</p>
 </blockquote>
@@ -235943,8 +235943,8 @@ It returns a Timing object that is used to end the time measurement.</p>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>methodName</strong>: [CallerMemberName]string - method name.</li>
-<li><strong>ex</strong>: Exception - Error that occured during the method call.</li>
-<li><strong>rethrow</strong>: bool - True to throw the exception.</li>
+<li><strong>ex</strong>: Exception - error that occured during the method call.</li>
+<li><strong>rethrow</strong>: bool - true to throw the exception.</li>
 </ul>
 <h4 id="isopen">IsOpen</h4>
 <p>Checks if the component is open.</p>
@@ -235952,7 +235952,7 @@ It returns a Timing object that is used to end the time measurement.</p>
 <p><code>public virtual</code> bool IsOpen()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: bool - True if the component has been opened and False otherwise.</li>
+<li><strong>returns</strong>: bool - true if the component is open and false otherwise.</li>
 </ul>
 <h4 id="openasync">OpenAsync</h4>
 <p>Opens the component.</p>
@@ -235968,7 +235968,7 @@ It returns a Timing object that is used to end the time measurement.</p>
 <p><code>public virtual</code> void SetReferences(<a href="../../../commons/refer/ireferences">IReferences</a> references)</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyDirectClient</span><span style="color:#111">:</span> <span style="color:#111">DirectClient</span><span style="color:#111">&lt;</span><span style="color:#111">IMyController</span><span style="color:#111">&gt;,</span> <span style="color:#111">IMyClient</span> 

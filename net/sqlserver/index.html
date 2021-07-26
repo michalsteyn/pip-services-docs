@@ -227660,7 +227660,7 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
 	<h3 id="packages">Packages</h3>
 <p>The module contains the following packages:</p>
 <ul>
-<li><a href="build"><strong>Build</strong></a> - a standard factory for constructing components</li>
+<li><a href="build"><strong>Build</strong></a> - standard factory for constructing components</li>
 <li><a href="connect"><strong>Connect</strong></a> - instruments for configuring connections to the database.</li>
 <li><a href="persistence"><strong>Persistence</strong></a> - abstract classes for working with the database that can be used for connecting to collections and performing basic CRUD operations</li>
 </ul>
@@ -227693,7 +227693,7 @@ This module is a part of the <a href="http://pipservices.org">Pip.Services</a> p
 <span style="color:#111">}</span>
 </code></pre></div><p>To implement sql server persistence component you shall inherit <code>IdentifiableSqlServerPersistence</code>.
 Most CRUD operations will come from the base class. You only need to override <code>getPageByFilter</code> method with a custom filter function.
-And implement a <code>getOneByKey</code> custom persistence method that doesn&rsquo;t exist in the base class.</p>
+And then, implement a <code>getOneByKey</code> custom persistence method that doesn&rsquo;t exist in the base class.</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.SqlServer.Persistence</span><span style="color:#111">;</span>
 
 
@@ -227765,7 +227765,7 @@ And implement a <code>getOneByKey</code> custom persistence method that doesn&rs
 <span style="color:#111">}</span>
 </code></pre></div><p>Alternatively you can store data in non-relational format using <code>IdentificableJsonSqlServerPersistence</code>.
 It stores data in tables with two columns - <code>id</code> with unique object id and <code>data</code> with object data serialized as JSON.
-To access data fields you shall use <code>JSON_VALUE([data],'$.field')</code> expression.</p>
+To access data fields you shall use the <code>JSON_VALUE([data],'$.field')</code> expression.</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MySqlServerPersistence</span> <span style="color:#111">:</span> <span style="color:#111">IdentifiableJsonSqlServerPersistence</span><span style="color:#111">&lt;</span><span style="color:#111">MyObject</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span><span style="color:#111">&gt;</span>
 <span style="color:#111">{</span>
     <span style="color:#00a8c8">public</span> <span style="color:#111">MySqlServerPersistence</span><span style="color:#111">()</span> <span style="color:#111">:</span> <span style="color:#00a8c8">base</span><span style="color:#111">(</span><span style="color:#d88200">&#34;myobjects&#34;</span><span style="color:#111">)</span>
@@ -227831,7 +227831,7 @@ To access data fields you shall use <code>JSON_VALUE([data],'$.field')</code> ex
         <span style="color:#00a8c8">return</span> <span style="color:#111">item</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
-</code></pre></div><p>Configuration for your microservice that includes sqlserver persistence may look the following way.</p>
+</code></pre></div><p>The configuration for your microservice that includes sqlserver persistence may look the following way.</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#111">...</span>
 {{<span style="color:#75715e">#if SQLSERVER_ENABLED}}</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#ae81ff">pip-services:connection:sqlserver:con1:1.0</span>
