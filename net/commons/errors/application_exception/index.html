@@ -25,14 +25,14 @@ Defines a base class used to define various application exceptions.
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/commons/errors/application_exception/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-07-23T02:11:27+03:00" />
+<meta property="article:modified_time" content="2021-07-28T23:56:58+02:00" />
 
 <meta itemprop="name" content="ApplicationException">
 <meta itemprop="description" content="
 Defines a base class used to define various application exceptions.
 ">
-<meta itemprop="dateModified" content="2021-07-23T02:11:27+03:00" />
-<meta itemprop="wordCount" content="962">
+<meta itemprop="dateModified" content="2021-07-28T23:56:58+02:00" />
+<meta itemprop="wordCount" content="960">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ApplicationException"/>
 <meta name="twitter:description" content="
@@ -242842,7 +242842,7 @@ Defines a base class used to define various application exceptions.
 	<p><strong>Inherits</strong>: Exception</p>
 <h3 id="description">Description</h3>
 <p>The ApplicationException class defines a base class used to define various application exceptions.</p>
-<p>Important points</p>
+<p><strong>Important points</strong></p>
 <ul>
 <li>Most languages have their own definition of base exception (error) types. However, this class is implemented symmetrically in all languages supported by the PipServices toolkit and  allows to create portable implementations and support proper error propagation in microservices calls.</li>
 <li>Error propagation means that when a microservice implemented in one language calls a microservice(s) implemented in a different language(s), errors are returned throught the entire call chain and restored in their original (or close) type.</li>
@@ -242853,13 +242853,13 @@ Defines a base class used to define various application exceptions.
 <li>category: one of the 12 standard error categories</li>
 <li>status: numeric HTTP status code for REST invocations</li>
 <li>code: a unique error code, usually defined as &ldquo;MY_ERROR_CODE&rdquo;</li>
-<li>correlation_id: a unique transaction id used to trace execution through a call chain</li>
+<li>correlation_id: unique transaction id used to trace execution through a call chain</li>
 <li>details: map with error parameters that can help to recreate meaningful error description in other languages</li>
-<li>stack_trace: a stack trace</li>
+<li>stack_trace: stack trace</li>
 <li>cause: the original error that is wrapped by this exception</li>
 </ul>
 </li>
-<li>The ApplicationException class is not serializable. To pass errors through the wire it must be converted into a <a href="../error_description">ErrorDescription</a> object and then restored on the receiving end into an identical exception type.</li>
+<li>The ApplicationException class is not serializable. To pass errors through the wire it must be converted into an <a href="../error_description">ErrorDescription</a> object and then restored on the receiving end into an identical exception type.</li>
 </ul>
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of application exception and assigns its values.</p>
@@ -242934,13 +242934,13 @@ Defines a base class used to define various application exceptions.
 </blockquote>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="getobjectdata">GetObjectData</h4>
-<p>TODO: add description</p>
+<p>Gets information such as category, correlation_id, etc.</p>
 <blockquote>
 <p><code>public override</code> void GetObjectData(SerializationInfo info, StreamingContext context)</p>
 </blockquote>
 <ul>
-<li><strong>info</strong>: SerializationInfo - TODO: add description</li>
-<li><strong>context</strong>: StreamingContext - TODO: add description</li>
+<li><strong>info</strong>: SerializationInfo - serialization information</li>
+<li><strong>context</strong>: StreamingContext - streaming context</li>
 </ul>
 <h4 id="withcause">WithCause</h4>
 <p>Sets a original error wrapped by this exception
@@ -242972,7 +242972,7 @@ to chain additional calls.</p>
 <p><code>public</code> <a href="">ApplicationException</a> WithCorrelationId(string correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - unique transaction id used to trace an error through a call chain</li>
+<li><strong>correlationId</strong>: string - unique transaction id used to trace an error through the call chain</li>
 <li><strong>returns</strong>: <a href="">ApplicationException</a> - exception object</li>
 </ul>
 <h4 id="withdetails">WithDetails</h4>
@@ -242996,7 +242996,7 @@ to chain additional calls</p>
 <p><code>public</code> <a href="">ApplicationException</a> WithStackTrace(string stackTrace)</p>
 </blockquote>
 <ul>
-<li><strong>stackTrace</strong>: string - stackTrace a stack trace where this error occured</li>
+<li><strong>stackTrace</strong>: string - stack trace where this error occured</li>
 <li><strong>returns</strong>: <a href="">ApplicationException</a> - exception object</li>
 </ul>
 <h4 id="withstatus">WithStatus</h4>
