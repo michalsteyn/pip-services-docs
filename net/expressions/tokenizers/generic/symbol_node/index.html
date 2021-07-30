@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.86.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../../net/expressions/tokenizers/generic/symbol_node/index.xml">
+<meta name="generator" content="Hugo 0.86.1" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../../net/expressions/tokenizers/generic/symbol_node/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/expressions/tokenizers/generic/symbol_node/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-07-17T19:43:46+03:00" />
+<meta property="article:modified_time" content="2021-07-30T23:49:40+02:00" />
 
 <meta itemprop="name" content="SymbolNode">
 <meta itemprop="description" content="Constructs a SymbolNode.
 ">
-<meta itemprop="dateModified" content="2021-07-17T19:43:46+03:00" />
-<meta itemprop="wordCount" content="548">
+<meta itemprop="dateModified" content="2021-07-30T23:49:40+02:00" />
+<meta itemprop="wordCount" content="549">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SymbolNode"/>
 <meta name="twitter:description" content="Constructs a SymbolNode.
@@ -245542,7 +245542,7 @@
 <p><strong>Important points</strong></p>
 <ul>
 <li>A <em>SymbolNode</em> object is a member of a tree that contains all possible prefixes of allowable symbols. Multi-character symbols appear in a <em>SymbolNode</em> tree with one node for each character.</li>
-<li>For example, the symbol <em>=:~</em> will appear in a tree as three nodes. The first node contains an equals sign, and has a child; that child contains a colon and has a child; this third child contains a tilde, and has no children of its own. If the colon node had another child for a dollar sign character, then the tree would contain the symbol <em>=:$</em>.</li>
+<li>For example, the symbol <em>=:~</em> will appear in a tree as three nodes. The first node contains an equals sign and has a child. That child contains a colon and has a child. This third child contains a tilde, and has no children of its own. If the colon node had another child for a dollar sign character, then the tree would contain the symbol <em>=:$</em>.</li>
 <li>A tree of <em>SymbolNode</em> objects collaborate to read a (potentially multi-character) symbol from an input stream. A root node with no character of its own finds an initial node
 that represents the first character in the input. This node looks to see if the next character in the stream matches one of its children. If so, the node delegates its reading task to its child.</li>
 <li>This approach walks down the tree, pulling symbols from the input that match the path down the tree.</li>
@@ -245603,7 +245603,7 @@ complete symbols. If, say, the input contains <em>=:a</em>, the colon node will 
 <p><code>internal</code> <a href="">SymbolNode</a> EnsureChildWithChar(char value)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: char - chararacters&rsquo;s</li>
+<li><strong>value</strong>: char - chararacters&rsquo;s value</li>
 <li><strong>returns</strong>: <a href="">SymbolNode</a> - symbol&rsquo;s node</li>
 </ul>
 <h4 id="findchildwithchar">FindChildWithChar</h4>
@@ -245616,7 +245616,7 @@ complete symbols. If, say, the input contains <em>=:a</em>, the colon node will 
 <li><strong>returns</strong>: <a href="">SymbolNode</a> - symbol&rsquo;s node</li>
 </ul>
 <h4 id="unreadtovalid">UnreadToValid</h4>
-<p>Unwinds to a valid node; this node is &ldquo;valid&rdquo; if its ancestry represents a complete symbol.
+<p>Unwinds to a valid node. This node is &ldquo;valid&rdquo; if its ancestry represents a complete symbol.
 If this node is not valid, puts back the character and asks the parent to unwind.</p>
 <blockquote>
 <p><code>internal</code> <a href="">SymbolNode</a> UnreadToValid(<a href="../../../io/iscanner">IScanner</a> scanner)</p>
