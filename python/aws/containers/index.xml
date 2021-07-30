@@ -1,0 +1,270 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – Containers</title>
+    <link>/python/aws/containers/</link>
+    <description>Recent content in Containers on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/aws/containers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: CommandableLambdaFunction</title>
+      <link>/python/aws/containers/commandable_lambda_function/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/aws/containers/commandable_lambda_function/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../lambda_function&#34;&gt;LambdaFunction&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The CommandableLambdaFunction class allows you to create AWS Lambda function that acts as a container to instantiate and run components and expose them via an external entry point.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;All actions are automatically generated for commands defined in &lt;a href=&#34;../../../commons/commands/icommandable&#34;&gt;ICommandable components&lt;/a&gt;. Each command is exposed as an action defined by the &amp;ldquo;cmd&amp;rdquo; parameter.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Container configuration for this Lambda function is stored in &lt;em&gt;&amp;quot;./config/config.yml&amp;quot;&lt;/em&gt; file. But this path can be overriden by &lt;em&gt;CONFIG_PATH&lt;/em&gt; environment variable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This component has been deprecated. Use &lt;a href=&#34;../../services/lambda_service&#34;&gt;LambdaService&lt;/a&gt; instead.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:service:lambda:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../services/ilambda_service&#34;&gt;ILambdaService&lt;/a&gt; services to handle action requests&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:service:commandable-lambda:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../services/ilambda_service&#34;&gt;ILambdaService&lt;/a&gt; services to handle action requests&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of this lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;CommandableLambdaFunction(name: str, description: str = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - (optional) container name (accessible via &lt;a href=&#34;../../../components/info/context_info&#34;&gt;ContextInfo&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: str - (optional) container description (accessible via &lt;a href=&#34;../../../components/info/context_info&#34;&gt;ContextInfo&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;_register&#34;&gt;_register&lt;/h4&gt;
+&lt;p&gt;Registers all actions in this lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaFunction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;CommandableLambdaFunction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;MyGroup lambda function&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependency_resolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+            &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IMyController&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt;
+        
+&lt;span style=&#34;color:#00a8c8&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyLambdaFunction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;MyLambdaFunction is started&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;lambdaclientclientslambda_client&#34;&gt;&lt;a href=&#34;../../clients/lambda_client&#34;&gt;LambdaClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: LambdaFunction</title>
+      <link>/python/aws/containers/lambda_function/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/aws/containers/lambda_function/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../container/containers/container&#34;&gt;Container&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The LambdaFunction class allows you to create an abstract AWS Lambda function that acts as a container to instantiate and run components, and expose them via an external entry point.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;When handling calls the &amp;ldquo;cmd&amp;rdquo; parameter determines what action shall be called, while the other parameters are passed to the action itself.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Container configuration for this Lambda function is stored in &lt;em&gt;&amp;quot;./config/config.yml&amp;quot;&lt;/em&gt; file. But this path can be overriden by &lt;em&gt;CONFIG_PATH&lt;/em&gt; environment variable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;*:logger:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/log/ilogger&#34;&gt;ILogger&lt;/a&gt; components to pass log messages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:counters:*:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../../components/count/icounters&#34;&gt;ICounters&lt;/a&gt; components to pass collected measurements.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:service:lambda:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../services/ilambda_service&#34;&gt;ILambdaService&lt;/a&gt; services to handle action requests&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;*:service:commandable-lambda:*:1.0&lt;/strong&gt;: (optional) &lt;a href=&#34;../../services/ilambda_service&#34;&gt;ILambdaService&lt;/a&gt; services to handle action requests&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of this lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LambdaFunction(name: str, description: str = None)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - (optional) a container name (accessible via &lt;a href=&#34;../../../components/info/context_info&#34;&gt;ContextInfo&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: str - (optional) container description (accessible via &lt;a href=&#34;../../../components/info/context_info&#34;&gt;ContextInfo&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;_actions&#34;&gt;_actions&lt;/h4&gt;
+&lt;p&gt;Map containing registered actions.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_actions&lt;/strong&gt;: Dict[str, Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_config_path&#34;&gt;_config_path&lt;/h4&gt;
+&lt;p&gt;Default path to config file.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_config_path&lt;/strong&gt;: str = &amp;lsquo;./config/config.yml&amp;rsquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
+&lt;p&gt;Performance counters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_counters&lt;/strong&gt;: &lt;a href=&#34;../../../components/count/composite_counters&#34;&gt;CompositeCounters&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_dependency_resolver&#34;&gt;_dependency_resolver&lt;/h4&gt;
+&lt;p&gt;Dependency resolver.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_dependency_resolver&lt;/strong&gt;:&lt;a href=&#34;../../../commons/refer/dependency_resolver&#34;&gt;DependencyResolver&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_schemas&#34;&gt;_schemas&lt;/h4&gt;
+&lt;p&gt;Map of registred validation schemas.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_schemas&lt;/strong&gt;: Dict[str, &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_tracer&#34;&gt;_tracer&lt;/h4&gt;
+&lt;p&gt;Tracer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_tracer&lt;/strong&gt;: &lt;a href=&#34;../../../components/trace/composite_tracer&#34;&gt;CompositeTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;act&#34;&gt;act&lt;/h4&gt;
+&lt;p&gt;Calls registered action in this lambda function.
+The &amp;ldquo;cmd&amp;rdquo; parameter in the action parameters determines
+what action shall be called.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This method shall only be used in testing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;act(params: dict): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;params&lt;/strong&gt;: dict - action parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - result&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_execute&#34;&gt;_execute&lt;/h4&gt;
+&lt;p&gt;Executes this AWS Lambda function and returns the result.
+This method can be overloaded in child classes
+if it is necessary to change the default behavior&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_execute(event: dict): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;event&lt;/strong&gt;: dict - event parameters (or function arguments)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - result of the function execution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_handler&#34;&gt;get_handler&lt;/h4&gt;
+&lt;p&gt;Gets an entry point into this lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_handler(): Callable[[dict], Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Callable[[dict], Any] - incoming event object with invocation parameters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_instrument&#34;&gt;_instrument&lt;/h4&gt;
+&lt;p&gt;Gets entry point into this lambda function.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_instrument(correlation_id: Optional[str], name: str): &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;InstrumentTiming&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - method name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;InstrumentTiming&lt;/a&gt; - object to end the time measurement.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;open&#34;&gt;open&lt;/h4&gt;
+&lt;p&gt;Opens the component.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;open(correlation_id: Optional[str])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_register&#34;&gt;_register&lt;/h4&gt;
+&lt;p&gt;Registers all actions in this lambda function.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Note: Overloading of this method has been deprecated. Use &lt;a href=&#34;../../services/lambda_service&#34;&gt;LambdaService&lt;/a&gt; instead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_register()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;_register_action&#34;&gt;_register_action&lt;/h4&gt;
+&lt;p&gt;Registers an action in this lambda function.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Note: This method has been deprecated. Use &lt;a href=&#34;../../services/lambda_service&#34;&gt;LambdaService&lt;/a&gt; instead.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_register_action(cmd: str, schema: Optional[&lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;], action: Callable[[dict], Any])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;cmd&lt;/strong&gt;: str - action/command name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: Optional[&lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;] - validation schema used to validate received parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[dict], Any] - action function that is called when the action is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_register_services&#34;&gt;_register_services&lt;/h4&gt;
+&lt;p&gt;Registers all lambda services in the container.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_register_services()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;run&#34;&gt;run&lt;/h4&gt;
+&lt;p&gt;Runs this lambda function, loads container configuration,
+instantiates components and manages their lifecycle.
+Makes this function ready to access action calls.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;run()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
+&lt;p&gt;Sets references to dependent components.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_references(references: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component&amp;rsquo;s dependencies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyLambdaFunction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;LambdaFunction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;MyGroup lambda function&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;lambda&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyLambdaFunction&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;MyLambdaFunction is started&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;lambdaclientclientslambda_client&#34;&gt;&lt;a href=&#34;../../clients/lambda_client&#34;&gt;LambdaClient&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
