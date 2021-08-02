@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/data/persistence/memory_persistence/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-24T17:33:12+03:00" />
+<meta property="article:modified_time" content="2021-08-02T21:42:07+02:00" />
 
 <meta itemprop="name" content="MemoryPersistence&lt;T&gt;">
 <meta itemprop="description" content="Persistence component that stores data in memory.
 ">
-<meta itemprop="dateModified" content="2021-06-24T17:33:12+03:00" />
-<meta itemprop="wordCount" content="888">
+<meta itemprop="dateModified" content="2021-08-02T21:42:07+02:00" />
+<meta itemprop="wordCount" content="883">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MemoryPersistence&lt;T&gt;"/>
 <meta name="twitter:description" content="Persistence component that stores data in memory.
@@ -244797,11 +244797,6 @@
               </ul>
             </li>
             <li><a href="#examples">Examples</a></li>
-            <li><a href="#see-also">See also</a>
-              <ul>
-                <li><a href="#memorypersistencememory_persistence"><a href="../memory_persistence">MemoryPersistence</a></a></li>
-              </ul>
-            </li>
           </ul>
         </li>
       </ul>
@@ -244900,7 +244895,7 @@
 	<p><strong>Inherits:</strong> <a href="../../../commons/config/iconfigurable">IConfigurable</a>, <a href="../../../commons/refer/ireferenceable">IReferenceable</a>, <a href="../../../commons/run/iopenable">IOpenable</a>, <a href="../../../commons/run/icleanable">ICleanable</a></p>
 <h3 id="description">Description</h3>
 <p>The MemoryPersistence class allows you to create persistence components that store data in memory.</p>
-<p>Important points</p>
+<p><strong>Important points</strong></p>
 <ul>
 <li>This is the most basic persistence component that is only able to store data items of any type.</li>
 <li>Specific CRUD operations over the data items must be implemented in child classes by accessing the this._items property and calling the <strong>Save</strong> method.</li>
@@ -245000,7 +244995,7 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 <li><strong>matchFunctions</strong>: IList&lt;Func&lt;T, bool&gt;&gt; - (optional) filter function used to filter items.</li>
 </ul>
 <h4 id="getcountbyfilter">GetCountByFilter</h4>
-<p><strong>TODO: this method is not implemented yet</strong></p>
+<p><strong>Note: this method is not implemented yet</strong></p>
 <p>Gets the number of items retrieved by a given filter.</p>
 <p>This method shall be called by a public <strong>GetCountByFilter</strong> method from a child class that
 receives <a href="../../../commons/data/filter_params">FilterParams</a> and converts them into a filter function.</p>
@@ -245033,8 +245028,8 @@ that receives <a href="../../../commons/data/filter_params">FilterParams</a> and
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>matchFunctions</strong>: IList&lt;Func&lt;T, bool&gt;&gt; - (optional) a filter function to filter items.</li>
-<li><strong>returns</strong>: Task&lt;T&gt; - a random item.</li>
+<li><strong>matchFunctions</strong>: IList&lt;Func&lt;T, bool&gt;&gt; - (optional) filter function to filter items.</li>
+<li><strong>returns</strong>: Task&lt;T&gt; - random item.</li>
 </ul>
 <h4 id="getpagebyfilter">GetPageByFilter</h4>
 <p>Gets a page of data items retrieved by a given filter and sorted according to sorting parameters.</p>
@@ -245055,7 +245050,7 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 <p><code>public</code> bool IsOpen()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: bool - True if the component is open and False otherwise.</li>
+<li><strong>returns</strong>: bool - true if the component is open and false otherwise.</li>
 </ul>
 <h4 id="loadasync">LoadAsync</h4>
 <p>Loads items.</p>
@@ -245084,10 +245079,10 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 <h4 id="setreferences">SetReferences</h4>
 <p>Sets the component&rsquo;s references. References must match configured dependencies.</p>
 <blockquote>
-<p><code>public</code> void SetReferences(<a href="../ireferences">IReferences</a> references)</p>
+<p><code>public</code> void SetReferences(<a href="../../../commons/refer/ireferences">IReferences</a> references)</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../ireferences">IReferences</a> - references to set.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to set.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyMemoryPersistence</span> <span style="color:#111">extends</span> <span style="color:#111">MemoryPersistence</span><span style="color:#111">&lt;</span><span style="color:#111">MyData</span><span style="color:#111">&gt;</span>
@@ -245111,13 +245106,7 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 <span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">Set</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">MyData</span><span style="color:#111">(</span><span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">));</span>
 <span style="color:#111">Console</span><span style="color:#111">.</span><span style="color:#111">Out</span><span style="color:#111">.</span><span style="color:#111">WriteLine</span><span style="color:#111">(</span><span style="color:#111">persistence</span><span style="color:#111">.</span><span style="color:#111">getByName</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">)).</span><span style="color:#111">toString</span><span style="color:#111">();</span> <span style="color:#75715e">// Result: { name: &#34;ABC&#34; }
 </span><span style="color:#75715e"></span>
-</code></pre></div><h3 id="see-also">See also</h3>
-<ul>
-<li>
-<h4 id="memorypersistencememory_persistence"><a href="../memory_persistence">MemoryPersistence</a></h4>
-</li>
-</ul>
-
+</code></pre></div>
 	
 	
 	<div class="text-muted mt-5 pt-3 border-top">
