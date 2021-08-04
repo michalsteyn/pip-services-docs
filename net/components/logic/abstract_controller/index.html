@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.86.1" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/components/logic/abstract_controller/index.xml">
+<meta name="generator" content="Hugo 0.87.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../net/components/logic/abstract_controller/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>AbstractController | Services Docs</title><meta property="og:title" content="AbstractController" />
-<meta property="og:description" content="TODO: add description
+<meta property="og:description" content="Abstract logger that caches captured log messages in memory and periodically dumps them.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/components/logic/abstract_controller/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-28T20:54:06+03:00" />
+<meta property="article:modified_time" content="2021-08-04T05:23:41+02:00" />
 
 <meta itemprop="name" content="AbstractController">
-<meta itemprop="description" content="TODO: add description
+<meta itemprop="description" content="Abstract logger that caches captured log messages in memory and periodically dumps them.
 ">
-<meta itemprop="dateModified" content="2021-06-28T20:54:06+03:00" />
-<meta itemprop="wordCount" content="547">
+<meta itemprop="dateModified" content="2021-08-04T05:23:41+02:00" />
+<meta itemprop="wordCount" content="614">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AbstractController"/>
-<meta name="twitter:description" content="TODO: add description
+<meta name="twitter:description" content="Abstract logger that caches captured log messages in memory and periodically dumps them.
 "/>
 
 
@@ -244759,7 +244759,7 @@
                 <li><a href="#getcachekey">GetCacheKey</a></li>
                 <li><a href="#auditcreateasync">AuditCreateAsync</a></li>
                 <li><a href="#auditupdateasync">AuditUpdateAsync</a></li>
-                <li><a href="#auditupdateasync-1">AuditUpdateAsync</a></li>
+                <li><a href="#auditdeleteasync">AuditDeleteAsync</a></li>
               </ul>
             </li>
             <li><a href="#see-also">See also</a>
@@ -244862,20 +244862,20 @@
 </div>
 
 	
-    <div class="lead">TODO: add description</div>
+    <div class="lead">Abstract logger that caches captured log messages in memory and periodically dumps them.</div>
 	       
 	<p><strong>Inherits</strong>: <a href="../../../commons/config/iconfigurable">IConfigurable</a>, <a href="../../../commons/config/ireconfigurable">IReconfigurable</a></p>
 <h3 id="description">Description</h3>
-<p>TODO: add description</p>
+<p>The AbstractController class allows you to create an abstract logger that caches captured log messages in memory and periodically dumps them. Child classes implement saving cached messages to their specified destinations.</p>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
 <h4 id="_dependencyresolver">_dependencyResolver</h4>
-<p>TODO: add description</p>
+<p>Dependency resolver</p>
 <blockquote>
 <p><code>protected</code> _dependencyResolver: <a href="../../../commons/refer/dependency_resolver">DependencyResolver</a> = new DependencyResolver()</p>
 </blockquote>
 <h4 id="_logger">_logger</h4>
-<p>TODO: add description</p>
+<p>Logger</p>
 <blockquote>
 <p><code>protected</code> _logger: <a href="../../log/composite_logger">CompositeLogger</a> = new CompositeLogger()</p>
 </blockquote>
@@ -244885,20 +244885,20 @@
 <p><code>protected</code> _counters: <a href="../../count/composite_counters">CompositeCounters</a> = new CompositeCounters()</p>
 </blockquote>
 <h4 id="_counters-1">_counters</h4>
-<p>TODO: add description</p>
+<p>Counters</p>
 <blockquote>
 <p><code>protected</code> _cache: <a href="../../cache/icache">ICache</a> = new <a href="../../cache/null_cache">NullCache</a>()</p>
 </blockquote>
 </span>
 <h3 id="properties">Properties</h3>
 <h4 id="component">Component</h4>
-<p>TODO: add description</p>
+<p>Component</p>
 <blockquote>
 <p><code>public abstract</code> string Component { get; }</p>
 </blockquote>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="configure">Configure</h4>
-<p>Configures component by passing configuration parameters.</p>
+<p>Configures a component by passing its configuration parameters.</p>
 <blockquote>
 <p><code>public virtual</code> void Configure(<a href="../../../commons/config/config_params">ConfigParams</a> config)</p>
 </blockquote>
@@ -244911,128 +244911,128 @@
 <p><code>public virtual</code> void SetReferences(<a href="../../../commons/refer/ireferences">IReferences</a> references)</p>
 </blockquote>
 <ul>
-<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component dependencies.</li>
+<li><strong>references</strong>: <a href="../../../commons/refer/ireferences">IReferences</a> - references to locate the component&rsquo;s dependencies.</li>
 </ul>
 <h4 id="instrument">Instrument</h4>
-<p>TODO: add description</p>
+<p>Starts timing.</p>
 <blockquote>
 <p><code>public virtual</code> <a href="../../count/counter_timing">CounterTiming</a> Instrument(string correlationId, string methodName, string message=&quot;&quot;)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>methodName</strong>: string - TODO: add description</li>
-<li><strong>message</strong>: string - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>methodName</strong>: string - name of the method</li>
+<li><strong>message</strong>: string - message</li>
 </ul>
 <h4 id="handleerror">HandleError</h4>
-<p>TODO: add description</p>
+<p>Logs an error.</p>
 <blockquote>
 <p><code>public virtual</code> void HandleError(string correlationId, string methodName, Exception ex)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>methodName</strong>: string - TODO: add description</li>
-<li><strong>ex</strong>: Exception - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>methodName</strong>: string - name of the method</li>
+<li><strong>ex</strong>: Exception - exception</li>
 </ul>
 <h4 id="safeinvokeasync">SafeInvokeAsync</h4>
-<p>TODO: add description</p>
+<p>Invokes a function.</p>
 <blockquote>
 <p><code>public virtual</code> Task&lt;T&gt; SafeInvokeAsync&lt;T&gt;(string correlationId, string methodName, Func&lt;Task&lt;T&gt;&gt; invokeFunc, bool throwException=false)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>methodName</strong>: string - TODO: add description</li>
-<li><strong>invokeFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - TODO: add description</li>
-<li><strong>throwException</strong>: bool - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>methodName</strong>: string - name of the method</li>
+<li><strong>invokeFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - invoked function</li>
+<li><strong>throwException</strong>: bool - true if can throw an exception and false otherwise</li>
 </ul>
 <h4 id="safeinvokeasync-1">SafeInvokeAsync</h4>
-<p>TODO: add description</p>
+<p>Invokes a function and handles the error if it fails.</p>
 <blockquote>
 <p><code>public virtual</code> Task&lt;T&gt; SafeInvokeAsync&lt;T&gt;(string correlationId, string methodName, Func&lt;Task&lt;T&gt;&gt; invokeFunc, Func&lt;Task&lt;T&gt;&gt; errorHandlerFunc, bool throwException=false)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>methodName</strong>: string - TODO: add description</li>
-<li><strong>invokeFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - TODO: add description</li>
-<li><strong>errorHandlerFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - TODO: add description</li>
-<li><strong>throwException</strong>: bool - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>methodName</strong>: string - name of the method</li>
+<li><strong>invokeFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - invoked function</li>
+<li><strong>errorHandlerFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - error handling function</li>
+<li><strong>throwException</strong>: bool - true if can throw an exception and false otherwise</li>
 </ul>
 <h4 id="retrievefromcacheasync">RetrieveFromCacheAsync</h4>
-<p>TODO: add description</p>
+<p>Retrieves from cache based on the cache key.</p>
 <blockquote>
 <p><code>public virtual</code> Task&lt;T&gt; RetrieveFromCacheAsync&lt;T&gt;(string correlationId, string cacheKey)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>cacheKey</strong>: string - TODO: add description</li>
+<li><strong>cacheKey</strong>: string - cache key</li>
 </ul>
 <h4 id="storeincacheasync">StoreInCacheAsync</h4>
-<p>TODO: add description</p>
+<p>Stores in cache using the cache key.</p>
 <blockquote>
 <p><code>public virtual</code> Task&lt;T&gt; StoreInCacheAsync&lt;T&gt;(string correlationId, string cacheKey, T result)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>cacheKey</strong>: string - TODO: add description</li>
-<li><strong>result</strong>: T - TODO: add description</li>
+<li><strong>cacheKey</strong>: string - cache key</li>
+<li><strong>result</strong>: T -  Cached value or null if the value is not stored.</li>
 </ul>
 <h4 id="removefromcacheasync">RemoveFromCacheAsync</h4>
-<p>TODO: add description</p>
+<p>Removes from cache.</p>
 <blockquote>
 <p><code>public virtual</code> Task RemoveFromCacheAsync(string correlationId, string id)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>id</strong>: string - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>id</strong>: string - id</li>
 </ul>
 <h4 id="getprojectioncachekey">GetProjectionCacheKey</h4>
-<p>TODO: add description</p>
+<p>Gets the projection</p>
 <blockquote>
 <p><code>public virtual</code> string GetProjectionCacheKey(string id)</p>
 </blockquote>
 <ul>
-<li><strong>id</strong>: string - TODO: add description</li>
+<li><strong>id</strong>: string - id</li>
 </ul>
 <h4 id="getcachekey">GetCacheKey</h4>
-<p>TODO: add description</p>
+<p>Returns the component&rsquo;s id.</p>
 <blockquote>
 <p><code>public virtual</code> string GetCacheKey(string id)</p>
 </blockquote>
 <ul>
-<li><strong>id</strong>: string - TODO: add description</li>
+<li><strong>id</strong>: string - id</li>
 </ul>
 <h4 id="auditcreateasync">AuditCreateAsync</h4>
-<p>TODO: add description</p>
+<p>Checks if an object is created.</p>
 <blockquote>
 <p><code>public virtual</code> Task AuditCreateAsync&lt;T&gt;(string correlationId, string collectionName, object createdObject, Func&lt;Task&lt;T&gt;&gt; auditFunc)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>collectionName</strong>: string - TODO: add description</li>
-<li><strong>createdObject</strong>: object - TODO: add description</li>
-<li><strong>auditFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>collectionName</strong>: string - name of the collection</li>
+<li><strong>createdObject</strong>: object - created object</li>
+<li><strong>auditFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - audit function</li>
 </ul>
 <h4 id="auditupdateasync">AuditUpdateAsync</h4>
-<p>TODO: add description</p>
+<p>Audits the update of an object.</p>
 <blockquote>
 <p><code>public virtual</code> Task AuditUpdateAsync&lt;T&gt;(string correlationId, string collectionName, object oldObject, object updatedObject, Func&lt;Task&lt;T&gt;&gt; auditFunc)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>collectionName</strong>: string - TODO: add description</li>
-<li><strong>oldObject</strong>: object - TODO: add description</li>
-<li><strong>updatedObject</strong>: object - TODO: add description</li>
-<li><strong>auditFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>collectionName</strong>: name of the collection</li>
+<li><strong>oldObject</strong>: object - old object</li>
+<li><strong>updatedObject</strong>: object - updated object</li>
+<li><strong>auditFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - audit function</li>
 </ul>
-<h4 id="auditupdateasync-1">AuditUpdateAsync</h4>
-<p>TODO: add description</p>
+<h4 id="auditdeleteasync">AuditDeleteAsync</h4>
+<p>Audits the delete of an object.</p>
 <blockquote>
 <p><code>public virtual</code> Task AuditDeleteAsync&lt;T&gt;(string correlationId, string collectionName, object deletedObject, Func&lt;Task&lt;T&gt;&gt; auditFunc)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id to trace execution through call chain.</li>
-<li><strong>collectionName</strong>: string - TODO: add description</li>
-<li><strong>deletedObject</strong>: object - TODO: add description</li>
-<li><strong>auditFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - TODO: add description</li>
+<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>collectionName</strong>: string - name of the collection</li>
+<li><strong>deletedObject</strong>: object - deleted object</li>
+<li><strong>auditFunc</strong>: Func&lt;Task&lt;T&gt;&gt; - audit function</li>
 </ul>
 <h3 id="see-also">See also</h3>
 <ul>
