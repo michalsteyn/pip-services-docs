@@ -74,10 +74,20 @@ GRPC-based remote interface.&lt;/li&gt;
 &lt;blockquote&gt;
 &lt;p&gt;register()&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;h4 id=&#34;_register_commandable_method&#34;&gt;_register_commandable_method&lt;/h4&gt;
+&lt;p&gt;Registers a commandable method in this objects GRPC server (service) by the given name.,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_register_commandable_method(method: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: Callable[[Optional[str], Any], Any])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: str - the GRPC method name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - the schema to use for parameter validation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[Optional[str], Any], Any] - the action to perform at the given route.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyCommandableGrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;CommandableGrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;service name&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
         &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependency_resolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
             &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
@@ -182,38 +192,29 @@ following references to the object&amp;rsquo;s &lt;a href=&#34;#set_references&#
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;registration&lt;/strong&gt;: &lt;a href=&#34;../iregisterable&#34;&gt;IRegisterable&lt;/a&gt; - registration to be added.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h4 id=&#34;register_service&#34;&gt;register_service&lt;/h4&gt;
+&lt;p&gt;Registers a service with related implementation&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;register_service(service: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;service&lt;/strong&gt;: Any - a GRPC service object.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4 id=&#34;_register_commandable_method&#34;&gt;_register_commandable_method&lt;/h4&gt;
 &lt;p&gt;Registers a commandable method in the object&amp;rsquo;s GRPC server (service) by the given name.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;_register_commandable_method(method: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None])&lt;/p&gt;
+&lt;p&gt;_register_commandable_method(method: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: Callable[[Optional[str], Any], Any])&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: str - GRPC method name.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - schema to use for parameter validation.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None] - action to perform at the given route.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;_register_interceptor&#34;&gt;_register_interceptor&lt;/h4&gt;
-&lt;p&gt;Registers a middleware for methods in GRPC endpoint.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;_register_interceptor(interceptor: Callable)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;interceptor&lt;/strong&gt;: Callable - the middleware action to perform at the given route.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;_register_method&#34;&gt;_register_method!&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented for Python&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Registers a middleware for methods in GRPC endpoint.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;_register_method(name: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: action: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None])&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a method name&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - a validation schema to validate received parameters.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None] - an action function that is called when operation is invoked.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: action: Callable[[Optional[str], Any], Any] - action to perform at the given route.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;my_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+    
     &lt;span style=&#34;color:#111&#34;&gt;endpoint&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;GrpcEndpoint&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
     &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;endpoint&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
@@ -295,6 +296,9 @@ following references to the object&amp;rsquo;s &lt;a href=&#34;#set_references&#
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;_logger&lt;/strong&gt;: &lt;a href=&#34;../../../components/log/composite_logger&#34;&gt;CompositeLogger&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;_tracer&lt;/strong&gt;: &lt;a href=&#34;../../../components/trace/composite_tracer&#34;&gt;CompositeTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h4 id=&#34;_counters&#34;&gt;_counters&lt;/h4&gt;
 &lt;p&gt;The performance counters.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -309,6 +313,25 @@ following references to the object&amp;rsquo;s &lt;a href=&#34;#set_references&#
 &lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; register()&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;_apply_validation&#34;&gt;_apply_validation&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_apply_validation(schema: Schema, action: Callable[[InvokeRequest, ServicerContext], Any]): Callable[[InvokeRequest, ServicerContext], Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext], Any] - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext], Any] - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_apply_interceptors&#34;&gt;_apply_interceptors&lt;/h4&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_apply_interceptors(action: Callable[[InvokeRequest, ServicerContext], Any]): Callable[[InvokeRequest, ServicerContext], Any]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext], Any] - TODO: add description&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext], Any] - TODO: add description&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4 id=&#34;close&#34;&gt;close&lt;/h4&gt;
 &lt;p&gt;Closes the component and frees used resources.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -337,12 +360,12 @@ following references to the object&amp;rsquo;s &lt;a href=&#34;#set_references&#
 &lt;p&gt;Adds instrumentation to log calls and measures call time.
 It returns a CounterTiming object that is used to end the time measurement.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;_instrument(correlation_id: Optional[str], name: str): &lt;a href=&#34;../../../components/cout/counter_timing&#34;&gt;CounterTiming&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;_instrument(correlation_id: Optional[str], name: str): &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;InstrumentTiming&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - method name.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../components/cout/counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - CounterTiming object used to end the time measurement.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../../../rpc/services/instrument_timing&#34;&gt;InstrumentTiming&lt;/a&gt; - CounterTiming object used to end the time measurement.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;_instrument_error&#34;&gt;_instrument_error&lt;/h4&gt;
 &lt;p&gt;Adds instrumentation to error handling.&lt;/p&gt;
@@ -363,34 +386,34 @@ It returns a CounterTiming object that is used to end the time measurement.&lt;/
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id used to trace execution through the call chain.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;_register_commandable_method&#34;&gt;_register_commandable_method&lt;/h4&gt;
-&lt;p&gt;Registers a commandable method in the object&amp;rsquo;s GRPC server (service) by the given name.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;_register_commandable_method(method: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None])&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt;: str - GRPC method name.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - schema used for parameter validation.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None] - action to perform at the given route.&lt;/li&gt;
-&lt;/ul&gt;
 &lt;h4 id=&#34;_register_interceptor&#34;&gt;_register_interceptor&lt;/h4&gt;
 &lt;p&gt;Registers a middleware for methods in GRPC endpoint.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;_register_interceptor(interceptor: Callable)&lt;/p&gt;
+&lt;p&gt;_register_interceptor(interceptor: Callable[[InvokeRequest, ServicerContext, Callable], Any])&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;interceptor&lt;/strong&gt;: Callable - middleware action to perform at the given route.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;interceptor&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext, Callable], Any] - middleware action to perform at the given route.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;_register_method&#34;&gt;_register_method!&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;TODO: this method is not implemented for Python&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;_register_method&#34;&gt;_register_method&lt;/h4&gt;
 &lt;p&gt;Registers a middleware for methods in GRPC endpoint.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;_register_method(name: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: action: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None])&lt;/p&gt;
+&lt;p&gt;_register_method(name: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, action: Callable[[InvokeRequest, ServicerContext], Any])&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - method name&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - validation schema to validate received parameters.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[Optional[str], Optional[str], &lt;a href=&#34;../../../commons/run/parameters&#34;&gt;Parameters&lt;/a&gt;], None] - action function that is called when operation is invoked.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext], Any] - action function that is called when operation is invoked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;_register_method_with_auth&#34;&gt;_register_method_with_auth&lt;/h4&gt;
+&lt;p&gt;Registers a method with authorization.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;_register_method_with_auth(name: str, schema: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt;, authorize: Callable[[InvokeRequest, ServicerContext, Callable], Any], action: Callable[[InvokeRequest, ServicerContext, Callable], Any])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: str - a method name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;schema&lt;/strong&gt;: &lt;a href=&#34;../../../commons/validate/schema&#34;&gt;Schema&lt;/a&gt; - a validation schema to validate received parameters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;authorize&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext, Callable], Any] - an authorization interceptor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;action&lt;/strong&gt;: Callable[[InvokeRequest, ServicerContext, Callable], Any] - an action function that is called when operation is invoked.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;set_references&#34;&gt;set_references&lt;/h4&gt;
 &lt;p&gt;Sets references to dependent components.&lt;/p&gt;
@@ -406,32 +429,42 @@ It returns a CounterTiming object that is used to end the time measurement.&lt;/
 &lt;p&gt;unset_references()&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyGrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;GrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyGrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;GrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;my_data_pb2_grpc&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;MyDataServicer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+
     &lt;span style=&#34;color:#111&#34;&gt;__controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IMyController&lt;/span&gt;
+
     &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+
     &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#111&#34;&gt;suoer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;... path to proto ...&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;.. service name ...&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;suoer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__init__&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;.. service name ...&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependency_resolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
             &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
             &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mygroup&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;add_servicer_to_server&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;server&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;my_data_pb2_grpc&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;add_MyDataServicer_to_server&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;server&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
     &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;set_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;set_references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_dependency_resolver&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_required&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;__number_of_calls_interceptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;InvokeRequest&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ServicerContext&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+                            &lt;span style=&#34;color:#111&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Callable&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[[&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;InvokeRequest&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ServicerContext&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Any&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;]):&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Any&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__number_of_calls&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;next&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;__method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;InvokeRequest&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ServicerContext&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;get_my_data&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
 
     &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlation_id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;getted_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;):&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;call&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;call&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_controller&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;getMyData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;callback&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-
-        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;register_commadable_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get_mydata&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_register_interceptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;__number_of_calls_interceptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_register_method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;get_mydata&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;None&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;method&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+        
+        &lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_register_service&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
         &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
-
-
 
 &lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MyGrpcService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;service&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;from_tuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
