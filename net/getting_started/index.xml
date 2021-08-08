@@ -187,7 +187,7 @@
 &lt;li&gt;The controller, which generates responses to requests&lt;/li&gt;
 &lt;li&gt;A REST service for the transmission of responses and requests&lt;/li&gt;
 &lt;li&gt;The component factory for the dynamic creation of components&lt;/li&gt;
-&lt;li&gt;A container process, which will be filled with the necessary components, based on yml configuration.&lt;/li&gt;
+&lt;li&gt;A container process, which will be filled with the necessary components, based on a yml configuration file.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;step-1-project-setup&#34;&gt;Step 1. Project setup&lt;/h3&gt;
 &lt;p&gt;Create a folder for the project, open it in Visual Studio Code and run the command:&lt;/p&gt;
@@ -218,7 +218,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Configure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ConfigParams&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;){&lt;/span&gt;
     &lt;span style=&#34;color:#ae81ff&#34;&gt;_d&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;efaultName&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;GetAsStringWithDefault&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default_name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now, parameters that are read by the microservice from the configuration file will be passed to the “Configure” method of the corresponding component. Here’s an example of a configuration:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now, the parameters that are read by the microservice from the configuration file will be passed to the “Configure” method of the corresponding component. Here’s an example of a configuration:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Controller&lt;/span&gt;
 - &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world:controller:default:default:1.0&amp;#34;&lt;/span&gt;
   &lt;span style=&#34;color:#f92672&#34;&gt;default_name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;World&amp;#34;&lt;/span&gt;
@@ -389,7 +389,7 @@
 &lt;/ul&gt;
 &lt;p&gt;As you may have noticed, more than half of the components are being taken from Pip.Services and used “right out of the box”. This significantly expands our microservice’s capabilities, with minimal effort on our part.&lt;/p&gt;
 &lt;h3 id=&#34;step-6-run-and-test-the-microservice&#34;&gt;Step 6. Run and test the microservice&lt;/h3&gt;
-&lt;p&gt;In .NET, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.&lt;/p&gt;
+&lt;p&gt;In .NET, we’ll need a special file to run the microservice. All this file does is to create a container instance and run it with the parameters provided from the command line.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/Program.cs&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; 
 
@@ -415,10 +415,10 @@
 &lt;p&gt;Using the factory, the container creates the necessary components in accordance with their descriptors (see &lt;a href=&#34;../../recipes/container&#34;&gt;The Container recipe&lt;/a&gt;);&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;The components are configured. During this step, all components that implement the IConfigurable interface have their configure methods called with the configuration defined in config.yml passed as a parameter (see &lt;a href=&#34;(../../recipes/configuration)&#34;&gt;The Configuration recipe&lt;/a&gt;);&lt;/p&gt;
+&lt;p&gt;The components are configured. During this step, all components that implement the IConfigurable interface have their configure methods called with the configuration defined in config.yml passed as a parameter (see &lt;a href=&#34;../../recipes/configuration&#34;&gt;The Configuration recipe&lt;/a&gt;;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Components are linked. All components that implement the IReferenceable interface get their setReferences methods called with a list of components available in the container. With the help of descriptors, objects can find all necessary dependencies (see [The References recipe]);&lt;/p&gt;
+&lt;p&gt;Components are linked. All components that implement the IReferenceable interface get their setReferences methods called with a list of components available in the container. With the help of descriptors, objects can find all necessary dependencies (see &lt;a href=&#34;&#34;&gt;The References recipe&lt;/a&gt;);&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Components with active processes are run. A component is considered to contain active processes if it implements the IOpenable interface and has an open method defined (see &lt;a href=&#34;../../recipes/component_lifecycle&#34;&gt;The Component Lifecycle recipe&lt;/a&gt;).&lt;/p&gt;
@@ -442,7 +442,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 &lt;p&gt;If all’s well, you should get the following string as a result:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Hello, John!&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;All source codes are available on &lt;a href=&#34;https://github.com/pip-services-samples/service-quickstart-dotnet&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To learn even more about Pip.Services, consider creating a &lt;a href=&#34;../../turptials/data_microservice&#34;&gt;Data Microservice&lt;/a&gt; as your next step!&lt;/p&gt;
+&lt;p&gt;To learn even more about Pip.Services, consider creating a &lt;a href=&#34;../../tutorials/data_microservice&#34;&gt;Data Microservice&lt;/a&gt; as your next step!&lt;/p&gt;
 
       </description>
     </item>
@@ -467,7 +467,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 &lt;p&gt;&lt;strong&gt;Q: What is a recommended strategy for incremental adoption of Pip.Services?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Irrelevant to implementation details, the first step in microservices development is always to establish consolidated logging and metrics across all microservices. Whether you instrument your existing microservices using loggers and performance counters from Pip.Services toolkit, or wrap your existing logging and monitoring into Pip.Services components. Then you shall go through 3 steps in any order: decompose microservice code into loosely coupled components, implement properly versioned interfaces, package microservice components into appropriate containers.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: How stable is Pip.Services toolkit?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; It depends. Core of the toolkit (commons, components, container, data, rpc, messaging) is stable, while some technology-specific modules can be less stable. Also it depends on the language. Our team developed hundreds of microservices in .NET and Node.js in many projects and that implementation is very stable. Golang and Dart are quite new. Golang is being quickly adopted and maturing fast. Many 3rd party libraries in Dart are still low quality and using Dart in production carries a lot of risks (mid 2020). Python was added mainly to experiment with BigData, AI and Natural Languages and hasn’t been used a lot. And Java implementation didn’t get much attention yet. SpringBoot is a great framework which dominates the Java world. We are not trying to compete with it directly. We keep the Java version for clients who value code symmetry more than bells and whistles that SpringBoot provides.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; It depends. Core of the toolkit (commons, components, container, data, rpc, messaging) is stable, while some technology-specific modules can be less stable. Also it depends on the language. Our team developed hundreds of microservices in .NET and Node.js in many projects and that implementation is very stable. Golang and Dart are quite new. Golang is being quickly adopted and maturing fast. Many 3rd party libraries in Dart are still low quality and using Dart in production carries a lot of risks (mid 2020). Python was added mainly to experiment with BigData, AI and Natural Languages and hasn’t been used a lot. And Java implementation didn’t get much attention yet. SpringBoot is a great framework which dominates the Java world. We are not trying to compete with it directly. We keep the Java version for clients who value code symmetry more than the bells and whistles that SpringBoot provides.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: I’m not sure microservices is the right approach or/and there is a resistance to microservice in my organization. What shall I do?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Any architecture whether it is monolithic, course services or microservices has its own pros and cons. You shall carefully consider it’s short-term as well as long-term impact. And Pip.Services toolkit is not just for microservices. It is simply a collection of patterns that can be used in any architecture. It just happens that we use it for microservices more often. Moreover, we created a special technique using containers and direct clients when we develop microservices, but deploy them as a monolithic system. That helps to lower initial barrier/cost and can be highly valuable for startups or organizations that are cost sensitive or just not ready for microservices yet. Later that code can be decoupled and redeployed as independent microservices without changing a line of code!&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: Does Pip.Services support backward compatibility?&lt;/strong&gt;&lt;/p&gt;
@@ -477,7 +477,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 &lt;p&gt;&lt;strong&gt;Q: I like Pip.Services and would like to contribute. What can I do?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Oh, there are lots of things where you can help: writing and maintaining code, writing documentation and tutorials, supporting other developers or just spreading the word about the project. Any help is welcome and appreciated. Just send us a message and we’ll get you into the project.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: I haven’t found an answer to my question. What shall I do?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Ask you question on [stackoverflow] or send us a message, and we may add you question to this FAQ&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Ask you question on &lt;a href=&#34;https://stackoverflow.com/&#34;&gt;stackoverflow&lt;/a&gt; or send us a message, and we may add you question to this FAQ.&lt;/p&gt;
 
       </description>
     </item>

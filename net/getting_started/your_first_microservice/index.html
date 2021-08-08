@@ -245196,7 +245196,7 @@
 <li>The controller, which generates responses to requests</li>
 <li>A REST service for the transmission of responses and requests</li>
 <li>The component factory for the dynamic creation of components</li>
-<li>A container process, which will be filled with the necessary components, based on yml configuration.</li>
+<li>A container process, which will be filled with the necessary components, based on a yml configuration file.</li>
 </ul>
 <h3 id="step-1-project-setup">Step 1. Project setup</h3>
 <p>Create a folder for the project, open it in Visual Studio Code and run the command:</p>
@@ -245227,7 +245227,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">){</span>
     <span style="color:#ae81ff">_d</span><span style="color:#111">efaultName</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">GetAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;default_name&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
 <span style="color:#111">}</span>
-</code></pre></div><p>Now, parameters that are read by the microservice from the configuration file will be passed to the “Configure” method of the corresponding component. Here’s an example of a configuration:</p>
+</code></pre></div><p>Now, the parameters that are read by the microservice from the configuration file will be passed to the “Configure” method of the corresponding component. Here’s an example of a configuration:</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e"># Controller</span>
 - <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span>
   <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span>
@@ -245398,7 +245398,7 @@
 </ul>
 <p>As you may have noticed, more than half of the components are being taken from Pip.Services and used “right out of the box”. This significantly expands our microservice’s capabilities, with minimal effort on our part.</p>
 <h3 id="step-6-run-and-test-the-microservice">Step 6. Run and test the microservice</h3>
-<p>In .NET, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.</p>
+<p>In .NET, we’ll need a special file to run the microservice. All this file does is to create a container instance and run it with the parameters provided from the command line.</p>
 <p><strong>/Program.cs</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">{</span> 
 
@@ -245424,10 +245424,10 @@
 <p>Using the factory, the container creates the necessary components in accordance with their descriptors (see <a href="../../recipes/container">The Container recipe</a>);</p>
 </li>
 <li>
-<p>The components are configured. During this step, all components that implement the IConfigurable interface have their configure methods called with the configuration defined in config.yml passed as a parameter (see <a href="(../../recipes/configuration)">The Configuration recipe</a>);</p>
+<p>The components are configured. During this step, all components that implement the IConfigurable interface have their configure methods called with the configuration defined in config.yml passed as a parameter (see <a href="../../recipes/configuration">The Configuration recipe</a>;</p>
 </li>
 <li>
-<p>Components are linked. All components that implement the IReferenceable interface get their setReferences methods called with a list of components available in the container. With the help of descriptors, objects can find all necessary dependencies (see [The References recipe]);</p>
+<p>Components are linked. All components that implement the IReferenceable interface get their setReferences methods called with a list of components available in the container. With the help of descriptors, objects can find all necessary dependencies (see <a href="">The References recipe</a>);</p>
 </li>
 <li>
 <p>Components with active processes are run. A component is considered to contain active processes if it implements the IOpenable interface and has an open method defined (see <a href="../../recipes/component_lifecycle">The Component Lifecycle recipe</a>).</p>
@@ -245451,7 +245451,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 <p>If all’s well, you should get the following string as a result:</p>
 <p><code>Hello, John!</code></p>
 <p>All source codes are available on <a href="https://github.com/pip-services-samples/service-quickstart-dotnet">GitHub</a>.</p>
-<p>To learn even more about Pip.Services, consider creating a <a href="../../turptials/data_microservice">Data Microservice</a> as your next step!</p>
+<p>To learn even more about Pip.Services, consider creating a <a href="../../tutorials/data_microservice">Data Microservice</a> as your next step!</p>
 
         <div class="section-index">
     
