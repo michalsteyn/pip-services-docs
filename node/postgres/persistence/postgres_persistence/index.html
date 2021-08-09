@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/postgres/persistence/postgres_persistence/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-07T20:30:51+03:00" />
+<meta property="article:modified_time" content="2021-08-09T18:22:54+03:00" />
 
 <meta itemprop="name" content="PostgresPersistence">
 <meta itemprop="description" content="Abstract persistence component that stores data in PostgreSQL using the official driver.
 ">
-<meta itemprop="dateModified" content="2021-07-07T20:30:51+03:00" />
-<meta itemprop="wordCount" content="1320">
+<meta itemprop="dateModified" content="2021-08-09T18:22:54+03:00" />
+<meta itemprop="wordCount" content="1361">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="PostgresPersistence"/>
 <meta name="twitter:description" content="Abstract persistence component that stores data in PostgreSQL using the official driver.
@@ -245521,6 +245521,7 @@
                 <li><a href="#_client">_client</a></li>
                 <li><a href="#_databasename">_databaseName</a></li>
                 <li><a href="#_maxpagesize">_maxPageSize</a></li>
+                <li><a href="#_schemaname">_schemaName</a></li>
               </ul>
             </li>
             <li><a href="#instance-methods">Instance methods</a>
@@ -245548,6 +245549,7 @@
                 <li><a href="#isopen">isOpen</a></li>
                 <li><a href="#open">open</a></li>
                 <li><a href="#quoteidentifier">quoteIdentifier</a></li>
+                <li><a href="#quotedtablename">quotedTableName</a></li>
                 <li><a href="#setreferences">setReferences</a></li>
                 <li><a href="#unsetreferences">unsetReferences</a></li>
               </ul>
@@ -245658,8 +245660,11 @@
 </ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
-<li><strong>collection</strong>: (optional) PostgreSQL collection name
-<strong>connection(s)</strong>:</li>
+<li><strong>table</strong>: (optional) PostgreSQL table name</li>
+<li><strong>schema</strong>: (optional) PostgreSQL schema name</li>
+</ul>
+<p><strong>connection(s)</strong>:</p>
+<ul>
 <li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
 <li><strong>host</strong>: host name or IP address</li>
 <li><strong>port</strong>: port number (default: 27017)</li>
@@ -245686,10 +245691,11 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of the persistence component.</p>
 <blockquote>
-<p><code>public</code> constructor(tableName?: string)</p>
+<p><code>public</code> constructor(tableName?: string,  schemaName?: string)</p>
 </blockquote>
 <ul>
 <li><strong>tableName</strong>: string - (optional) table name.</li>
+<li><strong>schemaName</strong>: string - (optional) a schema name.</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
@@ -245727,6 +245733,11 @@
 <p>The maximum number of records to return from the database.</p>
 <blockquote>
 <p><code>protected</code> <strong>_maxPageSize</strong> = 100</p>
+</blockquote>
+<h4 id="_schemaname">_schemaName</h4>
+<p>The SQLServer schema object.</p>
+<blockquote>
+<p><code>protected</code> <strong>_schemaName</strong>: string</p>
 </blockquote>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
@@ -245940,6 +245951,14 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 </blockquote>
 <ul>
 <li><strong>value</strong>: string - string where quotes need to be added</li>
+<li><strong>returns</strong>: string - string with added quotes</li>
+</ul>
+<h4 id="quotedtablename">quotedTableName</h4>
+<p>Joins schema and database name in dot notation</p>
+<blockquote>
+<p><code>protected</code> quotedTableName(): string</p>
+</blockquote>
+<ul>
 <li><strong>returns</strong>: string - string with added quotes</li>
 </ul>
 <h4 id="setreferences">setReferences</h4>

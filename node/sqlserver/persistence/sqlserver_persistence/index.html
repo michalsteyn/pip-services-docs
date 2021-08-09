@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/sqlserver/persistence/sqlserver_persistence/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-07T20:30:51+03:00" />
+<meta property="article:modified_time" content="2021-08-09T18:22:54+03:00" />
 
 <meta itemprop="name" content="SqlServerPersistence">
 <meta itemprop="description" content="Abstract persistence component that stores data in a SQLServer database using the official driver.
 ">
-<meta itemprop="dateModified" content="2021-07-07T20:30:51+03:00" />
-<meta itemprop="wordCount" content="1359">
+<meta itemprop="dateModified" content="2021-08-09T18:22:54+03:00" />
+<meta itemprop="wordCount" content="1369">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="SqlServerPersistence"/>
 <meta name="twitter:description" content="Abstract persistence component that stores data in a SQLServer database using the official driver.
@@ -245520,11 +245520,11 @@
                 <li><a href="#_databasename">_databaseName</a></li>
                 <li><a href="#_maxpagesize">_maxPageSize</a></li>
                 <li><a href="#_requestfactory">_requestFactory</a></li>
+                <li><a href="#_schemaname">_schemaName</a></li>
               </ul>
             </li>
             <li><a href="#instance-methods">Instance methods</a>
               <ul>
-                <li><a href="#autocreateobject">autoCreateObject</a></li>
                 <li><a href="#clear">clear</a></li>
                 <li><a href="#clearschema">clearSchema</a></li>
                 <li><a href="#close">close</a></li>
@@ -245549,6 +245549,7 @@
                 <li><a href="#isopen">isOpen</a></li>
                 <li><a href="#open">open</a></li>
                 <li><a href="#quoteidentifier">quoteIdentifier</a></li>
+                <li><a href="#quotedtablename">quotedTableName</a></li>
                 <li><a href="#setreferences">setReferences</a></li>
                 <li><a href="#unsetreferences">unsetReferences</a></li>
               </ul>
@@ -245658,7 +245659,8 @@
 </ul>
 <h4 id="configuration-parameters">Configuration parameters</h4>
 <ul>
-<li><strong>collection</strong>: (optional) SQLServer collection name<br>
+<li><strong>table</strong>: (optional) SQLServer table name</li>
+<li><strong>schema</strong>: (optional) SQLServer table name
 <strong>connection(s)</strong>:</li>
 <li><strong>discovery_key</strong>: (optional) key to retrieve the connection from <a href="../../../components/connect/idiscovery">IDiscovery</a></li>
 <li><strong>host</strong>: host name or IP address</li>
@@ -245686,10 +245688,11 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of the persistence component.</p>
 <blockquote>
-<p><code>public</code> constructor(tableName?: string)</p>
+<p><code>public</code> constructor(tableName?: string, _schemaName? string)</p>
 </blockquote>
 <ul>
 <li><strong>tableName</strong>: string - (optional) table name.</li>
+<li><strong>_schemaName</strong>: string - (optional) a schema name.</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
@@ -245733,19 +245736,13 @@
 <blockquote>
 <p><code>protected</code> <strong>_requestFactory</strong>: any</p>
 </blockquote>
+<h4 id="_schemaname">_schemaName</h4>
+<p>The SQLServer schema object.</p>
+<blockquote>
+<p><code>protected</code> <strong>_schemaName</strong>: string</p>
+</blockquote>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
-<h4 id="autocreateobject">autoCreateObject</h4>
-<p>Adds an index definition to be created on opening.</p>
-<ul>
-<li>This is a deprecated method. Use <strong>ensureSchema</strong> instead.</li>
-</ul>
-<blockquote>
-<p><code>protected</code> autoCreateObject(schemaStatement: string): void</p>
-</blockquote>
-<ul>
-<li><strong>schemaStatement</strong>: string - DML statement to autocreate database object</li>
-</ul>
 <h4 id="clear">clear</h4>
 <p>Clears component state.</p>
 <blockquote>
@@ -245966,6 +245963,14 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 </blockquote>
 <ul>
 <li><strong>value</strong>: string - string where quotes need to be added</li>
+<li><strong>returns</strong>: string - string with added quotes</li>
+</ul>
+<h4 id="quotedtablename">quotedTableName</h4>
+<p>Joins schema and database name in dot notation</p>
+<blockquote>
+<p><code>protected</code> quotedTableName(): string</p>
+</blockquote>
+<ul>
 <li><strong>returns</strong>: string - string with added quotes</li>
 </ul>
 <h4 id="setreferences">setReferences</h4>
