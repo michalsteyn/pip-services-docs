@@ -24,15 +24,15 @@
         
         
         &lt;p&gt;Let’s do some small preparation of the project before we start writing the client library.&lt;/p&gt;
-&lt;p&gt;First, create the following directory structure to keep the source code organized:&lt;/p&gt;
+&lt;p&gt;First, we create the following directory structure to keep the source code organized:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/src
 └───/version1
 /test
 └───/version1
 
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Prepare the initial project files, as described in the tutorial on &lt;a href=&#34;../../data_microservice&#34;&gt;creating a data microservice&lt;/a&gt;, for the language of your choice and perform the initialization process.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then, we prepare the initial project files, as described in the tutorial on creating a &lt;a href=&#34;../../data_microservice&#34;&gt;data microservice&lt;/a&gt;, for our chosen language and perform the initialization process.&lt;/p&gt;
 &lt;p&gt;Since data is transferred between the client and the microservice using a specific protocol, this data must be defined for the client to work correctly. Some developers prefer to export general data structures, define external interfaces in a separate library, and use it on the client and on the server. However, to minimize the amount of libraries and simplify dependencies, we prefer to just copy the data structure from the microservice to the client library. This won’t cause any additional problems, since after changing the external interface, the client should be updated and retested anyways.&lt;/p&gt;
-&lt;p&gt;Copy the files from the microservice’s data folder into the &lt;strong&gt;src/data/version1&lt;/strong&gt; folder of our client project. The microservice’s source code can be found at the following &lt;a href=&#34;https://github.com/pip-services-samples/service-beacons-dotnet&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we copy the files from the microservice’s data folder into the &lt;strong&gt;src/data/version1&lt;/strong&gt; folder of our client project. The microservice’s source code can be found &lt;a href=&#34;https://github.com/pip-services-samples/service-beacons-dotnet&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;For “strongly typed” languages (e.g. Dart), you’ll have to import the data model files from the microservice using the import directive, instead of just copying the directory over. This will guarantee an exact type match.&lt;/p&gt;
 &lt;p&gt;Now we’re ready to start writing our client library. When you’re ready, continue on to &lt;a href=&#34;../step2&#34;&gt;Step 2. Designing a Direct Client.&lt;/a&gt;&lt;/p&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
@@ -67,7 +67,7 @@
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let’s start writing our direct client. This will be a class that implements the interface we defined above, that has our controller set as a dependency in the controller, and that will call the controller’s methods when asked to. To learn more about the referencing and linking mechanisms, be sure to read &lt;a href=&#34;../../recipes/component_references/&#34;&gt;The Referenceable Recipes&lt;/a&gt;. Ultimately, this will just be a wrapper class for the container.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let’s start writing our direct client. This will be a class that implements the interface we defined above, that has our controller set as a dependency in the controller, and that will call the controller’s methods when asked to. To learn more about the referencing and linking mechanisms, be sure to read &lt;a href=&#34;../../recipes/component_references/&#34;&gt;The Referenceable Recipe&lt;/a&gt;. Ultimately, this will just be a wrapper class for the container.
 The direct client’s code is listed below:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;src/version1/BeaconsDirectClientV1.cs&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;BeaconsDirectClientV1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;DirectClient&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IBeaconsController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IBeaconsClientV1&lt;/span&gt;
@@ -200,11 +200,11 @@ The direct client’s code is listed below:&lt;/p&gt;
 
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now that we’re done writing the client, we should test it.
-To be sure that our code works as intended, we need to perform some functional testing. Let’s start with creating, in a separate class, a set of tests that will be common to all our clients. This will help us simplify the process of testing multiple clients, as well as make sure that they all work the same. We’ll place the code for our tests in the &lt;strong&gt;test/version1&lt;/strong&gt; folder. The code for this class can be found in the &lt;a href=&#34;https://github.com/pip-services-samples/client-beacons-dotnet&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Now, let’s test the direct client. To do this, create an instance of the direct client and pass it as a parameter to our set of tests.
-An example implementation of the tests can be found in the example’s &lt;a href=&#34;https://github.com/pip-services-samples/client-beacons-dotnet&#34;&gt;repository&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Run the tests using the testing methods that are standard for the programming language you are using. All tests should pass successfully.This finishes the development of the Direct client.
-Move on to &lt;a href=&#34;../step3&#34;&gt;Step 3 to create the HTTP client&lt;/a&gt;.&lt;/p&gt;
+To be sure that our code works as intended, we need to perform some functional testing. Let’s start with creating, in a separate class, a set of tests that will be common to all our clients. This will help us simplify the process of testing multiple clients, as well as make sure that they all work the same. We’ll place the code for our tests in the &lt;strong&gt;test/version1&lt;/strong&gt; folder.&lt;/p&gt;
+&lt;p&gt;Now, let’s test the direct client. To do this, we create an instance of the direct client and pass it as a parameter to our set of tests.
+The code for this class and tests can be found in the &lt;a href=&#34;https://github.com/pip-services-samples/client-beacons-dotnet&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We run the tests using the testing methods that are standard for the programming language we are using. All tests should pass successfully.This finishes the development of the Direct client.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s move on to &lt;a href=&#34;../step3&#34;&gt;Step 3 to create the HTTP client&lt;/a&gt;.&lt;/p&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h3 id=&#34;step-3-to-create-the-http-clientstep3&#34;&gt;&lt;a href=&#34;../step3&#34;&gt;Step 3 to create the HTTP client&lt;/a&gt;&lt;/h3&gt;
 &lt;/span&gt;
@@ -222,7 +222,7 @@ Move on to &lt;a href=&#34;../step3&#34;&gt;Step 3 to create the HTTP client&lt;
         
         
         &lt;p&gt;The standard way of communicating with a microservice is via the HTTP protocol. It allows calling microservices that work on a separate server, or in their own container. Our example microservice uses a simplified version of the HTTP protocol that is automatically generated using the Commandable pattern.&lt;/p&gt;
-&lt;p&gt;Then, creates a new class for the Commandable REST client and an implementation for each of the microservice’s methods. This is done by calling the REST API’s methods using the methods of the parent Commandable REST client, passing the necessary set of parameters, and then processing the response’s result. Since the answer from the client is returned as JSON, some programming languages will require that you first convert it to an instance with a specific type. Be sure to remember this when writing your HTTP clients.&lt;/p&gt;
+&lt;p&gt;Then, creates a new class for the Commandable REST client and an implementation for each of the microservice’s methods. This is done by calling the REST API’s methods using the methods of the parent Commandable REST client, passing the necessary set of parameters, and then processing the response’s result. Since the answer from the client is returned as JSON, some programming languages will require that we first convert it to an instance with a specific type. We must always remember this when writing our HTTP clients.&lt;/p&gt;
 &lt;p&gt;The client’s resulting code is listed below:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/src/version1/BeaconsHttpClientV1.cs&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;BeaconsHttpClientV1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RestClient&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;IBeaconsClientV1&lt;/span&gt;
@@ -371,7 +371,7 @@ Move on to &lt;a href=&#34;../step3&#34;&gt;Step 3 to create the HTTP client&lt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To be sure that our code works as intended, we should perform some functional testing. Test the Commandable HTTP REST client using the class with tests that we developed in the previous step. To do this, create an instance of the HTTP REST client and pass it as a parameter to our set of tests.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To be sure that our code works as intended, we should perform some functional testing. We must test the Commandable HTTP REST client using the class with tests that we developed in the previous step. To do this, ew create an instance of the HTTP REST client and pass it as a parameter to our set of tests.
 An example implementation of the tests can be found in the example’s &lt;a href=&#34;https://github.com/pip-services-samples/client-beacons-dotnet&#34;&gt;repository&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;All tests should pass successfully.This finishes the development of our clients. As a result, we ended up with 2 clients: one for working from within a monolithic application, and another for working with the microservice from a different application, when utilizing a distributed architecture.&lt;/p&gt;
 &lt;p&gt;To simulate the service, let&amp;rsquo;s create a test client in &lt;a href=&#34;../step4&#34;&gt;Step 4. Implementing Test Memory Client.&lt;/a&gt;&lt;/p&gt;
@@ -383,7 +383,7 @@ An example implementation of the tests can be found in the example’s &lt;a hre
     </item>
     
     <item>
-      <title>Net: Step 4. Implementing Mock Client</title>
+      <title>Net: Step 4. Implementing a Mock Client</title>
       <link>/net/tutorials/client_library/step4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -392,8 +392,8 @@ An example implementation of the tests can be found in the example’s &lt;a hre
         
         
         &lt;p&gt;Complex systems usually experience difficulties when it comes to writing unit tests for a logic that calls external services. These tests are supposed to run quickly and without any additional infrastructure. The standard approach to solving this problem is to replace the calls to external services with a local approximation (a.k.a. a mock). However, writing mocks takes time and doesn’t always guarantee functionality that matches the real service.&lt;/p&gt;
-&lt;p&gt;In our projects, we’ve come to the conclusion that it pays off to develop mocks alongside the real clients and test them using common tests, to guarantee that their behavior is identical. This way, all users of the microservice will receive both the client and mock from the library and will be able to start coding logic and unit tests for it without delay.&lt;/p&gt;
-&lt;p&gt;In this step we will be demonstrating how Mock clients are developed and how they can be tested using the tests we created earlier.&lt;/p&gt;
+&lt;p&gt;At PIP.Services, we’ve come to the conclusion that it pays off to develop mocks alongside the real clients and test them using common tests, to guarantee that their behavior is identical. This way, all users of the microservice will receive both the client and mock from the library and will be able to start coding logic and unit tests for it without delay.&lt;/p&gt;
+&lt;p&gt;In this step we will learn how Mock clients are developed and how they can be tested using the tests we created earlier.&lt;/p&gt;
 &lt;p&gt;The test client has to implement the same interface that the other clients did. However, the client’s methods are going to contain code that only imitates the microservice’s behavior.&lt;/p&gt;
 &lt;p&gt;The code for this client is showed below:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/src/version1/BeaconsMockClientV1.cs&lt;/strong&gt;&lt;/p&gt;
@@ -566,9 +566,9 @@ An example implementation of the tests can be found in the example’s &lt;a hre
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Create a file with the tests and run them. All the tests should pass, even though the server-side code wasn’t actually used anywhere.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now, we create a file with the tests and run them. All the tests should pass, even though the server-side code wasn’t actually used anywhere.&lt;/p&gt;
 &lt;p&gt;This technique becomes very useful when developing microservices that bring together multiple microservices by means of their clients (e.g. a facade microservice). It allows us to perform functional testing without having to run the entire infrastructure.&lt;/p&gt;
-&lt;p&gt;To performing non-fuctional testing, we need to generate a large amount of realistic data. Users usually don’t know the entire data structure with all of its variations and exceptions. The next component we will be adding to our client library is a random data generator. This component can be used by the microservice’s users to create quality tests. The implementation is usually done in the form of static methods that either return an entire object, or just some part of its parameters. Let’s take a look at what an implementation of such a generator for the &lt;strong&gt;BeaconsV1&lt;/strong&gt; data object would look like. The generator’s code is listed below:&lt;/p&gt;
+&lt;p&gt;To perform non-fuctional testing, we need to generate a large amount of realistic data. Users usually don’t know the entire data structure with all of its variations and exceptions. The next component we will be adding to our client library is a random data generator. This component can be used by the microservice’s users to create quality tests. The implementation is usually done in the form of static methods that either return an entire object, or just some part of its parameters. Let’s take a look at what an implementation of such a generator for the &lt;strong&gt;BeaconsV1&lt;/strong&gt; data object would look like. The generator’s code is listed below:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;RandomBeaconV1&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
 	&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;BeaconV1&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;NextBeacon&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;siteCount&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
@@ -622,9 +622,9 @@ An example implementation of the tests can be found in the example’s &lt;a hre
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In this implementation, the ranges of generated values are statically set, but they can be passed as parameters to the methods and dynamically set as needed.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In this implementation, the ranges of generated values are statically set, but can be passed as parameters to the methods and dynamically set as needed.
 Using this instrument, we can easily generate large volumes of realistic data. This, in turn, can be used to test, for example, how fast the system can create elements in the persistence it’s using.&lt;/p&gt;
-&lt;p&gt;In the &lt;a href=&#34;../step5&#34;&gt;Step 5. Testing the Client with a Remote Microservice&lt;/a&gt;, we’ll be taking a look at how to test our client using a microservice that is remotely deployed in a Docker container.&lt;/p&gt;
+&lt;p&gt;In &lt;a href=&#34;../step5&#34;&gt;Step 5. Testing the Client with a Remote Microservice&lt;/a&gt;, we’ll be taking a look at how to test our client using a microservice that is remotely deployed in a Docker container.&lt;/p&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h3 id=&#34;step-5-testing-the-client-with-a-remote-microservicestep5&#34;&gt;&lt;a href=&#34;../step5&#34;&gt;Step 5. Testing the Client with a Remote Microservice&lt;/a&gt;&lt;/h3&gt;
 &lt;/span&gt;
