@@ -23,12 +23,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/tutorials/client_library/step5/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-06-29T21:06:47+03:00" />
+<meta property="article:modified_time" content="2021-08-10T21:26:59+02:00" />
 
 <meta itemprop="name" content="Step 5. Testing the Client with a Remote Microservice">
 <meta itemprop="description" content="In the previous steps, we were looking at the development of clients and at the clients themselves. However, both the client and the microservice were implemented in the same language, which allowed us to run components of the microservice from right inside the tests. In a multi-language environment, there are times when you need to create clients in a language that is different from the one that was used to write the microservice.">
-<meta itemprop="dateModified" content="2021-06-29T21:06:47+03:00" />
-<meta itemprop="wordCount" content="757">
+<meta itemprop="dateModified" content="2021-08-10T21:26:59+02:00" />
+<meta itemprop="wordCount" content="759">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 5. Testing the Client with a Remote Microservice"/>
 <meta name="twitter:description" content="In the previous steps, we were looking at the development of clients and at the clients themselves. However, both the client and the microservice were implemented in the same language, which allowed us to run components of the microservice from right inside the tests. In a multi-language environment, there are times when you need to create clients in a language that is different from the one that was used to write the microservice."/>
@@ -245828,7 +245828,7 @@ To run the microservice in Docker, we’ll first need to create a configuration 
       - <span style="color:#d88200">&#34;27017:27017&#34;</span>
 
 </code></pre></div><p>This configuration will run the microservice alongside a Mongo DB for data storage. HTTP services will also be started on port 8080 and will be made accessible from outside the container. You can set up the microservice to run with a memory persistence as well. To do this, comment out the MONGO environment variables, as well as any other Mongo-related parameters.
-The image parameter contains the name of the Docker image being hosted on DockerHub (pipdevs/data-microservice-node:1.0), which is the microservice we want to be testing with. Once we get our microservice up and running, it will be available at http://localhost:8080, and the client will be able to work with it using this address. Let’s design a test, in which the client will work with our new service. We’ll be basing this test off of the one we wrote in Step 3. Place the code below into a file named <strong>test_BeaconsHttpClientV1.py</strong>.</p>
+The image parameter contains the name of the Docker image being hosted on DockerHub (pipdevs/data-microservice-node:1.0), which is the microservice we want to be testing with. Once we get our microservice up and running, it will be available at http://localhost:8080, and the client will be able to work with it using this address. Let’s design a test, in which the client will work with our new service. We’ll be basing this test off of the one we wrote in Step 3. We place the code below into a file named <strong>test_BeaconsHttpClientV1.py</strong>.</p>
 <p><strong>/test/version1/BeaconsHttpClientV1Test.py</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75af00">    [Collection(&#34;Sequential&#34;)]</span>
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsHttpClientV1Test</span> <span style="color:#111">:</span> <span style="color:#111">IDisposable</span>
@@ -245893,7 +245893,7 @@ The image parameter contains the name of the Docker image being hosted on Docker
     <span style="color:#111">}</span>
 
 </code></pre></div><p>This test differs from the previous one mainly in that we aren’t running the microservice’s components in the test itself. Instead, we are configuring our client to connect to the microservice, which will be running in our Docker container. Another difference is that we will be deleting all data from the microservice before each test, so that our test always starts off with a clean DB.
-Before we can start testing, we need to get our containerized microservice up and running. To do this, run the command:</p>
+Before we can start testing, we need to get our containerized microservice up and running. To do this, we run the command:</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker-compose -f ./docker/docker-compose.dev.yml up 
 
 </code></pre></div><p>In a separate console, run the test using the following command:</p>
