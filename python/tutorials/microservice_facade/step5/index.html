@@ -22,25 +22,25 @@
 <meta property="og:description" content="A facade’s RESTful operations are implemented by REST services, which receive external requests and delegate their execution to operations.
 To process requests made to the API’s first version, let’s create a file named FacadeServiceV1.py in the services/version1 folder with the following code:
 /pip_facades_sample_python/services/version1/FacadeServiceV1.py
-# -*- coding: utf-8 -*- from typing import List import bottle from pip_services3_commons.convert import JsonConverter from pip_services3_commons.errors import UnauthorizedException from pip_services3_rpc.auth.BasicAuthorizer import BasicAuthorizer from pip_services3_rpc.auth.OwnerAuthorizer import OwnerAuthorizer from pip_services3_rpc." />
+# -*- coding: utf-8 -*- from pip_services3_commons.config import ConfigParams from pip_services3_commons.refer import IReferences from pip_services3_rpc.services.AboutOperations import AboutOperations from pip_services3_rpc.services.RestService import RestService from pip_facades_sample_python.operations.version1.BeaconsOperationsV1 import BeaconsOperationsV1 from pip_facades_sample_python.operations.version1.InvitationsOperationsV1 import InvitationsOperationsV1 from pip_facades_sample_python." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/tutorials/microservice_facade/step5/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-06-18T02:51:33+03:00" />
+<meta property="article:modified_time" content="2021-08-11T17:59:58+03:00" />
 
 <meta itemprop="name" content="Step 5. Services and versioning">
 <meta itemprop="description" content="A facade’s RESTful operations are implemented by REST services, which receive external requests and delegate their execution to operations.
 To process requests made to the API’s first version, let’s create a file named FacadeServiceV1.py in the services/version1 folder with the following code:
 /pip_facades_sample_python/services/version1/FacadeServiceV1.py
-# -*- coding: utf-8 -*- from typing import List import bottle from pip_services3_commons.convert import JsonConverter from pip_services3_commons.errors import UnauthorizedException from pip_services3_rpc.auth.BasicAuthorizer import BasicAuthorizer from pip_services3_rpc.auth.OwnerAuthorizer import OwnerAuthorizer from pip_services3_rpc.">
-<meta itemprop="dateModified" content="2021-06-18T02:51:33+03:00" />
-<meta itemprop="wordCount" content="577">
+# -*- coding: utf-8 -*- from pip_services3_commons.config import ConfigParams from pip_services3_commons.refer import IReferences from pip_services3_rpc.services.AboutOperations import AboutOperations from pip_services3_rpc.services.RestService import RestService from pip_facades_sample_python.operations.version1.BeaconsOperationsV1 import BeaconsOperationsV1 from pip_facades_sample_python.operations.version1.InvitationsOperationsV1 import InvitationsOperationsV1 from pip_facades_sample_python.">
+<meta itemprop="dateModified" content="2021-08-11T17:59:58+03:00" />
+<meta itemprop="wordCount" content="638">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 5. Services and versioning"/>
 <meta name="twitter:description" content="A facade’s RESTful operations are implemented by REST services, which receive external requests and delegate their execution to operations.
 To process requests made to the API’s first version, let’s create a file named FacadeServiceV1.py in the services/version1 folder with the following code:
 /pip_facades_sample_python/services/version1/FacadeServiceV1.py
-# -*- coding: utf-8 -*- from typing import List import bottle from pip_services3_commons.convert import JsonConverter from pip_services3_commons.errors import UnauthorizedException from pip_services3_rpc.auth.BasicAuthorizer import BasicAuthorizer from pip_services3_rpc.auth.OwnerAuthorizer import OwnerAuthorizer from pip_services3_rpc."/>
+# -*- coding: utf-8 -*- from pip_services3_commons.config import ConfigParams from pip_services3_commons.refer import IReferences from pip_services3_rpc.services.AboutOperations import AboutOperations from pip_services3_rpc.services.RestService import RestService from pip_facades_sample_python.operations.version1.BeaconsOperationsV1 import BeaconsOperationsV1 from pip_facades_sample_python.operations.version1.InvitationsOperationsV1 import InvitationsOperationsV1 from pip_facades_sample_python."/>
 
 
 
@@ -151269,6 +151269,75 @@ To process requests made to the API’s first version, let’s create a file nam
   
     
     
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+  
+
+   
+  
+
+  
+    
+    
       
       <ul class="pl-0 md-3 ul-3 container">
         
@@ -151678,75 +151747,6 @@ To process requests made to the API’s first version, let’s create a file nam
           
         
       </ul>
-    
-  </li>
-  
-          
-        
-          
-            
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  
-
-  
-
-   
-  
-  
-  
-  
-  
-    
-      
-      
-      
-    
-  
-    
-      
-      
-      
-    
-  
-  
-  
-  
-
-    
-    
-    
-  
-
-  
-  
-
-
-  
-
-   
-  
-
-  
-    
     
   </li>
   
@@ -244913,102 +244913,143 @@ To process requests made to the API’s first version, let’s create a file nam
 <p>To process requests made to the API’s first version, let’s create a file named <strong>FacadeServiceV1.py</strong> in the <strong>services/version1</strong> folder with the following code:</p>
 <p><strong>/pip_facades_sample_python/services/version1/FacadeServiceV1.py</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
-<span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">List</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.config</span> <span style="color:#f92672">import</span> <span style="color:#111">ConfigParams</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.refer</span> <span style="color:#f92672">import</span> <span style="color:#111">IReferences</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_rpc.services.AboutOperations</span> <span style="color:#f92672">import</span> <span style="color:#111">AboutOperations</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_rpc.services.RestService</span> <span style="color:#f92672">import</span> <span style="color:#111">RestService</span>
 
-<span style="color:#f92672">import</span> <span style="color:#111">bottle</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.convert</span> <span style="color:#f92672">import</span> <span style="color:#111">JsonConverter</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.errors</span> <span style="color:#f92672">import</span> <span style="color:#111">UnauthorizedException</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_rpc.auth.BasicAuthorizer</span> <span style="color:#f92672">import</span> <span style="color:#111">BasicAuthorizer</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_rpc.auth.OwnerAuthorizer</span> <span style="color:#f92672">import</span> <span style="color:#111">OwnerAuthorizer</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_rpc.auth.RoleAuthorizer</span> <span style="color:#f92672">import</span> <span style="color:#111">RoleAuthorizer</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_facades_sample_python.operations.version1.BeaconsOperationsV1</span> <span style="color:#f92672">import</span> <span style="color:#111">BeaconsOperationsV1</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_facades_sample_python.operations.version1.InvitationsOperationsV1</span> <span style="color:#f92672">import</span> <span style="color:#111">InvitationsOperationsV1</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_facades_sample_python.operations.version1.SessionsOperationsV1</span> <span style="color:#f92672">import</span> <span style="color:#111">SessionsOperationsV1</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_facades_sample_python.operations.version1.SitesOperationsV1</span> <span style="color:#f92672">import</span> <span style="color:#111">SitesOperationsV1</span>
+<span style="color:#f92672">from</span> <span style="color:#111">pip_facades_sample_python.services.version1.AuthorizerV1</span> <span style="color:#f92672">import</span> <span style="color:#111">AuthorizerV1</span>
 
 
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">AuthorizerV1</span><span style="color:#111">:</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">FacadeServiceV1</span><span style="color:#111">(</span><span style="color:#111">RestService</span><span style="color:#111">):</span>
 
     <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__basic_auth</span> <span style="color:#f92672">=</span> <span style="color:#111">BasicAuthorizer</span><span style="color:#111">()</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__role_auth</span> <span style="color:#f92672">=</span> <span style="color:#111">RoleAuthorizer</span><span style="color:#111">()</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__owner_auth</span> <span style="color:#f92672">=</span> <span style="color:#111">OwnerAuthorizer</span><span style="color:#111">()</span>
+        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">FacadeServiceV1</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_base_route</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;api/v1&#39;</span>
 
-    <span style="color:#75715e"># Anybody who entered the system</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">anybody</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__basic_auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__about_operations</span> <span style="color:#f92672">=</span> <span style="color:#111">AboutOperations</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span> <span style="color:#f92672">=</span> <span style="color:#111">SessionsOperationsV1</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span> <span style="color:#f92672">=</span> <span style="color:#111">SitesOperationsV1</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span> <span style="color:#f92672">=</span> <span style="color:#111">InvitationsOperationsV1</span><span style="color:#111">()</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconsOperationsV1</span><span style="color:#111">()</span>
 
-    <span style="color:#75715e"># Only registered and authenticated users</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">signed</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__basic_auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">()</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">config</span><span style="color:#111">:</span> <span style="color:#111">ConfigParams</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
 
-    <span style="color:#75715e"># Only the user session owner</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">owner</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__owner_auth</span><span style="color:#f92672">.</span><span style="color:#111">owner</span><span style="color:#111">(</span><span style="color:#111">id_param</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__about_operations</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">owner_or_admin</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__owner_auth</span><span style="color:#f92672">.</span><span style="color:#111">owner_or_admin</span><span style="color:#111">(</span><span style="color:#111">id_param</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">set_references</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">references</span><span style="color:#111">:</span> <span style="color:#111">IReferences</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">set_references</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">site_roles</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">roles</span><span style="color:#111">:</span> <span style="color:#111">List</span><span style="color:#111">[</span><span style="color:#111">str</span><span style="color:#111">],</span> <span style="color:#111">id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">def</span> <span style="color:#75af00">inner</span><span style="color:#111">():</span>
-            <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">None</span> <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">hasattr</span><span style="color:#111">(</span><span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;user&#39;</span><span style="color:#111">)</span> <span style="color:#00a8c8">else</span> <span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">user</span>
-            <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">roles</span> <span style="color:#f92672">=</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">roles</span> <span style="color:#f92672">or</span> <span style="color:#111">[]</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__about_operations</span><span style="color:#f92672">.</span><span style="color:#111">set_references</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">set_references</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">set_references</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">set_references</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">set_references</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span>
 
-            <span style="color:#00a8c8">if</span> <span style="color:#111">user</span> <span style="color:#f92672">is</span> <span style="color:#00a8c8">None</span><span style="color:#111">:</span>
-                <span style="color:#00a8c8">raise</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_SIGNED&#39;</span><span style="color:#111">,</span>
-                    <span style="color:#d88200">&#39;User must be signed in to perform this operation&#39;</span>
-                <span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">with_status</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">def</span> <span style="color:#75af00">register</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">auth</span> <span style="color:#f92672">=</span> <span style="color:#111">AuthorizerV1</span><span style="color:#111">()</span>
 
-            <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-                <span style="color:#111">site_id</span> <span style="color:#f92672">=</span> <span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">params</span><span style="color:#111">[</span><span style="color:#d88200">&#39;kwargs&#39;</span><span style="color:#111">]</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">id_param</span><span style="color:#111">)</span>
-                <span style="color:#111">authorized</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;admin&#39;</span> <span style="color:#f92672">in</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">roles</span>
-                <span style="color:#00a8c8">if</span> <span style="color:#111">site_id</span> <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#00a8c8">None</span> <span style="color:#f92672">and</span> <span style="color:#f92672">not</span> <span style="color:#111">authorized</span><span style="color:#111">:</span>
-                    <span style="color:#00a8c8">for</span> <span style="color:#111">role</span> <span style="color:#f92672">in</span> <span style="color:#111">roles</span><span style="color:#111">:</span>
-                        <span style="color:#111">authorized</span> <span style="color:#f92672">=</span> <span style="color:#111">authorized</span> <span style="color:#f92672">or</span> <span style="color:#111">(</span><span style="color:#111">site_id</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#111">role</span><span style="color:#111">)</span> <span style="color:#f92672">in</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">roles</span>
+        <span style="color:#75715e"># Restore session middleware</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_interceptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">load_session</span><span style="color:#111">())</span>
 
-                <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">authorized</span><span style="color:#111">:</span>
-                    <span style="color:#00a8c8">raise</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
-                        <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_IN_SITE_ROLE&#39;</span><span style="color:#111">,</span>
-                        <span style="color:#d88200">&#39;User must be site:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39; or site:&#39;</span><span style="color:#f92672">.</span><span style="color:#111">join</span><span style="color:#111">(</span><span style="color:#111">roles</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39; to perform this operation&#39;</span>
-                    <span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">with_details</span><span style="color:#111">(</span><span style="color:#d88200">&#39;roles&#39;</span><span style="color:#111">,</span> <span style="color:#111">roles</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">with_status</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">)</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/about&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__about_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_about</span><span style="color:#111">())</span>
+        <span style="color:#75715e"># Session Routes</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/signup&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">signup</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/signup/validate&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">signup_validate</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/signin&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">signin</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/signout&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">signout</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sessions&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">admin</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_sessions</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sessions/restore&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">restore_session</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sessions/current&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_current_session</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sessions/:user_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">owner_or_admin</span><span style="color:#111">(</span><span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">user_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_user_sessions</span><span style="color:#111">(</span><span style="color:#111">user_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;del&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sessions/:user_id/:session_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">owner_or_admin</span><span style="color:#111">(</span><span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">user_id</span><span style="color:#111">,</span> <span style="color:#111">session_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__session_operations</span><span style="color:#f92672">.</span><span style="color:#111">close_session</span><span style="color:#111">(</span><span style="color:#111">user_id</span><span style="color:#111">,</span>
+                                                                                                          <span style="color:#111">session_id</span><span style="color:#111">))</span>
 
-        <span style="color:#00a8c8">return</span> <span style="color:#111">inner</span>
+        <span style="color:#75715e"># Site Routes</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_authorized_sites</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/all&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">admin</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_sites</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/find_by_code&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">anybody</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">find_site_by_code</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_site</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/generate_code&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_admin</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">generate_code</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">create_site</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/validate_code&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">validate_site_code</span><span style="color:#111">())</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;put&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_admin</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">update_site</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;delete&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">admin</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">delete_site</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/remove&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__sites_operations</span><span style="color:#f92672">.</span><span style="color:#111">remove_site</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">admin</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__role_auth</span><span style="color:#f92672">.</span><span style="color:#111">user_in_role</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
+        <span style="color:#75715e"># Invitation Routes</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_invitations</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations/:invitation_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_invitation</span><span style="color:#111">(</span>
+                                          <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">send_invitation</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations/notify&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_manager</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">notify_invitation</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;delete&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations/:invitation_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_manager</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">delete_invitation</span><span style="color:#111">(</span>
+                                          <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations/:invitation_id/approve&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span>
+                                      <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_manager</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">approve_invitation</span><span style="color:#111">(</span>
+                                          <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations/:invitation_id/deny&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span>
+                                      <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_manager</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">deny_invitation</span><span style="color:#111">(</span>
+                                          <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/invitations/:invitation_id/resend&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span>
+                                      <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_manager</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__invitations_operations</span><span style="color:#f92672">.</span><span style="color:#111">resend_invitation</span><span style="color:#111">(</span>
+                                          <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">invitation_id</span><span style="color:#111">))</span>
 
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">site_admin</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">site_roles</span><span style="color:#111">([</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">],</span> <span style="color:#111">id_param</span><span style="color:#111">)</span>
-
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">site_manager</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">site_roles</span><span style="color:#111">([</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;manager&#39;</span><span style="color:#111">],</span> <span style="color:#111">id_param</span><span style="color:#111">)</span>
-
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">site_user</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">site_roles</span><span style="color:#111">([</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;manager&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;user&#39;</span><span style="color:#111">],</span> <span style="color:#111">id_param</span><span style="color:#111">)</span>
-
-    <span style="color:#00a8c8">def</span> <span style="color:#75af00">site_admin_or_owner</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">user_id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">,</span> <span style="color:#111">site_id_param</span><span style="color:#111">:</span> <span style="color:#111">str</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">):</span>
-        <span style="color:#00a8c8">def</span> <span style="color:#75af00">inner</span><span style="color:#111">():</span>
-            <span style="color:#111">user</span> <span style="color:#f92672">=</span> <span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">user</span>
-            <span style="color:#00a8c8">if</span> <span style="color:#111">user</span> <span style="color:#f92672">is</span> <span style="color:#00a8c8">None</span><span style="color:#111">:</span>
-                <span style="color:#00a8c8">raise</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_SIGNED&#39;</span><span style="color:#111">,</span>
-                    <span style="color:#d88200">&#39;User must be signed in to perform this operation&#39;</span>
-                <span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">with_status</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">)</span>
-
-            <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-                <span style="color:#111">user_id</span> <span style="color:#f92672">=</span> <span style="color:#111">dict</span><span style="color:#111">(</span><span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">query</span><span style="color:#f92672">.</span><span style="color:#111">decode</span><span style="color:#111">())</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">user_id_param</span><span style="color:#111">)</span> <span style="color:#f92672">or</span> <span style="color:#111">JsonConverter</span><span style="color:#f92672">.</span><span style="color:#111">to_json</span><span style="color:#111">(</span>
-                    <span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">json</span><span style="color:#111">)</span>
-                <span style="color:#00a8c8">if</span> <span style="color:#111">user_id</span> <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#00a8c8">None</span> <span style="color:#f92672">and</span> <span style="color:#111">user_id</span> <span style="color:#f92672">==</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">user_id</span><span style="color:#111">:</span>
-                    <span style="color:#00a8c8">return</span>
-                <span style="color:#00a8c8">else</span><span style="color:#111">:</span>
-                    <span style="color:#111">site_id</span> <span style="color:#f92672">=</span> <span style="color:#111">bottle</span><span style="color:#f92672">.</span><span style="color:#111">request</span><span style="color:#f92672">.</span><span style="color:#111">params</span><span style="color:#f92672">.</span><span style="color:#111">get</span><span style="color:#111">(</span><span style="color:#111">site_id_param</span><span style="color:#111">)</span>
-                    <span style="color:#111">authorized</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;admin&#39;</span> <span style="color:#f92672">in</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">roles</span> <span style="color:#f92672">or</span> <span style="color:#111">site_id</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;:admin&#39;</span> <span style="color:#f92672">in</span> <span style="color:#111">user</span><span style="color:#f92672">.</span><span style="color:#111">roles</span>
-                    <span style="color:#00a8c8">if</span> <span style="color:#f92672">not</span> <span style="color:#111">authorized</span><span style="color:#111">:</span>
-                        <span style="color:#00a8c8">raise</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
-                            <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_IN_SITE_ROLE&#39;</span><span style="color:#111">,</span>
-                            <span style="color:#d88200">&#39;User must be site:admin to perform this operation&#39;</span>
-                        <span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">with_details</span><span style="color:#111">(</span><span style="color:#d88200">&#39;roles&#39;</span><span style="color:#111">,</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">])</span><span style="color:#f92672">.</span><span style="color:#111">with_status</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">)</span>
-
-
-        <span style="color:#00a8c8">return</span> <span style="color:#111">inner</span>
-
+        <span style="color:#75715e"># Beacon Routes</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_beacons</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons/:beacon_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">beacon_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">get_beacon</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span>
+                                                                                                      <span style="color:#111">beacon_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons/calculate_position&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">calculate_position</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">create_beacon</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;post&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons/validate_udi&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">signed</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">validate_beacon_udi</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;put&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons/:beacon_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">beacon_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">update_beacon</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span>
+                                                                                                         <span style="color:#111">beacon_id</span><span style="color:#111">))</span>
+        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">register_route_with_auth</span><span style="color:#111">(</span><span style="color:#d88200">&#39;delete&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/sites/:site_id/beacons/:beacon_id&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">None</span><span style="color:#111">,</span> <span style="color:#111">auth</span><span style="color:#f92672">.</span><span style="color:#111">site_user</span><span style="color:#111">(),</span>
+                                      <span style="color:#00a8c8">lambda</span> <span style="color:#111">site_id</span><span style="color:#111">,</span> <span style="color:#111">beacon_id</span><span style="color:#111">:</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__beacons_operations</span><span style="color:#f92672">.</span><span style="color:#111">delete_beacon</span><span style="color:#111">(</span><span style="color:#111">site_id</span><span style="color:#111">,</span>
+                                                                                                         <span style="color:#111">beacon_id</span><span style="color:#111">))</span>
 </code></pre></div><p>The FacadeServiceV1 component extends the standard RestService, which implements the majority of the component’s basic functionality. All that we have left to do is define some routes and delegate their processing to the operations we defined in the previous steps.</p>
 <p>A base route is defined in the constructor, which contains the API version that is implemented in the service.</p>
 <p>In the <strong>register</strong> method, before we register our routes, we make sure to register the <strong>load_session</strong> interceptor, which will be loading user sessions using the parameters set in the REST requests.</p>

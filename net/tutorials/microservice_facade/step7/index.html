@@ -25,14 +25,14 @@ One factory for the facade in a file named FacadeFactory." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/net/tutorials/microservice_facade/step7/" /><meta property="article:section" content="net" />
 
-<meta property="article:modified_time" content="2021-08-11T11:37:57+02:00" />
+<meta property="article:modified_time" content="2021-08-11T17:56:27+03:00" />
 
 <meta itemprop="name" content="Step 7. Running the facade">
 <meta itemprop="description" content="Before we can run our facade, we need to add three more things: a factory for the component’s we’ve created, a container, and the code that will run it all. The process of implementing these pieces is the same as the one described in Data Microservice, so this time around we’ll just list the code:
 Create three factories in the src/service/build/ folder:
 One factory for the facade in a file named FacadeFactory.">
-<meta itemprop="dateModified" content="2021-08-11T11:37:57+02:00" />
-<meta itemprop="wordCount" content="786">
+<meta itemprop="dateModified" content="2021-08-11T17:56:27+03:00" />
+<meta itemprop="wordCount" content="911">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 7. Running the facade"/>
 <meta name="twitter:description" content="Before we can run our facade, we need to add three more things: a factory for the component’s we’ve created, a container, and the code that will run it all. The process of implementing these pieces is the same as the one described in Data Microservice, so this time around we’ll just list the code:
@@ -163692,6 +163692,75 @@ One factory for the facade in a file named FacadeFactory."/>
   
     
     
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+  
+
+   
+  
+
+  
+    
+    
       
       <ul class="pl-0 md-3 ul-3 container">
         
@@ -164101,75 +164170,6 @@ One factory for the facade in a file named FacadeFactory."/>
           
         
       </ul>
-    
-  </li>
-  
-          
-        
-          
-            
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  
-
-  
-
-   
-  
-  
-  
-  
-  
-    
-      
-      
-      
-    
-  
-    
-      
-      
-      
-    
-  
-  
-  
-  
-
-    
-    
-    
-  
-
-  
-  
-
-
-  
-
-   
-  
-
-  
-    
     
   </li>
   
@@ -246582,7 +246582,92 @@ One factory for the facade in a file named FacadeFactory."/>
 </code></pre></div><p>For demonstration purposes, we’ll be running our system in a distributed mode, with all of its components running in their own, individual containers. The configuration above is designed specifically for this type of distributed deployment.</p>
 <p>The process of running a service in a Docker container is described in detail in the <a href="../../microservice_dockerization">Dockerization tutorial</a></p>
 <p>To run our system using Docker Compose, create a docker-compose.yml file with the following:</p>
-<p>Build and run the facade using the respective scripts (described in the <a href="../../microservice_dockerization">Docker tutorial</a> we mentioned above), which can be found in this example project’s <a href="https://github.com/pip-services-samples/facade-sample-dotnet">repository</a>.</p>
+<p><strong>/docker/docker-compose.yml</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#f92672">version</span><span style="color:#111">:</span> <span style="color:#d88200">&#39;3.3&#39;</span>
+
+<span style="color:#f92672">services</span><span style="color:#111">:</span>
+
+  <span style="color:#f92672">app</span><span style="color:#111">:</span>
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">${IMAGE}</span>
+    <span style="color:#f92672">environment</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">MAGIC_CODE=magic</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_URI=</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_HOST=mongo</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_PORT=27017</span>
+      - <span style="color:#ae81ff">MONGO_DB=app   </span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;8080:8080&#34;</span>
+    <span style="color:#f92672">links</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">mongo</span>
+      - <span style="color:#ae81ff">accounts</span>
+      - <span style="color:#ae81ff">role</span>
+      - <span style="color:#ae81ff">passwords</span>
+      - <span style="color:#ae81ff">sessions</span>
+      - <span style="color:#ae81ff">beacons     </span>
+      
+    <span style="color:#f92672">command</span><span style="color:#111">:</span> <span style="color:#ae81ff">node /app/bin/run.js -c /app/config/config-distributed.yml</span>
+
+  <span style="color:#f92672">mongo</span><span style="color:#111">:</span>
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">mongo:latest</span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;27017:27017&#34;</span>
+
+  <span style="color:#f92672">accounts</span><span style="color:#111">:</span>
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">pipdevs/pip-services-accounts-node:latest</span>
+    <span style="color:#f92672">environment</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_HOST=mongo</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_PORT=27017</span>
+      - <span style="color:#ae81ff">MONGO_DB=accounts</span>
+    <span style="color:#f92672">links</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">mongo   </span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;8082:8080&#34;</span>
+  
+  <span style="color:#f92672">role</span><span style="color:#111">:</span>
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">pipdevs/pip-services-roles-node:latest</span>
+    <span style="color:#f92672">environment</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_HOST=mongo</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_PORT=27017</span>
+      - <span style="color:#ae81ff">MONGO_DB=roles</span>
+    <span style="color:#f92672">links</span><span style="color:#111">:</span>
+        - <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;8083:8080&#34;</span>
+
+  <span style="color:#f92672">passwords</span><span style="color:#111">:</span> 
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">pipdevs/pip-services-passwords-node:1.0.1-12-rc</span>
+    <span style="color:#f92672">environment</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_HOST=mongo</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_PORT=27017</span>
+      - <span style="color:#ae81ff">MONGO_DB=passwd</span>
+    <span style="color:#f92672">links</span><span style="color:#111">:</span>
+        - <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;8084:8080&#34;</span>
+
+  <span style="color:#f92672">sessions</span><span style="color:#111">:</span>
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">pipdevs/pip-services-sessions-node:1.0.1-19-rc</span>
+    <span style="color:#f92672">environment</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_HOST=mongo</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_PORT=27017</span>
+      - <span style="color:#ae81ff">MONGO_DB=sessions</span>
+    <span style="color:#f92672">links</span><span style="color:#111">:</span>
+        - <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;8085:8080&#34;</span>
+
+  <span style="color:#f92672">beacons</span><span style="color:#111">:</span>
+    <span style="color:#f92672">image</span><span style="color:#111">:</span> <span style="color:#ae81ff">pipdevs/pip-services-beacons-node:1.0</span>
+    <span style="color:#f92672">environment</span><span style="color:#111">:</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_HOST=mongo</span>
+      - <span style="color:#ae81ff">MONGO_SERVICE_PORT=27017</span>
+      - <span style="color:#ae81ff">MONGO_DB=beacons</span>
+    <span style="color:#f92672">links</span><span style="color:#111">:</span>
+        - <span style="color:#ae81ff">mongo</span>
+    <span style="color:#f92672">ports</span><span style="color:#111">:</span>
+      - <span style="color:#d88200">&#34;8086:8080&#34;</span>
+  
+</code></pre></div><p>Build and run the facade using the respective scripts (described in the <a href="../../microservice_dockerization">Docker tutorial</a> we mentioned above), which can be found in this example project’s <a href="https://github.com/pip-services-samples/facade-sample-dotnet">repository</a>.</p>
 <p>To build the facade’s image and load the rest of the services’ images, run the “package” script using the command below:</p>
 <pre><code>.\package.ps1
 </code></pre><p>Once the build process successfully finishes, run the entire system with all of its microservices in Docker Compose using the “run” script. This can be done with the following command:</p>

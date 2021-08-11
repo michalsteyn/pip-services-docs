@@ -1908,7 +1908,92 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For demonstration purposes, we’ll be running our system in a distributed mode, with all of its components running in their own, individual containers. The configuration above is designed specifically for this type of distributed deployment.&lt;/p&gt;
 &lt;p&gt;The process of running a service in a Docker container is described in detail in the &lt;a href=&#34;../../microservice_dockerization&#34;&gt;Dockerization tutorial&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;To run our system using Docker Compose, create a docker-compose.yml file with the following:&lt;/p&gt;
-&lt;p&gt;Build and run the facade using the respective scripts (described in the &lt;a href=&#34;../../microservice_dockerization&#34;&gt;Docker tutorial&lt;/a&gt; we mentioned above), which can be found in this example project’s &lt;a href=&#34;https://github.com/pip-services-samples/facade-sample-node&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;/docker/docker-compose.yml&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;3.3&amp;#39;&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;services&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;app&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;${IMAGE}&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MAGIC_CODE=magic&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_URI=&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=app   &lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8080:8080&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;links&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;accounts&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;role&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;passwords&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;sessions&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;beacons     &lt;/span&gt;
+      
+    &lt;span style=&#34;color:#f92672&#34;&gt;command&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;node /app/bin/run.js -c /app/config/config-distributed.yml&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;mongo&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo:latest&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;27017:27017&amp;#34;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;accounts&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;pipdevs/pip-services-accounts-node:latest&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=accounts&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;links&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo   &lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8082:8080&amp;#34;&lt;/span&gt;
+  
+  &lt;span style=&#34;color:#f92672&#34;&gt;role&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;pipdevs/pip-services-roles-node:latest&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=roles&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;links&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8083:8080&amp;#34;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;passwords&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; 
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;pipdevs/pip-services-passwords-node:1.0.1-12-rc&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=passwd&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;links&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8084:8080&amp;#34;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;sessions&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;pipdevs/pip-services-sessions-node:1.0.1-19-rc&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=sessions&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;links&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8085:8080&amp;#34;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#f92672&#34;&gt;beacons&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;image&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;pipdevs/pip-services-beacons-node:1.0&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_HOST=mongo&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_SERVICE_PORT=27017&lt;/span&gt;
+      - &lt;span style=&#34;color:#ae81ff&#34;&gt;MONGO_DB=beacons&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;links&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+        - &lt;span style=&#34;color:#ae81ff&#34;&gt;mongo&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;ports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+      - &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;8086:8080&amp;#34;&lt;/span&gt;
+  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Build and run the facade using the respective scripts (described in the &lt;a href=&#34;../../microservice_dockerization&#34;&gt;Docker tutorial&lt;/a&gt; we mentioned above), which can be found in this example project’s &lt;a href=&#34;https://github.com/pip-services-samples/facade-sample-node&#34;&gt;repository&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;To build the facade’s image and load the rest of the services’ images, run the “package” script using the command below:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;.\package.ps1
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Once the build process successfully finishes, run the entire system with all of its microservices in Docker Compose using the “run” script. This can be done with the following command:&lt;/p&gt;
