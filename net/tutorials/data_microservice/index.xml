@@ -224,7 +224,7 @@
       <description>
         
         
-        &lt;p&gt;In this step, we’ll be creating components for persisting the data model we defined in the previous step. In our projects, we always create at least two persistences: one for storing data in-memory (used for testing), and another for storing data in an external database (used in production). With the Beacons example, we’ll be doing the same.&lt;/p&gt;
+        &lt;p&gt;In this step, we’ll be creating the components for persisting the data model that we defined in the previous step. In our projects, it is advisale to create at least two persistences: one for storing data in-memory (used for testing), and another for storing data in an external database (used in production). With the Beacons example, we’ll be doing the same.&lt;/p&gt;
 &lt;p&gt;Let’s start by navigating to the &lt;strong&gt;src/service&lt;/strong&gt; directory and creating a &lt;strong&gt;persistence&lt;/strong&gt; directory inside it. This directory is going to contain all of the files that relate to this step of the tutorial.&lt;/p&gt;
 &lt;p&gt;The first thing we are going to do is define what functionality our persistent storage should have. We can define these in a form of an interface and name it &lt;code&gt;IBeaconsPersistence&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;src/interface/persistence/IBeaconsPersistence.cs&lt;/strong&gt;&lt;/p&gt;
@@ -581,12 +581,13 @@
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To run these tests, run the command npm test from a terminal at the root of the project.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To run these tests, we run the command npm test from a terminal at the root of the project.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;“But where exactly is the data going to be stored when we get the service actually up and running?”&lt;/em&gt; you may ask. Jumping ahead, we’ll tell you that the config.yml configuration file takes care of that. It contains configurations for all of the service’s components, such as: which logger to use, where performance counter output should be, what database to connect to and using what parameters, etc. We’ll discuss this in more detail later on in this tutorial.&lt;/p&gt;
 &lt;p&gt;Now that we can persist our data, let’s move on to &lt;a href=&#34;../step4&#34;&gt;Step 4. Implementing a controller.&lt;/a&gt;&lt;/p&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h3 id=&#34;step-4-implementing-a-controllerstep4&#34;&gt;&lt;a href=&#34;../step4&#34;&gt;Step 4. Implementing a controller.&lt;/a&gt;&lt;/h3&gt;
 &lt;/span&gt;
+
       </description>
     </item>
     
@@ -856,7 +857,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To sum up this class’s code: we’re creating commands for each of the controller’s methods, and then registering them in the constructor. To create a command, we give it a name, a validation schema (if needed), and a callback function with the following three parameters:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;correlationId&lt;/code&gt;: string – used to identify the operation,&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;args&lt;/code&gt;: Parameters - the set of parameters received from the command being called,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;args&lt;/code&gt;: Parameters - set of parameters received from the command being called,&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;callback&lt;/code&gt; – callback function for returning the command’s result, or an error, if one occurs.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;To be sure that our new methods are working correctly, let’s add some tests for the controller. The code for testing the controller is listed below:&lt;/p&gt;
@@ -1027,6 +1028,7 @@
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h3 id=&#34;step-5-implementing-an-http-servicestep5&#34;&gt;&lt;a href=&#34;../step5&#34;&gt;Step 5. Implementing an HTTP service.&lt;/a&gt;&lt;/h3&gt;
 &lt;/span&gt;
+
       </description>
     </item>
     
@@ -1207,7 +1209,7 @@
         
         
         &lt;p&gt;Our service is pretty much done - all that is left is to place the components we’ve developed into a process container and configure it.&lt;/p&gt;
-&lt;p&gt;When a container is started, it starts composing the microservice out of the components indicated in the configuration file. For the container to be able to build these components, it will need a component factory. In the &lt;strong&gt;build&lt;/strong&gt; directory, create a &lt;code&gt;BeaconsServiceFactory&lt;/code&gt; class and populate it with the following code:&lt;/p&gt;
+&lt;p&gt;When a container is started, it starts composing the microservice out of the components indicated in the configuration file. For the container to be able to build these components, it will need a component factory. Thus, in the &lt;strong&gt;build&lt;/strong&gt; directory, we create a &lt;code&gt;BeaconsServiceFactory&lt;/code&gt; class and populate it with the following code:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/src/service/build/BeaconsServiceFactory.cs&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Beacons.Build&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
@@ -1247,7 +1249,7 @@
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, add the factories that are missing from the standard container (the one from the pip-services3-container module), so that we can build all the objects our service needs. In our case, this means adding the factory for the components we’ve written, as well as the default RPC factory (from the pip-services3-rpc module), which is needed for the HTTP service to work.&lt;/p&gt;
-&lt;p&gt;Before we run the microservice, we need to prepare an initial configuration for it. In the &lt;strong&gt;config&lt;/strong&gt; folder, create a &lt;strong&gt;config.yml&lt;/strong&gt; file with the following configuration:&lt;/p&gt;
+&lt;p&gt;Before we run the microservice, we need to prepare an initial configuration for it. In the &lt;strong&gt;config&lt;/strong&gt; folder, we create a &lt;strong&gt;config.yml&lt;/strong&gt; file with the following configuration:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/config/config.yml&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;---&lt;/span&gt;
 &lt;span style=&#34;color:#75715e&#34;&gt;# Container descriptor&lt;/span&gt;
@@ -1324,6 +1326,7 @@ Otherwise, we will just default to the in-memory persistence&lt;/p&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h3 id=&#34;step-7-running-and-testing-the-microservicestep7&#34;&gt;&lt;a href=&#34;../step7&#34;&gt;Step 7. Running and testing the microservice.&lt;/a&gt;&lt;/h3&gt;
 &lt;/span&gt;
+
       </description>
     </item>
     
@@ -1336,7 +1339,7 @@ Otherwise, we will just default to the in-memory persistence&lt;/p&gt;
       <description>
         
         
-        &lt;p&gt;To run our microservice, we need to add just one last bit of code. In the bin folder, create a &lt;strong&gt;Program.cs&lt;/strong&gt; file with the following code:&lt;/p&gt;
+        &lt;p&gt;To run our microservice, we need to add just one last bit of code. In the bin folder, we create a &lt;strong&gt;Program.cs&lt;/strong&gt; file with the following code:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/src/service/process/Program.cs&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Process&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
@@ -1358,7 +1361,7 @@ Otherwise, we will just default to the in-memory persistence&lt;/p&gt;
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In the code above, all we’re doing is creating an instance of the container we described earlier, telling it where to find the configuration file, and running it using the &lt;code&gt;RunAsync()&lt;/code&gt; method.&lt;/p&gt;
-&lt;p&gt;To run the microservice, execute the following command from a terminal at the root of the project:&lt;/p&gt;
+&lt;p&gt;To run the microservice, we execute the following command from a terminal at the root of the project:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;dotnet build &lt;span style=&#34;color:#75715e&#34;&gt;# build&lt;/span&gt;
 
 dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml &lt;span style=&#34;color:#75715e&#34;&gt;# start with config file&lt;/span&gt;
@@ -1369,7 +1372,7 @@ dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml &lt;span sty
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MONGO_ENABLED&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;true&lt;/span&gt;
 
 dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Make sure that you have MongoDB running locally (see &lt;a href=&#34;../../../getting_started/setup_environment&#34;&gt;Setup environment&lt;/a&gt;) or in an accessible Docker container (i.e. whose ports are exposed), and that the connection parameters set in the configuration file are correct.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Just a reminder: make sure that you have MongoDB running locally (see &lt;a href=&#34;../../../getting_started/setup_environment&#34;&gt;Setup environment&lt;/a&gt;) or in an accessible Docker container (i.e. whose ports are exposed), and that the connection parameters set in the configuration file are correct.&lt;/p&gt;
 &lt;p&gt;We can use the following docker composer configuration to run MongoDB in Docker:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/docker/docker-compose.yml&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;3.3&amp;#39;&lt;/span&gt;
@@ -1412,16 +1415,16 @@ dotnet src/process/bin/debug/net5.0/main.dll -c ./config/config.yml
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let’s move on to testing the main functionality of our microservice. Our set of commands for working with the service is available at the base path of &lt;code&gt;http://localhost:8080/v1/beacons&lt;/code&gt;, using the POST method.&lt;/p&gt;
 &lt;p&gt;We could use a REST client to test our microservice, but for the sake of this example, we’ll be using curl instead.&lt;/p&gt;
-&lt;p&gt;Let’s check the availability of our commands - the very same ones we defined in our &lt;a href=&#34;../../commons/commands/command_set/&#34;&gt;CommandSet&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s check the availability of our commands - the very same ones we defined in our &lt;a href=&#34;../../../commons/commands/command_set/&#34;&gt;CommandSet&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;First, we’ll attempt to create a few beacons in the system:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;{\&amp;#34;beacon\&amp;#34;:{\&amp;#34;id\&amp;#34;: \&amp;#34;1\&amp;#34;, \&amp;#34;udi\&amp;#34;: \&amp;#34;00001\&amp;#34;,  \&amp;#34;type\&amp;#34;: \&amp;#34;altbeacon\&amp;#34;,  \&amp;#34;site_id\&amp;#34;: \&amp;#34;1\&amp;#34;, \&amp;#34;label\&amp;#34;: \&amp;#34;TestBeacon1\&amp;#34;, \&amp;#34;center\&amp;#34;: { \&amp;#34;type\&amp;#34;: \&amp;#34;Point\&amp;#34;, \&amp;#34;coordinates\&amp;#34;: [ 0, 0 ] },\&amp;#34;radius\&amp;#34;: 50}}&amp;#34;&lt;/span&gt; http://localhost:8080/v1/beacons/create_beacon
 ‍
 curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;{\&amp;#34;beacon\&amp;#34;:{\&amp;#34;id\&amp;#34;: \&amp;#34;2\&amp;#34;, \&amp;#34;udi\&amp;#34;: \&amp;#34;00002\&amp;#34;,  \&amp;#34;type\&amp;#34;: \&amp;#34;altbeacon\&amp;#34;,  \&amp;#34;site_id\&amp;#34;: \&amp;#34;1\&amp;#34;,    \&amp;#34;label\&amp;#34;: \&amp;#34;TestBeacon2\&amp;#34;, \&amp;#34;center\&amp;#34;: { \&amp;#34;type\&amp;#34;: \&amp;#34;Point\&amp;#34;, \&amp;#34;coordinates\&amp;#34;: [ 2, 2 ] },\&amp;#34;radius\&amp;#34;: 70}}&amp;#34;&lt;/span&gt; http://localhost:8080/v1/beacons/create_beacon
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Update the second beacon by changing its coordinates and radius:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We update the second beacon by changing its coordinates and radius:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;{\&amp;#34;beacon\&amp;#34;:{\&amp;#34;id\&amp;#34;: \&amp;#34;2\&amp;#34;, \&amp;#34;udi\&amp;#34;: \&amp;#34;00002\&amp;#34;, \&amp;#34;type\&amp;#34;: \&amp;#34;altbeacon\&amp;#34;, \&amp;#34;site_id\&amp;#34;: \&amp;#34;1\&amp;#34;, \&amp;#34;label\&amp;#34;: \&amp;#34;TestBeacon2\&amp;#34;, \&amp;#34;center\&amp;#34;: { \&amp;#34;type\&amp;#34;: \&amp;#34;Point\&amp;#34;, \&amp;#34;coordinates\&amp;#34;: [ 2, 4 ] },\&amp;#34;radius\&amp;#34;: 80}}&amp;#34;&lt;/span&gt; http://localhost:8080/v1/beacons/update_beacon
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Retrieve a list of all available beacons using the command below:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We retrieve a list of all available beacons using the command below:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST http://localhost:8080/v1/beacons/get_beacons
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We should get the following JSON response with all of the beacons currently in the system:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
@@ -1459,7 +1462,7 @@ curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type:
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;]&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Try to get the first beacon by its UDI using the command:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now, we try to get the first beacon by its UDI using the command:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;{\&amp;#34;udi\&amp;#34;:\&amp;#34;00001\&amp;#34;}&amp;#34;&lt;/span&gt; http://localhost:8080/v1/beacons/get_beacon_by_udi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We should receive the following response:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
@@ -1477,9 +1480,9 @@ curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type:
   &lt;span style=&#34;color:#111&#34;&gt;},&lt;/span&gt;
   &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;radius&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To calculate a device’s position, use the following request:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To calculate a device’s position, we use the following request:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;curl -X POST -H &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -d &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;{\&amp;#34;site_id\&amp;#34;: \&amp;#34;1\&amp;#34;,\&amp;#34;udis\&amp;#34;: [\&amp;#34;00001\&amp;#34;, \&amp;#34;00002\&amp;#34;]}&amp;#34;&lt;/span&gt; http://localhost:8080/v1/beacons/calculate_position
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;As a result, you should get the following coordinates:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;As a result, we should get the following coordinates:&lt;/p&gt;
 &lt;p&gt;``json
 {&amp;ldquo;type&amp;rdquo;:&amp;ldquo;Point&amp;rdquo;,&amp;ldquo;coordinates&amp;rdquo;:[1,2]}&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
