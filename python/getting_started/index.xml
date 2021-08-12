@@ -143,7 +143,7 @@
 &lt;span style=&#34;color:#75715e&#34;&gt;# Status service&lt;/span&gt;
 - &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:status-service:http:default:1.0&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;A microservice’s container can read this configuration, use the descriptors in a factory to create all necessary components, provide these components with some configuration parameters, link the components with one another, and start up all available active processes.&lt;/p&gt;
-&lt;p&gt;This approach was used to implement &lt;a href=&#34;../../../microservices/overview&#34;&gt;The Pip.Services Library&lt;/a&gt;, which offers dozens of reusable microservices. And as a result, these microservices are all incredibly flexible: to configure them for a specific platform, all you need to do is provide them with the correct configuration, and you’re done! No coding needed!&lt;/p&gt;
+&lt;p&gt;This approach was used to implement &lt;a href=&#34;../../../microservices/#overview&#34;&gt;The Pip.Services Library&lt;/a&gt;, which offers dozens of reusable microservices. And as a result, these microservices are all incredibly flexible: to configure them for a specific platform, all you need to do is provide them with the correct configuration, and you’re done! No coding needed!&lt;/p&gt;
 
       </description>
     </item>
@@ -321,7 +321,7 @@ pip_services3_rpc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-5-container&#34;&gt;Step 5. Container&lt;/h3&gt;
 &lt;p&gt;Last but not least, our microservice needs a container component. This component creates all of the other components, links them with one another, and controls their life cycle. Although there exist many different ways of running a microservice in a container (regular classes, serverless functions, serlets, etc), we’ll be running our example microservice as a system process. To do this, we’ll make the HelloWorldProcess extend the ProcessContainer class of the Pip.Services toolkit.&lt;/p&gt;
 &lt;p&gt;Although containers can be populated by components manually, we’ll be using dynamic configuration to do this. By default, ProcessContainer reads the configuration from an external config.yml file. All we have left to do is register the factory for creating components from their descriptors.&lt;/p&gt;
-&lt;p&gt;Full listing of the container’s code found in the file:&lt;/p&gt;
+&lt;p&gt;The full listing of the container’s code can be found in the file:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/HelloWorldProcess.py&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# -*- coding: utf-8 -*- &lt;/span&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldServiceFactory&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldServiceFactory&lt;/span&gt;
@@ -378,8 +378,8 @@ pip_services3_rpc
 &lt;li&gt;HelloWorldController - the controller of our microservice, implemented in step 2. Make note of the controller’s descriptor, as it will be used to link the controller class to the REST service.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;../../rpc/services/http_endpoint&#34;&gt;HttpEndpoint&lt;/a&gt; - standard Pip.Services component that allows multiple services to use a single HTTP port simultaneously.&lt;/li&gt;
 &lt;li&gt;HelloWorldRestServices - the REST service we implemented on step 3.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;../../rpc/services/heartbeat_http_service&#34;&gt;HeartbeatHttpService&lt;/a&gt; - standard Pip.Services component that is used to check whether or not a microservice is still up and running by calling GET /heartbeat.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;../../rpc/services/status_http_service&#34;&gt;StatusHttpService&lt;/a&gt; - standard Pip.Services component for getting the status of a microservice by calling GET /status.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;../../rpc/services/heartbeat_rest_service&#34;&gt;HeartbeatRestService&lt;/a&gt; - standard Pip.Services component that is used to check whether or not a microservice is still up and running by calling GET /heartbeat.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;../../rpc/services/status_rest_service/&#34;&gt;StatusRestService&lt;/a&gt; - standard Pip.Services component for getting the status of a microservice by calling GET /status.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;As you may have noticed, more than half of the components are being taken from Pip.Services and used “right out of the box”. This significantly expands our microservice’s capabilities, with minimal effort on our part.&lt;/p&gt;
 &lt;h3 id=&#34;step-6-run-and-test-the-microservice&#34;&gt;Step 6. Run and test the microservice&lt;/h3&gt;
@@ -412,7 +412,7 @@ pip_services3_rpc
 &lt;p&gt;The components are configured. During this step, all components that implement the IConfigurable interface have their configure methods called with the configuration defined in config.yml passed as a parameter (see &lt;a href=&#34;../../recipes/configuration&#34;&gt;The Configuration recipe&lt;/a&gt;);&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Components are linked. All components that implement the IReferenceable interface get their setReferences methods called with a list of components available in the container. With the help of descriptors, objects can find all necessary dependencies (see &lt;a href=&#34;../../recipes/component_references&#34;&gt;The References recipe&lt;/a&gt;;&lt;/p&gt;
+&lt;p&gt;Components are linked. All components that implement the IReferenceable interface get their setReferences methods called with a list of components available in the container. With the help of descriptors, objects can find all necessary dependencies (see &lt;a href=&#34;../../recipes/component_references&#34;&gt;The References recipe&lt;/a&gt;);&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Components with active processes are run. A component is considered to contain active processes if it implements the IOpenable interface and has an open method defined (see &lt;a href=&#34;../../recipes/component_lifecycle&#34;&gt;The Component Lifecycle recipe&lt;/a&gt;).&lt;/p&gt;
@@ -459,7 +459,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 &lt;p&gt;&lt;strong&gt;Q: My company already has a microservices framework and full rewrite is not an option. How can I introduce Pip.Services?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; It is important to understand two things. First: microservices by design are components with independent lifecycle. Nothing shall prevent you from keeping old microservices the way they are and start implementing new microservices using new technologies. Second: Pip.Services toolkit was designed for composition and can be easily mixed with other libraries and frameworks. That allows to incrementally adopt Pip.Services without pain.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: What is a recommended strategy for incremental adoption of Pip.Services?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Irrelevant to implementation details, the first step in microservices development is always to establish consolidated logging and metrics across all microservices. Whether you instrument your existing microservices using loggers and performance counters from Pip.Services toolkit, or wrap your existing logging and monitoring into Pip.Services components. Then you shall go through three steps in any order: decompose microservice code into loosely coupled components, implement properly versioned interfaces, package microservice components into appropriate containers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Irrelevant to implementation details, the first step in microservices development is always to establish consolidated logging and metrics across all microservices. Whether you instrument your existing microservices using loggers and performance counters from Pip.Services toolkit, or wrap your existing logging and monitoring into Pip.Services components. Then you shall go through three steps in any order: decompose microservice code into loosely coupled components, implement properly versioned interfaces, and package microservice components into appropriate containers.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: How stable is Pip.Services toolkit?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; It depends. Core of the toolkit (commons, components, container, data, rpc, messaging) is stable, while some technology-specific modules can be less stable. Also, it depends on the language. Our team developed hundreds of microservices in .NET and Node.js in many projects and that implementation is very stable. Golang and Dart are quite new. Golang is being quickly adopted and maturing fast. Many 3rd party libraries in Dart are still low quality and using Dart in production carries a lot of risks (mid 2020). Python was added mainly to experiment with BigData, AI and Natural Languages and hasn’t been used a lot. And Java implementation didn’t get much attention yet. SpringBoot is a great framework which dominates the Java world. We are not trying to compete with it directly. We keep the Java version for clients who value code symmetry more than bells and whistles that SpringBoot provides.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: I’m not sure microservices is the right approach or/and there is a resistance to microservice in my organization. What shall I do?&lt;/strong&gt;&lt;/p&gt;
@@ -471,7 +471,7 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 &lt;p&gt;&lt;strong&gt;Q: I like Pip.Services and would like to contribute. What can I do?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Oh, there are lots of things where you can help: writing and maintaining code, writing documentation and tutorials, supporting other developers or just spreading the word about the project. Any help is welcome and appreciated. Just send us a message and we’ll get you into the project.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: I haven’t found an answer to my question. What shall I do?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Ask you question on &lt;a href=&#34;https://stackoverflow.com/&#34;&gt;stackoverflow&lt;/a&gt; or send us a message, and we may add you question to this FAQ&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A:&lt;/strong&gt; Ask your question on &lt;a href=&#34;https://stackoverflow.com/&#34;&gt;stackoverflow&lt;/a&gt; or send us a message, and we may add you question to this FAQ&lt;/p&gt;
 
       </description>
     </item>
