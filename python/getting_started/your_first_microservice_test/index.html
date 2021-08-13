@@ -25,14 +25,14 @@ The microservice is structurally made up of these components:
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/getting_started/your_first_microservice_test/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-08-13T21:49:59+02:00" />
+<meta property="article:modified_time" content="2021-08-13T23:05:34+02:00" />
 
 <meta itemprop="name" content="Your first microservice in Python (test)">
 <meta itemprop="description" content="So, let’s start developing microservices using the Pip.Services toolkit. As a simple example, we will make a Hello World microservice, which will greet you in response to your request. The communication protocol will be HTTP REST.
 The microservice is structurally made up of these components:
  The controller, which generates responses to requests A REST service for the transmission of responses and requests The component factory for the dynamic creation of components A container process, which will be filled with the necessary components, based on a yaml file configuration.">
-<meta itemprop="dateModified" content="2021-08-13T21:49:59+02:00" />
-<meta itemprop="wordCount" content="2883">
+<meta itemprop="dateModified" content="2021-08-13T23:05:34+02:00" />
+<meta itemprop="wordCount" content="1972">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Your first microservice in Python (test)"/>
 <meta name="twitter:description" content="So, let’s start developing microservices using the Pip.Services toolkit. As a simple example, we will make a Hello World microservice, which will greet you in response to your request. The communication protocol will be HTTP REST.
@@ -237814,299 +237814,10 @@ pip_services3_rpc
 <p>One of the most popular ways of transferring data between microservices is using the synchronous HTTP REST protocol. The HelloWorldRestService will be used to implement an external REST interface. This component extends the abstract RestService of the Pip.Services toolkit, which implements all the necessary functionality for processing REST HTTP requests.</p>
 <h3 id="step-4-component-factory">Step 4. Component factory</h3>
 <p>When a microservice is being populated by components based on the configuration being used, it requires a special factory to create components in accordance with their descriptors. The HelloWorldServiceFactory class is used for just that, as it extends the Factory class of the Pip.Services toolkit.</p>
-<div class="btn-group" role="group" aria-label="Lnguage selector">
-  <button id="select-node4" type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
-  <button id="select-dotnet4" type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
-  <button id="select-golang4" type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
-  <button id="select-dart4" type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
-  <button id="select-pytho4n" type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
-  <button id="select-java4" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
-</div>
-<div  id="node4">
-</div>
-<div  id="dotnet4">
-</div>
-<div  id="golang4">
-</div>
-<div  id="dart4">
-</div>
-<div  id="python4">
-</div>
-<div  id="java4">
-</div>	  
 <h3 id="step-5-container">Step 5. Container</h3>
 <p>Last but not least, our microservice needs a container component. This component creates all of the other components, links them with one another, and controls their life cycle. Although there exist many different ways of running a microservice in a container (regular classes, serverless functions, serlets, etc), we’ll be running our example microservice as a system process. To do this, we’ll make the HelloWorldProcess extend the ProcessContainer class of the Pip.Services toolkit.</p>
 <p>Although containers can be populated by components manually, we’ll be using dynamic configuration to do this. By default, ProcessContainer reads the configuration from an external config.yml file. All we have left to do is register the factory for creating components from their descriptors.</p>
-<div class="btn-group" role="group" aria-label="Lnguage selector">
-  <button id="select-node5" type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
-  <button id="select-dotnet5" type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
-  <button id="select-golang5" type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
-  <button id="select-dart5" type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
-  <button id="select-python5" type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
-  <button id="select-java5" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
-</div>
-<div  id="node5">
-Full listing of the container’s code found in the file:
-<p><strong>‍/HelloWorldProcess.js</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
-
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">rpc</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-rpc-node&#34;</span><span style="color:#111">);</span>
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">factory</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./HelloWorldServiceFactory&#34;</span><span style="color:#111">);</span>
-
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProcess</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">container</span><span style="color:#111">.</span><span style="color:#75af00">ProcessContainer</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;HelloWorld microservice&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_configPath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;./config.yml&#39;</span><span style="color:#111">;</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">factory</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldServiceFactory</span><span style="color:#111">());</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">rpc</span><span style="color:#111">.</span><span style="color:#75af00">DefaultRpcFactory</span><span style="color:#111">());</span>
-    <span style="color:#111">}</span>
-<span style="color:#111">}</span>
-
-<span style="color:#75af00">exports</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldProcess</span> <span style="color:#f92672">=</span> <span style="color:#75af00">HelloWorldProcess</span><span style="color:#111">;</span>
-</code></pre></div><p>The dynamic configuration is defined in the file:</p>
-<p><strong>‍/config.yml</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
-<span style="color:#75715e"># Container context</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
-  <span style="color:#f92672">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span> 
-
-<span style="color:#75715e"># Console logger</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span> 
-  <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span> 
-
-<span style="color:#75715e"># Performance counter that post values to log</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:counters:log:default:1.0&#34;</span> 
-<span style="color:#75715e"># Controller</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span> 
-<span style="color:#75715e"># Shared HTTP Endpoint</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:endpoint:http:default:1.0&#34;</span> 
-  <span style="color:#f92672">connection</span><span style="color:#111">:</span> 
-    <span style="color:#f92672">protocol</span><span style="color:#111">:</span> <span style="color:#ae81ff">http </span>
-    <span style="color:#f92672">host</span><span style="color:#111">:</span> <span style="color:#ae81ff">0.0.0.0</span> 
-    <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">8080</span> 
-
-<span style="color:#75715e"># HTTP Service V1</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:service:http:default:1.0&#34;</span> 
-
-<span style="color:#75715e"># Heartbeat service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:heartbeat-service:http:default:1.0&#34;</span> 
-<span style="color:#ae81ff">‍</span>
-<span style="color:#75715e"># Status service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:status-service:http:default:1.0&#34;</span>
-
-</code></pre></div></div>
-<div  id="dotnet5">
-Full listing of the container’s code found in the file:
-<p><strong>‍/HelloWorldProcess.cs</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Container</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Rpc.Build</span><span style="color:#111">;</span> 
-
-<span style="color:#00a8c8">namespace</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">{</span>
-
-    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProcess</span> <span style="color:#111">:</span> <span style="color:#111">ProcessContainer</span> <span style="color:#111">{</span>    
-
-        <span style="color:#00a8c8">public</span> <span style="color:#111">HelloWorldProcess</span><span style="color:#111">():</span> <span style="color:#00a8c8">base</span><span style="color:#111">(</span><span style="color:#d88200">&#34;hello_world&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Hello world microservice&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span>            
-            <span style="color:#ae81ff">_</span><span style="color:#111">configPath</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;config.yml&#34;</span><span style="color:#111">;</span>             
-            <span style="color:#ae81ff">_f</span><span style="color:#111">actories</span><span style="color:#111">.</span><span style="color:#111">Add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">DefaultRpcFactory</span><span style="color:#111">());</span>            
-            <span style="color:#ae81ff">_f</span><span style="color:#111">actories</span><span style="color:#111">.</span><span style="color:#111">Add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorldServiceFactory</span><span style="color:#111">());</span>        
-        <span style="color:#111">}</span>   
-
-    <span style="color:#111">}</span>
-<span style="color:#111">}</span>
-</code></pre></div><p>The dynamic configuration is defined in the file:</p>
-<p><strong>‍/config.yml</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
-<span style="color:#75715e"># Container context</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
-  <span style="color:#f92672">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span> 
-
-<span style="color:#75715e"># Console logger</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span> 
-  <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span> 
-
-<span style="color:#75715e"># Performance counter that post values to log</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:counters:log:default:1.0&#34;</span> 
-<span style="color:#75715e"># Controller</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span> 
-<span style="color:#75715e"># Shared HTTP Endpoint</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:endpoint:http:default:1.0&#34;</span> 
-  <span style="color:#f92672">connection</span><span style="color:#111">:</span> 
-    <span style="color:#f92672">protocol</span><span style="color:#111">:</span> <span style="color:#ae81ff">http </span>
-    <span style="color:#f92672">host</span><span style="color:#111">:</span> <span style="color:#ae81ff">0.0.0.0</span> 
-    <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">8080</span> 
-
-<span style="color:#75715e"># HTTP Service V1</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:service:http:default:1.0&#34;</span> 
-
-<span style="color:#75715e"># Heartbeat service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:heartbeat-service:http:default:1.0&#34;</span> 
-<span style="color:#ae81ff">‍</span>
-<span style="color:#75715e"># Status service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:status-service:http:default:1.0&#34;</span>
-
-</code></pre></div></div>
-<div  id="golang5">
-Full listing of the container’s code found in the file:
-<p><strong>‍/HelloWorldProcess.go</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">quickstart</span>
-
-<span style="color:#f92672">import</span> <span style="color:#111">(</span>
-    <span style="color:#75af00">cproc</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-container-go/container&#34;</span>
-    <span style="color:#75af00">rpcbuild</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-rpc-go/build&#34;</span>
-<span style="color:#111">)</span>
-
-<span style="color:#00a8c8">type</span> <span style="color:#75af00">HelloWorldProcess</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
-    <span style="color:#75af00">cproc</span><span style="color:#111">.</span><span style="color:#75af00">ProcessContainer</span>
-<span style="color:#111">}</span>
-
-<span style="color:#00a8c8">func</span> <span style="color:#75af00">NewHelloWorldProcess</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">HelloWorldProcess</span> <span style="color:#111">{</span>
-    <span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">HelloWorldProcess</span><span style="color:#111">{}</span>
-    <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">ProcessContainer</span> <span style="color:#111">=</span> <span style="color:#f92672">*</span><span style="color:#75af00">cproc</span><span style="color:#111">.</span><span style="color:#75af00">NewProcessContainer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;hello-world&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span><span style="color:#111">)</span>
-    <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">SetConfigPath</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./config.yml&#34;</span><span style="color:#111">)</span>
-    <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">AddFactory</span><span style="color:#111">(</span><span style="color:#75af00">NewHelloWorldServiceFactory</span><span style="color:#111">())</span>
-    <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">AddFactory</span><span style="color:#111">(</span><span style="color:#75af00">rpcbuild</span><span style="color:#111">.</span><span style="color:#75af00">NewDefaultRpcFactory</span><span style="color:#111">())</span>
-    <span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">c</span>
-<span style="color:#111">}</span>
-</code></pre></div><p>The dynamic configuration is defined in the file:</p>
-<p><strong>‍/config.yml</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
-<span style="color:#75715e"># Container context</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
-  <span style="color:#f92672">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span> 
-
-<span style="color:#75715e"># Console logger</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span> 
-  <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span> 
-
-<span style="color:#75715e"># Performance counter that post values to log</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:counters:log:default:1.0&#34;</span> 
-<span style="color:#75715e"># Controller</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span> 
-<span style="color:#75715e"># Shared HTTP Endpoint</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:endpoint:http:default:1.0&#34;</span> 
-  <span style="color:#f92672">connection</span><span style="color:#111">:</span> 
-    <span style="color:#f92672">protocol</span><span style="color:#111">:</span> <span style="color:#ae81ff">http </span>
-    <span style="color:#f92672">host</span><span style="color:#111">:</span> <span style="color:#ae81ff">0.0.0.0</span> 
-    <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">8080</span> 
-
-<span style="color:#75715e"># HTTP Service V1</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:service:http:default:1.0&#34;</span> 
-
-<span style="color:#75715e"># Heartbeat service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:heartbeat-service:http:default:1.0&#34;</span> 
-<span style="color:#ae81ff">‍</span>
-<span style="color:#75715e"># Status service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:status-service:http:default:1.0&#34;</span>
-
-</code></pre></div></div>
-<div  id="dart5">
-Full listing of the container’s code found in the file:
-<p><strong>‍‍/lib/src/HelloWorldProcess.dart</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_rpc/pip_services3_rpc.dart&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_container/pip_services3_container.dart&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;./HelloWorldServiceFactory.dart&#39;</span><span style="color:#111">;</span>
-
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProcess</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">ProcessContainer</span> <span style="color:#111">{</span>
-  <span style="color:#111">HelloWorldProcess</span><span style="color:#111">()</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;HelloWorld microservice&#39;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">configPath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;./config.yml&#39;</span><span style="color:#111">;</span>
-    <span style="color:#111">factories</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">HelloWorldServiceFactory</span><span style="color:#111">());</span>
-    <span style="color:#111">factories</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">DefaultRpcFactory</span><span style="color:#111">());</span>
-  <span style="color:#111">}</span>
-<span style="color:#111">}</span>
-</code></pre></div><p>The dynamic configuration is defined in the file:</p>
-<p><strong>‍/config.yml</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
-<span style="color:#75715e"># Container context</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
-  <span style="color:#f92672">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span> 
-
-<span style="color:#75715e"># Console logger</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span> 
-  <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span> 
-
-<span style="color:#75715e"># Performance counter that post values to log</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:counters:log:default:1.0&#34;</span> 
-<span style="color:#75715e"># Controller</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span> 
-<span style="color:#75715e"># Shared HTTP Endpoint</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:endpoint:http:default:1.0&#34;</span> 
-  <span style="color:#f92672">connection</span><span style="color:#111">:</span> 
-    <span style="color:#f92672">protocol</span><span style="color:#111">:</span> <span style="color:#ae81ff">http </span>
-    <span style="color:#f92672">host</span><span style="color:#111">:</span> <span style="color:#ae81ff">0.0.0.0</span> 
-    <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">8080</span> 
-
-<span style="color:#75715e"># HTTP Service V1</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:service:http:default:1.0&#34;</span> 
-
-<span style="color:#75715e"># Heartbeat service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:heartbeat-service:http:default:1.0&#34;</span> 
-<span style="color:#ae81ff">‍</span>
-<span style="color:#75715e"># Status service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:status-service:http:default:1.0&#34;</span>
-
-</code></pre></div></div>
-<div  id="python5">
-The full listing of the container’s code can be found in the file:
-<p><strong>/HelloWorldProcess.py</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># -*- coding: utf-8 -*- </span>
-<span style="color:#f92672">from</span> <span style="color:#111">HelloWorldServiceFactory</span> <span style="color:#f92672">import</span> <span style="color:#111">HelloWorldServiceFactory</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_container.ProcessContainer</span> <span style="color:#f92672">import</span> <span style="color:#111">ProcessContainer</span>
-<span style="color:#f92672">from</span> <span style="color:#111">pip_services3_rpc.build</span> <span style="color:#f92672">import</span> <span style="color:#111">DefaultRpcFactory</span>
-
-
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProcess</span><span style="color:#111">(</span><span style="color:#111">ProcessContainer</span><span style="color:#111">):</span>
-    <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
-
-        <span style="color:#111">super</span><span style="color:#111">(</span><span style="color:#111">HelloWorldProcess</span><span style="color:#111">,</span> <span style="color:#111">self</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;HelloWorld microservice&#39;</span><span style="color:#111">)</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_config_path</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;./config.yaml&#39;</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_factories</span><span style="color:#f92672">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">HelloWorldServiceFactory</span><span style="color:#111">())</span>
-        <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_factories</span><span style="color:#f92672">.</span><span style="color:#111">add</span><span style="color:#111">(</span><span style="color:#111">DefaultRpcFactory</span><span style="color:#111">())</span>
-
-</code></pre></div><p>The dynamic configuration is defined in the file:</p>
-<p><strong>‍/config.yaml</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
-<span style="color:#75715e"># Container context</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
-  <span style="color:#f92672">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span> 
-
-<span style="color:#75715e"># Console logger</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span> 
-  <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span> 
-
-<span style="color:#75715e"># Performance counter that post values to log</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:counters:log:default:1.0&#34;</span> 
-<span style="color:#75715e"># Controller</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span> 
-  <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span> 
-<span style="color:#75715e"># Shared HTTP Endpoint</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:endpoint:http:default:1.0&#34;</span> 
-  <span style="color:#f92672">connection</span><span style="color:#111">:</span> 
-    <span style="color:#f92672">protocol</span><span style="color:#111">:</span> <span style="color:#ae81ff">http </span>
-    <span style="color:#f92672">host</span><span style="color:#111">:</span> <span style="color:#ae81ff">0.0.0.0</span> 
-    <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">8080</span> 
-
-<span style="color:#75715e"># HTTP Service V1</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:service:http:default:1.0&#34;</span> 
-
-<span style="color:#75715e"># Heartbeat service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:heartbeat-service:http:default:1.0&#34;</span> 
-<span style="color:#ae81ff">‍</span>
-<span style="color:#75715e"># Status service</span>
-- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:status-service:http:default:1.0&#34;</span>
-
-</code></pre></div></div>
-<div  id="java5">
-</div>
-Looking at the configuration file, we can conclude that the following components will be created in the microservice:
+<p>Looking at the configuration file, we can conclude that the following components will be created in the microservice:</p>
 <ul>
 <li><a href="../../components/info/context_info">ContextInfo</a> - standard Pip.Services component for determining the name and description of a microservice.</li>
 <li><a href="../../components/log/console_logger">ConsoleLogger</a> - standard Pip.Services component for writing logs to stdout,</li>
@@ -238119,92 +237830,6 @@ Looking at the configuration file, we can conclude that the following components
 </ul>
 <p>As you may have noticed, more than half of the components are being taken from Pip.Services and used “right out of the box”. This significantly expands our microservice’s capabilities, with minimal effort on our part.</p>
 <h3 id="step-6-run-and-test-the-microservice">Step 6. Run and test the microservice</h3>
-<div class="btn-group" role="group" aria-label="Lnguage selector">
-  <button id="select-node6" type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
-  <button id="select-dotnet6" type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
-  <button id="select-golang6" type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
-  <button id="select-dart6" type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
-  <button id="select-python6" type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
-  <button id="select-java6" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
-</div>
-<div  id="node6">
-In Node.js, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.
-<p><strong>/run.js</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
-
-<span style="color:#00a8c8">const</span> <span style="color:#75af00">process</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./HelloWorldProcess&#34;</span><span style="color:#111">);</span>
-
-<span style="color:#00a8c8">try</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">new</span> <span style="color:#75af00">process</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldProcess</span><span style="color:#111">().</span><span style="color:#75af00">run</span><span style="color:#111">(</span><span style="color:#75af00">process</span><span style="color:#111">.</span><span style="color:#75af00">argv</span><span style="color:#111">);</span>
-<span style="color:#111">}</span> <span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">ex</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">error</span><span style="color:#111">(</span><span style="color:#75af00">ex</span><span style="color:#111">);</span>
-<span style="color:#111">}</span>
-
-</code></pre></div></div>
-<div  id="dotnet6">
-In .NET, we’ll need a special file to run the microservice. All this file does is to create a container instance and run it with the parameters provided from the command line.
-<p><strong>/Program.cs</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">HelloWorld</span> <span style="color:#111">{</span> 
-
-    <span style="color:#00a8c8">class</span> <span style="color:#75af00">Program</span> <span style="color:#111">{</span> 
-
-        <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Main</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span><span style="color:#111">[]</span> <span style="color:#111">args</span><span style="color:#111">)</span> <span style="color:#111">{</span>   
-
-            <span style="color:#00a8c8">var</span> <span style="color:#111">process</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">HelloWorldProcess</span><span style="color:#111">();</span>            
-            <span style="color:#111">process</span><span style="color:#111">.</span><span style="color:#111">RunAsync</span><span style="color:#111">(</span><span style="color:#111">args</span><span style="color:#111">).</span><span style="color:#111">Wait</span><span style="color:#111">();</span>        
-        <span style="color:#111">}</span>
-
-    <span style="color:#111">}</span>
-<span style="color:#111">}</span>
-</code></pre></div></div>
-<div  id="golang6">
-In Golang, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line. Let's place it separately from the rest in the folder bin.
-<p><strong>/bin/run.go</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
-
-<span style="color:#f92672">import</span> <span style="color:#111">(</span>
-    <span style="color:#d88200">&#34;os&#34;</span>
-    <span style="color:#d88200">&#34;quickstart&#34;</span>
-<span style="color:#111">)</span>
-
-<span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-    <span style="color:#75af00">proc</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">quickstart</span><span style="color:#111">.</span><span style="color:#75af00">NewHelloWorldProcess</span><span style="color:#111">()</span>
-    <span style="color:#75af00">proc</span><span style="color:#111">.</span><span style="color:#75af00">Run</span><span style="color:#111">(</span><span style="color:#75af00">os</span><span style="color:#111">.</span><span style="color:#75af00">Args</span><span style="color:#111">)</span>
-<span style="color:#111">}</span>
-</code></pre></div></div>
-<div  id="dart6">
-In Dart, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.
-<p><strong>/bin/run.dart.</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_quickstart/pip_quickstart.dart&#39;</span><span style="color:#111">;</span>
-
-<span style="color:#00a8c8">void</span> <span style="color:#111">main</span><span style="color:#111">(</span><span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">argv</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">try</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">var</span> <span style="color:#111">proc</span> <span style="color:#f92672">=</span> <span style="color:#111">HelloWorldProcess</span><span style="color:#111">();</span>
-    <span style="color:#111">proc</span><span style="color:#111">.</span><span style="color:#111">run</span><span style="color:#111">(</span><span style="color:#111">argv</span><span style="color:#111">);</span>
-  <span style="color:#111">}</span> <span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">ex</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#111">ex</span><span style="color:#111">);</span>
-  <span style="color:#111">}</span>
-<span style="color:#111">}</span>
-
-</code></pre></div></div>
-<div  id="python6">
-In Python, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.
-<p><strong>/run.py</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#75715e"># -*- coding: utf-8 -*- </span>
-<span style="color:#f92672">from</span> <span style="color:#111">HelloWorldProcess</span> <span style="color:#f92672">import</span> <span style="color:#111">HelloWorldProcess</span>
-
-<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
-    <span style="color:#111">runner</span> <span style="color:#f92672">=</span> <span style="color:#111">HelloWorldProcess</span><span style="color:#111">()</span>
-    <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;run&#34;</span><span style="color:#111">)</span>
-    <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
-        <span style="color:#111">runner</span><span style="color:#f92672">.</span><span style="color:#111">run</span><span style="color:#111">()</span>
-    <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">ex</span><span style="color:#111">:</span>
-        <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#111">ex</span><span style="color:#111">)</span>
-
-</code></pre></div></div>
-<div  id="java6">
-</div>
 <p>When a microservice starts up, the following sequence of events takes place:</p>
 <ol>
 <li>
@@ -238233,31 +237858,31 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 <li>The components previously created in the container are destroyed;</li>
 <li>The container is stopped.</li>
 </ol>
-<p>To start the microservice, run the following command from a terminal:</p>
 <div class="btn-group" role="group" aria-label="Lnguage selector">
-  <button id="select-node6-2" type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
-  <button id="select-dotnet6-2" type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
-  <button id="select-golang6-2" type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
-  <button id="select-dart6-2" type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
-  <button id="select-python6-2" type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
-  <button id="select-java6-2" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+  <button id="select-node6b" type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+  <button id="select-dotnet6b" type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+  <button id="select-golang6b" type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+  <button id="select-dart6b" type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+  <button id="select-python6b" type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+  <button id="select-java6b" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
 </div>
-<div  id="node6-2">
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">node ./run.js
-</code></pre></div></div>
-<div  id="dotnet6-2">
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet run
-</code></pre></div></div>
-<div  id="golang6-2">
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go run ./bin/run.go
-</code></pre></div></div>
-<div  id="dart6-2">
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dart./bin/run.dart
-</code></pre></div></div>
-<div  id="python6-2">
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python ./run.py
-</code></pre></div></div>
-<div  id="java6-2">
+<div  id="node6b">
+node	  
+</div>
+<div  id="dotnet6b">
+dotnet	  
+</div>
+<div  id="golang6b">
+golang	  
+</div>
+<div  id="dart6b">
+dart	  
+</div>
+<div  id="python6b">
+python	  
+</div>
+<div  id="java6b">
+java	  
 </div>
 <p>If the microservice started up successfully, you should see the following result in the terminal:</p>
 <pre><code>[echo:INFO:2018-09-25T15:15:30.284Z] Press Control-C to stop the microservice...
