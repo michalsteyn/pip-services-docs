@@ -25,14 +25,14 @@ The microservice is structurally made up of these components:
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/getting_started/your_first_microservice_test/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-08-14T10:19:08+02:00" />
+<meta property="article:modified_time" content="2021-08-14T14:18:41+02:00" />
 
 <meta itemprop="name" content="Your first microservice in Python (test)">
 <meta itemprop="description" content="So, let’s start developing microservices using the Pip.Services toolkit. As a simple example, we will make a Hello World microservice, which will greet you in response to your request. The communication protocol will be HTTP REST.
 The microservice is structurally made up of these components:
  The controller, which generates responses to requests A REST service for the transmission of responses and requests The component factory for the dynamic creation of components A container process, which will be filled with the necessary components, based on a yaml file configuration.">
-<meta itemprop="dateModified" content="2021-08-14T10:19:08+02:00" />
-<meta itemprop="wordCount" content="2020">
+<meta itemprop="dateModified" content="2021-08-14T14:18:41+02:00" />
+<meta itemprop="wordCount" content="2595">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Your first microservice in Python (test)"/>
 <meta name="twitter:description" content="So, let’s start developing microservices using the Pip.Services toolkit. As a simple example, we will make a Hello World microservice, which will greet you in response to your request. The communication protocol will be HTTP REST.
@@ -237821,8 +237821,51 @@ pip_services3_rpc
   <button id="select-java3" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
 </div>
 <div  id="node3">
-<p>node</p>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldRestService</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">rpc</span><span style="color:#111">.</span><span style="color:#75af00">RestService</span>
+</code></pre></div><p>Next, we’ll need to register the REST operations that we’ll be using in the class’s register method. In this microservice, we’ll only be needing to implement a single GET command: “/greeting”. This command receives a “name” parameter, calls the controller’s “greeting” method, and returns the generated result to the client.</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#75af00">register() {</span>
+   <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">registerRoute</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;/greeting&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+       <span style="color:#00a8c8">let</span> <span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">param</span><span style="color:#111">(</span><span style="color:#d88200">&#39;name&#39;</span><span style="color:#111">);</span>
+       <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_controller</span><span style="color:#111">.</span><span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#75af00">name</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">sendResult</span><span style="color:#111">(</span><span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">));</span>    
+   <span style="color:#111">});</span>
+<span style="color:#111">}</span>
+</code></pre></div><p>To get a reference to the controller, we’ll add its descriptor to the _dependency_resolver with a name of “controller”.</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">super</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_baseRoute</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;/hello_world&#34;</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#75af00">put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;controller&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">commons</span><span style="color:#111">.</span><span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;hello-world&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;controller&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>   
+<span style="color:#111">}</span>
+
+</code></pre></div><p>Using this descriptor, the base class will be able to find a reference to the controller during component linking. Check out <a href="https://www.geeksforgeeks.org/service-locator-pattern/">The Locator Pattern</a> for more on how this mechanism works.</p>
+<p>We also need to set a base route in the service’s constructor using the _base_route property. As a result, the microservice’s full REST request will look something like:</p>
+<p><code>GET /hello_world/greeting?name=John</code></p>
+<p>Full listing for the REST service found in the file:</p>
+<p><strong>/HelloWorldRestService.js</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
+<span style="color:#960050;background-color:#1e0010">‍</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">rpc</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-rpc-node&#34;</span><span style="color:#111">);</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">commons</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-commons-node&#34;</span><span style="color:#111">);</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldRestService</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">rpc</span><span style="color:#111">.</span><span style="color:#75af00">RestService</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">super</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_baseRoute</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#34;/hello_world&#34;</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#75af00">put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;controller&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">commons</span><span style="color:#111">.</span><span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;hello-world&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;controller&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">){</span>
+        <span style="color:#00a8c8">super</span><span style="color:#111">.</span><span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#75af00">getOneRequired</span><span style="color:#111">(</span><span style="color:#d88200">&#39;controller&#39;</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>    
+    <span style="color:#75af00">register() {</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">registerRoute</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;/greeting&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+            <span style="color:#00a8c8">let</span> <span style="color:#75af00">name</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">query</span><span style="color:#111">.</span><span style="color:#75af00">name</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_controller</span><span style="color:#111">.</span><span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#75af00">name</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">sendResult</span><span style="color:#111">(</span><span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">));</span>
+        <span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+<span style="color:#75af00">exports</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldRestService</span> <span style="color:#f92672">=</span> <span style="color:#75af00">HelloWorldRestService</span>
+</code></pre></div></div>
 <div  id="dotnet3">
 <p>dotnet</p>
 </div>
@@ -237849,8 +237892,44 @@ java
   <button id="select-java4" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
 </div>
 <div  id="node4">
-<p>node</p>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">components</span><span style="color:#111">.</span><span style="color:#75af00">Factory</span>
+</code></pre></div><p>Next, in the factory’s constructor, we’ll be registering descriptors and their corresponding component types.</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">super</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">registerAsType</span><span style="color:#111">(</span>
+        <span style="color:#00a8c8">new</span> <span style="color:#75af00">commons</span><span style="color:#111">.</span><span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;controller&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;default&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+        <span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldController</span>
+    <span style="color:#111">);</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">registerAsType</span><span style="color:#111">(</span>
+        <span style="color:#00a8c8">new</span> <span style="color:#75af00">commons</span><span style="color:#111">.</span><span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;service&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;http&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+        <span style="color:#75af00">restService</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldRestService</span>
+    <span style="color:#111">);</span>
+<span style="color:#960050;background-color:#1e0010">‍</span><span style="color:#111">}</span>
+</code></pre></div><p>For more info on how this works, be sure to check out <a href="../../recipes/container">The Container recipe</a>.</p>
+<p>Full listing of the factory’s code found in the file:</p>
+<p><strong>‍/HelloWorldServiceFactory.js</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">components</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-components-node&#34;</span><span style="color:#111">);</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">commons</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-commons-node&#34;</span><span style="color:#111">);</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./HelloWorldController&#34;</span><span style="color:#111">);</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">restService</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./HelloWorldRestService&#34;</span><span style="color:#111">);</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">components</span><span style="color:#111">.</span><span style="color:#75af00">Factory</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">super</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">registerAsType</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">commons</span><span style="color:#111">.</span><span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;controller&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;default&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+            <span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldController</span>
+        <span style="color:#111">);</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">registerAsType</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">commons</span><span style="color:#111">.</span><span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;service&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;http&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+            <span style="color:#75af00">restService</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldRestService</span>
+        <span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+<span style="color:#75af00">exports</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#f92672">=</span> <span style="color:#75af00">HelloWorldServiceFactory</span>
+</code></pre></div></div>
 <div  id="dotnet4">
 <p>dotnet</p>
 </div>
@@ -237878,8 +237957,57 @@ java
   <button id="select-java5" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
 </div>
 <div  id="node5">
-<p>node</p>
-</div>
+<p>Full listing of the container’s code found in the file:</p>
+<p><strong>‍/HelloWorldProcess.js</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">rpc</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-rpc-node&#34;</span><span style="color:#111">);</span>
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">factory</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./HelloWorldServiceFactory&#34;</span><span style="color:#111">);</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldProcess</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">container</span><span style="color:#111">.</span><span style="color:#75af00">ProcessContainer</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;hello-world&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;HelloWorld microservice&#39;</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_configPath</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;./config.yml&#39;</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">factory</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldServiceFactory</span><span style="color:#111">());</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">rpc</span><span style="color:#111">.</span><span style="color:#75af00">DefaultRpcFactory</span><span style="color:#111">());</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#75af00">exports</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldProcess</span> <span style="color:#f92672">=</span> <span style="color:#75af00">HelloWorldProcess</span><span style="color:#111">;</span>
+</code></pre></div><p>The dynamic configuration is defined in the file:</p>
+<p><strong>‍/config.yml</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#111">---</span>
+<span style="color:#75715e"># Container context</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:context-info:default:default:1.0&#34;</span> 
+  <span style="color:#f92672">name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world&#34;</span> 
+  <span style="color:#f92672">description</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;HelloWorld microservice&#34;</span> 
+
+<span style="color:#75715e"># Console logger</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:logger:console:default:1.0&#34;</span> 
+  <span style="color:#f92672">level</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;trace&#34;</span> 
+
+<span style="color:#75715e"># Performance counter that post values to log</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:counters:log:default:1.0&#34;</span> 
+<span style="color:#75715e"># Controller</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:controller:default:default:1.0&#34;</span> 
+  <span style="color:#f92672">default_name</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;World&#34;</span> 
+<span style="color:#75715e"># Shared HTTP Endpoint</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:endpoint:http:default:1.0&#34;</span> 
+  <span style="color:#f92672">connection</span><span style="color:#111">:</span> 
+    <span style="color:#f92672">protocol</span><span style="color:#111">:</span> <span style="color:#ae81ff">http </span>
+    <span style="color:#f92672">host</span><span style="color:#111">:</span> <span style="color:#ae81ff">0.0.0.0</span> 
+    <span style="color:#f92672">port</span><span style="color:#111">:</span> <span style="color:#ae81ff">8080</span> 
+
+<span style="color:#75715e"># HTTP Service V1</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;hello-world:service:http:default:1.0&#34;</span> 
+
+<span style="color:#75715e"># Heartbeat service</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:heartbeat-service:http:default:1.0&#34;</span> 
+<span style="color:#ae81ff">‍</span>
+<span style="color:#75715e"># Status service</span>
+- <span style="color:#f92672">descriptor</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-services:status-service:http:default:1.0&#34;</span>
+
+</code></pre></div></div>
 <div  id="dotnet5">
 <p>dotnet</p>
 </div>
@@ -237917,8 +238045,19 @@ java
   <button id="select-java6a" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
 </div>
 <div  id="node6a">
-<p>node</p>
-</div>
+<p>In Node.js, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.</p>
+<p><strong>/run.js</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#d88200">&#34;use strict&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">const</span> <span style="color:#75af00">process</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./HelloWorldProcess&#34;</span><span style="color:#111">);</span>
+
+<span style="color:#00a8c8">try</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">new</span> <span style="color:#75af00">process</span><span style="color:#111">.</span><span style="color:#75af00">HelloWorldProcess</span><span style="color:#111">().</span><span style="color:#75af00">run</span><span style="color:#111">(</span><span style="color:#75af00">process</span><span style="color:#111">.</span><span style="color:#75af00">argv</span><span style="color:#111">);</span>
+<span style="color:#111">}</span> <span style="color:#00a8c8">catch</span><span style="color:#111">(</span><span style="color:#75af00">ex</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">error</span><span style="color:#111">(</span><span style="color:#75af00">ex</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+</code></pre></div></div>
 <div  id="dotnet6a">
 <p>dotnet</p>
 </div>
@@ -237929,7 +238068,21 @@ java
 <p>dart</p>
 </div>
 <div  id="python6a">
-<p>python</p>
+In Python, we’ll need a special file to run the microservice. All this file does is creates a container instance and runs it with the parameters provided from the command line.
+<p><strong>/run.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#75715e"># -*- coding: utf-8 -*- </span>
+<span style="color:#f92672">from</span> <span style="color:#111">HelloWorldProcess</span> <span style="color:#f92672">import</span> <span style="color:#111">HelloWorldProcess</span>
+
+<span style="color:#00a8c8">if</span> <span style="color:#111">__name__</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#39;__main__&#39;</span><span style="color:#111">:</span>
+    <span style="color:#111">runner</span> <span style="color:#f92672">=</span> <span style="color:#111">HelloWorldProcess</span><span style="color:#111">()</span>
+    <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;run&#34;</span><span style="color:#111">)</span>
+    <span style="color:#00a8c8">try</span><span style="color:#111">:</span>
+        <span style="color:#111">runner</span><span style="color:#f92672">.</span><span style="color:#111">run</span><span style="color:#111">()</span>
+    <span style="color:#00a8c8">except</span> <span style="color:#75af00">Exception</span> <span style="color:#00a8c8">as</span> <span style="color:#111">ex</span><span style="color:#111">:</span>
+        <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#111">ex</span><span style="color:#111">)</span>
+
+</code></pre></div><p>python</p>
 </div>
 <div  id="java6a">
 java	  
@@ -237971,8 +238124,8 @@ Components are unlinked. All components that implement the IUnreferenceable inte
   <button id="select-java6b" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
 </div>
 <div  id="node6b">
-<p>node</p>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">node ./run.js
+</code></pre></div></div>
 <div  id="dotnet6b">
 <p>dotnet</p>
 </div>
@@ -237983,8 +238136,8 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 <p>dart</p>
 </div>
 <div  id="python6b">
-<p>python</p>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python ./run.py
+</code></pre></div></div>
 <div  id="java6b">
 java	  
 </div>
