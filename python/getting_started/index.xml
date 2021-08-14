@@ -816,8 +816,60 @@ pip_services3_rpc
 &lt;span style=&#34;color:#75af00&#34;&gt;exports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldRestService&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldRestService&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;dotnet3&#34;&gt;
-&lt;p&gt;dotnet&lt;/p&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldRestService&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RestService&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, we’ll need to register the REST operations that we’ll be using in the class’s register method. In this microservice, we’ll only be needing to implement a single GET command: “/greeting”. This command receives a “name” parameter, calls the controller’s “greeting” method, and returns the generated result to the client.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(){&lt;/span&gt;    
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;    
+    &lt;span style=&#34;color:#111&#34;&gt;RegisterRoute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;GET&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;/greeting&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;routeData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Query&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;TryGetValue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;StringValues&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;            
+            &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;FirstOrDefault&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;SendResultAsync&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;GreetingAsync&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;    
+  &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To get a reference to the controller, we’ll add its descriptor to the “_dependencyResolver” with a name of “controller”.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(){&lt;/span&gt;    
+    &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;baseRoute&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello_world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;    
+    &lt;span style=&#34;color:#ae81ff&#34;&gt;_d&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Using this descriptor, the base class will be able to find a reference to the controller during component linking. Check out &lt;a href=&#34;https://www.geeksforgeeks.org/service-locator-pattern/&#34;&gt;The Locator Pattern&lt;/a&gt; for more on how this mechanism works.&lt;/p&gt;
+&lt;p&gt;We also need to set a base route in the service’s constructor using the _baseRoute property. As a result, the microservice’s full REST request will look something like:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GET /hello_world/greeting?name=John&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Full listing for the REST service found in the file:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;/HelloWorldRestService.cs&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Microsoft.Extensions.Primitives&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PipServices3.Commons.Refer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PipServices3.Rpc.Services&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;System.Linq&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt; 
+&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;    
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldRestService&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RestService&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldController&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;   
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;            
+            &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;baseRoute&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello_world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;            
+            &lt;span style=&#34;color:#ae81ff&#34;&gt;_d&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Put&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;    
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;IReferences&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;            
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;SetReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;references&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;            
+            &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;_d&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ependencyResolver&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;GetOneRequired&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;HelloWorldController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;  
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;override&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;            
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Register&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;            
+            &lt;span style=&#34;color:#111&#34;&gt;RegisterRoute&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;GET&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;/greeting&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;routeData&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;                
+                &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;                
+                &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;request&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Query&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;TryGetValue&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;StringValues&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;                    
+                  &lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;values&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;FirstOrDefault&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;                
+                &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;                
+              &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;SendResultAsync&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;response&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;controller&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;GreetingAsync&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;    
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;golang3&#34;&gt;
 &lt;p&gt;golang&lt;/p&gt;
 &lt;/div&gt;
@@ -880,8 +932,33 @@ java
 &lt;span style=&#34;color:#75af00&#34;&gt;exports&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldServiceFactory&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldServiceFactory&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;dotnet4&#34;&gt;
-&lt;p&gt;dotnet&lt;/p&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldServiceFactory&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Factory&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The factory’s constructor is used to register descriptors and their corresponding component types.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldServiceFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(){&lt;/span&gt;    
+    &lt;span style=&#34;color:#111&#34;&gt;RegisterAsType&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ControllerDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;typeof&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;HelloWorldController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;    
+    &lt;span style=&#34;color:#111&#34;&gt;RegisterAsType&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;HttpServiceDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;typeof&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;HelloWorldRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For more info on how this works, be sure to check out &lt;a href=&#34;../../recipes/container&#34;&gt;The Container recipe&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Full listing of the factory’s code found in the file:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;‍/HelloWorldServiceFactory.cs&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PipServices3.Commons.Refer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PipServices3.Components.Build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt; 
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;    
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldServiceFactory&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Factory&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;  
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;factory&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ControllerDescriptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;controller&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;RestServiceDescriptor&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;1.0&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;         
+        
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldServiceFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(){&lt;/span&gt;            
+            &lt;span style=&#34;color:#111&#34;&gt;RegisterAsType&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;ControllerDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;typeof&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;HelloWorldController&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;            
+            &lt;span style=&#34;color:#111&#34;&gt;RegisterAsType&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestServiceDescriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;typeof&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;HelloWorldRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;));&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;    
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;golang4&#34;&gt;
 &lt;p&gt;golang&lt;/p&gt;
 &lt;/div&gt;
@@ -958,8 +1035,57 @@ java
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;dotnet5&#34;&gt;
-&lt;p&gt;dotnet&lt;/p&gt;
-&lt;/div&gt;
+&lt;p&gt;Full listing of the container’s code found in the file:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;‍/HelloWorldProcess.cs&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PipServices3.Container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;PipServices3.Rpc.Build&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt; 
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldProcess&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;ProcessContainer&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;    
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldProcess&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;():&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;base&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello_world&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;Hello world microservice&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;            
+            &lt;span style=&#34;color:#ae81ff&#34;&gt;_&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;configPath&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;config.yml&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;             
+            &lt;span style=&#34;color:#ae81ff&#34;&gt;_f&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;actories&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Add&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;DefaultRpcFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;            
+            &lt;span style=&#34;color:#ae81ff&#34;&gt;_f&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;actories&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Add&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldServiceFactory&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;   
+
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The dynamic configuration is defined in the file:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;‍/config.yml&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;---&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# Container context&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:context-info:default:default:1.0&amp;#34;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world&amp;#34;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;description&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;HelloWorld microservice&amp;#34;&lt;/span&gt; 
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Console logger&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:logger:console:default:1.0&amp;#34;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;level&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;trace&amp;#34;&lt;/span&gt; 
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Performance counter that post values to log&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:counters:log:default:1.0&amp;#34;&lt;/span&gt; 
+&lt;span style=&#34;color:#75715e&#34;&gt;# Controller&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world:controller:default:default:1.0&amp;#34;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;default_name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;World&amp;#34;&lt;/span&gt; 
+&lt;span style=&#34;color:#75715e&#34;&gt;# Shared HTTP Endpoint&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:endpoint:http:default:1.0&amp;#34;&lt;/span&gt; 
+  &lt;span style=&#34;color:#f92672&#34;&gt;connection&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; 
+    &lt;span style=&#34;color:#f92672&#34;&gt;protocol&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;http &lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;host&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.0.0.0&lt;/span&gt; 
+    &lt;span style=&#34;color:#f92672&#34;&gt;port&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8080&lt;/span&gt; 
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# HTTP Service V1&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;hello-world:service:http:default:1.0&amp;#34;&lt;/span&gt; 
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Heartbeat service&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:heartbeat-service:http:default:1.0&amp;#34;&lt;/span&gt; 
+&lt;span style=&#34;color:#ae81ff&#34;&gt;‍&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# Status service&lt;/span&gt;
+- &lt;span style=&#34;color:#f92672&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;pip-services:status-service:http:default:1.0&amp;#34;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;golang5&#34;&gt;
 &lt;p&gt;golang&lt;/p&gt;
 &lt;/div&gt;
@@ -1008,10 +1134,23 @@ java
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;dotnet6a&#34;&gt;
-&lt;p&gt;dotnet&lt;/p&gt;
-&lt;/div&gt;
+&lt;p&gt;In .NET, we’ll need a special file to run the microservice. All this file does is to create a container instance and run it with the parameters provided from the command line.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;/Program.cs&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cs&#34; data-lang=&#34;cs&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;namespace&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; 
+
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Program&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; 
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Main&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;   
+
+            &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;process&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;HelloWorldProcess&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;            
+            &lt;span style=&#34;color:#111&#34;&gt;process&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RunAsync&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;).&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;Wait&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;        
+        &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;golang6a&#34;&gt;
-&lt;p&gt;golang&lt;/p&gt;
+golang 
 &lt;/div&gt;
 &lt;div  id=&#34;dart6a&#34;&gt;
 &lt;p&gt;dart&lt;/p&gt;
@@ -1076,19 +1215,18 @@ Components are unlinked. All components that implement the IUnreferenceable inte
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;node ./run.js
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;dotnet6b&#34;&gt;
-&lt;p&gt;dotnet&lt;/p&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;dotnet run
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;golang6b&#34;&gt;
-&lt;p&gt;golang&lt;/p&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;go run ./bin/run.go
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;dart6b&#34;&gt;
-&lt;p&gt;dart&lt;/p&gt;
-&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;dart./bin/run.dart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;python6b&#34;&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;python ./run.py
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;div  id=&#34;java6b&#34;&gt;
-java	  
 &lt;/div&gt;
 &lt;p&gt;If the microservice started up successfully, you should see the following result in the terminal:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[echo:INFO:2018-09-25T15:15:30.284Z] Press Control-C to stop the microservice...
