@@ -189,7 +189,27 @@
 &lt;li&gt;The component factory for the dynamic creation of components&lt;/li&gt;
 &lt;li&gt;A container process, which will be filled with the necessary components, based on yml configuration.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;step-1-project-setup&#34;&gt;Step 1. Project setup&lt;/h3&gt;
+&lt;h3 id=&#34;step-1-environment-setup&#34;&gt;Step 1. Environment setup&lt;/h3&gt;
+&lt;p&gt;Before we can start writing-up some microservices, we’ll need to install a few mandatory prerequisites.&lt;/p&gt;
+&lt;h4 id=&#34;1-compiler-and-ide&#34;&gt;1. Compiler and IDE&lt;/h4&gt;
+&lt;p&gt;First and foremost - we’ll need a compiler for your programming language of choice, as well as some sort of code editor. In our examples, we usually use Visual Studio Code, but any fitting IDE will do.&lt;/p&gt;
+&lt;p&gt;For working with the Dart programming language, you’ll need to perform its installation and setup the environment. To do this, download and install Dart from their official site &lt;a href=&#34;https://dart.dev/get-dart#install&#34;&gt;https://dart.dev/get-dart#install&lt;/a&gt;. Select the download that corresponds to the operating system you’re using, and follow the installation instructions listed on their site.&lt;/p&gt;
+&lt;p&gt;Once installed, check that the installation was completed successfully by running the following command from your console:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;dart --version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;2-git-client&#34;&gt;2. Git client&lt;/h4&gt;
+&lt;p&gt;Example projects are stored in repositories on github.com. To download their source code to your computer, you’ll need a Git client. You can download and install Git using the following link: &lt;a href=&#34;https://git-scm.com/downloads&#34;&gt;https://git-scm.com/downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If you don’t feel comfortable using the Git CLI, you can download and install an additional UI utility called GitHub Desktop. The installation procedure for GitHub Desktop can be found on github.com.&lt;/p&gt;
+&lt;h4 id=&#34;3-mongodb&#34;&gt;3. MongoDB&lt;/h4&gt;
+&lt;p&gt;Data microservice examples use MongoDB for storing data. You can either install MongoDB locally on your computer, or start it in a docker container.&lt;/p&gt;
+&lt;p&gt;To install MongoDB locally, download the installer from their official website &lt;a href=&#34;https://www.mongodb.org/downloads&#34;&gt;https://www.mongodb.org/downloads&lt;/a&gt; . Select the download that corresponds to the operating system you’re using, and follow the installation instructions listed on their site.&lt;/p&gt;
+&lt;h4 id=&#34;4docker&#34;&gt;4.Docker&lt;/h4&gt;
+&lt;p&gt;Microservices that are developed using Pip.Services have more than just one way of being launched. For example, they can be launched as a system process, as a serverless (Lambda) function, or as a Service Fabric microservice. However, the most popular method of launching these microservices is to assemble them into a Docker container. Additionally, Docker will allow us to start up all the necessary infrastructure services, such as: databases, message brokers, logging, and monitoring.&lt;/p&gt;
+&lt;p&gt;To install Docker, download the Docker Desktop installer that corresponds to the operating system you’re using from the official Docker site &lt;a href=&#34;https://www.docker.com/get-started&#34;&gt;https://www.docker.com/get-started&lt;/a&gt;. Once downloaded, launch the installer and follow the installation instructions.&lt;/p&gt;
+&lt;p&gt;Once installed, check that the installation was completed successfully by running the following commands from your console:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;docker --version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If everything was installed successfully, the screen will display the latest version of Docker.&lt;/p&gt;
+&lt;p&gt;Once all of the prerequisites are installed and set up - you’re ready to get started!&lt;/p&gt;
+&lt;h3 id=&#34;step-2-project-setup&#34;&gt;Step 2. Project setup&lt;/h3&gt;
 &lt;p&gt;Create a folder for the project and within it, add a pubspec.yaml file with the name of your microservice and a list of dependencies for your necessary components. For editing, you can use any text editor or IDE of your choice.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;/pubspec.yaml&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;pip_quickstart&lt;/span&gt;
@@ -223,7 +243,7 @@
 &lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;./HelloWorldRestService.dart&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;./HelloWorldServiceFactory.dart&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;These files are necessary export classes outside the library.&lt;/p&gt;
-&lt;h3 id=&#34;step-2-controller&#34;&gt;Step 2. Controller&lt;/h3&gt;
+&lt;h3 id=&#34;step-3-controller&#34;&gt;Step 3. Controller&lt;/h3&gt;
 &lt;p&gt;The controller will be a simple class that implements a single business method, which receives a name and generates a greeting. In general, business methods can call other built-in services or work with a database. Since their execution time might take too long, business methods are implemented in Dart as asynchronous functions:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;Future&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;greeting&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;async&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;Hello, &amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;defaultName&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
@@ -256,7 +276,7 @@
   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-3-rest-service&#34;&gt;Step 3. REST service&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-4-rest-service&#34;&gt;Step 4. REST service&lt;/h3&gt;
 &lt;p&gt;One of the most popular ways of transferring data between microservices is using the synchronous HTTP REST protocol. The HelloWorldRestService will be used to implement an external REST interface. This component extends the abstract RestService of the Pip.Services toolkit, which implements all the necessary functionality for processing REST HTTP requests.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldRestService&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;rpc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;RestService&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, we’ll need to register the REST operations that we’ll be using in the class’s register method. In this microservice, we’ll only be needing to implement a single GET command: “/greeting”. This command receives a “name” parameter, calls the controller’s “greeting” method, and returns the generated result to the client.&lt;/p&gt;
@@ -310,7 +330,7 @@
     &lt;span style=&#34;color:#111&#34;&gt;});&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-4-component-factory&#34;&gt;Step 4. Component factory&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-5-component-factory&#34;&gt;Step 5. Component factory&lt;/h3&gt;
 &lt;p&gt;When a microservice is being populated by components based on the configuration being used, it requires a special factory to create components in accordance with their descriptors. The HelloWorldServiceFactory class is used for just that, as it extends the Factory class of the Pip.Services toolkit.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;HelloWorldServiceFactory&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;Factory&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next, in the factory’s constructor, we’ll be registering descriptors and their corresponding component types.&lt;/p&gt;
@@ -337,7 +357,7 @@
         &lt;span style=&#34;color:#111&#34;&gt;HelloWorldRestService&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
   &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-5-container&#34;&gt;Step 5. Container&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;step-6-container&#34;&gt;Step 6. Container&lt;/h3&gt;
 &lt;p&gt;Last but not least, our microservice needs a container component. This component creates all of the other components, links them with one another, and controls their life cycle. Although there exist many different ways of running a microservice in a container (regular classes, serverless functions, serlets, etc), we’ll be running our example microservice as a system process. To do this, we’ll make the HelloWorldProcess extend the ProcessContainer class of the Pip.Services toolkit.&lt;/p&gt;
 &lt;p&gt;Although containers can be populated by components manually, we’ll be using dynamic configuration to do this. By default, ProcessContainer reads the configuration from an external config.yml file. All we have left to do is register the factory for creating components from their descriptors.&lt;/p&gt;
 &lt;p&gt;Full listing of the container’s code found in the file:&lt;/p&gt;

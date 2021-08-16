@@ -247253,11 +247253,19 @@
       <ul>
         <li>
           <ul>
-            <li><a href="#step-1-project-setup">Step 1. Project setup</a></li>
-            <li><a href="#step-2-controller">Step 2. Controller</a></li>
-            <li><a href="#step-3-rest-service">Step 3. REST service</a></li>
-            <li><a href="#step-4-component-factory">Step 4. Component factory</a></li>
-            <li><a href="#step-5-container">Step 5. Container</a></li>
+            <li><a href="#step-1-environment-setup">Step 1. Environment setup</a>
+              <ul>
+                <li><a href="#1-compiler-and-ide">1. Compiler and IDE</a></li>
+                <li><a href="#2-git-client">2. Git client</a></li>
+                <li><a href="#3-mongodb">3. MongoDB</a></li>
+                <li><a href="#4docker">4.Docker</a></li>
+              </ul>
+            </li>
+            <li><a href="#step-2-project-setup">Step 2. Project setup</a></li>
+            <li><a href="#step-3-controller">Step 3. Controller</a></li>
+            <li><a href="#step-4-rest-service">Step 4. REST service</a></li>
+            <li><a href="#step-5-component-factory">Step 5. Component factory</a></li>
+            <li><a href="#step-6-container">Step 6. Container</a></li>
             <li><a href="#step-6-run-and-test-the-microservice">Step 6. Run and test the microservice</a></li>
           </ul>
         </li>
@@ -247328,7 +247336,27 @@
 <li>The component factory for the dynamic creation of components</li>
 <li>A container process, which will be filled with the necessary components, based on a yml configuration file.</li>
 </ul>
-<h3 id="step-1-project-setup">Step 1. Project setup</h3>
+<h3 id="step-1-environment-setup">Step 1. Environment setup</h3>
+<p>Before we can start writing-up some microservices, we’ll need to install a few mandatory prerequisites.</p>
+<h4 id="1-compiler-and-ide">1. Compiler and IDE</h4>
+<p>First and foremost - we’ll need a compiler for your programming language of choice, as well as some sort of code editor. In our examples, we usually use Visual Studio Code, but any fitting IDE will do.</p>
+<p>For working with the .NET programming language, you’ll need to perform its installation and setup the environment. To do this, download and install .NET from the official site, as well as the following packages:</p>
+<p>Visual Studio 2015 Professional or Community Edition: <a href="https://www.visualstudio.com">https://www.visualstudio.com</a></p>
+<p>Core .NET SDK with Visual Studio extensions: <a href="https://www.microsoft.com/net/core">https://www.microsoft.com/net/core</a></p>
+<h4 id="2-git-client">2. Git client</h4>
+<p>Example projects are stored in repositories on github.com. To download their source code to your computer, you’ll need a Git client. You can download and install Git using the following link: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+<p>If you don’t feel comfortable using the Git CLI, you can download and install an additional UI utility called GitHub Desktop. The installation procedure for GitHub Desktop can be found on github.com.</p>
+<h4 id="3-mongodb">3. MongoDB</h4>
+<p>Data microservice examples use MongoDB for storing data. You can either install MongoDB locally on your computer, or start it in a docker container.</p>
+<p>To install MongoDB locally, download the installer from their official website <a href="https://www.mongodb.org/downloads">https://www.mongodb.org/downloads</a> . Select the download that corresponds to the operating system you’re using, and follow the installation instructions listed on their site.</p>
+<h4 id="4docker">4.Docker</h4>
+<p>Microservices that are developed using Pip.Services have more than just one way of being launched. For example, they can be launched as a system process, as a serverless (Lambda) function, or as a Service Fabric microservice. However, the most popular method of launching these microservices is to assemble them into a Docker container. Additionally, Docker will allow us to start up all the necessary infrastructure services, such as: databases, message brokers, logging, and monitoring.</p>
+<p>To install Docker, download the Docker Desktop installer that corresponds to the operating system you’re using from the official Docker site <a href="https://www.docker.com/get-started">https://www.docker.com/get-started</a>. Once downloaded, launch the installer and follow the installation instructions.</p>
+<p>Once installed, check that the installation was completed successfully by running the following commands from your console:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker --version
+</code></pre></div><p>If everything was installed successfully, the screen will display the latest version of Docker.</p>
+<p>Once all of the prerequisites are installed and set up - you’re ready to get started!</p>
+<h3 id="step-2-project-setup">Step 2. Project setup</h3>
 <p>Create a folder for the project, open it in Visual Studio Code and run the command:</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet new console
 </code></pre></div><p>This command will automatically create two files: HelloWorld.csproj and Program.cs. Open the HelloWorld.csproj file and add the necessary dependencies to it.</p>
@@ -247348,7 +247376,7 @@
 <span style="color:#f92672">&lt;/Project&gt;</span>
 </code></pre></div><p>In the command line, type out the command below to install the dependencies:</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet restore
-</code></pre></div><h3 id="step-2-controller">Step 2. Controller</h3>
+</code></pre></div><h3 id="step-3-controller">Step 3. Controller</h3>
 <p>The controller will be a simple class that implements a single business method, which receives a name and generates a greeting. In general, business methods can call other built-in services or work with a database. Since their execution time might take too long, business methods are implemented in .NET as asynchronous functions:</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;</span> <span style="color:#111">GreetingAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">name</span><span style="color:#111">){</span>    
   <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">FromResult</span><span style="color:#111">(</span><span style="color:#d88200">$&#34;Hello {name ?? _defaultName}!&#34;</span><span style="color:#111">);</span>
@@ -247379,7 +247407,7 @@
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 
-</code></pre></div><h3 id="step-3-rest-service">Step 3. REST service</h3>
+</code></pre></div><h3 id="step-4-rest-service">Step 4. REST service</h3>
 <p>One of the most popular ways of transferring data between microservices is using the synchronous HTTP REST protocol. The HelloWorldRestService will be used to implement an external REST interface. This component extends the abstract RestService of the Pip.Services toolkit, which implements all the necessary functionality for processing REST HTTP requests.</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldRestService</span> <span style="color:#111">:</span> <span style="color:#111">RestService</span>
 </code></pre></div><p>Next, we’ll need to register the REST operations that we’ll be using in the class’s register method. In this microservice, we’ll only be needing to implement a single GET command: “/greeting”. This command receives a “name” parameter, calls the controller’s “greeting” method, and returns the generated result to the client.</p>
@@ -247434,7 +247462,7 @@
         <span style="color:#111">}</span>    
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
-</code></pre></div><h3 id="step-4-component-factory">Step 4. Component factory</h3>
+</code></pre></div><h3 id="step-5-component-factory">Step 5. Component factory</h3>
 <p>When a microservice is being populated by components based on the configuration being used, it requires a special factory to create components in accordance with their descriptors. The HelloWorldServiceFactory class is used for just that, as it extends the Factory class of the Pip.Services toolkit.</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">HelloWorldServiceFactory</span> <span style="color:#111">:</span> <span style="color:#111">Factory</span>
 </code></pre></div><p>The factory’s constructor is used to register descriptors and their corresponding component types.</p>
@@ -247462,7 +247490,7 @@
         <span style="color:#111">}</span>    
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
-</code></pre></div><h3 id="step-5-container">Step 5. Container</h3>
+</code></pre></div><h3 id="step-6-container">Step 6. Container</h3>
 <p>Last but not least, our microservice needs a container component. This component creates all of the other components, links them with one another, and controls their life cycle. Although there exist many different ways of running a microservice in a container (regular classes, serverless functions, serlets, etc), we’ll be running our example microservice as a system process. To do this, we’ll make the HelloWorldProcess extend the ProcessContainer class of the Pip.Services toolkit.</p>
 <p>Although containers can be populated by components manually, we’ll be using dynamic configuration to do this. By default, ProcessContainer reads the configuration from an external config.yml file. All we have left to do is register the factory for creating components from their descriptors.</p>
 <p>Full listing of the container’s code found in the file:</p>

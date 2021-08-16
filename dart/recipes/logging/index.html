@@ -242861,10 +242861,10 @@ The <strong>Level</strong> property can be used to optimize code. Generating log
 <li><strong>NullLogger</strong> - Empty logger for debugging (in the <a href="../../components/log/null_logger">Components</a> module)</li>
 <li><strong>ConsoleLogger</strong> - Logger for writing messages to the console (in the <a href="../../components/log/console_logger">Components</a> module)</li>
 <li><strong>CompositeLogger</strong> - Virtual logger for collecting and transferring messages to other loggers (in the <a href="../../components/log/composite_logger">Components</a> module)</li>
-<li><strong>ElasticSearchLogger</strong> - Logger for saving messages in ElasticSearch (inthe <a href="../../../elasticsearch/elasticsearch_logger">ElasticSearch</a> module)</li>
-<li><strong>FluentdLogger</strong> - Logger for transferring messages to Fluentd (in the <a href="../../../fluentd/log/fluentd_logger">Fluentd</a> module)</li>
-<li><strong>CloudWatchLogger</strong> - Logger for collecting messages in AWS CloudWatch (in the <a href="../../../aws/log/cloudwatch_logger">AWS</a> module)</li>
-<li><strong>AppInsightsLogger</strong> - Logger for collecting messages in Azure AppInsights (in the <a href="../../../azure/log/app_insights_logger">Azure</a> module)</li>
+<li><strong>ElasticSearchLogger</strong> - Logger for saving messages in ElasticSearch (in the <a href="../../elasticsearch/log/elasticsearch_logger">ElasticSearch</a> module)</li>
+<li><strong>FluentdLogger</strong> - Logger for transferring messages to Fluentd (in the <a href="../../fluentd/log/fluentd_logger">Fluentd</a> module)</li>
+<li><strong>CloudWatchLogger</strong> - Logger for collecting messages in AWS CloudWatch (in the <a href="../../aws/log/cloudwatch_logger">AWS</a> module)</li>
+<li><strong>AppInsightsLogger</strong> - Logger for collecting messages in Azure AppInsights (in the <a href="../../azure/log/app_insights_logger">Azure</a> module)</li>
 </ul>
 <h4 id="adding-a-logger">Adding a logger</h4>
 <p>Loggers are usually added to microservices dynamically using a yml configuration:
@@ -242887,7 +242887,7 @@ The <strong>Level</strong> property can be used to optimize code. Generating log
     <span style="color:#f92672">daily</span><span style="color:#111">:</span> <span style="color:#00a8c8">true</span>      
 </code></pre></div><h4 id="composite-logger">Composite logger</h4>
 <p>It’s not rare for multiple loggers to be used simultaneously. One logger can be used to output messages to the console, allowing developers to debug the microservice, while another logger collects messages from all running microservices in a distributed storage, allowing technical support to monitor the system.
-To simplify the collection of log messages in situations when the amount of loggers and/or their configurations are bound to change, the <a href="../../components/log/composite_logger/">CompositeLogger</a> from the <a href="../../components/">Components</a> module is used. The <strong>CompositeLogger</strong>’s task is to pass along any messages it receives to all of the other loggers included in the container. Logger linking is performed in the <strong>setReferences</strong> method (<a href="../component_references">see the References Recipe</a>).</p>
+To simplify the collection of log messages in situations when the amount of loggers and/or their configurations are bound to change, the <a href="../../components/log/composite_logger/">CompositeLogger</a> from the <a href="../../components/">Components</a> module is used. The <strong>CompositeLogger</strong>’s task is to pass along any messages it receives to all of the other loggers included in the container. Logger linking is performed in the <strong>setReferences</strong> method (see the <a href="../component_references">References Recipe</a>).</p>
 <p>The <strong>CompositeLogger</strong> is used in the following way:</p>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">  <span style="color:#00a8c8">var</span> <span style="color:#111">logger</span> <span style="color:#f92672">=</span> <span style="color:#111">CompositeLogger</span><span style="color:#111">();</span>
 
