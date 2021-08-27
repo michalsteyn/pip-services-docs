@@ -15,66 +15,6 @@
     
     
     <item>
-      <title>Dart: Step 1. Setting up the project</title>
-      <link>/dart/tutorials/data_microservice/step1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/dart/tutorials/data_microservice/step1/</guid>
-      <description>
-        
-        
-        &lt;p&gt;Before we start actually writing our microservice, we need to first set up our environment and create a directory structure in the project’s folder.&lt;/p&gt;
-&lt;p&gt;To set up our environment, we’ll need to install all the necessary tools, as described on the &lt;a href=&#34;../../../getting_started/setup_environment&#34;&gt;Setup environment&lt;/a&gt; page.&lt;/p&gt;
-&lt;p&gt;Don’t forget to select the programming language that you plan on using.&lt;/p&gt;
-&lt;p&gt;Create a folder for the project and, inside it, a directory structure to match the one below:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;/bin
-/config
-/docker
-/lib
-└───/src
-    └───/build
-    └───/container
-    └───/data
-    │   └───/version1
-    └───/logic
-    └───/persistence
-    └───/service
-        └───/version1
-/test
-└───/logic
-└───/persistence
-└───/service
-    └───/version1
-
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Add a package.json file with the following lines to the root of the project’s folder:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;/package.yaml&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;sdk&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=2.0.0 &amp;lt;3.0.0&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_commons&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.5 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_components&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.2 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_data&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.0 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_mongodb&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.2 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_rpc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.2 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.3 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;^0.12.0&amp;#34;&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;angel_framework&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;^2.1.1&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;fixnum&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;^0.10.11&lt;/span&gt;
-
-&lt;span style=&#34;color:#f92672&#34;&gt;dev_dependencies&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
-  &lt;span style=&#34;color:#f92672&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&amp;gt;=1.14.2 &amp;lt;2.0.0&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To install all necessary dependencies, run the following command from a terminal at the root of the project’s directory:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;pub get
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now that we’ve got the project all set up, we can move on to &lt;a href=&#34;../step2&#34;&gt;Step 2. Data model development.&lt;/a&gt;&lt;/p&gt;
-&lt;span class=&#34;hide-title-link&#34;&gt;
-&lt;h3 id=&#34;step-2-data-model-developmentstep2&#34;&gt;&lt;a href=&#34;../step2&#34;&gt;Step 2. Data model development.&lt;/a&gt;&lt;/h3&gt;
-&lt;/span&gt;
-
-      </description>
-    </item>
-    
-    <item>
       <title>Dart: Step 2. Data model development</title>
       <link>/dart/tutorials/data_microservice/step2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -175,6 +115,66 @@
 &lt;span class=&#34;hide-title-link&#34;&gt;
 &lt;h3 id=&#34;step-3-implementing-persistence-componentsstep3&#34;&gt;&lt;a href=&#34;../step3&#34;&gt;Step 3. Implementing persistence components.&lt;/a&gt;&lt;/h3&gt;
 &lt;/span&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Step 2. Setting up the project</title>
+      <link>/dart/tutorials/data_microservice/step1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/tutorials/data_microservice/step1/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Before we start actually writing our microservice, we need to first set up our environment and create a directory structure in the project’s folder.&lt;/p&gt;
+&lt;p&gt;To set up our environment, we’ll need to install all the necessary tools, as described on the &lt;a href=&#34;../../../getting_started/setup_environment&#34;&gt;Setup environment&lt;/a&gt; page.&lt;/p&gt;
+&lt;p&gt;Don’t forget to select the programming language that you plan on using.&lt;/p&gt;
+&lt;p&gt;Create a folder for the project and, inside it, a directory structure to match the one below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/bin
+/config
+/docker
+/lib
+└───/src
+    └───/build
+    └───/container
+    └───/data
+    │   └───/version1
+    └───/logic
+    └───/persistence
+    └───/service
+        └───/version1
+/test
+└───/logic
+└───/persistence
+└───/service
+    └───/version1
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Add a package.json file with the following lines to the root of the project’s folder:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;/package.yaml&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;environment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;sdk&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=2.0.0 &amp;lt;3.0.0&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;dependencies&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_commons&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.5 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_components&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.2 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_data&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.0 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_mongodb&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.2 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_rpc&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.2 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;pip_services3_container&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;&amp;gt;=1.0.3 &amp;lt;2.0.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;http&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;^0.12.0&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;angel_framework&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;^2.1.1&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;fixnum&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;^0.10.11&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;dev_dependencies&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt;
+  &lt;span style=&#34;color:#f92672&#34;&gt;test&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;&amp;gt;=1.14.2 &amp;lt;2.0.0&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To install all necessary dependencies, run the following command from a terminal at the root of the project’s directory:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;pub get
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now that we’ve got the project all set up, we can move on to &lt;a href=&#34;../step2&#34;&gt;Step 3. Data model development.&lt;/a&gt;&lt;/p&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h3 id=&#34;step-3-data-model-developmentstep2&#34;&gt;&lt;a href=&#34;../step2&#34;&gt;Step 3. Data model development.&lt;/a&gt;&lt;/h3&gt;
+&lt;/span&gt;
+
       </description>
     </item>
     
