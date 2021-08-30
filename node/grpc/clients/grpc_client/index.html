@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/grpc/clients/grpc_client/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-06-28T17:33:02+03:00" />
+<meta property="article:modified_time" content="2021-08-30T21:11:07+03:00" />
 
 <meta itemprop="name" content="GrpcClient">
 <meta itemprop="description" content="Abstract client that calls remote endpoints using the GRPC protocol.
 ">
-<meta itemprop="dateModified" content="2021-06-28T17:33:02+03:00" />
-<meta itemprop="wordCount" content="542">
+<meta itemprop="dateModified" content="2021-08-30T21:11:07+03:00" />
+<meta itemprop="wordCount" content="480">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GrpcClient"/>
 <meta name="twitter:description" content="Abstract client that calls remote endpoints using the GRPC protocol.
@@ -246279,6 +246279,7 @@
                 <li><a href="#_connecttimeout">_connectTimeout</a></li>
                 <li><a href="#_timeout">_timeout</a></li>
                 <li><a href="#_uri">_uri</a></li>
+                <li><a href="#_tracer">_tracer</a></li>
               </ul>
             </li>
             <li><a href="#instance-methods">Instance methods</a>
@@ -246287,7 +246288,6 @@
                 <li><a href="#close">close</a></li>
                 <li><a href="#configure">configure</a></li>
                 <li><a href="#instrument">instrument</a></li>
-                <li><a href="#instrumenterror">instrumentError</a></li>
                 <li><a href="#isopen">isOpen</a></li>
                 <li><a href="#open">open</a></li>
                 <li><a href="#setreferences">setReferences</a></li>
@@ -246464,6 +246464,11 @@
 <blockquote>
 <p><code>protected</code> <strong>_uri</strong>: string</p>
 </blockquote>
+<h4 id="_tracer">_tracer</h4>
+<p>The tracer.</p>
+<blockquote>
+<p><code>protected</code> <strong>_tracer</strong>: <a href="../../../components/trace/composite_tracer">CompositeTracer</a> = CompositeTracer()</p>
+</blockquote>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="call">call</h4>
@@ -246497,24 +246502,12 @@
 <p>Adds instrumentation to log calls and measures call time.
 It returns a CounterTiming object that is used to end the time measurement.</p>
 <blockquote>
-<p><code>protected</code> instrument(correlationId: string, name: string): <a href="../../../components/cout/counter_timing">CounterTiming</a></p>
+<p><code>protected</code> instrument(correlationId: string, name: string): <a href="../../../rpc/services/instrument_timing">InstrumentTiming</a></p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>name</strong>: string - method name.</li>
-<li><strong>returns</strong>: <a href="../../../components/cout/counter_timing">CounterTiming</a> - CounterTiming object used to end the time measurement.</li>
-</ul>
-<h4 id="instrumenterror">instrumentError</h4>
-<p>Adds instrumentation to error handling.</p>
-<blockquote>
-<p><code>protected</code> instrumentError(correlationId: string, name: string, err: any, result: any = null, callback: (err: any, result: any) =&gt; void = null): void</p>
-</blockquote>
-<ul>
-<li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>name</strong>: string - method name.</li>
-<li><strong>err</strong>: Exception - occured error</li>
-<li><strong>result</strong>: any - (optional) an execution result</li>
-<li><strong>callback</strong>: (err: any, result: any) =&gt; void - (optional) an execution callback</li>
+<li><strong>returns</strong>: <a href="../../../rpc/services/instrument_timing">InstrumentTiming</a> - CounterTiming object used to end the time measurement.</li>
 </ul>
 <h4 id="isopen">isOpen</h4>
 <p>Checks if the component is open.</p>

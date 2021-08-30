@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/grpc/clients/grpc_client/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-06-28T17:33:02+03:00" />
+<meta property="article:modified_time" content="2021-08-30T21:11:07+03:00" />
 
 <meta itemprop="name" content="GrpcClient">
 <meta itemprop="description" content="Abstract client that calls remote endpoints using the GRPC protocol.
 ">
-<meta itemprop="dateModified" content="2021-06-28T17:33:02+03:00" />
-<meta itemprop="wordCount" content="535">
+<meta itemprop="dateModified" content="2021-08-30T21:11:07+03:00" />
+<meta itemprop="wordCount" content="497">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GrpcClient"/>
 <meta name="twitter:description" content="Abstract client that calls remote endpoints using the GRPC protocol.
@@ -244639,17 +244639,17 @@
                 <li><a href="#_connection_timeout">_connection_timeout</a></li>
                 <li><a href="#_timeout">_timeout</a></li>
                 <li><a href="#_uri">_uri</a></li>
+                <li><a href="#_tracer">_tracer</a></li>
               </ul>
             </li>
             <li><a href="#instance-methods">Instance methods</a>
               <ul>
                 <li><a href="#_add_filter_params">_add_filter_params</a></li>
                 <li><a href="#_add_paging_params">_add_paging_params</a></li>
-                <li><a href="#call">call</a></li>
+                <li><a href="#_call">_call</a></li>
                 <li><a href="#close">close</a></li>
                 <li><a href="#configure">configure</a></li>
                 <li><a href="#_instrument">_instrument</a></li>
-                <li><a href="#_instrument_error">_instrument_error</a></li>
                 <li><a href="#is_open">is_open</a></li>
                 <li><a href="#open">open</a></li>
                 <li><a href="#set_references">set_references</a></li>
@@ -244822,7 +244822,12 @@
 <h4 id="_uri">_uri</h4>
 <p>The remote service uri which is calculated on openning.</p>
 <blockquote>
-<p><strong>_uri</strong>: string</p>
+<p><strong>_uri</strong>: str</p>
+</blockquote>
+<h4 id="_tracer">_tracer</h4>
+<p>The tracer.</p>
+<blockquote>
+<p><strong>_tracer</strong>: <a href="../../../components/trace/composite_tracer">CompositeTracer</a> = CompositeTracer()</p>
 </blockquote>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
@@ -244847,10 +244852,10 @@ to the invocation parameter map.</p>
 <li><strong>paging</strong>: Any - (optional) paging parameters</li>
 <li><strong>returns</strong>: Any - invocation parameters with added paging parameters.</li>
 </ul>
-<h4 id="call">call</h4>
+<h4 id="_call">_call</h4>
 <p>Calls a remote method via GRPC protocol.</p>
 <blockquote>
-<p>call(method: str, client: Any, request: Any): Any</p>
+<p>_call(method: str, client: Any, request: Any): Any</p>
 </blockquote>
 <ul>
 <li><strong>method</strong>: str - name of the calling method</li>
@@ -244878,23 +244883,12 @@ to the invocation parameter map.</p>
 <p>Adds instrumentation to log calls and measures call time.
 It returns a CounterTiming object that is used to end the time measurement.</p>
 <blockquote>
-<p>_instrument(correlation_id: Optional[str], name: str): <a href="../../../components/cout/counter_timing">CounterTiming</a></p>
+<p>_instrument(correlation_id: Optional[str], name: str): <a href="../../../rpc/services/instrument_timing">InstrumentTiming</a></p>
 </blockquote>
 <ul>
 <li><strong>correlation_id</strong>: Optional[str] - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>name</strong>: str - method name.</li>
-<li><strong>returns</strong>: <a href="../../../components/cout/counter_timing">CounterTiming</a> - CounterTiming object used to end the time measurement.</li>
-</ul>
-<h4 id="_instrument_error">_instrument_error</h4>
-<p>Adds instrumentation to error handling.</p>
-<blockquote>
-<p>_instrument_error(correlation_id: Optional[str], name: str, err: Exception, reerror=False)</p>
-</blockquote>
-<ul>
-<li><strong>correlation_id</strong>: Optional[str] - (optional) transaction id used to trace execution through the call chain.</li>
-<li><strong>name</strong>: str - method name.</li>
-<li><strong>err</strong>: Exception - occured error</li>
-<li><strong>reerror</strong>: bool - if True - throw error</li>
+<li><strong>returns</strong>: <a href="../../../rpc/services/instrument_timing">InstrumentTiming</a> - InstrumentTiming object used to end the time measurement.</li>
 </ul>
 <h4 id="is_open">is_open</h4>
 <p>Checks if the component is open.</p>
@@ -244925,7 +244919,7 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
     <span style="color:#f92672">...</span>
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_data</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">id</span> <span style="color:#111">):</span>
         <span style="color:#111">timing</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">instrument</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;myclient.get_data&#39;</span><span style="color:#111">)</span>
-        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">call</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get_data&#34;</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">{</span> <span style="color:#111">id</span><span style="color:#111">:</span> <span style="color:#111">id</span> <span style="color:#111">})</span>
+        <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">_call</span><span style="color:#111">(</span><span style="color:#d88200">&#34;get_data&#34;</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">{</span> <span style="color:#111">id</span><span style="color:#111">:</span> <span style="color:#111">id</span> <span style="color:#111">})</span>
         <span style="color:#111">timing</span><span style="color:#f92672">.</span><span style="color:#111">end_timing</span><span style="color:#111">()</span>
         <span style="color:#00a8c8">return</span> <span style="color:#111">result</span>
     <span style="color:#f92672">...</span>
