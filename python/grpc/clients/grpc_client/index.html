@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/grpc/clients/grpc_client/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-08-30T21:11:07+03:00" />
+<meta property="article:modified_time" content="2021-08-31T16:56:07+03:00" />
 
 <meta itemprop="name" content="GrpcClient">
 <meta itemprop="description" content="Abstract client that calls remote endpoints using the GRPC protocol.
 ">
-<meta itemprop="dateModified" content="2021-08-30T21:11:07+03:00" />
-<meta itemprop="wordCount" content="497">
+<meta itemprop="dateModified" content="2021-08-31T16:56:07+03:00" />
+<meta itemprop="wordCount" content="516">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GrpcClient"/>
 <meta name="twitter:description" content="Abstract client that calls remote endpoints using the GRPC protocol.
@@ -244777,10 +244777,11 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of the grpc client.</p>
 <blockquote>
-<p>GrpcClient(client_name: str)</p>
+<p>GrpcClient(service_client: Any, client_name: str)</p>
 </blockquote>
 <ul>
 <li><strong>client_name</strong>: str - client&rsquo;s name.</li>
+<li><strong>service_client</strong>: Any - service client class</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
@@ -244855,11 +244856,11 @@ to the invocation parameter map.</p>
 <h4 id="_call">_call</h4>
 <p>Calls a remote method via GRPC protocol.</p>
 <blockquote>
-<p>_call(method: str, client: Any, request: Any): Any</p>
+<p>_call(method: str, correlation_id: Optional[str], request: Any): Any</p>
 </blockquote>
 <ul>
 <li><strong>method</strong>: str - name of the calling method</li>
-<li><strong>client</strong>: Any - current client</li>
+<li><strong>correlation_id</strong>: Any - (optional) transaction id to trace execution through call chain.</li>
 <li><strong>request</strong>: Any - (optional) request object.</li>
 <li><strong>returns</strong>: Any - (optional) feature that receives the result object or error.</li>
 </ul>
@@ -244916,6 +244917,9 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyGrpcClient</span><span style="color:#111">(</span><span style="color:#111">GrpcClient</span><span style="color:#111">,</span> <span style="color:#111">IMyClient</span><span style="color:#111">):</span>
+     <span style="color:#00a8c8">def</span> <span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">):</span>
+        <span style="color:#111">super</span><span style="color:#111">()</span><span style="color:#f92672">.</span><span style="color:#111">__init__</span><span style="color:#111">(</span><span style="color:#111">my_data_pb2_grpc</span><span style="color:#f92672">.</span><span style="color:#111">MyDataStub</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;my_data_v1&#39;</span><span style="color:#111">)</span>
+
     <span style="color:#f92672">...</span>
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">get_data</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">id</span> <span style="color:#111">):</span>
         <span style="color:#111">timing</span> <span style="color:#f92672">=</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">instrument</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;myclient.get_data&#39;</span><span style="color:#111">)</span>
