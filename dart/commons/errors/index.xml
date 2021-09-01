@@ -26,7 +26,7 @@
         &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; Exception&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
 &lt;p&gt;The ApplicationException class defines a base class used to define various application exceptions.&lt;/p&gt;
-&lt;p&gt;Important points&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Most languages have their own definition of base exception (error) types. However, this class is implemented symmetrically in all languages supported by the PipServices toolkit and  allows to create portable implementations and support proper error propagation in microservices calls.&lt;/li&gt;
 &lt;li&gt;Error propagation means that when a microservice implemented in one language calls a microservice(s) implemented in a different language(s), errors are returned throught the entire call chain and restored in their original (or close) type.&lt;/li&gt;
@@ -214,8 +214,8 @@ Otherwise, a new ApplicationException object is created and the original error i
 &lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
 &lt;h4 id=&#34;unwraperror&#34;&gt;unwrapError&lt;/h4&gt;
 &lt;p&gt;Unwraps an original exception through wrapped exception objects.&lt;/p&gt;
-&lt;p&gt;Many frameworks like Seneca or restify wrap original exceptions.
-That may result in propagating less specific errors and can hide
+&lt;p&gt;Many frameworks like Seneca or Restify wrap original exceptions.
+That may result in propagating less specific errors and can hide the
 causes of the errors.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;static&lt;/code&gt; dynamic unwrapError(error)&lt;/p&gt;
@@ -263,12 +263,12 @@ Otherwise, the original error is set as a cause for the specified ApplicationExc
 &lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
 &lt;h4 id=&#34;create&#34;&gt;create&lt;/h4&gt;
 &lt;p&gt;Recreates ApplicationException object from serialized ErrorDescription.
-It tries to restore original exception type using the type or error category fields.&lt;/p&gt;
+It tries to restore the original exception type using the type or error category fields.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;static&lt;/code&gt; &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt; create(&lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; description)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; - serialized error description received as a result of remote call.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;description&lt;/strong&gt;: &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; - serialized error description received as a result of a remote call.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt; - new instance of the &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
@@ -417,7 +417,7 @@ It tries to restore original exception type using the type or error category fie
 &lt;p&gt;&lt;code&gt;static final&lt;/code&gt; &lt;strong&gt;Misconfiguration&lt;/strong&gt;: String = &amp;ldquo;Misconfiguration&amp;rdquo;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;invalidstate&#34;&gt;InvalidState&lt;/h4&gt;
-&lt;p&gt;Errors caused by incorrect object state..
+&lt;p&gt;Errors caused by incorrect object state.
 For example: business calls when the component is not ready.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;static final&lt;/code&gt; &lt;strong&gt;InvalidState&lt;/strong&gt;: String = &amp;ldquo;InvalidState&amp;rdquo;&lt;/p&gt;
@@ -533,7 +533,7 @@ posted by the user and those that are stored on the server.&lt;/p&gt;
 &lt;/span&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;fromjson&#34;&gt;fromJson&lt;/h4&gt;
-&lt;p&gt;Adds field to &lt;a href=&#34;&#34;&gt;ErrorDescription&lt;/a&gt; from json map&lt;/p&gt;
+&lt;p&gt;Adds field to &lt;a href=&#34;&#34;&gt;ErrorDescription&lt;/a&gt; from a json map&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;void fromJson(Map&amp;lt;String, dynamic&amp;gt; json)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -541,7 +541,7 @@ posted by the user and those that are stored on the server.&lt;/p&gt;
 &lt;li&gt;json: Map&amp;lt;String, dynamic&amp;gt; - serealized json map&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;tojson&#34;&gt;toJson&lt;/h4&gt;
-&lt;p&gt;Converts &lt;a href=&#34;&#34;&gt;ErrorDescription&lt;/a&gt; to json Map&lt;/p&gt;
+&lt;p&gt;Converts &lt;a href=&#34;&#34;&gt;ErrorDescription&lt;/a&gt; to a json Map&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Map&amp;lt;String, dynamic&amp;gt; toJson()&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -572,13 +572,13 @@ posted by the user and those that are stored on the server.&lt;/p&gt;
         
         &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
 &lt;p&gt;The ErrorDescriptionFactory class provides a factory to create a serializeable &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; from &lt;a href=&#34;../application_exception&#34;&gt;ApplicationException&lt;/a&gt; or from arbitrary errors.&lt;/p&gt;
-&lt;p&gt;Important points&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Error descriptions are used to pass errors through the wire between microservices implemented in different languages. They allow to restore exceptions on the receiving side close to the original type and preserve additional information.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;static-methods&#34;&gt;Static methods&lt;/h3&gt;
 &lt;h4 id=&#34;create&#34;&gt;create&lt;/h4&gt;
-&lt;p&gt;Creates a serializable ErrorDescription from n error object.&lt;/p&gt;
+&lt;p&gt;Creates a serializable ErrorDescription from an error object.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;static&lt;/code&gt; &lt;a href=&#34;../error_description&#34;&gt;ErrorDescription&lt;/a&gt; create(error)&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -694,7 +694,7 @@ posted by the user and those that are stored on the server.&lt;/p&gt;
 &lt;p&gt;InvocationException([String correlation_id, String code, String message])&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: String - (optional) unique transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: String - (optional) unique transaction id used to trace execution through a call chain.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;code&lt;/strong&gt;: String - (optional) unique error code. Default: &amp;ldquo;UNKNOWN&amp;rdquo;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;message&lt;/strong&gt;: String - (optional) human-readable description of the error.&lt;/li&gt;
 &lt;/ul&gt;
