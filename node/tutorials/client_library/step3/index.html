@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.87.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/client_library/step3/index.xml">
+<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/client_library/step3/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -23,12 +23,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/tutorials/client_library/step3/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-08-27T20:11:46+02:00" />
+<meta property="article:modified_time" content="2021-09-03T19:44:41+03:00" />
 
 <meta itemprop="name" content="Step 4. Designing an HTTP Client">
 <meta itemprop="description" content="The standard way of communicating with a microservice is via the HTTP protocol. It allows calling microservices that work on a separate server, or in their own container. Our example microservice uses a simplified version of the HTTP protocol that is automatically generated using the Commandable pattern. Then, creates a new class for the Commandable REST client and an implementation for each of the microservice’s methods. This is done by calling the REST API’s methods using the methods of the parent Commandable REST client, passing the necessary set of parameters, and then processing the response’s result.">
-<meta itemprop="dateModified" content="2021-08-27T20:11:46+02:00" />
-<meta itemprop="wordCount" content="501">
+<meta itemprop="dateModified" content="2021-09-03T19:44:41+03:00" />
+<meta itemprop="wordCount" content="452">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 4. Designing an HTTP Client"/>
 <meta name="twitter:description" content="The standard way of communicating with a microservice is via the HTTP protocol. It allows calling microservices that work on a separate server, or in their own container. Our example microservice uses a simplified version of the HTTP protocol that is automatically generated using the Commandable pattern. Then, creates a new class for the Commandable REST client and an implementation for each of the microservice’s methods. This is done by calling the REST API’s methods using the methods of the parent Commandable REST client, passing the necessary set of parameters, and then processing the response’s result."/>
@@ -246368,7 +246368,7 @@
 Then, creates a new class for the Commandable REST client and an implementation for each of the microservice’s methods. This is done by calling the REST API’s methods using the methods of the parent Commandable REST client, passing the necessary set of parameters, and then processing the response’s result. Since the answer from the client is returned as JSON, some programming languages will require that you first convert it to an instance with a specific type. Be sure to remember this when writing your HTTP clients.</p>
 <p>The client’s resulting code is listed below:</p>
 <p><strong>/src/version1/BeaconsHttpClientV1.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DataPage</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">CommandableHttpClient</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
@@ -246381,86 +246381,72 @@ Then, creates a new class for the Commandable REST client and an implementation 
         <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;v1/beacons&#39;</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getBeacons</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">page</span>: <span style="color:#00a8c8">DataPage</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getBeacons</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">DataPage</span><span style="color:#960050;background-color:#1e0010">&lt;</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;get_beacons&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
-            <span style="color:#111">{</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">filter</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">paging</span> <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">{</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">filter</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">paging</span> <span style="color:#111">}</span>
         <span style="color:#111">);</span>
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getBeaconById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getBeaconById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;get_beacon_by_id&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
             <span style="color:#111">{</span>
                 <span style="color:#75af00">beacon_id</span>: <span style="color:#00a8c8">beaconId</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">}</span>
         <span style="color:#111">);</span>
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getBeaconByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getBeaconByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;get_beacon_by_udi&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
             <span style="color:#111">{</span>
                 <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">udi</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">}</span>
         <span style="color:#111">);</span>
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">calculatePosition</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udis</span>: <span style="color:#00a8c8">string</span><span style="color:#111">[],</span> 
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">position</span>: <span style="color:#00a8c8">any</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">calculatePosition</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udis</span>: <span style="color:#00a8c8">string</span><span style="color:#111">[])</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">any</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;calculate_position&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
             <span style="color:#111">{</span>
                 <span style="color:#75af00">site_id</span>: <span style="color:#00a8c8">siteId</span><span style="color:#111">,</span>
                 <span style="color:#75af00">udis</span>: <span style="color:#00a8c8">udis</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">}</span>
         <span style="color:#111">);</span>    
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">createBeacon</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">createBeacon</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;create_beacon&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
             <span style="color:#111">{</span>
                 <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">beacon</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">}</span>
         <span style="color:#111">);</span>
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">updateBeacon</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">updateBeacon</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;update_beacon&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
             <span style="color:#111">{</span>
                 <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">beacon</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">}</span>
         <span style="color:#111">);</span>    
     <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">deleteBeaconById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">deleteBeaconById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">callCommand</span><span style="color:#111">(</span>
             <span style="color:#d88200">&#39;delete_beacon_by_id&#39;</span><span style="color:#111">,</span>
             <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
             <span style="color:#111">{</span>
                 <span style="color:#75af00">beacon_id</span>: <span style="color:#00a8c8">beaconId</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75af00">callback</span>
+            <span style="color:#111">}</span>
         <span style="color:#111">);</span>
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>

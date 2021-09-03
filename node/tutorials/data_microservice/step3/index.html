@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.87.0" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/data_microservice/step3/index.xml">
+<meta name="generator" content="Hugo 0.84.4" /><link rel="alternate" type="application/rss&#43;xml" href="../../../../node/tutorials/data_microservice/step3/index.xml">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 
 
@@ -24,13 +24,13 @@ Let’s start by navigating to the src directory and creating a persistence dire
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/tutorials/data_microservice/step3/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-08-27T08:54:13+02:00" />
+<meta property="article:modified_time" content="2021-09-03T19:44:41+03:00" />
 
 <meta itemprop="name" content="Step 4. Implementing persistence components">
 <meta itemprop="description" content="In this step, we’ll be creating components for persisting the data model we defined in the previous step. In our projects, we always create at least two persistences: one for storing data in-memory (used for testing), and another for storing data in an external database (used in production). With the Beacons example, we’ll be doing the same.
 Let’s start by navigating to the src directory and creating a persistence directory inside it.">
-<meta itemprop="dateModified" content="2021-08-27T08:54:13+02:00" />
-<meta itemprop="wordCount" content="1875">
+<meta itemprop="dateModified" content="2021-09-03T19:44:41+03:00" />
+<meta itemprop="wordCount" content="1668">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 4. Implementing persistence components"/>
 <meta name="twitter:description" content="In this step, we’ll be creating components for persisting the data model we defined in the previous step. In our projects, we always create at least two persistences: one for storing data in-memory (used for testing), and another for storing data in an external database (used in production). With the Beacons example, we’ll be doing the same.
@@ -246375,68 +246375,64 @@ Let’s start by navigating to the src directory and creating a persistence dire
 <p>Let’s start by navigating to the <strong>src</strong> directory and creating a <strong>persistence</strong> directory inside it. This directory is going to contain all of the files that relate to this step of the tutorial.</p>
 <p>The first thing we are going to do is define what functionality our persistent storage should have. We can define these in a form of an interface and name it <code>IBeaconsPersistence</code></p>
 <p><strong>/src/persistence/IBeaconsPersistence.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DataPage</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconV1</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../data/version1/BeaconV1&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">{</span>
-    <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">,</span>
-         <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">page</span>: <span style="color:#00a8c8">DataPage</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-   <span style="color:#75af00">getOneById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">id</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-         <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-   <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-         <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">,</span>
-         <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DataPage</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
 
-    <span style="color:#75af00">update</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">,</span>
-         <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#75af00">deleteById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">id</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-         <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconV1</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../data/version1/BeaconV1&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">{</span>
+    <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span>
+        <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">DataPage</span><span style="color:#960050;background-color:#1e0010">&lt;</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">&gt;</span><span style="color:#f92672">&gt;</span><span style="color:#111">;</span>
+    
+    <span style="color:#75af00">getOneById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">id</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;;</span>
+    
+    <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;;</span>
+
+    <span style="color:#75af00">create</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;;</span>
+    
+    <span style="color:#75af00">update</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;;</span>
+
+    <span style="color:#75af00">deleteById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">id</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;;</span>
 <span style="color:#111">}</span>
 
 </code></pre></div><p>The first persistence to implement this interface will be the memory persistence, which we will name <strong>BeaconsMemoryPersistence</strong>. This class will need to extend the <code>IdentifiableMemoryPersistence</code> class from the <strong>pip-services3-data</strong> module, and have a few additional functions added to it. One of these functions will be used to create filters for the <code>getPageByFilter</code> method that we’re going to override from the parent class. This function will be called <code>composeFilter</code>, as it’s going to allow us to filter data in accordance with the received filtering parameters. The overriding <code>getPageByFilter</code> method then simply calls the parent’s method, passing the <code>composeFilter</code> function as a filter parameter. The second function that we will need to implement is the <code>getOneByUdi</code> method, whose purpose will be to retrieve a beacon by its <code>udi</code>.</p>
 <p>The resulting code for this class is listed below:</p>
 <p><strong>/src/persistence/BeaconsMemoryPersistence.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">let</span> <span style="color:#75af00">_</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;lodash&#39;</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DataPage</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableMemoryPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-data-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DataPage</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableMemoryPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-data-nodex&#39;</span><span style="color:#111">;</span>
+
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconV1</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../data/version1/BeaconV1&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;./IBeaconsPersistence&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
 <span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMemoryPersistence</span>
     <span style="color:#00a8c8">extends</span> <span style="color:#75af00">IdentifiableMemoryPersistence</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#960050;background-color:#1e0010">,</span> <span style="color:#75af00">string</span><span style="color:#111">&gt;</span>
     <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">{</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
     <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">super</span><span style="color:#111">();</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_maxPageSize</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>    <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_maxPageSize</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+
     <span style="color:#00a8c8">private</span> <span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">any</span> <span style="color:#111">{</span>
         <span style="color:#75af00">filter</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span> <span style="color:#f92672">||</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">();</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">id</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">label</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;label&#39;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">udi</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;udi&#39;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">udis</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#39;udis&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">isString</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">))</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#00a8c8">typeof</span> <span style="color:#75af00">udis</span> <span style="color:#f92672">===</span> <span style="color:#d88200">&#34;string&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#75af00">udis</span> <span style="color:#f92672">=</span> <span style="color:#75af00">udis</span><span style="color:#111">.</span><span style="color:#75af00">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;,&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">isArray</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">))</span>
+        <span style="color:#111">}</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#111">Array</span><span style="color:#111">.</span><span style="color:#75af00">isArray</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">))</span> <span style="color:#111">{</span>
             <span style="color:#75af00">udis</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+        <span style="color:#111">}</span>
+
         <span style="color:#00a8c8">return</span> <span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
             <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">id</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">id</span> <span style="color:#f92672">!=</span> <span style="color:#75af00">id</span><span style="color:#111">)</span>
                 <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#111">;</span>
@@ -246446,108 +246442,124 @@ Let’s start by navigating to the src directory and creating a persistence dire
                 <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#111">;</span>
             <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">udi</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">udi</span> <span style="color:#f92672">!=</span> <span style="color:#75af00">udi</span><span style="color:#111">)</span>
                 <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#111">;</span>
-            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">udis</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">indexOf</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">)</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">udis</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">udis</span><span style="color:#111">.</span><span style="color:#75af00">indexOf</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">)</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
                 <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span><span style="color:#111">;</span>
             <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span><span style="color:#111">;</span>
         <span style="color:#111">};</span>
     <span style="color:#111">}</span>
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">page</span>: <span style="color:#00a8c8">DataPage</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">super</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">),</span> <span style="color:#75af00">paging</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#75af00">callback</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span>
+        <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">DataPage</span><span style="color:#960050;background-color:#1e0010">&lt;</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">super</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">),</span> <span style="color:#75af00">paging</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#00a8c8">let</span> <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">find</span><span style="color:#111">(</span><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_items</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">udi</span> <span style="color:#f92672">==</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>        
+        <span style="color:#00a8c8">let</span> <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_items</span><span style="color:#111">.</span><span style="color:#75af00">find</span><span style="color:#111">((</span><span style="color:#75af00">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">udi</span> <span style="color:#f92672">==</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
+
         <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">else</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#75af00">callback</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">);</span>
+
+       <span style="color:#00a8c8">return</span> <span style="color:#75af00">item</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
+
 <span style="color:#111">}</span>
 
 </code></pre></div><p>And that’s pretty much it for the memory persistence.</p>
 <p>Now let’s move on to something a bit more sophisticated - a MongoDB persistence. Here we’re also going to use an already existing base class, <code>IdentifiableMongoDbPersistence</code>, from the <strong>pip-services3-mongodb</strong> module, and write a few functions, the most important of which will be <code>composeFilter</code>. This time around, its implementation is going to contain syntax for creating database requests. The resulting code for this class is listed below:</p>
 <p><strong>/src/persistence/BeaconsMongoDbPersistence.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableMongoDbPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-mongodb-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DataPage</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IdentifiableMongoDbPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-mongodb-nodex&#39;</span><span style="color:#111">;</span>
+
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconV1</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../data/version1/BeaconV1&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;./IBeaconsPersistence&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconsMongoDbSchema</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;./BeaconsMongoDbSchema&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
 <span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span>
     <span style="color:#00a8c8">extends</span> <span style="color:#75af00">IdentifiableMongoDbPersistence</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#960050;background-color:#1e0010">,</span> <span style="color:#75af00">string</span><span style="color:#111">&gt;</span>
     <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">{</span>
+
     <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;beacons&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">BeaconsMongoDbSchema</span><span style="color:#111">());</span>
+        <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;beacons&#39;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_maxPageSize</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
     <span style="color:#00a8c8">private</span> <span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">any</span> <span style="color:#111">{</span>
         <span style="color:#75af00">filter</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span> <span style="color:#f92672">||</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">();</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">[];</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">id</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">id</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
-             <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">({</span> <span style="color:#75af00">_id</span>: <span style="color:#00a8c8">id</span> <span style="color:#111">});</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">id</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+            <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">({</span> <span style="color:#75af00">_id</span>: <span style="color:#00a8c8">id</span> <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">siteId</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">siteId</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">({</span> <span style="color:#75af00">site_id</span>: <span style="color:#00a8c8">siteId</span> <span style="color:#111">});</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+        <span style="color:#111">}</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">label</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;label&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">label</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">label</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">({</span> <span style="color:#75af00">label</span>: <span style="color:#00a8c8">label</span> <span style="color:#111">});</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+        <span style="color:#111">}</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">udi</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;udi&#39;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">udi</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">({</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">udi</span> <span style="color:#111">});</span>
         <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">udis</span> <span style="color:#f92672">=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">getAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#39;udis&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">isString</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">))</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#00a8c8">typeof</span> <span style="color:#75af00">udis</span> <span style="color:#f92672">===</span> <span style="color:#d88200">&#34;string&#34;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#75af00">udis</span> <span style="color:#f92672">=</span> <span style="color:#75af00">udis</span><span style="color:#111">.</span><span style="color:#75af00">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;,&#39;</span><span style="color:#111">);</span>
-        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">isArray</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">))</span>
+        <span style="color:#111">}</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">Array</span><span style="color:#111">.</span><span style="color:#75af00">isArray</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">))</span> <span style="color:#111">{</span>
             <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">push</span><span style="color:#111">({</span> <span style="color:#75af00">udi</span><span style="color:#f92672">:</span> <span style="color:#111">{</span> <span style="color:#75af00">$in</span>: <span style="color:#00a8c8">udis</span> <span style="color:#111">}</span> <span style="color:#111">});</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+        <span style="color:#111">}</span>
+
         <span style="color:#00a8c8">return</span> <span style="color:#75af00">criteria</span><span style="color:#111">.</span><span style="color:#75af00">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">?</span> <span style="color:#111">{</span> <span style="color:#75af00">$and</span>: <span style="color:#00a8c8">criteria</span> <span style="color:#111">}</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">page</span>: <span style="color:#00a8c8">DataPage</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">super</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">),</span> <span style="color:#75af00">paging</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#75af00">callback</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span>: <span style="color:#00a8c8">FilterParams</span><span style="color:#111">,</span>
+        <span style="color:#75af00">paging</span>: <span style="color:#00a8c8">PagingParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">DataPage</span><span style="color:#960050;background-color:#1e0010">&lt;</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">super</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">),</span> <span style="color:#75af00">paging</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span>
-        <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">let</span> <span style="color:#75af00">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
             <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">udi</span>
         <span style="color:#111">};</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_model</span><span style="color:#111">.</span><span style="color:#75af00">findOne</span><span style="color:#111">(</span><span style="color:#75af00">criteria</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-            <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">convertFromPublic</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">);</span>
-            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
-            <span style="color:#00a8c8">else</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-            <span style="color:#75af00">callback</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">);</span>
-        <span style="color:#111">});</span>
+
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Promise</span><span style="color:#111">((</span><span style="color:#75af00">resolve</span><span style="color:#111">,</span> <span style="color:#75af00">reject</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+            <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_collection</span><span style="color:#111">.</span><span style="color:#75af00">findOne</span><span style="color:#111">(</span><span style="color:#75af00">criteria</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                    <span style="color:#75af00">reject</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
+                    <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+                <span style="color:#111">}</span>
+
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
+                <span style="color:#00a8c8">else</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
+                
+                <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">convertToPublic</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">);</span>
+                <span style="color:#75af00">resolve</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">);</span>
+            <span style="color:#111">});</span>    
+        <span style="color:#111">});</span>     
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>Let’s take a quick look at what’s in this code. A basic set of CRUD operations are already implemented in the data module. There’s minimal code that needs to be written by us as developers for this class: just a filter function, and non-standard methods for searching by a specific data field. The rest of the methods that we defined in our interface are already implemented in the parent class.</p>
 <p>To make sure that the code does just what we expect it to do, let’s add some tests. We’ll be placing the files with our tests in the <strong>test</strong> directory and organizing them into subdirectories, whose names will reflect the components they are testing.</p>
 <p>Thanks to the modular structure of microservices, each component is easily testable with the help of simple mock tests. We’ll start with creating a class that contains a set of testable commands and checks the results we receive with the help of standard testing libraries. This class will be accepting any persistence that implements our <code>IBeaconsPersistence</code> interface as a parameter. This way we can use the same set of commands to test both of our persistence implementations. This set of commands should contain standard CRUD operations, which are implemented in the parent class, as well as the methods we’ve added in the child classes.</p>
 <p><strong>/test/persistence/BeaconsPersistenceFixture.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">let</span> <span style="color:#75af00">_</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;lodash&#39;</span><span style="color:#111">);</span>
-<span style="color:#00a8c8">let</span> <span style="color:#00a8c8">async</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;async&#39;</span><span style="color:#111">);</span>
-<span style="color:#00a8c8">let</span> <span style="color:#75af00">assert</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;chai&#39;</span><span style="color:#111">).</span><span style="color:#75af00">assert</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">const</span> <span style="color:#75af00">assert</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;chai&#39;</span><span style="color:#111">).</span><span style="color:#75af00">assert</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FilterParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">PagingParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconV1</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../../src/data/version1/BeaconV1&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconTypeV1</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../../src/data/version1/BeaconTypeV1&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IBeaconsPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../../src/persistence/IBeaconsPersistence&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
 <span style="color:#00a8c8">const</span> <span style="color:#75af00">BEACON1</span>: <span style="color:#00a8c8">BeaconV1</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
     <span style="color:#75af00">id</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;1&#39;</span><span style="color:#111">,</span>
     <span style="color:#75af00">udi</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;00001&#39;</span><span style="color:#111">,</span>
@@ -246575,276 +246587,182 @@ Let’s start by navigating to the src directory and creating a persistence dire
     <span style="color:#75af00">center</span><span style="color:#f92672">:</span> <span style="color:#111">{</span> <span style="color:#00a8c8">type</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;Point&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">coordinates</span><span style="color:#f92672">:</span> <span style="color:#111">[</span> <span style="color:#ae81ff">10</span><span style="color:#111">,</span> <span style="color:#ae81ff">10</span> <span style="color:#111">]</span> <span style="color:#111">},</span>
     <span style="color:#75af00">radius</span>: <span style="color:#00a8c8">50</span>
 <span style="color:#111">};</span>
-<span style="color:#00a8c8">export</span>
- <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsPersistenceFixture</span> <span style="color:#111">{</span>
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsPersistenceFixture</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">private</span> <span style="color:#75af00">_persistence</span>: <span style="color:#00a8c8">IBeaconsPersistence</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">constructor</span><span style="color:#111">(</span><span style="color:#75af00">persistence</span>: <span style="color:#00a8c8">IBeaconsPersistence</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">persistence</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span> <span style="color:#f92672">=</span> <span style="color:#75af00">persistence</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#00a8c8">private</span> <span style="color:#75af00">testCreateBeacons</span><span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">async</span><span style="color:#111">.</span><span style="color:#75af00">series</span><span style="color:#111">([</span>
-            <span style="color:#75715e">// Create the first beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">BEACON1</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">center</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">);</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Create the second beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">BEACON2</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">center</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">);</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Create the third beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">BEACON3</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">center</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">);</span>
-            <span style="color:#111">}</span>
-        <span style="color:#111">],</span> <span style="color:#75af00">done</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">testCreateBeacons() {</span>
+        <span style="color:#75715e">// Create the first beacon
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">let</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">BEACON1</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON1</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">center</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Create the second beacon
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">BEACON2</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON2</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">center</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Create the third beacon
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">create</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">BEACON3</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">site_id</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#00a8c8">type</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">BEACON3</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNotNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">center</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">testCrudOperations</span><span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">let</span> <span style="color:#75af00">beacon1</span>: <span style="color:#00a8c8">BeaconV1</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#00a8c8">async</span><span style="color:#111">.</span><span style="color:#75af00">series</span><span style="color:#111">([</span>
-            <span style="color:#75715e">// Create items
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">testCreateBeacons</span><span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">);</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Get all beacons
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">(),</span>
-                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">(),</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">page</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">beacon1</span> <span style="color:#f92672">=</span> <span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">];</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Update the beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">label</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;ABC&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">update</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">beacon1</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ABC&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Get beacon by udi
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                     <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">}</span>
-<span style="color:#111">,</span>            <span style="color:#75715e">// Delete the beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">deleteById</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Try to get deleted beacon
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getOneById</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span> <span style="color:#f92672">||</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">}</span>
-        <span style="color:#111">],</span> <span style="color:#75af00">done</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">testCrudOperations() {</span>
+        <span style="color:#75715e">// Create items
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">testCreateBeacons</span><span style="color:#111">();</span>
+
+        <span style="color:#75715e">// Get all beacons
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">let</span> <span style="color:#75af00">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">(),</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">()</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">3</span><span style="color:#111">);</span>
+
+        <span style="color:#00a8c8">let</span> <span style="color:#75af00">beacon1</span> <span style="color:#f92672">=</span> <span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">];</span>
+
+        <span style="color:#75715e">// Update the beacon
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">label</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;ABC&#39;</span><span style="color:#111">;</span>
+
+        <span style="color:#00a8c8">let</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">update</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">beacon1</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#d88200">&#39;ABC&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">label</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Get beacon by udi
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span> 
+            <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">,</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Delete the beacon
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">deleteById</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">equal</span><span style="color:#111">(</span><span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">id</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Try to get deleted beacon
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getOneById</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">beacon1</span><span style="color:#111">.</span><span style="color:#75af00">id</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span> <span style="color:#f92672">||</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#00a8c8">public</span> <span style="color:#75af00">testGetWithFilters</span><span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">async</span><span style="color:#111">.</span><span style="color:#75af00">series</span><span style="color:#111">([</span>
-            <span style="color:#75715e">// Create items
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">testCreateBeacons</span><span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">);</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Filter by id
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
-                        <span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1&#39;</span>
-                    <span style="color:#111">),</span>
-                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">(),</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">page</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Filter by udi
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
-                        <span style="color:#d88200">&#39;udi&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;00002&#39;</span>
-                    <span style="color:#111">),</span>
-                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">(),</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">page</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Filter by udis
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
-                        <span style="color:#d88200">&#39;udis&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;00001,00003&#39;</span>
-                    <span style="color:#111">),</span>
-                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">(),</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">page</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-            <span style="color:#75715e">// Filter by site_id
-</span><span style="color:#75715e"></span>            <span style="color:#111">(</span><span style="color:#75af00">callback</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
-                    <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-                    <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
-                        <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1&#39;</span>
-                    <span style="color:#111">)</span>
-<span style="color:#111">,</span>                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">(),</span>
-                    <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">page</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">isNull</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-                        <span style="color:#75af00">callback</span><span style="color:#111">();</span>
-                    <span style="color:#111">}</span>
-                <span style="color:#111">)</span>
-            <span style="color:#111">},</span>
-        <span style="color:#111">],</span> <span style="color:#75af00">done</span><span style="color:#111">);</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">testGetWithFilters() {</span>
+        <span style="color:#75715e">// Create items
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">testCreateBeacons</span><span style="color:#111">();</span>
+
+        <span style="color:#75715e">// Filter by id
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">let</span> <span style="color:#75af00">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1&#39;</span>
+            <span style="color:#111">),</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">()</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Filter by udi
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#39;udi&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;00002&#39;</span>
+            <span style="color:#111">),</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">()</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Filter by udis
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#39;udis&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;00001,00003&#39;</span>
+            <span style="color:#111">),</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">()</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">);</span>
+
+        <span style="color:#75715e">// Filter by site_id
+</span><span style="color:#75715e"></span>        <span style="color:#75af00">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+            <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1&#39;</span>
+            <span style="color:#111">),</span>
+            <span style="color:#00a8c8">new</span> <span style="color:#75af00">PagingParams</span><span style="color:#111">()</span>
+        <span style="color:#111">);</span>
+        <span style="color:#75af00">assert</span><span style="color:#111">.</span><span style="color:#75af00">lengthOf</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
+
 </code></pre></div><p>Now that we have a set of tests, we can dive into the testing itself. To do this, we’ll create files for testing each of our persistences and run them.</p>
 <p><strong>/test/persistence/BeaconsMemoryPersistence.test.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ConfigParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span><span style="color:#75af00">BeaconsMemoryPersistence</span><span style="color:#111">}</span> <span style="color:#00a8c8">from</span>  <span style="color:#d88200">&#39;../../src/persistence/BeaconsMemoryPersistence&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ConfigParams</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-nodex&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconsMemoryPersistence</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../../src/persistence/BeaconsMemoryPersistence&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BeaconsPersistenceFixture</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;./BeaconsPersistenceFixture&#39;</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
+
 <span style="color:#75af00">suite</span><span style="color:#111">(</span><span style="color:#d88200">&#39;BeaconsMemoryPersistence&#39;</span><span style="color:#111">,</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">let</span> <span style="color:#75af00">persistence</span>: <span style="color:#00a8c8">BeaconsMemoryPersistence</span><span style="color:#111">;</span>
     <span style="color:#00a8c8">let</span> <span style="color:#75af00">fixture</span>: <span style="color:#00a8c8">BeaconsPersistenceFixture</span><span style="color:#111">;</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#75af00">setup</span><span style="color:#111">((</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+
+    <span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#00a8c8">async</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
         <span style="color:#75af00">persistence</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">BeaconsMemoryPersistence</span><span style="color:#111">();</span>
         <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">ConfigParams</span><span style="color:#111">());</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#75af00">fixture</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">BeaconsPersistenceFixture</span><span style="color:#111">(</span><span style="color:#75af00">persistence</span><span style="color:#111">);</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-        <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#75af00">done</span><span style="color:#111">);</span>
-    <span style="color:#111">});</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#75af00">teardown</span><span style="color:#111">((</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-        <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">close</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#75af00">done</span><span style="color:#111">);</span>
-    <span style="color:#111">});</span>
-<span style="color:#960050;background-color:#1e0010">‍</span>
-    <span style="color:#75af00">test</span><span style="color:#111">(</span><span style="color:#d88200">&#39;CRUD Operations&#39;</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-        <span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">testCrudOperations</span><span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">);</span>
-    <span style="color:#111">});</span>
-    <span style="color:#75af00">test</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Get with Filters&#39;</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-        <span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">testGetWithFilters</span><span style="color:#111">(</span><span style="color:#75af00">done</span><span style="color:#111">);</span>
-    <span style="color:#111">});</span>
-<span style="color:#111">});</span>
 
+        <span style="color:#75af00">fixture</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">BeaconsPersistenceFixture</span><span style="color:#111">(</span><span style="color:#75af00">persistence</span><span style="color:#111">);</span>
+
+        <span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+    <span style="color:#111">});</span>
+
+    <span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#00a8c8">async</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">close</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+    <span style="color:#111">});</span>
+
+    <span style="color:#75af00">test</span><span style="color:#111">(</span><span style="color:#d88200">&#39;CRUD Operations&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">async</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">await</span> <span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">testCrudOperations</span><span style="color:#111">();</span>
+    <span style="color:#111">});</span>
+
+    <span style="color:#75af00">test</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Get with Filters&#39;</span><span style="color:#111">,</span> <span style="color:#00a8c8">async</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">await</span> <span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">testGetWithFilters</span><span style="color:#111">();</span>
+    <span style="color:#111">});</span>
+
+<span style="color:#111">});</span>
 </code></pre></div><p>To run these tests, run the command npm test from a terminal at the root of the project.</p>
 <p><em>“But where exactly is the data going to be stored when we get the service actually up and running?”</em> you may ask. Jumping ahead, we’ll tell you that the config.yml configuration file takes care of that. It contains configurations for all of the service’s components, such as: which logger to use, where performance counter output should be, what database to connect to and using what parameters, etc. We’ll discuss this in more detail later on in this tutorial.</p>
 <p>Now that we can persist our data, let’s move on to <a href="../step4">Step 5. Implementing a controller.</a></p>
