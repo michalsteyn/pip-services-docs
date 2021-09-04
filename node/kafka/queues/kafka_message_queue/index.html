@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/kafka/queues/kafka_message_queue/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-12T03:19:04+02:00" />
+<meta property="article:modified_time" content="2021-09-04T19:52:17+03:00" />
 
 <meta itemprop="name" content="KafkaMessageQueue">
 <meta itemprop="description" content="Message queue that sends and receives messages via the Kafka message broker.
 ">
-<meta itemprop="dateModified" content="2021-07-12T03:19:04+02:00" />
-<meta itemprop="wordCount" content="1179">
+<meta itemprop="dateModified" content="2021-09-04T19:52:17+03:00" />
+<meta itemprop="wordCount" content="1176">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="KafkaMessageQueue"/>
 <meta name="twitter:description" content="Message queue that sends and receives messages via the Kafka message broker.
@@ -246759,17 +246759,15 @@ This method is usually used to extend the message processing time.</p>
   <span style="color:#d88200">&#34;connection.port&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">9092</span>
 <span style="color:#111">));</span>
 
-<span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-    <span style="color:#111">...</span>
-<span style="color:#111">});</span>
+<span style="color:#00a8c8">await</span> <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">);</span>
 
-<span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">send</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">MessageEnvelope</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mymessage&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">));</span>
-<span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">receive</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">message</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">message</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-       <span style="color:#111">...</span>
-       <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">complete</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">message</span><span style="color:#111">);</span>
-    <span style="color:#111">}</span>
-<span style="color:#111">});</span>
+<span style="color:#00a8c8">await</span> <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">send</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">MessageEnvelope</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mymessage&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;ABC&#34;</span><span style="color:#111">));</span>
+<span style="color:#00a8c8">let</span> <span style="color:#75af00">message</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">receive</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">);</span>
+
+<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">message</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">...</span>
+    <span style="color:#00a8c8">await</span> <span style="color:#75af00">queue</span><span style="color:#111">.</span><span style="color:#75af00">complete</span><span style="color:#111">(</span><span style="color:#d88200">&#34;123&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">message</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
 </code></pre></div><h3 id="see-also">See also</h3>
 <ul>
 <li>

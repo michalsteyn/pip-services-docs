@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/node/couchbase/persistence/couchbase_persistence/" /><meta property="article:section" content="node" />
 
-<meta property="article:modified_time" content="2021-07-14T02:10:28+03:00" />
+<meta property="article:modified_time" content="2021-09-04T19:52:17+03:00" />
 
 <meta itemprop="name" content="CouchbasePersistence&lt;T&gt;">
 <meta itemprop="description" content="Abstract persistence component that stores data in a Couchbase database using Couchbase object relational mapping.
 ">
-<meta itemprop="dateModified" content="2021-07-14T02:10:28+03:00" />
+<meta itemprop="dateModified" content="2021-09-04T19:52:17+03:00" />
 <meta itemprop="wordCount" content="1182">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CouchbasePersistence&lt;T&gt;"/>
@@ -246680,8 +246680,9 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCouchbasePersistence</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">CouchbasePersistence</span><span style="color:#111">&lt;</span><span style="color:#f92672">MyData</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-    <span style="color:#75af00">base</span><span style="color:#111">(</span><span style="color:#d88200">&#34;mydata&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycollection&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">MyDataCouchbaseSchema</span><span style="color:#111">());</span>
+    <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#34;mydata&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycollection&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">MyDataCouchbaseSchema</span><span style="color:#111">());</span>
   <span style="color:#111">}</span>
+
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">getByName</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">name</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">MyData</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">let</span> <span style="color:#75af00">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span> <span style="color:#75af00">name</span>: <span style="color:#00a8c8">name</span> <span style="color:#111">};</span>
     <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Promise</span><span style="color:#111">((</span><span style="color:#75af00">resolve</span><span style="color:#111">,</span> <span style="color:#75af00">reject</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
@@ -246691,6 +246692,7 @@ receives <a href="../../../commons/data/filter_params">FilterParams</a> and conv
        <span style="color:#111">});</span>
     <span style="color:#111">});</span>
   <span style="color:#111">}</span>
+
   <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">set</span><span style="color:#111">(</span><span style="color:#75af00">correlatonId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">item</span>: <span style="color:#00a8c8">MyData</span><span style="color:#111">,</span> <span style="color:#75af00">callback</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">let</span> <span style="color:#75af00">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span> <span style="color:#75af00">name</span>: <span style="color:#00a8c8">item.name</span> <span style="color:#111">};</span>
     <span style="color:#00a8c8">let</span> <span style="color:#75af00">options</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span> <span style="color:#75af00">upsert</span>: <span style="color:#00a8c8">true</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">true</span> <span style="color:#111">};</span>
