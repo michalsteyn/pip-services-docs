@@ -54531,7 +54531,7 @@
           style="padding-left:10px;">
           
           <div class="col  "> 
-            Background Execution!
+            Background Execution
           </div>
           
         </div>
@@ -240506,12 +240506,155 @@ One of the roles of the microservice’s container is to correctly initialize al
 <li>The component is destroyed</li>
 </ol>
 <p>A flexible and, at the same time, standardized approach was developed in the Pip.Services Toolkit for initializing components. This approach preserves the conceptual integrity of the whole microservice, while keeping the source code clean, coherent, and testable. A component’s lifecycle is determined by which of the following interfaces it implements:</p>
+<div class="content-tab-selector">
+	<div class="btn-group tab-selector-btn-group" role="group" aria-label="Language selector">
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+	</div>
+<div class="content-tab-section">
 <ul>
-<li><a href="../../commons/config/iconfigurable/">IConfigurable</a> – component configuration.</li>
-<li><a href="../../commons/refer/ireferenceable/">IReferenceable</a> and <a href="../../commons/refer/iunreferenceable/">IUnreferenceable</a> – setting and destroying references to other components.</li>
-<li><a href="../../commons/run/iopenable">IOpenable</a> and <a href="../..//commons/run/iclosable">IClosable</a> – starting and stopping internal functional processes.</li>
-<li><a href="../../commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
-<li><a href="../../commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
+<li><a href="../../../node/commons/config/iconfigurable/">IConfigurable</a> – component configuration.</li>
+<li><a href="../../../node/commons/refer/ireferenceable/">IReferenceable</a> and <a href="../../../node/commons/refer/iunreferenceable/">IUnreferenceable</a> – setting and destroying references to other components.</li>
+<li><a href="../../../node/commons/run/iopenable">IOpenable</a> and <a href="../../../node/commons/run/iclosable">IClosable</a> – starting and stopping internal functional processes.</li>
+<li><a href="../../../node/commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
+<li><a href="../../../node/commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
+</ul>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IConfigurable</span> <span style="color:#111">{</span>
+    <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span>: <span style="color:#00a8c8">ConfigParams</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IReferenceable</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span>: <span style="color:#00a8c8">IReferences</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">void</span><span style="color:#111">;</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IOpenable</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">IClosable</span> <span style="color:#111">{</span>
+
+	<span style="color:#75af00">isOpen</span><span style="color:#111">()</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">boolean</span><span style="color:#111">;</span>
+
+	<span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">void</span><span style="color:#111">&gt;;</span>
+<span style="color:#111">}</span>
+
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IClosable</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">close</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">void</span><span style="color:#111">&gt;;</span>
+<span style="color:#111">}</span>
+
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">interface</span> <span style="color:#75af00">IExecutable</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">execute</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">args</span>: <span style="color:#00a8c8">Parameters</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">any</span><span style="color:#111">&gt;;</span>
+<span style="color:#111">}</span>
+
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../net/commons/config/iconfigurable/">IConfigurable</a> – component configuration.</li>
+<li><a href="../../../net/commons/refer/ireferenceable/">IReferenceable</a> and <a href="../../../net/commons/refer/iunreferenceable/">IUnreferenceable</a> – setting and destroying references to other components.</li>
+<li><a href="../../../net/commons/run/iopenable">IOpenable</a> and <a href="../../../net/commons/run/iclosable">IClosable</a> – starting and stopping internal functional processes.</li>
+<li><a href="../../../net/commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
+<li><a href="../../../net/commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
+</ul>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IConfigurable</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IReferenceable</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">void</span> <span style="color:#111">SetReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IOpenable</span> <span style="color:#111">:</span> <span style="color:#111">IClosable</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">bool</span> <span style="color:#111">IsOpen</span><span style="color:#111">();</span>
+    <span style="color:#111">Task</span> <span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IClosable</span>
+<span style="color:#111">{</span>
+    <span style="color:#111">Task</span> <span style="color:#111">CloseAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">IExecutable</span>
+<span style="color:#111">{</span>
+    <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">object</span><span style="color:#111">&gt;</span> <span style="color:#111">ExecuteAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">args</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../go/commons/config/iconfigurable/">IConfigurable</a> – component configuration.</li>
+<li><a href="../../../go/commons/refer/ireferenceable/">IReferenceable</a> and <a href="../../../go/commons/refer/iunreferenceable/">IUnreferenceable</a> – setting and destroying references to other components.</li>
+<li><a href="../../../go/commons/run/iopenable">IOpenable</a> and <a href="../../../go/commons/run/iclosable">IClosable</a> – starting and stopping internal functional processes.</li>
+<li><a href="../../../go/commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
+<li><a href="../../../go/commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
+</ul>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">IConfigurable</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span> <span style="color:#f92672">*</span><span style="color:#75af00">ConfigParams</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">IReferenceable</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">SetReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span> <span style="color:#75af00">IReferences</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">IOpenable</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">IClosable</span>
+
+	<span style="color:#75af00">IsOpen</span><span style="color:#111">()</span> <span style="color:#00a8c8">bool</span>
+
+	<span style="color:#75af00">Open</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span>
+<span style="color:#111">}</span>
+
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">IClosable</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">Close</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#00a8c8">error</span>
+<span style="color:#111">}</span>
+
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">IExecutable</span> <span style="color:#00a8c8">interface</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">Execute</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">args</span> <span style="color:#f92672">*</span><span style="color:#75af00">Parameters</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">result</span> <span style="color:#00a8c8">interface</span><span style="color:#111">{},</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../dart/commons/config/iconfigurable/">IConfigurable</a> – component configuration.</li>
+<li><a href="../../../dart/commons/refer/ireferenceable/">IReferenceable</a> and <a href="../../../dart/commons/refer/iunreferenceable/">IUnreferenceable</a> – setting and destroying references to other components.</li>
+<li><a href="../../../dart/commons/run/iopenable">IOpenable</a> and <a href="../../../dart/commons/run/iclosable">IClosable</a> – starting and stopping internal functional processes.</li>
+<li><a href="../../../dart/commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
+<li><a href="../../../dart/commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
+</ul>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">
+<span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IConfigurable</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IReferenceable</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IOpenable</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IClosable</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">bool</span> <span style="color:#111">isOpen</span><span style="color:#111">();</span>
+  <span style="color:#111">Future</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IClosable</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IExecutable</span> <span style="color:#111">{</span>
+   <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">dynamic</span><span style="color:#f92672">&gt;</span> <span style="color:#111">execute</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">args</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../python/commons/config/iconfigurable/">IConfigurable</a> – component configuration.</li>
+<li><a href="../../../python/commons/refer/ireferenceable/">IReferenceable</a> and <a href="../../../python/commons/refer/iunreferenceable/">IUnreferenceable</a> – setting and destroying references to other components.</li>
+<li><a href="../../../python/commons/run/iopenable">IOpenable</a> and <a href="../../../python/commons/run/iclosable">IClosable</a> – starting and stopping internal functional processes.</li>
+<li><a href="../../../python/commons/run/iexecutable">IExecutable</a> – execution of functional processes.</li>
+<li><a href="../../../python/commons/run/inotifiable">INotifiable</a> - sending event notifications.</li>
 </ul>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">IConfigurable</span><span style="color:#111">(</span><span style="color:#111">ABC</span><span style="color:#111">):</span>
@@ -240546,9 +240689,175 @@ One of the roles of the microservice’s container is to correctly initialize al
     <span style="color:#00a8c8">def</span> <span style="color:#75af00">execute</span><span style="color:#111">(</span><span style="color:#111">self</span><span style="color:#111">,</span> <span style="color:#111">correlation_id</span><span style="color:#111">:</span> <span style="color:#111">Optional</span><span style="color:#111">[</span><span style="color:#111">str</span><span style="color:#111">],</span> <span style="color:#111">args</span><span style="color:#111">:</span> <span style="color:#111">Parameters</span><span style="color:#111">):</span>
         <span style="color:#00a8c8">raise</span> <span style="color:#75af00">NotImplementedError</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Method from interface definition&#39;</span><span style="color:#111">)</span>
 
-</code></pre></div><h3 id="implementation">Implementation</h3>
+</code></pre></div></div>
+<div class="content-tab-section">
+<p><strong>TODO: add language</strong></p>
+</div>
+</div>
+<h3 id="implementation">Implementation</h3>
 <p>Microservice developers are free to implement just the interfaces needed by their components. When the container is started, all implemented methods will be called in the previously mentioned order.
 For example:</p>
+<div class="content-tab-selector">
+	<div class="btn-group tab-selector-btn-group" role="group" aria-label="Language selector">
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+	</div>
+<div class="content-tab-section">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ConfigParams</span><span style="color:#111">,</span> <span style="color:#75af00">FixedRateTimer</span><span style="color:#111">,</span> <span style="color:#75af00">Parameters</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-commons-nodex&#34;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IExecutable</span><span style="color:#111">,</span> <span style="color:#75af00">IOpenable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferences</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-commons-nodex&#34;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">CompositeLogger</span><span style="color:#111">,</span> <span style="color:#75af00">LogLevel</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">CounterController</span> <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#75af00">IOpenable</span><span style="color:#111">,</span> <span style="color:#75af00">IExecutable</span> <span style="color:#111">{</span>
+    
+
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">logger</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">CompositeLogger</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">timer</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">FixedRateTimer</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">parameters</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Parameters</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">counter</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+    
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">constructor</span><span style="color:#111">(){</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">setLevel</span><span style="color:#111">(</span><span style="color:#75af00">LogLevel</span><span style="color:#111">.</span><span style="color:#75af00">Debug</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span>: <span style="color:#00a8c8">ConfigParams</span><span style="color:#111">){</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">parameters</span> <span style="color:#f92672">=</span> <span style="color:#75af00">Parameters</span><span style="color:#111">.</span><span style="color:#75af00">fromConfig</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+        
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span>: <span style="color:#00a8c8">IReferences</span><span style="color:#111">){</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+        
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">isOpen</span><span style="color:#111">()</span><span style="color:#f92672">:</span> <span style="color:#00a8c8">boolean</span><span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">timer</span><span style="color:#111">.</span><span style="color:#75af00">isStarted</span><span style="color:#111">();</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">void</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">isOpen</span><span style="color:#111">())</span> <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">timer</span><span style="color:#111">.</span><span style="color:#75af00">setCallback</span><span style="color:#111">(()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">execute</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">parameters</span><span style="color:#111">))</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">timer</span><span style="color:#111">.</span><span style="color:#75af00">setInterval</span><span style="color:#111">(</span><span style="color:#ae81ff">1000</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">timer</span><span style="color:#111">.</span><span style="color:#75af00">setDelay</span><span style="color:#111">(</span><span style="color:#ae81ff">1000</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">timer</span><span style="color:#111">.</span><span style="color:#75af00">start</span><span style="color:#111">()</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller opened&#34;</span><span style="color:#111">)</span>
+
+    <span style="color:#111">}</span>
+        
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">close</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">void</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">timer</span><span style="color:#111">.</span><span style="color:#75af00">stop</span><span style="color:#111">()</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller closed&#34;</span><span style="color:#111">)</span>
+    <span style="color:#111">}</span>
+        
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">execute</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">args</span>: <span style="color:#00a8c8">Parameters</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">any</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">counter</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span><span style="color:#111">;</span>
+
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">logger</span><span style="color:#111">.</span><span style="color:#75af00">info</span><span style="color:#111">(</span>
+            <span style="color:#75af00">correlationId</span><span style="color:#111">,</span>
+            <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">counter</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34; - &#34;</span> <span style="color:#f92672">+</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">parameters</span><span style="color:#111">.</span><span style="color:#75af00">getAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#39;message&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Hello World!&#39;</span><span style="color:#111">)</span>
+        <span style="color:#111">)</span>
+
+        <span style="color:#00a8c8">let</span> <span style="color:#75af00">result</span> <span style="color:#f92672">=</span> <span style="color:#75af00">args</span><span style="color:#111">.</span><span style="color:#75af00">getAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#34;message&#34;</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+</code></pre></div></div>
+<div class="content-tab-section">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">sealed</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">CounterController</span> <span style="color:#111">:</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#111">IOpenable</span><span style="color:#111">,</span> <span style="color:#111">IExecutable</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">readonly</span> <span style="color:#111">CompositeLogger</span> <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CompositeLogger</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#111">FixedRateTimer</span> <span style="color:#111">Timer</span> <span style="color:#111">{</span> <span style="color:#00a8c8">get</span><span style="color:#111">;</span> <span style="color:#00a8c8">set</span><span style="color:#111">;</span> <span style="color:#111">}</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#111">Parameters</span> <span style="color:#111">Parameters</span> <span style="color:#111">{</span> <span style="color:#00a8c8">get</span><span style="color:#111">;</span> <span style="color:#00a8c8">set</span><span style="color:#111">;</span> <span style="color:#111">}</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Parameters</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">long</span> <span style="color:#111">Counter</span> <span style="color:#111">{</span> <span style="color:#00a8c8">get</span><span style="color:#111">;</span> <span style="color:#00a8c8">set</span><span style="color:#111">;</span> <span style="color:#111">}</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#111">Parameters</span> <span style="color:#111">=</span> <span style="color:#111">Parameters</span><span style="color:#111">.</span><span style="color:#111">FromConfig</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">SetReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">SetReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">bool</span> <span style="color:#111">IsOpen</span><span style="color:#111">()</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">Timer</span><span style="color:#111">.</span><span style="color:#111">IsStarted</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#111">Task</span> <span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#111">Timer</span><span style="color:#111">.</span><span style="color:#111">Task</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Action</span><span style="color:#111">(</span><span style="color:#00a8c8">async</span> <span style="color:#111">()</span> <span style="color:#111">=&gt;</span> <span style="color:#00a8c8">await</span> <span style="color:#111">ExecuteAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span><span style="color:#111">));</span>
+        <span style="color:#111">Timer</span><span style="color:#111">.</span><span style="color:#111">Interval</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+        <span style="color:#111">Timer</span><span style="color:#111">.</span><span style="color:#111">Delay</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+        <span style="color:#111">Timer</span><span style="color:#111">.</span><span style="color:#111">Start</span><span style="color:#111">();</span>
+        <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller opened&#34;</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">CompletedTask</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#111">Task</span> <span style="color:#111">CloseAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#111">Timer</span><span style="color:#111">.</span><span style="color:#111">Stop</span><span style="color:#111">();</span>
+        <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller closed&#34;</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">CompletedTask</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">object</span><span style="color:#111">&gt;</span> <span style="color:#111">ExecuteAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">parameters</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Info</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;{0} - {1}&#34;</span><span style="color:#111">,</span> <span style="color:#111">Counter</span><span style="color:#111">++,</span>
+        <span style="color:#111">Parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;message&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#111">));</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">FromResult</span><span style="color:#111">(</span><span style="color:#111">Counter</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+</code></pre></div></div>
+<div class="content-tab-section">
+<p><strong>TODO: add CounterController</strong></p>
+</div>
+<div class="content-tab-section">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">CounterController</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#111">IOpenable</span><span style="color:#111">,</span> <span style="color:#111">IExecutable</span>
+<span style="color:#111">{</span>
+  <span style="color:#00a8c8">final</span> <span style="color:#111">CompositeLogger</span> <span style="color:#111">_logger</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">CompositeLogger</span><span style="color:#111">();</span>
+  <span style="color:#00a8c8">final</span> <span style="color:#111">FixedRateTimer</span> <span style="color:#111">timer</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">();</span>
+  <span style="color:#00a8c8">final</span> <span style="color:#111">Parameters</span> <span style="color:#111">parameters</span>  <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Parameters</span><span style="color:#111">();</span>
+  <span style="color:#00a8c8">int</span> <span style="color:#111">counter</span>  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span> <span style="color:#111">ConfigParams</span> <span style="color:#111">)</span>
+  <span style="color:#111">{</span>
+    <span style="color:#111">parameters</span> <span style="color:#f92672">=</span> <span style="color:#111">Parameters</span><span style="color:#111">.</span><span style="color:#111">fromConfig</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+  <span style="color:#111">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span> <span style="color:#111">IReferences</span><span style="color:#111">)</span>
+  <span style="color:#111">{</span>
+    <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+  <span style="color:#111">public</span> <span style="color:#00a8c8">bool</span> <span style="color:#111">IsOpen</span><span style="color:#111">()</span>
+  <span style="color:#111">{</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">isStarted</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+  <span style="color:#111">Future</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#111">correlationId</span> <span style="color:#00a8c8">String</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span>
+  <span style="color:#111">{</span>
+    <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">task</span> <span style="color:#f92672">=</span> <span style="color:#111">()</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span><span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">Execute</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)};</span>
+    <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">interval</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+    <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">delay</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+    <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">start</span><span style="color:#111">();</span>
+    <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller opened&#34;</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+  <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#111">correlationId</span> <span style="color:#00a8c8">String</span><span style="color:#111">)</span>
+  <span style="color:#111">{</span>
+    <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">stop</span><span style="color:#111">();</span>
+    <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Counter controller closed&#34;</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">int</span><span style="color:#f92672">&gt;</span> <span style="color:#111">Execute</span><span style="color:#111">(</span><span style="color:#111">correlationId</span> <span style="color:#00a8c8">String</span><span style="color:#111">,</span> <span style="color:#111">parameters</span> <span style="color:#111">Parameters</span> <span style="color:#111">)</span> <span style="color:#00a8c8">async</span>
+  <span style="color:#111">{</span>
+    <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">info</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;</span><span style="color:#d88200">$</span><span style="color:#111">s</span><span style="color:#d88200"> - </span><span style="color:#d88200">$</span><span style="color:#111">s</span><span style="color:#d88200">&#34;</span><span style="color:#111">,</span> <span style="color:#111">counter</span><span style="color:#f92672">++</span><span style="color:#111">,</span> 
+    <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">getAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;message&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Hello World!&#34;</span><span style="color:#111">));</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">counter</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+    
+</code></pre></div></div>
+<div class="content-tab-section">
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">Optional</span>
 
 <span style="color:#f92672">from</span> <span style="color:#111">pip_services3_commons.config</span> <span style="color:#f92672">import</span> <span style="color:#111">IReconfigurable</span><span style="color:#111">,</span> <span style="color:#111">ConfigParams</span>
@@ -240595,20 +240904,90 @@ For example:</p>
 
         <span style="color:#00a8c8">return</span> <span style="color:#111">self</span><span style="color:#f92672">.</span><span style="color:#111">__counter</span>
 
-</code></pre></div><h3 id="utilities">Utilities</h3>
+</code></pre></div></div>
+<div class="content-tab-section">
+<p><strong>TODO: add language</strong></p>
+</div>
+</div>
+<h3 id="utilities">Utilities</h3>
 <p>The Pip.Service’s Toolkit also includes a few utilities that can be used during microservice development:</p>
+<div class="content-tab-selector">
+	<div class="btn-group tab-selector-btn-group" role="group" aria-label="Language selector">
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+	</div>
+<div class="content-tab-section">
 <ul>
-<li><a href="../../commons/run/opener/">Opener</a> – initiates the functional processes of selected components.</li>
-<li><a href="../../commons/run/closer/">Closer</a> – stops the functional processes of selected components.</li>
-<li><a href="../../commons/run/executor/">Executor</a> – runs the functional processes of selected components.</li>
-<li><a href="../../commons/run/notifier/">Notifier</a> - sends event notifications for selected components.</li>
-<li><a href="../../commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
+<li><a href="../../../node/commons/run/opener/">Opener</a> – initiates the functional processes of selected components.</li>
+<li><a href="../../../node/commons/run/closer/">Closer</a> – stops the functional processes of selected components.</li>
+<li><a href="../../../node/commons/run/executor/">Executor</a> – runs the functional processes of selected components.</li>
+<li><a href="../../../node/commons/run/notifier/">Notifier</a> - sends event notifications for selected components.</li>
+<li><a href="../../../node/commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">await</span> <span style="color:#75af00">Opener</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">references</span><span style="color:#111">.</span><span style="color:#75af00">getAll</span><span style="color:#111">());</span>
+<span style="color:#111">...</span>
+<span style="color:#00a8c8">await</span> <span style="color:#75af00">Closer</span><span style="color:#111">.</span><span style="color:#75af00">close</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">references</span><span style="color:#111">.</span><span style="color:#75af00">getAll</span><span style="color:#111">());</span>
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../net/commons/run/opener/">Opener</a> – initiates the functional processes of selected components.</li>
+<li><a href="../../../net/commons/run/closer/">Closer</a> – stops the functional processes of selected components.</li>
+<li><a href="../../../net/commons/run/executor/">Executor</a> – runs the functional processes of selected components.</li>
+<li><a href="../../../net/commons/run/notifier/">Notifier</a> - sends event notifications for selected components.</li>
+<li><a href="../../../net/commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">await</span> <span style="color:#111">Opener</span><span style="color:#111">.</span><span style="color:#111">OpenAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">GetAll</span><span style="color:#111">());</span>
+<span style="color:#111">...</span>
+<span style="color:#00a8c8">await</span> <span style="color:#111">Closer</span><span style="color:#111">.</span><span style="color:#111">CloseAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">GetAll</span><span style="color:#111">());</span>
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../go/commons/run/opener/">Opener</a> – initiates the functional processes of selected components.</li>
+<li><a href="../../../go/commons/run/closer/">Closer</a> – stops the functional processes of selected components.</li>
+<li><a href="../../../go/commons/run/executor/">Executor</a> – runs the functional processes of selected components.</li>
+<li><a href="../../../go/commons/run/notifier/">Notifier</a> - sends event notifications for selected components.</li>
+<li><a href="../../../go/commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75af00">TODO</span><span style="color:#111">:</span> <span style="color:#75af00">add</span> <span style="color:#75af00">example</span>
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../dart/commons/run/opener/">Opener</a> – initiates the functional processes of selected components.</li>
+<li><a href="../../../dart/commons/run/closer/">Closer</a> – stops the functional processes of selected components.</li>
+<li><a href="../../../dart/commons/run/executor/">Executor</a> – runs the functional processes of selected components.</li>
+<li><a href="../../../dart/commons/run/notifier/">Notifier</a> - sends event notifications for selected components.</li>
+<li><a href="../../../dart/commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">await</span> <span style="color:#111">Opener</span><span style="color:#111">.</span><span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">getAll</span><span style="color:#111">());</span>
+<span style="color:#111">...</span>
+<span style="color:#00a8c8">await</span> <span style="color:#111">Closer</span><span style="color:#111">.</span><span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">getAll</span><span style="color:#111">());</span>
+</code></pre></div></div>
+<div class="content-tab-section">
+<ul>
+<li><a href="../../../python/commons/run/opener/">Opener</a> – initiates the functional processes of selected components.</li>
+<li><a href="../../../python/commons/run/closer/">Closer</a> – stops the functional processes of selected components.</li>
+<li><a href="../../../python/commons/run/executor/">Executor</a> – runs the functional processes of selected components.</li>
+<li><a href="../../../python/commons/run/notifier/">Notifier</a> - sends event notifications for selected components.</li>
+<li><a href="../../../python/commons/run/cleaner/">Cleaner</a> – cleans the current state of selected components.</li>
 </ul>
 <p>For example:</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#111">Opener</span><span style="color:#f92672">.</span><span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">_references</span><span style="color:#f92672">.</span><span style="color:#111">get_all</span><span style="color:#111">())</span>
 <span style="color:#f92672">...</span>
 <span style="color:#111">Closer</span><span style="color:#f92672">.</span><span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#111">correlation_id</span><span style="color:#111">,</span> <span style="color:#111">_references</span><span style="color:#f92672">.</span><span style="color:#111">get_all</span><span style="color:#111">())</span>
-</code></pre></div>
+</code></pre></div></div>
+<div class="content-tab-section">
+<p><strong>TODO: add language</strong></p>
+</div>
+</div>
+
         <div class="section-index">
     
     
