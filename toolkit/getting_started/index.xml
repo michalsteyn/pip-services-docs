@@ -103,12 +103,64 @@
 &lt;p&gt;Additionally, PIP.Services provides implementations of loggers for &lt;a href=&#34;http://docs.pipservices.org/python/aws/log/cloud_watch_logger/&#34;&gt;CloudWatch&lt;/a&gt;, &lt;a href=&#34;http://docs.pipservices.org/python/elasticsearch/log/elasticsearch_logger/&#34;&gt;ElasticSearch&lt;/a&gt;, and &lt;a href=&#34;http://docs.pipservices.org/python/datadog/log/datadog_logger/&#34;&gt;DataDog&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Now, we will see how to create a console logger and a composite logger.&lt;/p&gt;
 &lt;h3 id=&#34;adding-a-console-logger-to-our-component&#34;&gt;Adding a console logger to our component&lt;/h3&gt;
-&lt;p&gt;In our example, we will add a logger that sends messages to our console. For this, we will use the ConsoleLogger class. After we created an instance of this class, we will set the logging level to five, which will allow us to log everything up to debug level.&lt;/p&gt;
+&lt;p&gt;In our example, we will add a logger that sends messages to our console. For this, we will use the &lt;strong&gt;ConsoleLogger&lt;/strong&gt; class. After we created an instance of this class, we will set the logging level to five, which will allow us to log everything up to debug level.&lt;/p&gt;
  &lt;!--#include file=&#34;code1.html&#34; --&gt;    
 &lt;p&gt;Then, we will replace our print messages with info-level log messages. For example, &lt;em&gt;print(&amp;ldquo;MyComponentA has been created.&amp;quot;)&lt;/em&gt; will be replaced with  &lt;em&gt;logger.info(None, &amp;ldquo;MyComponentA has been created.&amp;quot;)&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Finally, we will force an exception in the my_task method. As we had explained in the “Creating a component” tutorial, this method performs business-related tasks. Thus, we can simulate a problem within it by forcibly raising an exception. This method will look like this:&lt;/p&gt;
+&lt;p&gt;Finally, we will force an exception in the &lt;strong&gt;my_task&lt;/strong&gt; method. As we had explained in the “Creating a component” tutorial, this method performs business-related tasks. Thus, we can simulate a problem within it by forcibly raising an exception. This method will look like this:&lt;/p&gt;
+&lt;p&gt;&amp;lt;embed type=&amp;ldquo;text/html&amp;rdquo; src=code1.html&amp;rdquo;&amp;gt;&lt;/p&gt;
 &lt;p&gt;And, our final code will look like this:&lt;/p&gt;
 &lt;p&gt;a)	Our components&lt;/p&gt;
+&lt;p&gt;b)	Our factory&lt;/p&gt;
+&lt;p&gt;c)	Our service&lt;/p&gt;
+&lt;p&gt;d)	Running our service&lt;/p&gt;
+&lt;p&gt;After running this code, we will get the following result:&lt;/p&gt;
+&lt;img src=&#34;figure1.jpg&#34; alt=&#34;Console logger messages&#34; style=&#34;width:100%&#34;&gt;
+&lt;p&gt;As we can see from the above figure, the program has logged all messages with level info and from our artificial error.&lt;/p&gt;
+&lt;p&gt;This concludes our first task.&lt;/p&gt;
+&lt;h3 id=&#34;adding-a-composite-logger-to-our-component&#34;&gt;Adding a composite logger to our component&lt;/h3&gt;
+&lt;p&gt;Now, we will extend our logging capacity by adding a composite logger. This logger will allow us to aggregate all loggers from our component’s references into a centralized log.
+Our code will remain the same, except that now we need to create a composite logger for MyComponentA. For this, we will create an instance of this logger and set the logging level to 5.&lt;/p&gt;
+&lt;p&gt;Then, we will use the configure and set_references methods to let our composite logger know where to ask for log messages.
+Our factory and process container code sections will remain the same, but we will have to add a reference to our console logger in our configuration file. The syntax will be:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Console logger
+- descriptor: &amp;quot;pip-services:logger:console:default:1.0&amp;quot;
+  level: {{LOG_LEVEL}}{{^LOG_LEVEL}}info{{/LOG_LEVEL}}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Finally, we will add a console logger to MyComponentB.
+After these changes, our component section will look like this:&lt;/p&gt;
+&lt;p&gt;Once we run our service with the re-defined components, we will get the following results:&lt;/p&gt;
+&lt;img src=&#34;figure2.jpg&#34; alt=&#34;Composite logger messages&#34; style=&#34;width:100%&#34;&gt;
+&lt;p&gt;As we can see, we have log messages received from both MyComponentA and MyComponentB.&lt;/p&gt;
+&lt;h3 id=&#34;adding-specific-loggers&#34;&gt;Adding specific loggers&lt;/h3&gt;
+&lt;p&gt;As we said earlier, PIP.Services has specific loggers for Datadog, Elasticsearch, and  Amazon CloudWatch. The process to add any of them to a component is similar to what we saw in our console logger example: we need to declare an instance of the logger, configure it, set the message level, and add the messages we need. Here below are examples of how to define each of them.&lt;/p&gt;
+&lt;h4 id=&#34;adatadog&#34;&gt;a)	Datadog&lt;/h4&gt;
+&lt;h4 id=&#34;b-elasticsearch&#34;&gt;b) Elasticsearch&lt;/h4&gt;
+&lt;h4 id=&#34;camazon-cloudwatch&#34;&gt;c)	Amazon CloudWatch&lt;/h4&gt;
+&lt;h3 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h3&gt;
+&lt;p&gt;In this tutorial, we have learned what logging is, the different logging levels, and how to use the &lt;strong&gt;ConsoleLogger&lt;/strong&gt; and &lt;strong&gt;CompositeLogger&lt;/strong&gt; from PIP.Services to display log messages. The main advantage of the composite logger is its capacity to aggregate all logging messages, thus creating a centralized logging point.&lt;/p&gt;
+&lt;p&gt;We have also learned that PIP.Services provides several implementations of loggers, such as &lt;strong&gt;CloudWatchLogger&lt;/strong&gt;, &lt;strong&gt;ElasticSearchLogger&lt;/strong&gt;, and &lt;strong&gt;DataDogLogger&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Although the examples presented here are quite general, the concepts learned continue to apply to the development of more complex applications.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Toolkit: Creating a memory persistence component</title>
+      <link>/toolkit/getting_started/creating_a_memory_persistence_component/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/toolkit/getting_started/creating_a_memory_persistence_component/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;key-takeaways&#34;&gt;Key takeaways&lt;/h3&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Logging &lt;/td&gt;
+    &lt;td&gt;Logging is the capacity to create tagged messages from events in our code.&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/table&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;In this tutorial, you will learn how to create a persistence component, which will store some objects in memory. Then, we will see how to perform CRUD operations, such as adding data, reading it, updating stored values and deleting them. We will use a dummy object, which has the characteristic of being identifiable via an id parameter. All concepts learned here can be expanded to other more complex objects.&lt;/p&gt;
 
       </description>
     </item>
