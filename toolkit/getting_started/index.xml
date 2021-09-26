@@ -57,6 +57,80 @@
 &lt;h3 id=&#34;what-is-logging&#34;&gt;What is logging?&lt;/h3&gt;
 &lt;p&gt;Logging is the capacity to create tagged messages from events in our code. These messages can inform us about the running process.&lt;/p&gt;
 &lt;p&gt;There are different logging levels. PIP.Services defines them as:&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Level name&lt;/th&gt;
+    &lt;th&gt;Level number&lt;/th&gt;
+    &lt;th&gt;Description&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Nothing&lt;/td&gt;
+    &lt;td&gt;0&lt;/td&gt;
+    &lt;td&gt;Nothing to be logged.&lt;/td&gt;
+  &lt;/tr&gt;		
+  &lt;tr&gt;
+    &lt;td&gt;Fatal&lt;/td&gt;
+    &lt;td&gt;1&lt;/td&gt;
+    &lt;td&gt;Logs only fatal errors that cause a microservice to fail.&lt;/td&gt;
+  &lt;/tr&gt;		
+  &lt;tr&gt;
+    &lt;td&gt;Error&lt;/td&gt;
+    &lt;td&gt;2&lt;/td&gt;
+    &lt;td&gt;Logs all errors - fatal or recoverable.&lt;/td&gt;
+  &lt;/tr&gt;		
+  &lt;tr&gt;
+    &lt;td&gt;Warn&lt;/td&gt;
+    &lt;td&gt;3&lt;/td&gt;
+    &lt;td&gt;Logs errors and warnings.&lt;/td&gt;
+  &lt;/tr&gt;		
+  &lt;tr&gt;
+    &lt;td&gt;Info&lt;/td&gt;
+    &lt;td&gt;4&lt;/td&gt;
+    &lt;td&gt;Logs errors and important information messages.&lt;/td&gt;
+  &lt;/tr&gt;		
+  &lt;tr&gt;
+    &lt;td&gt;Debug&lt;/td&gt;
+    &lt;td&gt;5&lt;/td&gt;
+    &lt;td&gt;Logs everything up to high-level debugging information.&lt;/td&gt;
+  &lt;/tr&gt;		
+  &lt;tr&gt;
+    &lt;td&gt;Trace&lt;/td&gt;
+    &lt;td&gt;6&lt;/td&gt;
+    &lt;td&gt;Logs everything down to fine-granular debugging messages.&lt;/td&gt;
+  &lt;/tr&gt;		
+&lt;/table&gt;
+&lt;p&gt;Once generated, log messages need to be stored or displayed. PIP.Services provides specific tools for this: &lt;a href=&#34;http://docs.pipservices.org/python/components/log/cached_logger/&#34;&gt;CachedLogger&lt;/a&gt; and &lt;a href=&#34;http://docs.pipservices.org/python/components/log/console_logger/&#34;&gt;ConsoleLogger&lt;/a&gt;. The first class stores log messages in memory. The second class displays them on a console. The toolkit also provides us with the &lt;a href=&#34;http://docs.pipservices.org/python/components/log/composite_logger/&#34;&gt;CompositeLogger&lt;/a&gt;, which allows for message aggregation and thus, creating a centralized logging point.&lt;/p&gt;
+&lt;p&gt;Additionally, PIP.Services provides implementations of loggers for &lt;a href=&#34;http://docs.pipservices.org/python/aws/log/cloud_watch_logger/&#34;&gt;CloudWatch&lt;/a&gt;, &lt;a href=&#34;http://docs.pipservices.org/python/elasticsearch/log/elasticsearch_logger/&#34;&gt;ElasticSearch&lt;/a&gt;, and &lt;a href=&#34;http://docs.pipservices.org/python/datadog/log/datadog_logger/&#34;&gt;DataDog&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now, we will see how to create a console logger and a composite logger.&lt;/p&gt;
+&lt;h3 id=&#34;adding-a-console-logger-to-our-component&#34;&gt;Adding a console logger to our component&lt;/h3&gt;
+&lt;p&gt;In our example, we will add a logger that sends messages to our console. For this, we will use the ConsoleLogger class. After we created an instance of this class, we will set the logging level to five, which will allow us to log everything up to debug level.&lt;/p&gt;
+&lt;div class=&#34;btn-group&#34; role=&#34;group&#34; aria-label=&#34;Lnguage selector&#34;&gt;
+  &lt;button id=&#34;select-node&#34; type=&#34;button&#34; class=&#34;btn btn-outline-secondary lang-select-btn&#34;&gt;Node&lt;/button&gt;
+  &lt;button id=&#34;select-dotnet&#34; type=&#34;button&#34; class=&#34;btn btn-outline-secondary lang-select-btn&#34;&gt;.NET&lt;/button&gt;
+  &lt;button id=&#34;select-golang&#34; type=&#34;button&#34; class=&#34;btn btn-outline-secondary lang-select-btn&#34;&gt;Golang&lt;/button&gt;
+  &lt;button id=&#34;select-dart&#34; type=&#34;button&#34; class=&#34;btn btn-outline-secondary lang-select-btn&#34;&gt;Dart&lt;/button&gt;
+  &lt;button id=&#34;select-python&#34; type=&#34;button&#34; class=&#34;btn btn-outline-secondary lang-select-btn&#34;&gt;Python&lt;/button&gt;
+  &lt;button id=&#34;select-java&#34; type=&#34;button&#34; class=&#34;btn btn-outline-secondary lang-select-btn&#34;&gt;Java&lt;/button&gt;
+&lt;/div&gt;
+&lt;div  id=&#34;node&#34;&gt;
+&lt;/div&gt;
+&lt;div  id=&#34;dotnet&#34;&gt;
+&lt;/div&gt;
+&lt;div  id=&#34;golang&#34;&gt;
+&lt;/div&gt;
+&lt;div  id=&#34;dart&#34;&gt;
+&lt;/div&gt;
+&lt;div  id=&#34;python&#34;&gt;
+```python
+# Logger setting
+logger = ConsoleLogger()
+logger.set_level(5) 
+```  
+&lt;/div&gt;
+&lt;div  id=&#34;java&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;Then, we will replace our print messages with info-level log messages. For example, &lt;em&gt;print(&amp;ldquo;MyComponentA has been created.&amp;quot;)&lt;/em&gt; will be replaced with  &lt;em&gt;logger.info(None, &amp;ldquo;MyComponentA has been created.&amp;quot;)&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, we will force an exception in the my_task method. As we had explained in the “Creating a component” tutorial, this method performs business-related tasks. Thus, we can simulate a problem within it by forcibly raising an exception. This method will look like this:&lt;/p&gt;
 
       </description>
     </item>

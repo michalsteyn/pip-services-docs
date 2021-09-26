@@ -240517,6 +240517,7 @@
             <li><a href="#key-takeaways">Key takeaways</a></li>
             <li><a href="#introduction">Introduction</a></li>
             <li><a href="#what-is-logging">What is logging?</a></li>
+            <li><a href="#adding-a-console-logger-to-our-component">Adding a console logger to our component</a></li>
           </ul>
         </li>
       </ul>
@@ -240612,6 +240613,80 @@
 <h3 id="what-is-logging">What is logging?</h3>
 <p>Logging is the capacity to create tagged messages from events in our code. These messages can inform us about the running process.</p>
 <p>There are different logging levels. PIP.Services defines them as:</p>
+<table>
+  <tr>
+    <th>Level name</th>
+    <th>Level number</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Nothing</td>
+    <td>0</td>
+    <td>Nothing to be logged.</td>
+  </tr>		
+  <tr>
+    <td>Fatal</td>
+    <td>1</td>
+    <td>Logs only fatal errors that cause a microservice to fail.</td>
+  </tr>		
+  <tr>
+    <td>Error</td>
+    <td>2</td>
+    <td>Logs all errors - fatal or recoverable.</td>
+  </tr>		
+  <tr>
+    <td>Warn</td>
+    <td>3</td>
+    <td>Logs errors and warnings.</td>
+  </tr>		
+  <tr>
+    <td>Info</td>
+    <td>4</td>
+    <td>Logs errors and important information messages.</td>
+  </tr>		
+  <tr>
+    <td>Debug</td>
+    <td>5</td>
+    <td>Logs everything up to high-level debugging information.</td>
+  </tr>		
+  <tr>
+    <td>Trace</td>
+    <td>6</td>
+    <td>Logs everything down to fine-granular debugging messages.</td>
+  </tr>		
+</table>
+<p>Once generated, log messages need to be stored or displayed. PIP.Services provides specific tools for this: <a href="http://docs.pipservices.org/python/components/log/cached_logger/">CachedLogger</a> and <a href="http://docs.pipservices.org/python/components/log/console_logger/">ConsoleLogger</a>. The first class stores log messages in memory. The second class displays them on a console. The toolkit also provides us with the <a href="http://docs.pipservices.org/python/components/log/composite_logger/">CompositeLogger</a>, which allows for message aggregation and thus, creating a centralized logging point.</p>
+<p>Additionally, PIP.Services provides implementations of loggers for <a href="http://docs.pipservices.org/python/aws/log/cloud_watch_logger/">CloudWatch</a>, <a href="http://docs.pipservices.org/python/elasticsearch/log/elasticsearch_logger/">ElasticSearch</a>, and <a href="http://docs.pipservices.org/python/datadog/log/datadog_logger/">DataDog</a>.</p>
+<p>Now, we will see how to create a console logger and a composite logger.</p>
+<h3 id="adding-a-console-logger-to-our-component">Adding a console logger to our component</h3>
+<p>In our example, we will add a logger that sends messages to our console. For this, we will use the ConsoleLogger class. After we created an instance of this class, we will set the logging level to five, which will allow us to log everything up to debug level.</p>
+<div class="btn-group" role="group" aria-label="Lnguage selector">
+  <button id="select-node" type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+  <button id="select-dotnet" type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+  <button id="select-golang" type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+  <button id="select-dart" type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+  <button id="select-python" type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+  <button id="select-java" type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+</div>
+<div  id="node">
+</div>
+<div  id="dotnet">
+</div>
+<div  id="golang">
+</div>
+<div  id="dart">
+</div>
+<div  id="python">
+```python
+# Logger setting
+logger = ConsoleLogger()
+logger.set_level(5) 
+```  
+</div>
+<div  id="java">
+</div>
+<p>Then, we will replace our print messages with info-level log messages. For example, <em>print(&ldquo;MyComponentA has been created.&quot;)</em> will be replaced with  <em>logger.info(None, &ldquo;MyComponentA has been created.&quot;)</em>.</p>
+<p>Finally, we will force an exception in the my_task method. As we had explained in the “Creating a component” tutorial, this method performs business-related tasks. Thus, we can simulate a problem within it by forcibly raising an exception. This method will look like this:</p>
 
         <div class="section-index">
     
