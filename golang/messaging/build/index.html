@@ -95,6 +95,20 @@
 						
 						
 						<a class="nav-link dropdown-item"
+							href="../../../" >
+							<span>
+								Home
+								</span>
+						</a>
+					
+					
+					
+						
+						
+						
+						
+						
+						<a class="nav-link dropdown-item"
 							href="../../../toolkit/" >
 							<span>
 								Toolkit
@@ -270,6 +284,20 @@
 			<li class="nav-item dropdown m-auto">
 				
 				<div class="dropdown-menu pt-0 pb-0" aria-labelledby="navbarDropdownMenuLink" id="dropdown-menu-desktop">
+					
+					
+					
+					
+					
+					
+					
+					
+					<a class="nav-link dropdown-item"
+						href="../../../" >
+						<span>
+							Home
+							</span>
+					</a>
 					
 					
 					
@@ -258364,23 +258392,33 @@ The name of created message queue is taken from its descriptor.</p>
       let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
+        
+        
+        if ((item.url.split('#').at(-1) != undefined && item.url.split('#').at(-2) != undefined && item.url.split('#').at(-2).startsWith('__')) 
+            || (item.url.split('/').at(-1).startsWith('__') 
+            || item.url.split('/').at(-2).startsWith('__'))) {
+          
+          return false;
+        }
 
         
         let menuSection = item.url.split('/')[3];
         let module = item.url.split('/')[4];
         
         menuSection = menuSection.charAt(0).toUpperCase() + menuSection.slice(1);
-        module = module.charAt(0).toUpperCase() + module.slice(1);
+        module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
-        if (localStorage['currentMenuActiveItem'].toLowerCase() != 'menu'){
+        if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
           let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
-          item.hierarchy.lvl0 = module;
-          item._highlightResult.hierarchy.lvl0 = module;
+          if (module != null) {
+            item.hierarchy.lvl0 = module;
+            item._highlightResult.hierarchy.lvl0 = module;
+          }
 
           return isCorrectHit;
-        } else {
+        } else if (module != null){
           item.hierarchy.lvl0 = menuSection + ' → ' + module;
           item._highlightResult.hierarchy.lvl0 = menuSection + ' → ' + module;
         }
