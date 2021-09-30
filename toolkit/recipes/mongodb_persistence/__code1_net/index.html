@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="class BeaconMongoDbPersistence : MongoDbPersistence&lt;BeaconV1&gt; { public BeaconMongoDbPersistence() { base(&#34;beacons&#34;); } public async BeaconV1 GetByNameAsync(string correlationId, string name) { var builder = Builders&lt;BeaconV1&gt;.Filter; var filter = builder.Eq(x =&gt; x.Name, name); var result = await _collection.Find(filter).FirstOrDefaultAsync(); return result; } public async BeaconV1 setAsync(String correlatonId, BeaconV1 item) { var filter = Builders&lt;BeaconV1&gt;.Filter.Eq(x =&gt; x.Id, item.Id); var options = new FindOneAndReplaceOptions&lt;T&gt; { ReturnDocument = ReturnDocument.After, IsUpsert = true }; var result = await _collection.FindOneAndReplaceAsync(filter, item, options); return result; } } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/mongodb_persistence/__code1_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-09-30T22:22:55+02:00" />
+<meta property="article:modified_time" content="2021-09-30T23:35:57+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-09-30T22:22:55+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="class BeaconMongoDbPersistence : MongoDbPersistence&lt;BeaconV1&gt; { public BeaconMongoDbPersistence() { base(&#34;beacons&#34;); } public async BeaconV1 GetByNameAsync(string correlationId, string name) { var builder = Builders&lt;BeaconV1&gt;.Filter; var filter = builder.Eq(x =&gt; x.Name, name); var result = await _collection.Find(filter).FirstOrDefaultAsync(); return result; } public async BeaconV1 setAsync(String correlatonId, BeaconV1 item) { var filter = Builders&lt;BeaconV1&gt;.Filter.Eq(x =&gt; x.Id, item.Id); var options = new FindOneAndReplaceOptions&lt;T&gt; { ReturnDocument = ReturnDocument.After, IsUpsert = true }; var result = await _collection.FindOneAndReplaceAsync(filter, item, options); return result; } } ">
+<meta itemprop="dateModified" content="2021-09-30T23:35:57+02:00" />
+<meta itemprop="wordCount" content="76">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="class BeaconMongoDbPersistence : MongoDbPersistence&lt;BeaconV1&gt; { public BeaconMongoDbPersistence() { base(&#34;beacons&#34;); } public async BeaconV1 GetByNameAsync(string correlationId, string name) { var builder = Builders&lt;BeaconV1&gt;.Filter; var filter = builder.Eq(x =&gt; x.Name, name); var result = await _collection.Find(filter).FirstOrDefaultAsync(); return result; } public async BeaconV1 setAsync(String correlatonId, BeaconV1 item) { var filter = Builders&lt;BeaconV1&gt;.Filter.Eq(x =&gt; x.Id, item.Id); var options = new FindOneAndReplaceOptions&lt;T&gt; { ReturnDocument = ReturnDocument.After, IsUpsert = true }; var result = await _collection.FindOneAndReplaceAsync(filter, item, options); return result; } } "/>
 
 
 
@@ -493,7 +493,35 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconMongoDbPersistence</span> <span style="color:#111">:</span> <span style="color:#111">MongoDbPersistence</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconMongoDbPersistence</span><span style="color:#111">()</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">base</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">GetByNameAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">name</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">var</span> <span style="color:#111">builder</span> <span style="color:#111">=</span> <span style="color:#111">Builders</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;.</span><span style="color:#111">Filter</span><span style="color:#111">;</span>
+        <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">x</span> <span style="color:#111">=&gt;</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Name</span><span style="color:#111">,</span> <span style="color:#111">name</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">collection</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">).</span><span style="color:#111">FirstOrDefaultAsync</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">setAsync</span><span style="color:#111">(</span><span style="color:#111">String</span> <span style="color:#111">correlatonId</span><span style="color:#111">,</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">item</span><span style="color:#111">)</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">Builders</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;.</span><span style="color:#111">Filter</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">x</span> <span style="color:#111">=&gt;</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">var</span> <span style="color:#111">options</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FindOneAndReplaceOptions</span><span style="color:#111">&lt;</span><span style="color:#111">T</span><span style="color:#111">&gt;</span>
+        <span style="color:#111">{</span>
+            <span style="color:#111">ReturnDocument</span> <span style="color:#111">=</span> <span style="color:#111">ReturnDocument</span><span style="color:#111">.</span><span style="color:#111">After</span><span style="color:#111">,</span>
+            <span style="color:#111">IsUpsert</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span>
+        <span style="color:#111">};</span>
+        <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">collection</span><span style="color:#111">.</span><span style="color:#111">FindOneAndReplaceAsync</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">item</span><span style="color:#111">,</span> <span style="color:#111">options</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+
 
 </code></pre></div>
 
