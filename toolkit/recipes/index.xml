@@ -2942,14 +2942,24 @@ This article explains how to tackle those three approaches through the use of a 
     
     <item>
       <title>Toolkit: Config File Syntax</title>
-      <link>/toolkit/recipes/config-file-syntax/</link>
+      <link>/toolkit/recipes/config_file_syntax/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/toolkit/recipes/config-file-syntax/</guid>
+      <guid>/toolkit/recipes/config_file_syntax/</guid>
       <description>
         
         
         &lt;h3 id=&#34;key-takeaways&#34;&gt;Key takeaways&lt;/h3&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;General case&lt;/td&gt;
+    &lt;td&gt;In general, a configuration is composed of a descriptor and the component’s configuration parameters.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Configuration examples&lt;/td&gt;
+    &lt;td&gt;These examples show how to configure some of the most common components available in the PIP.Services toolkit.&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/table&gt;
 &lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
 &lt;p&gt;In this tutorial you will learn how to create yml configuration files. First, we will see a general case. Then, we will show examples of the most common components in PIP.Services. These examples are valid for any of the six languages used by the toolkit.&lt;/p&gt;
 &lt;h3 id=&#34;syntax&#34;&gt;Syntax&lt;/h3&gt;
@@ -2960,7 +2970,230 @@ This article explains how to tackle those three approaches through the use of a 
 parameter1: value1
 ...
 parametern: valueN
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Where the configuration parameters depend on the component considered, and can be obtained from the component’s Configuration parameters section available in the reference manual.&lt;/p&gt;
+&lt;img src=&#34;figure1.png&#34; alt=&#34;figure 1&#34; style=&#34;width:100%&#34;&gt;
+&lt;p&gt;Figure 1 – Example of a Configuration parameters section&lt;/p&gt;
+&lt;h3 id=&#34;configuration-examples&#34;&gt;Configuration examples&lt;/h3&gt;
+&lt;p&gt;The following sections show several configuration examples for the most common components available in the PIP.Services toolkit. They are presented in alphabetical order and serve as a guide that can be adapted to your specific needs.&lt;/p&gt;
+&lt;h4 id=&#34;cloudwatch&#34;&gt;CloudWatch&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if CLOUD_WATCH_ENABLED}}
+# Cloudwatch counters
+- descriptor: &amp;quot;pip-services:counters:cloudwatch:default:1.0&amp;quot;
+  region: {{AWS_LAMDBA_ARN}}
+  access_id: {{AWS_ACCESS_ID}}
+  access_key: {{AWS_ACCESS_KEY}}
+
+# Cloudwatch logger
+- descriptor: &amp;quot;pip-services:logger:cloudwatch:default:1.0&amp;quot;
+  level: &amp;quot;info&amp;quot;
+  stream: {{CLOUD_WATCH_STREAM}}
+  group: {{CLOUD_WATCH_GROUP}}
+  region: {{AWS_LAMDBA_ARN}}
+  access_id: {{AWS_ACCESS_ID}}
+  access_key: {{AWS_ACCESS_KEY}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;console-logger&#34;&gt;Console logger&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;# Console logger
+- descriptor: &amp;quot;pip-services:logger:console:default:1.0&amp;quot;
+  level: &amp;quot;trace&amp;quot;
+  
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;container&#34;&gt;Container&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;# Container descriptor
+- descriptor: &amp;quot;pip-services:context-info:default:default:1.0&amp;quot;
+  name: &amp;quot;pip-service-data&amp;quot;
+  description: &amp;quot;Entities data microservice&amp;quot;
+  
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;controller&#34;&gt;Controller&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;# Controller
+- descriptor: &amp;quot;pip-service-data:controller:default:default:1.0&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;couchbase&#34;&gt;Couchbase&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if COUCHBASE_ENABLED}}
+# Couchbase Persistence
+- descriptor: &amp;quot;pip-service-data:persistence:couchbase:default:1.0&amp;quot;
+  bucket: {{COUCHBASE_BUCKET}}{{#unless COUCHBASE_BUCKET}}test{{/unless}}
+  connection:
+    uri: {{COUCHBASE_SERVICE_URI}}
+    host: {{COUCHBASE_SERVICE_HOST}}{{#unless COUCHBASE_SERVICE_HOST}}localhost{{/unless}}
+    port: {{COUCHBASE_SERVICE_PORT}}{{#unless COUCHBASE_SERVICE_PORT}}8091{{/unless}}
+  credential:
+    username: {{COUCHBASE_USER}}{{#unless COUCHBASE_USER}}Administrator{{/unless}}
+    password: {{COUCHBASE_PASS}}{{#unless COUCHBASE_PASS}}password{{/unless}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;datadog&#34;&gt;DataDog&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if DATADOG_ENABLED}}
+# DataDog counters
+- descriptor: &amp;quot;pip-services:counters:datadog:default:1.0&amp;quot;
+  connection:
+    protocol: {{DATADOG_PROTOCOL}}{{#unless DATADOG_PROTOCOL}}https{{/unless}}
+    uri: {{DATADOG_URI}}
+    host: {{DATADOG_HOST}}{{#unless DATADOG_HOST}}&amp;quot;api.datadoghq.com&amp;quot;{{/unless}}
+    port: {{DATADOG_PORT}}{{#unless DATADOG_PORT}}443{{/unless}}
+  credential:
+    access_key: {{DATADOG_ACCRSS_KEY}}
+
+# DataDog logger
+- descriptor: &amp;quot;pip-services:logger:datadog:default:1.0&amp;quot;
+  connection:
+    protocol: {{DATADOG_PROTOCOL}}{{#unless DATADOG_PROTOCOL}}https{{/unless}}
+    uri: {{DATADOG_URI}}
+    host: {{DATADOG_HOST}}{{#unless DATADOG_HOST}}&amp;quot;api.datadoghq.com&amp;quot;{{/unless}}
+    port: {{DATADOG_PORT}}{{#unless DATADOG_PORT}}443{{/unless}}
+  credential:
+    access_key: {{DATADOG_ACCRSS_KEY}}
+{{/if}}
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;elasticsearch&#34;&gt;Elasticsearch&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if ELASTICSEARCH_LOGGING_ENABLED}}
+# ElasticSearch logger
+- descriptor: &amp;quot;pip-services:logger:elasticsearch:default:1.0&amp;quot;
+  connection:
+    protocol: {{ELASTICSEARCH_PROTOCOL}}{{#unless ELASTICSEARCH_PROTOCOL}}http{{/unless}}
+    uri: {{ELASTICSEARCH_SERVICE_URI}}
+    host: {{ELASTICSEARCH_SERVICE_HOST}}{{#unless ELASTICSEARCH_SERVICE_HOST}}localhost{{/unless}}
+    port: {{ELASTICSEARCH_SERVICE_PORT}}{{#unless ELASTICSEARCH_SERVICE_PORT}}9200{{/unless}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;file-persistence&#34;&gt;File persistence&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if FILE_ENABLED}}
+# File persistence
+- descriptor: &amp;quot;pip-service-data:persistence:file:default:1.0&amp;quot;
+  path: {{FILE_PATH}}{{#unless FILE_PATH}}&amp;quot;./data/entities.json&amp;quot;{{/unless}}
+{{/if}}
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;grpc&#34;&gt;gRPC&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if GRPC_ENABLED}}
+# Common GRPC endpoint
+- descriptor: &amp;quot;pip-services:endpoint:grpc:default:1.0&amp;quot;
+  connection:
+    protocol: http
+    host: 0.0.0.0
+    port: {{GRPC_PORT}}{{#unless GRPC_PORT}}8090{{/unless}}
+
+# GRPC service version 1.0
+- descriptor: &amp;quot;pip-service-data:service:grpc:default:1.0&amp;quot;
+
+# Commandable GRPC version 1.0
+- descriptor: &amp;quot;pip-service-data:service:commandable-grpc:default:1.0&amp;quot;
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;http&#34;&gt;HTTP&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if HTTP_ENABLED}}
+# Common HTTP endpoint
+- descriptor: &amp;quot;pip-services:endpoint:http:default:1.0&amp;quot;
+  connection:
+    protocol: http
+    host: 0.0.0.0
+    port: {{HTTP_PORT}}{{#unless HTTP_PORT}}8080{{/unless}}
+
+# HTTP service version 1.0
+- descriptor: &amp;quot;pip-service-data:service:commandable-http:default:1.0&amp;quot;
+  swagger:
+    enable: true
+    auto: true
+    route: {{SWAGGER_ROUTE}}{{#unless SWAGGER_ROUTE}}swagger{{/unless}}
+    name: {{SWAGGER_NAME}}{{#unless SWAGGER_NAME}}Entities Service V1{{/unless}}
+    description: {{SWAGGER_DESCRIPTION}}{{#unless SWAGGER_DESCRIPTION}}microservice to demonstrate works with data microservices{{/unless}}
+
+# Hearbeat service
+- descriptor: &amp;quot;pip-services:heartbeat-service:http:default:1.0&amp;quot;
+
+# Status service
+- descriptor: &amp;quot;pip-services:status-service:http:default:1.0&amp;quot;
+
+# Swagger service
+- descriptor: &amp;quot;pip-services:swagger-service:http:default:1.0&amp;quot;
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;lambda&#34;&gt;Lambda&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if LAMBDA_ENABLED}}
+# Commandable Lambda service version 1.0
+- descriptor: &amp;quot;pip-service-data:service:commandable-lambda:default:1.0&amp;quot;
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;mongodb&#34;&gt;MongoDB&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if MONGO_ENABLED}}
+# MongoDb persistence
+- descriptor: &amp;quot;pip-service-data:persistence:mongodb:default:1.0&amp;quot;
+  connection:
+    uri: {{MONGO_SERVICE_URI}}
+    host: {{MONGO_SERVICE_HOST}}{{#unless MONGO_SERVICE_HOST}}&amp;quot;localhost&amp;quot;{{/unless}}
+    port: {{MONGO_SERVICE_PORT}}{{#unless MONGO_SERVICE_PORT}}27017{{/unless}}
+    database: {{MONGO_DB}}{{#unless MONGO_DB}}&amp;quot;test&amp;quot;{{/unless}}
+  credential:
+    username: {{MONGO_USER}}
+    password: {{MONGO_PASS}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;mysql&#34;&gt;MySQL&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if MYSQL_ENABLED}}
+# MYSQL Persistence
+{{#if MYSQL_JSON_ENABLED}}
+- descriptor: &amp;quot;pip-service-data:persistence:json-mysql:default:1.0&amp;quot;
+{{else}}
+- descriptor: &amp;quot;pip-service-data:persistence:mysql:default:1.0&amp;quot;
+{{/if}}
+  connection:
+    uri: {{MYSQL_URI}}
+    host: {{MYSQL_HOST}}{{#unless MYSQL_HOST}}localhost{{/unless}}
+    port: {{MYSQL_PORT}}{{#unless MYSQL_PORT}}1433{{/unless}}
+    database: {{MYSQL_DB}}{{#unless MYSQL_DB}}test{{/unless}}
+  credential:
+    username: {{MYSQL_USER}}
+    password: {{MYSQL_PASSWORD}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;postresql&#34;&gt;PostreSQL&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if POSTGRES_ENABLED}}
+# PostreSQL Persistence
+{{#if POSTGRES_JSON_ENABLED}}
+- descriptor: &amp;quot;pip-service-data:persistence:json-postgres:default:1.0&amp;quot;
+{{else}}
+- descriptor: &amp;quot;pip-service-data:persistence:postgres:default:1.0&amp;quot;
+{{/if}}
+  table: {{POSTGRES_TABLE}}{{#unless POSTGRES_TABLE}}id_records{{/unless}}
+  connection:
+    uri: {{POSTGRES_SERVICE_URI}}
+    host: {{POSTGRES_SERVICE_HOST}}{{#unless POSTGRES_SERVICE_HOST}}localhost{{/unless}}
+    port: {{POSTGRES_SERVICE_PORT}}{{#unless POSTGRES_SERVICE_PORT}}5432{{/unless}}
+    database: {{POSTGRES_DB}}{{#unless POSTGRES_DB}}test{{/unless}}
+  credential:
+    username: {{POSTGRES_USER}}
+    password: {{POSTGRES_PASS}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;prometheus&#34;&gt;Prometheus&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;# Prometheus performance counters
+- descriptor: &amp;quot;pip-services:counters:prometheus:default:1.0&amp;quot;
+{{#if PUSHGATEWAY_METRICS_ENABLED}}
+  connection:
+    protocol: {{PUSHGATEWAY_PROTOCOL}}{{#unless PUSHGATEWAY_PROTOCOL}}http{{/unless}}
+    uri: {{PUSHGATEWAY_METRICS_SERVICE_URI}}
+    host: {{PUSHGATEWAY_METRICS_SERVICE_HOST}}{{#unless PUSHGATEWAY_METRICS_SERVICE_HOST}}localhost{{/unless}}
+    port: {{PUSHGATEWAY_METRICS_SERVICE_PORT}}{{#unless PUSHGATEWAY_METRICS_SERVICE_PORT}}9090{{/unless}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;sqlserver&#34;&gt;SQLServer&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;{{#if SQLSERVER_ENABLED}}
+# SQL Server Persistence
+{{#if SQLSERVER_JSON_ENABLED}}
+- descriptor: &amp;quot;pip-service-data:persistence:json-sqlserver:default:1.0&amp;quot;
+{{else}}
+- descriptor: &amp;quot;pip-service-data:persistence:sqlserver:default:1.0&amp;quot;
+{{/if}}
+  table: {{SQLSERVER_TABLE}}{{#unless SQLSERVER_TABLE}}entities{{/unless}}
+  connection:
+    uri: {{SQLSERVER_SERVICE_URI}}
+    host: {{SQLSERVER_SERVICE_HOST}}{{#unless SQLSERVER_SERVICE_HOST}}localhost{{/unless}}
+    port: {{SQLSERVER_SERVICE_PORT}}{{#unless SQLSERVER_SERVICE_PORT}}1433{{/unless}}
+    database: {{SQLSERVER_DB}}{{#unless SQLSERVER_DB}}test{{/unless}}
+  credential:
+    username: {{SQLSERVER_USER}}
+    password: {{SQLSERVER_PASS}}
+{{/if}}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h3&gt;
+&lt;p&gt;In this tutorial, we have seen how to define the configuration of a component in a config.yml file. First, we understood the syntax for a general component. Then, we saw several examples, which can be adapted to your specific needs.&lt;/p&gt;
+
       </description>
     </item>
     
