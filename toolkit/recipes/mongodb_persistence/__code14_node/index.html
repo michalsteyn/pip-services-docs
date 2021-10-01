@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="let persistence = new BeaconsMongoDbPersistence(); await persistence.open(null); let beacon = &lt;BeaconV1&gt;{ id: &#39;1&#39;, site_id: &#34;0001&#34;, udi: &#34;0002&#34; }; await persistence.set(&#34;test&#34;, beacon) let item = await persistence.getOneByUdi(&#34;test&#34;, &#34;0002&#34;) console.log(item.udi) // Result: 0002 let page = await persistence.getPageByFilter(&#34;test&#34;, FilterParams.fromTuples(&#34;udi&#34;, &#34;0002&#34;), null) console.log(page.data.length) // Result: 1 console.log(page.data[0].udi) // Result: 0002 await persistence.close(&#34;test&#34;) " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/mongodb_persistence/__code14_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-09-30T22:00:52+02:00" />
+<meta property="article:modified_time" content="2021-10-01T01:10:17+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-09-30T22:00:52+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="let persistence = new BeaconsMongoDbPersistence(); await persistence.open(null); let beacon = &lt;BeaconV1&gt;{ id: &#39;1&#39;, site_id: &#34;0001&#34;, udi: &#34;0002&#34; }; await persistence.set(&#34;test&#34;, beacon) let item = await persistence.getOneByUdi(&#34;test&#34;, &#34;0002&#34;) console.log(item.udi) // Result: 0002 let page = await persistence.getPageByFilter(&#34;test&#34;, FilterParams.fromTuples(&#34;udi&#34;, &#34;0002&#34;), null) console.log(page.data.length) // Result: 1 console.log(page.data[0].udi) // Result: 0002 await persistence.close(&#34;test&#34;) ">
+<meta itemprop="dateModified" content="2021-10-01T01:10:17+02:00" />
+<meta itemprop="wordCount" content="49">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="let persistence = new BeaconsMongoDbPersistence(); await persistence.open(null); let beacon = &lt;BeaconV1&gt;{ id: &#39;1&#39;, site_id: &#34;0001&#34;, udi: &#34;0002&#34; }; await persistence.set(&#34;test&#34;, beacon) let item = await persistence.getOneByUdi(&#34;test&#34;, &#34;0002&#34;) console.log(item.udi) // Result: 0002 let page = await persistence.getPageByFilter(&#34;test&#34;, FilterParams.fromTuples(&#34;udi&#34;, &#34;0002&#34;), null) console.log(page.data.length) // Result: 1 console.log(page.data[0].udi) // Result: 0002 await persistence.close(&#34;test&#34;) "/>
 
 
 
@@ -493,7 +493,24 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">let</span> <span style="color:#75af00">persistence</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span><span style="color:#111">();</span>
+<span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">open</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+<span style="color:#00a8c8">let</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">=</span> <span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;{</span>
+    <span style="color:#75af00">id</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#39;1&#39;</span><span style="color:#111">,</span> 
+    <span style="color:#75af00">site_id</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;0001&#34;</span><span style="color:#111">,</span>
+    <span style="color:#75af00">udi</span><span style="color:#f92672">:</span> <span style="color:#d88200">&#34;0002&#34;</span>
+
+<span style="color:#111">};</span>
+
+<span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#00a8c8">set</span><span style="color:#111">(</span><span style="color:#d88200">&#34;test&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">)</span>
+<span style="color:#00a8c8">let</span> <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#d88200">&#34;test&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;0002&#34;</span><span style="color:#111">)</span>
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">udi</span><span style="color:#111">)</span> <span style="color:#75715e">// Result: 0002
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">let</span> <span style="color:#75af00">page</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">getPageByFilter</span><span style="color:#111">(</span><span style="color:#d88200">&#34;test&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">FilterParams</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;0002&#34;</span><span style="color:#111">),</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+
+<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">.</span><span style="color:#75af00">length</span><span style="color:#111">)</span> <span style="color:#75715e">// Result: 1
+</span><span style="color:#75715e"></span><span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">data</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">].</span><span style="color:#75af00">udi</span><span style="color:#111">)</span>   <span style="color:#75715e">// Result: 0002
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">await</span> <span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">close</span><span style="color:#111">(</span><span style="color:#d88200">&#34;test&#34;</span><span style="color:#111">)</span>
+
 </code></pre></div>
 
 

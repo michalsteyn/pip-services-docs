@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="public async getOneByUdi(correlationId: string, udi: string): Promise&lt;BeaconV1&gt; { let criteria = { udi: udi }; return new Promise((resolve, reject) =&gt; { this._collection.findOne(criteria, (err, item) =&gt; { if (err != null) { reject(err); return; } if (item != null) this._logger.trace(correlationId, &#34;Found beacon by %s&#34;, udi); else this._logger.trace(correlationId, &#34;Cannot find beacon by %s&#34;, udi); item = this.convertToPublic(item); resolve(item); }); }); } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/mongodb_persistence/__code12_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-09-30T22:00:12+02:00" />
+<meta property="article:modified_time" content="2021-10-01T01:08:34+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-09-30T22:00:12+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="public async getOneByUdi(correlationId: string, udi: string): Promise&lt;BeaconV1&gt; { let criteria = { udi: udi }; return new Promise((resolve, reject) =&gt; { this._collection.findOne(criteria, (err, item) =&gt; { if (err != null) { reject(err); return; } if (item != null) this._logger.trace(correlationId, &#34;Found beacon by %s&#34;, udi); else this._logger.trace(correlationId, &#34;Cannot find beacon by %s&#34;, udi); item = this.convertToPublic(item); resolve(item); }); }); } ">
+<meta itemprop="dateModified" content="2021-10-01T01:08:34+02:00" />
+<meta itemprop="wordCount" content="59">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="public async getOneByUdi(correlationId: string, udi: string): Promise&lt;BeaconV1&gt; { let criteria = { udi: udi }; return new Promise((resolve, reject) =&gt; { this._collection.findOne(criteria, (err, item) =&gt; { if (err != null) { reject(err); return; } if (item != null) this._logger.trace(correlationId, &#34;Found beacon by %s&#34;, udi); else this._logger.trace(correlationId, &#34;Cannot find beacon by %s&#34;, udi); item = this.convertToPublic(item); resolve(item); }); }); } "/>
 
 
 
@@ -493,7 +493,26 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#75af00">getOneByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">let</span> <span style="color:#75af00">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">{</span>
+        <span style="color:#75af00">udi</span>: <span style="color:#00a8c8">udi</span>
+    <span style="color:#111">};</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Promise</span><span style="color:#111">((</span><span style="color:#75af00">resolve</span><span style="color:#111">,</span> <span style="color:#75af00">reject</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_collection</span><span style="color:#111">.</span><span style="color:#75af00">findOne</span><span style="color:#111">(</span><span style="color:#75af00">criteria</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                <span style="color:#75af00">reject</span><span style="color:#111">(</span><span style="color:#75af00">err</span><span style="color:#111">);</span>
+                <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+            <span style="color:#111">}</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Found beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">else</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">trace</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Cannot find beacon by %s&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">);</span>
+            
+            <span style="color:#75af00">item</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">convertToPublic</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">);</span>
+            <span style="color:#75af00">resolve</span><span style="color:#111">(</span><span style="color:#75af00">item</span><span style="color:#111">);</span>
+        <span style="color:#111">});</span>    
+    <span style="color:#111">});</span>     
+<span style="color:#111">}</span>
+
+
 </code></pre></div>
 
 

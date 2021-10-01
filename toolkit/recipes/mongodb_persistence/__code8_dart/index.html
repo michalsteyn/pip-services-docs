@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence&lt;BeaconV1, String&gt; implements IBeaconsPersistence { BeaconsMongoDbPersistence() : super(&#39;beacons&#39;) { maxPageSize = 1000; } dynamic composeFilter(FilterParams filter) { filter = filter ?? FilterParams(); var criteria = []; var id = filter.getAsNullableString(&#39;id&#39;); if (id != null) { criteria.add({&#39;_id&#39;: id}); } var siteId = filter.getAsNullableString(&#39;site_id&#39;); if (siteId != null) { criteria.add({&#39;site_id&#39;: siteId}); } var label = filter.getAsNullableString(&#39;label&#39;); if (label != null) { criteria.add({&#39;label&#39;: label}); } var udi = filter.getAsNullableString(&#39;udi&#39;); if (udi !" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/mongodb_persistence/__code8_dart/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-09-30T23:02:50+02:00" />
+<meta property="article:modified_time" content="2021-10-01T01:13:22+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-09-30T23:02:50+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence&lt;BeaconV1, String&gt; implements IBeaconsPersistence { BeaconsMongoDbPersistence() : super(&#39;beacons&#39;) { maxPageSize = 1000; } dynamic composeFilter(FilterParams filter) { filter = filter ?? FilterParams(); var criteria = []; var id = filter.getAsNullableString(&#39;id&#39;); if (id != null) { criteria.add({&#39;_id&#39;: id}); } var siteId = filter.getAsNullableString(&#39;site_id&#39;); if (siteId != null) { criteria.add({&#39;site_id&#39;: siteId}); } var label = filter.getAsNullableString(&#39;label&#39;); if (label != null) { criteria.add({&#39;label&#39;: label}); } var udi = filter.getAsNullableString(&#39;udi&#39;); if (udi !">
+<meta itemprop="dateModified" content="2021-10-01T01:13:22+02:00" />
+<meta itemprop="wordCount" content="150">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence&lt;BeaconV1, String&gt; implements IBeaconsPersistence { BeaconsMongoDbPersistence() : super(&#39;beacons&#39;) { maxPageSize = 1000; } dynamic composeFilter(FilterParams filter) { filter = filter ?? FilterParams(); var criteria = []; var id = filter.getAsNullableString(&#39;id&#39;); if (id != null) { criteria.add({&#39;_id&#39;: id}); } var siteId = filter.getAsNullableString(&#39;site_id&#39;); if (siteId != null) { criteria.add({&#39;site_id&#39;: siteId}); } var label = filter.getAsNullableString(&#39;label&#39;); if (label != null) { criteria.add({&#39;label&#39;: label}); } var udi = filter.getAsNullableString(&#39;udi&#39;); if (udi !"/>
 
 
 
@@ -493,7 +493,68 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span>
+    <span style="color:#00a8c8">extends</span> <span style="color:#111">IdentifiableMongoDbPersistence</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span>
+    <span style="color:#00a8c8">implements</span> <span style="color:#111">IBeaconsPersistence</span> <span style="color:#111">{</span>
+
+  <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">()</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;beacons&#39;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">maxPageSize</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">composeFilter</span><span style="color:#111">(</span><span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">filter</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span> <span style="color:#f92672">??</span> <span style="color:#111">FilterParams</span><span style="color:#111">();</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">criteria</span> <span style="color:#f92672">=</span> <span style="color:#111">[];</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;id&#39;</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">id</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">({</span><span style="color:#d88200">&#39;_id&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">id</span><span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">siteId</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">siteId</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">({</span><span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">siteId</span><span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">label</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;label&#39;</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">label</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">({</span><span style="color:#d88200">&#39;label&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">label</span><span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">udi</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;udi&#39;</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">udi</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">({</span><span style="color:#d88200">&#39;udi&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">udi</span><span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">labelLike</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">getAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;label_like&#39;</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">labelLike</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#00a8c8">var</span> <span style="color:#111">regexp</span> <span style="color:#f92672">=</span> <span style="color:#111">RegExp</span><span style="color:#111">(</span><span style="color:#d88200">r&#39;^&#39;</span> <span style="color:#f92672">+</span> <span style="color:#111">labelLike</span><span style="color:#111">,</span> <span style="color:#111">caseSensitive:</span> <span style="color:#00a8c8">false</span><span style="color:#111">);</span>
+      <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">({</span><span style="color:#d88200">r&#39;$regex&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">regexp</span><span style="color:#111">.</span><span style="color:#111">pattern</span><span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">var</span> <span style="color:#111">udis</span> <span style="color:#f92672">=</span> <span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">getAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#39;udis&#39;</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">udis</span> <span style="color:#00a8c8">is</span> <span style="color:#00a8c8">String</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">udis</span> <span style="color:#f92672">=</span> <span style="color:#111">(</span><span style="color:#111">udis</span> <span style="color:#f92672">as</span> <span style="color:#00a8c8">String</span><span style="color:#111">).</span><span style="color:#111">split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;,&#39;</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">udis</span> <span style="color:#00a8c8">is</span> <span style="color:#111">List</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">add</span><span style="color:#111">({</span>
+        <span style="color:#d88200">&#39;udi&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">{</span><span style="color:#d88200">r&#39;$in&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">udis</span><span style="color:#111">}</span>
+      <span style="color:#111">});</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">return</span> <span style="color:#111">criteria</span><span style="color:#111">.</span><span style="color:#111">isNotEmpty</span> <span style="color:#f92672">?</span> <span style="color:#111">{</span><span style="color:#d88200">r&#39;$and&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">criteria</span><span style="color:#111">}</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">DataPage</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">getPageByFilter</span><span style="color:#111">(</span>
+      <span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">super</span>
+        <span style="color:#111">.</span><span style="color:#111">getPageByFilterEx</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">composeFilter</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">),</span> <span style="color:#111">paging</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+
+<span style="color:#111">}</span>
+
+
 </code></pre></div>
 
 
