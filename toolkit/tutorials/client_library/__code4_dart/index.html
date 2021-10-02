@@ -19,19 +19,22 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="/src/version1/BeaconsCommandableHttpClientV1.dart
+import &#39;dart:async&#39;; import &#39;dart:convert&#39;; import &#39;package:pip_services3_commons/pip_services3_commons.dart&#39;; import &#39;package:pip_services3_rpc/pip_services3_rpc.dart&#39;; import &#39;package:pip_services_beacons_dart/pip_services_beacons_dart.dart&#39;; import &#39;./IBeaconsClientV1.dart&#39;; class BeaconsCommandableHttpClientV1 extends CommandableHttpClient implements IBeaconsClientV1 { BeaconsCommandableHttpClientV1([config]) : super(&#39;v1/beacons&#39;) { if (config != null) { configure(ConfigParams.fromValue(config)); } } @override Future&lt;DataPage&lt;BeaconV1&gt;&gt; getBeacons( String correlationId, FilterParams filter, PagingParams paging) async { var result = await callCommand( &#39;get_beacons&#39;, correlationId, {&#39;filter&#39;: filter, &#39;paging&#39;: paging}, ); return DataPage&lt;BeaconV1&gt;.fromJson(json.decode(result), (item) { var beacon = BeaconV1(); beacon.fromJson(item); return beacon; }); } @override Future&lt;BeaconV1&gt; getBeaconById(String correlationId, String beaconId) async { var result = await callCommand( &#39;get_beacon_by_id&#39;, correlationId, {&#39;beacon_id&#39;: beaconId}); if (result == null) return null; var item = BeaconV1(); item." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/client_library/__code4_dart/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-02T02:42:07+02:00" />
+<meta property="article:modified_time" content="2021-10-02T18:57:29+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-10-02T02:42:07+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="/src/version1/BeaconsCommandableHttpClientV1.dart
+import &#39;dart:async&#39;; import &#39;dart:convert&#39;; import &#39;package:pip_services3_commons/pip_services3_commons.dart&#39;; import &#39;package:pip_services3_rpc/pip_services3_rpc.dart&#39;; import &#39;package:pip_services_beacons_dart/pip_services_beacons_dart.dart&#39;; import &#39;./IBeaconsClientV1.dart&#39;; class BeaconsCommandableHttpClientV1 extends CommandableHttpClient implements IBeaconsClientV1 { BeaconsCommandableHttpClientV1([config]) : super(&#39;v1/beacons&#39;) { if (config != null) { configure(ConfigParams.fromValue(config)); } } @override Future&lt;DataPage&lt;BeaconV1&gt;&gt; getBeacons( String correlationId, FilterParams filter, PagingParams paging) async { var result = await callCommand( &#39;get_beacons&#39;, correlationId, {&#39;filter&#39;: filter, &#39;paging&#39;: paging}, ); return DataPage&lt;BeaconV1&gt;.fromJson(json.decode(result), (item) { var beacon = BeaconV1(); beacon.fromJson(item); return beacon; }); } @override Future&lt;BeaconV1&gt; getBeaconById(String correlationId, String beaconId) async { var result = await callCommand( &#39;get_beacon_by_id&#39;, correlationId, {&#39;beacon_id&#39;: beaconId}); if (result == null) return null; var item = BeaconV1(); item.">
+<meta itemprop="dateModified" content="2021-10-02T18:57:29+02:00" />
+<meta itemprop="wordCount" content="248">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="/src/version1/BeaconsCommandableHttpClientV1.dart
+import &#39;dart:async&#39;; import &#39;dart:convert&#39;; import &#39;package:pip_services3_commons/pip_services3_commons.dart&#39;; import &#39;package:pip_services3_rpc/pip_services3_rpc.dart&#39;; import &#39;package:pip_services_beacons_dart/pip_services_beacons_dart.dart&#39;; import &#39;./IBeaconsClientV1.dart&#39;; class BeaconsCommandableHttpClientV1 extends CommandableHttpClient implements IBeaconsClientV1 { BeaconsCommandableHttpClientV1([config]) : super(&#39;v1/beacons&#39;) { if (config != null) { configure(ConfigParams.fromValue(config)); } } @override Future&lt;DataPage&lt;BeaconV1&gt;&gt; getBeacons( String correlationId, FilterParams filter, PagingParams paging) async { var result = await callCommand( &#39;get_beacons&#39;, correlationId, {&#39;filter&#39;: filter, &#39;paging&#39;: paging}, ); return DataPage&lt;BeaconV1&gt;.fromJson(json.decode(result), (item) { var beacon = BeaconV1(); beacon.fromJson(item); return beacon; }); } @override Future&lt;BeaconV1&gt; getBeaconById(String correlationId, String beaconId) async { var result = await callCommand( &#39;get_beacon_by_id&#39;, correlationId, {&#39;beacon_id&#39;: beaconId}); if (result == null) return null; var item = BeaconV1(); item."/>
 
 
 
@@ -492,6 +495,100 @@
     <div class="container-fluid td-default td-outer">
       <main role="main" class="td-main">
         
+
+<p><strong>/src/version1/BeaconsCommandableHttpClientV1.dart</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:async&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;dart:convert&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_commons/pip_services3_commons.dart&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services3_rpc/pip_services3_rpc.dart&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;package:pip_services_beacons_dart/pip_services_beacons_dart.dart&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#d88200">&#39;./IBeaconsClientV1.dart&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsCommandableHttpClientV1</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">CommandableHttpClient</span>
+    <span style="color:#00a8c8">implements</span> <span style="color:#111">IBeaconsClientV1</span> <span style="color:#111">{</span>
+  <span style="color:#111">BeaconsCommandableHttpClientV1</span><span style="color:#111">([</span><span style="color:#111">config</span><span style="color:#111">])</span> <span style="color:#f92672">:</span> <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#39;v1/beacons&#39;</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">config</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span><span style="color:#111">.</span><span style="color:#111">fromValue</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">));</span>
+    <span style="color:#111">}</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">DataPage</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">getBeacons</span><span style="color:#111">(</span>
+      <span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span>
+      <span style="color:#d88200">&#39;get_beacons&#39;</span><span style="color:#111">,</span>
+      <span style="color:#111">correlationId</span><span style="color:#111">,</span>
+      <span style="color:#111">{</span><span style="color:#d88200">&#39;filter&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;paging&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">paging</span><span style="color:#111">},</span>
+    <span style="color:#111">);</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">DataPage</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">),</span> <span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+      <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">();</span>
+      <span style="color:#111">beacon</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">);</span>
+      <span style="color:#00a8c8">return</span> <span style="color:#111">beacon</span><span style="color:#111">;</span>
+    <span style="color:#111">});</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getBeaconById</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">beaconId</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span>
+        <span style="color:#d88200">&#39;get_beacon_by_id&#39;</span><span style="color:#111">,</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;beacon_id&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">beaconId</span><span style="color:#111">});</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">item</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">();</span>
+    <span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">));</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">item</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getBeaconByUdi</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">udi</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span>
+        <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get_beacon_by_udi&#39;</span><span style="color:#111">,</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;udi&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">udi</span><span style="color:#111">});</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">item</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">();</span>
+    <span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">));</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">item</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">Map</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">String</span><span style="color:#111">,</span> <span style="color:#00a8c8">dynamic</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">calculatePosition</span><span style="color:#111">(</span>
+      <span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">siteId</span><span style="color:#111">,</span> <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">udis</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span>
+        <span style="color:#d88200">&#39;calculate_position&#39;</span><span style="color:#111">,</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">siteId</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;udis&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">udis</span><span style="color:#111">});</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span> <span style="color:#111">createBeacon</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">beacon</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span>
+        <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span><span style="color:#d88200">&#39;create_beacon&#39;</span><span style="color:#111">,</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;beacon&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">beacon</span><span style="color:#111">});</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">item</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">();</span>
+    <span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">));</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">item</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span> <span style="color:#111">updateBeacon</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">beacon</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span>
+        <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span><span style="color:#d88200">&#39;update_beacon&#39;</span><span style="color:#111">,</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;beacon&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">beacon</span><span style="color:#111">});</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">item</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">();</span>
+    <span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">));</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">item</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#f92672">&gt;</span> <span style="color:#111">deleteBeaconById</span><span style="color:#111">(</span>
+      <span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">beaconId</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span>
+        <span style="color:#d88200">&#39;delete_beacon_by_id&#39;</span><span style="color:#111">,</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span><span style="color:#d88200">&#39;beacon_id&#39;</span><span style="color:#f92672">:</span> <span style="color:#111">beaconId</span><span style="color:#111">});</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">var</span> <span style="color:#111">item</span> <span style="color:#f92672">=</span> <span style="color:#111">BeaconV1</span><span style="color:#111">();</span>
+    <span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#111">json</span><span style="color:#111">.</span><span style="color:#111">decode</span><span style="color:#111">(</span><span style="color:#111">result</span><span style="color:#111">));</span>
+    <span style="color:#00a8c8">return</span> <span style="color:#111">item</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+</code></pre></div>
 
 
       </main>
