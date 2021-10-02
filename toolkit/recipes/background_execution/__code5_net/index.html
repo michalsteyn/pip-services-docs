@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="public async Task PerformAnalysisAsync(string correlationId) { if (await JobsClient.IsJobExecutingAsync(correlationId, JobType)) return Task.CompletedTask; var newJob = new NewJobV1() { Type = JobType, ReferenceId = correlationId }; var job = await JobsClient.AddJobAsync(correlationId, newJob); await JobsClient.StartJobByIdAsync(correlationId, job.Id, TimeSpan.FromHours(2)); ... // Long running tasks  ... // Extend job if needed  await JobsClient.CompleteJobAsync(correlationId, job.Id); } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/background_execution/__code5_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-02T01:48:48+02:00" />
+<meta property="article:modified_time" content="2021-10-02T02:17:06+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-10-02T01:48:48+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="public async Task PerformAnalysisAsync(string correlationId) { if (await JobsClient.IsJobExecutingAsync(correlationId, JobType)) return Task.CompletedTask; var newJob = new NewJobV1() { Type = JobType, ReferenceId = correlationId }; var job = await JobsClient.AddJobAsync(correlationId, newJob); await JobsClient.StartJobByIdAsync(correlationId, job.Id, TimeSpan.FromHours(2)); ... // Long running tasks  ... // Extend job if needed  await JobsClient.CompleteJobAsync(correlationId, job.Id); } ">
+<meta itemprop="dateModified" content="2021-10-02T02:17:06+02:00" />
+<meta itemprop="wordCount" content="50">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="public async Task PerformAnalysisAsync(string correlationId) { if (await JobsClient.IsJobExecutingAsync(correlationId, JobType)) return Task.CompletedTask; var newJob = new NewJobV1() { Type = JobType, ReferenceId = correlationId }; var job = await JobsClient.AddJobAsync(correlationId, newJob); await JobsClient.StartJobByIdAsync(correlationId, job.Id, TimeSpan.FromHours(2)); ... // Long running tasks  ... // Extend job if needed  await JobsClient.CompleteJobAsync(correlationId, job.Id); } "/>
 
 
 
@@ -493,7 +493,22 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">PerformAnalysisAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span>
+<span style="color:#111">{</span>
+   <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#00a8c8">await</span> <span style="color:#111">JobsClient</span><span style="color:#111">.</span><span style="color:#111">IsJobExecutingAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">JobType</span><span style="color:#111">))</span>
+  	   <span style="color:#00a8c8">return</span> <span style="color:#111">Task</span><span style="color:#111">.</span><span style="color:#111">CompletedTask</span><span style="color:#111">;</span>
+ 
+   <span style="color:#00a8c8">var</span> <span style="color:#111">newJob</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">NewJobV1</span><span style="color:#111">()</span>
+   <span style="color:#111">{</span>
+   	<span style="color:#111">Type</span> <span style="color:#111">=</span> <span style="color:#111">JobType</span><span style="color:#111">,</span>
+   	<span style="color:#111">ReferenceId</span> <span style="color:#111">=</span> <span style="color:#111">correlationId</span>
+   <span style="color:#111">};</span>
+   <span style="color:#00a8c8">var</span> <span style="color:#111">job</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">JobsClient</span><span style="color:#111">.</span><span style="color:#111">AddJobAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">newJob</span><span style="color:#111">);</span>
+   <span style="color:#00a8c8">await</span> <span style="color:#111">JobsClient</span><span style="color:#111">.</span><span style="color:#111">StartJobByIdAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">job</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">TimeSpan</span><span style="color:#111">.</span><span style="color:#111">FromHours</span><span style="color:#111">(</span><span style="color:#ae81ff">2</span><span style="color:#111">));</span>
+   <span style="color:#111">...</span>   <span style="color:#75715e">// Long running tasks
+</span><span style="color:#75715e"></span>   <span style="color:#111">...</span>   <span style="color:#75715e">// Extend job if needed
+</span><span style="color:#75715e"></span>   <span style="color:#00a8c8">await</span> <span style="color:#111">JobsClient</span><span style="color:#111">.</span><span style="color:#111">CompleteJobAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">job</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+<span style="color:#111">}</span>
 
 </code></pre></div>
 
