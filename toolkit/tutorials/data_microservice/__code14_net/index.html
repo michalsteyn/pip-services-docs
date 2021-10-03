@@ -19,19 +19,22 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="/src/interfaces/logic/BeaconsCommandSet.cs
+namespace Beacons.Logic { public class BeaconsCommandSet : CommandSet { private IBeaconsController _controller; public BeaconsCommandSet(IBeaconsController controller) { _controller = controller; AddCommand(MakeGetBeaconsCommand()); AddCommand(MakeGetBeaconByIdBeaconsCommand()); AddCommand(MakeGetBeaconByUdiCommand()); AddCommand(MakeCalculatePositionCommand()); AddCommand(MakeCreateBeaconCommand()); AddCommand(MakeUpdateBeaconCommand()); AddCommand(MakeDeleteBeaconByIdCommand()); } private ICommand MakeGetBeaconsCommand() { return new Command( &#34;get_beacons&#34;, new ObjectSchema() .WithOptionalProperty(&#34;filter&#34;, new FilterParamsSchema()) .WithOptionalProperty(&#34;paging&#34;, new PagingParamsSchema()), async (correlationId, parameters) =&gt; { var filter = FilterParams.FromValue(parameters.Get(&#34;filter&#34;)); var paging = PagingParams.FromValue(parameters.Get(&#34;paging&#34;)); return await _controller.GetBeaconsAsync(correlationId, filter, paging); }); } private ICommand MakeGetBeaconByIdBeaconsCommand() { return new Command( &#34;get_beacon_by_id&#34;, new ObjectSchema() ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code14_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-02T20:22:04+02:00" />
+<meta property="article:modified_time" content="2021-10-03T04:10:41+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-10-02T20:22:04+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="/src/interfaces/logic/BeaconsCommandSet.cs
+namespace Beacons.Logic { public class BeaconsCommandSet : CommandSet { private IBeaconsController _controller; public BeaconsCommandSet(IBeaconsController controller) { _controller = controller; AddCommand(MakeGetBeaconsCommand()); AddCommand(MakeGetBeaconByIdBeaconsCommand()); AddCommand(MakeGetBeaconByUdiCommand()); AddCommand(MakeCalculatePositionCommand()); AddCommand(MakeCreateBeaconCommand()); AddCommand(MakeUpdateBeaconCommand()); AddCommand(MakeDeleteBeaconByIdCommand()); } private ICommand MakeGetBeaconsCommand() { return new Command( &#34;get_beacons&#34;, new ObjectSchema() .WithOptionalProperty(&#34;filter&#34;, new FilterParamsSchema()) .WithOptionalProperty(&#34;paging&#34;, new PagingParamsSchema()), async (correlationId, parameters) =&gt; { var filter = FilterParams.FromValue(parameters.Get(&#34;filter&#34;)); var paging = PagingParams.FromValue(parameters.Get(&#34;paging&#34;)); return await _controller.GetBeaconsAsync(correlationId, filter, paging); }); } private ICommand MakeGetBeaconByIdBeaconsCommand() { return new Command( &#34;get_beacon_by_id&#34;, new ObjectSchema() .">
+<meta itemprop="dateModified" content="2021-10-03T04:10:41+02:00" />
+<meta itemprop="wordCount" content="253">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="/src/interfaces/logic/BeaconsCommandSet.cs
+namespace Beacons.Logic { public class BeaconsCommandSet : CommandSet { private IBeaconsController _controller; public BeaconsCommandSet(IBeaconsController controller) { _controller = controller; AddCommand(MakeGetBeaconsCommand()); AddCommand(MakeGetBeaconByIdBeaconsCommand()); AddCommand(MakeGetBeaconByUdiCommand()); AddCommand(MakeCalculatePositionCommand()); AddCommand(MakeCreateBeaconCommand()); AddCommand(MakeUpdateBeaconCommand()); AddCommand(MakeDeleteBeaconByIdCommand()); } private ICommand MakeGetBeaconsCommand() { return new Command( &#34;get_beacons&#34;, new ObjectSchema() .WithOptionalProperty(&#34;filter&#34;, new FilterParamsSchema()) .WithOptionalProperty(&#34;paging&#34;, new PagingParamsSchema()), async (correlationId, parameters) =&gt; { var filter = FilterParams.FromValue(parameters.Get(&#34;filter&#34;)); var paging = PagingParams.FromValue(parameters.Get(&#34;paging&#34;)); return await _controller.GetBeaconsAsync(correlationId, filter, paging); }); } private ICommand MakeGetBeaconByIdBeaconsCommand() { return new Command( &#34;get_beacon_by_id&#34;, new ObjectSchema() ."/>
 
 
 
@@ -492,6 +495,136 @@
     <div class="container-fluid td-default td-outer">
       <main role="main" class="td-main">
         
+
+<p><strong>/src/interfaces/logic/BeaconsCommandSet.cs</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Logic</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsCommandSet</span> <span style="color:#111">:</span> <span style="color:#111">CommandSet</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">private</span> <span style="color:#111">IBeaconsController</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">;</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsCommandSet</span><span style="color:#111">(</span><span style="color:#111">IBeaconsController</span> <span style="color:#111">controller</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#ae81ff">_</span><span style="color:#111">controller</span> <span style="color:#111">=</span> <span style="color:#111">controller</span><span style="color:#111">;</span>
+
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeGetBeaconsCommand</span><span style="color:#111">());</span>
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeGetBeaconByIdBeaconsCommand</span><span style="color:#111">());</span>
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeGetBeaconByUdiCommand</span><span style="color:#111">());</span>
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeCalculatePositionCommand</span><span style="color:#111">());</span>
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeCreateBeaconCommand</span><span style="color:#111">());</span>
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeUpdateBeaconCommand</span><span style="color:#111">());</span>
+            <span style="color:#111">AddCommand</span><span style="color:#111">(</span><span style="color:#111">MakeDeleteBeaconByIdCommand</span><span style="color:#111">());</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeGetBeaconsCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#34;get_beacons&#34;</span><span style="color:#111">,</span>
+                <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithOptionalProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;filter&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FilterParamsSchema</span><span style="color:#111">())</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithOptionalProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;paging&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">PagingParamsSchema</span><span style="color:#111">()),</span>
+                <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">FromValue</span><span style="color:#111">(</span><span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">Get</span><span style="color:#111">(</span><span style="color:#d88200">&#34;filter&#34;</span><span style="color:#111">));</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">paging</span> <span style="color:#111">=</span> <span style="color:#111">PagingParams</span><span style="color:#111">.</span><span style="color:#111">FromValue</span><span style="color:#111">(</span><span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">Get</span><span style="color:#111">(</span><span style="color:#d88200">&#34;paging&#34;</span><span style="color:#111">));</span>
+                    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">GetBeaconsAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
+                <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeGetBeaconByIdBeaconsCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#34;get_beacon_by_id&#34;</span><span style="color:#111">,</span>
+                <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon_id&#34;</span><span style="color:#111">,</span> <span style="color:#111">TypeCode</span><span style="color:#111">.</span><span style="color:#111">String</span><span style="color:#111">),</span>
+                <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">id</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon_id&#34;</span><span style="color:#111">);</span>
+                    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">GetBeaconByIdAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#111">);</span>
+                <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeGetBeaconByUdiCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#34;get_beacon_by_udi&#34;</span><span style="color:#111">,</span>
+                <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">,</span> <span style="color:#111">TypeCode</span><span style="color:#111">.</span><span style="color:#111">String</span><span style="color:#111">),</span>
+                <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">udi</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">);</span>
+                    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">GetBeaconByUdiAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+                <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeCalculatePositionCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#34;calculate_position&#34;</span><span style="color:#111">,</span>
+                <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">,</span> <span style="color:#111">TypeCode</span><span style="color:#111">.</span><span style="color:#111">String</span><span style="color:#111">)</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">,</span> <span style="color:#111">TypeCode</span><span style="color:#111">.</span><span style="color:#111">Array</span><span style="color:#111">),</span>
+                <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">siteId</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">);</span>
+                    <span style="color:#00a8c8">string</span><span style="color:#111">[]</span> <span style="color:#111">udis</span> <span style="color:#111">=</span> <span style="color:#111">ConvertToStringList</span><span style="color:#111">(</span><span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">Get</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">));</span>
+
+                    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">CalculatePositionAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">siteId</span><span style="color:#111">,</span> <span style="color:#111">udis</span><span style="color:#111">);</span>
+                <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeCreateBeaconCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+                <span style="color:#d88200">&#34;create_beacon&#34;</span><span style="color:#111">,</span>
+                <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BeaconV1Schema</span><span style="color:#111">()),</span>
+                <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#111">ConvertToBeacon</span><span style="color:#111">(</span><span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon&#34;</span><span style="color:#111">));</span>
+                    <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">CreateBeaconAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">);</span>
+                <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeUpdateBeaconCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+               <span style="color:#d88200">&#34;update_beacon&#34;</span><span style="color:#111">,</span>
+               <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                    <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BeaconV1Schema</span><span style="color:#111">()),</span>
+               <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+               <span style="color:#111">{</span>
+                   <span style="color:#00a8c8">var</span> <span style="color:#111">beacon</span> <span style="color:#111">=</span> <span style="color:#111">ConvertToBeacon</span><span style="color:#111">(</span><span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon&#34;</span><span style="color:#111">));</span>
+                   <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">UpdateBeaconAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">beacon</span><span style="color:#111">);</span>
+               <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">ICommand</span> <span style="color:#111">MakeDeleteBeaconByIdCommand</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Command</span><span style="color:#111">(</span>
+               <span style="color:#d88200">&#34;delete_beacon_by_id&#34;</span><span style="color:#111">,</span>
+               <span style="color:#00a8c8">new</span> <span style="color:#111">ObjectSchema</span><span style="color:#111">()</span>
+                   <span style="color:#111">.</span><span style="color:#111">WithRequiredProperty</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon_id&#34;</span><span style="color:#111">,</span> <span style="color:#111">TypeCode</span><span style="color:#111">.</span><span style="color:#111">String</span><span style="color:#111">),</span>
+               <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">parameters</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+               <span style="color:#111">{</span>
+                   <span style="color:#00a8c8">var</span> <span style="color:#111">id</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacon_id&#34;</span><span style="color:#111">);</span>
+                   <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">DeleteBeaconByIdAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#111">);</span>
+               <span style="color:#111">});</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#111">BeaconV1</span> <span style="color:#111">ConvertToBeacon</span><span style="color:#111">(</span><span style="color:#00a8c8">object</span> <span style="color:#00a8c8">value</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">JsonConverter</span><span style="color:#111">.</span><span style="color:#111">FromJson</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;(</span><span style="color:#111">JsonConverter</span><span style="color:#111">.</span><span style="color:#111">ToJson</span><span style="color:#111">(</span><span style="color:#00a8c8">value</span><span style="color:#111">));</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">string</span><span style="color:#111">[]</span> <span style="color:#111">ConvertToStringList</span><span style="color:#111">(</span><span style="color:#00a8c8">object</span> <span style="color:#00a8c8">value</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">JsonConverter</span><span style="color:#111">.</span><span style="color:#111">FromJson</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">[]&gt;(</span><span style="color:#111">JsonConverter</span><span style="color:#111">.</span><span style="color:#111">ToJson</span><span style="color:#111">(</span><span style="color:#00a8c8">value</span><span style="color:#111">));</span>
+        <span style="color:#111">}</span>
+
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+</code></pre></div>
 
 
       </main>

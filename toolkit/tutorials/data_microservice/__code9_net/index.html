@@ -19,19 +19,22 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="src/interface/persistence/BeaconsMongoDbPersistence.cs
+namespace Beacons.Persistence { public class BeaconsMongoDbPersistence : IdentifiableMongoDbPersistence&lt;BeaconV1, string&gt;, IBeaconsPersistence { public BeaconsMongoDbPersistence() : base(&#34;beacons&#34;) { } private new FilterDefinition&lt;BeaconV1&gt; ComposeFilter(FilterParams filterParams) { filterParams = filterParams ?? new FilterParams(); var builder = Builders&lt;BeaconV1&gt;.Filter; var filter = builder.Empty; var id = filterParams.GetAsNullableString(&#34;id&#34;); if (!string.IsNullOrEmpty(id)) filter &amp;= builder.Eq(b =&gt; b.Id, id); var siteId = filterParams.GetAsNullableString(&#34;site_id&#34;); if (!string.IsNullOrEmpty(siteId)) filter &amp;= builder.Eq(b =&gt; b.SiteId, siteId); var label = filterParams.GetAsNullableString(&#34;label&#34;); if (!string.IsNullOrEmpty(label)) filter &amp;= builder." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code9_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-02T20:20:34+02:00" />
+<meta property="article:modified_time" content="2021-10-03T04:36:46+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-10-02T20:20:34+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="src/interface/persistence/BeaconsMongoDbPersistence.cs
+namespace Beacons.Persistence { public class BeaconsMongoDbPersistence : IdentifiableMongoDbPersistence&lt;BeaconV1, string&gt;, IBeaconsPersistence { public BeaconsMongoDbPersistence() : base(&#34;beacons&#34;) { } private new FilterDefinition&lt;BeaconV1&gt; ComposeFilter(FilterParams filterParams) { filterParams = filterParams ?? new FilterParams(); var builder = Builders&lt;BeaconV1&gt;.Filter; var filter = builder.Empty; var id = filterParams.GetAsNullableString(&#34;id&#34;); if (!string.IsNullOrEmpty(id)) filter &amp;= builder.Eq(b =&gt; b.Id, id); var siteId = filterParams.GetAsNullableString(&#34;site_id&#34;); if (!string.IsNullOrEmpty(siteId)) filter &amp;= builder.Eq(b =&gt; b.SiteId, siteId); var label = filterParams.GetAsNullableString(&#34;label&#34;); if (!string.IsNullOrEmpty(label)) filter &amp;= builder.">
+<meta itemprop="dateModified" content="2021-10-03T04:36:46+02:00" />
+<meta itemprop="wordCount" content="183">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="src/interface/persistence/BeaconsMongoDbPersistence.cs
+namespace Beacons.Persistence { public class BeaconsMongoDbPersistence : IdentifiableMongoDbPersistence&lt;BeaconV1, string&gt;, IBeaconsPersistence { public BeaconsMongoDbPersistence() : base(&#34;beacons&#34;) { } private new FilterDefinition&lt;BeaconV1&gt; ComposeFilter(FilterParams filterParams) { filterParams = filterParams ?? new FilterParams(); var builder = Builders&lt;BeaconV1&gt;.Filter; var filter = builder.Empty; var id = filterParams.GetAsNullableString(&#34;id&#34;); if (!string.IsNullOrEmpty(id)) filter &amp;= builder.Eq(b =&gt; b.Id, id); var siteId = filterParams.GetAsNullableString(&#34;site_id&#34;); if (!string.IsNullOrEmpty(siteId)) filter &amp;= builder.Eq(b =&gt; b.SiteId, siteId); var label = filterParams.GetAsNullableString(&#34;label&#34;); if (!string.IsNullOrEmpty(label)) filter &amp;= builder."/>
 
 
 
@@ -492,6 +495,70 @@
     <div class="container-fluid td-default td-outer">
       <main role="main" class="td-main">
         
+
+<p><strong>src/interface/persistence/BeaconsMongoDbPersistence.cs</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">namespace</span> <span style="color:#111">Beacons.Persistence</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">BeaconsMongoDbPersistence</span> <span style="color:#111">:</span> <span style="color:#111">IdentifiableMongoDbPersistence</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span><span style="color:#111">&gt;,</span> <span style="color:#111">IBeaconsPersistence</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">public</span> <span style="color:#111">BeaconsMongoDbPersistence</span><span style="color:#111">()</span>
+            <span style="color:#111">:</span> <span style="color:#00a8c8">base</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span> <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">private</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FilterDefinition</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">ComposeFilter</span><span style="color:#111">(</span><span style="color:#111">FilterParams</span> <span style="color:#111">filterParams</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#111">filterParams</span> <span style="color:#111">=</span> <span style="color:#111">filterParams</span> <span style="color:#111">??</span> <span style="color:#00a8c8">new</span> <span style="color:#111">FilterParams</span><span style="color:#111">();</span>
+
+            <span style="color:#00a8c8">var</span> <span style="color:#111">builder</span> <span style="color:#111">=</span> <span style="color:#111">Builders</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;.</span><span style="color:#111">Filter</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Empty</span><span style="color:#111">;</span>
+
+            <span style="color:#00a8c8">var</span> <span style="color:#111">id</span> <span style="color:#111">=</span> <span style="color:#111">filterParams</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">IsNullOrEmpty</span><span style="color:#111">(</span><span style="color:#111">id</span><span style="color:#111">))</span>
+                <span style="color:#111">filter</span> <span style="color:#111">&amp;=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">b</span> <span style="color:#111">=&gt;</span> <span style="color:#111">b</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#111">);</span>
+            
+            <span style="color:#00a8c8">var</span> <span style="color:#111">siteId</span> <span style="color:#111">=</span> <span style="color:#111">filterParams</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">IsNullOrEmpty</span><span style="color:#111">(</span><span style="color:#111">siteId</span><span style="color:#111">))</span>
+                <span style="color:#111">filter</span> <span style="color:#111">&amp;=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">b</span> <span style="color:#111">=&gt;</span> <span style="color:#111">b</span><span style="color:#111">.</span><span style="color:#111">SiteId</span><span style="color:#111">,</span> <span style="color:#111">siteId</span><span style="color:#111">);</span>
+            
+            <span style="color:#00a8c8">var</span> <span style="color:#111">label</span> <span style="color:#111">=</span> <span style="color:#111">filterParams</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;label&#34;</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">IsNullOrEmpty</span><span style="color:#111">(</span><span style="color:#111">label</span><span style="color:#111">))</span>
+                <span style="color:#111">filter</span> <span style="color:#111">&amp;=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">b</span> <span style="color:#111">=&gt;</span> <span style="color:#111">b</span><span style="color:#111">.</span><span style="color:#111">Label</span><span style="color:#111">,</span> <span style="color:#111">label</span><span style="color:#111">);</span>
+            
+            <span style="color:#00a8c8">var</span> <span style="color:#111">udi</span> <span style="color:#111">=</span> <span style="color:#111">filterParams</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">IsNullOrEmpty</span><span style="color:#111">(</span><span style="color:#111">udi</span><span style="color:#111">))</span>
+                <span style="color:#111">filter</span> <span style="color:#111">&amp;=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">b</span> <span style="color:#111">=&gt;</span> <span style="color:#111">b</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+
+            <span style="color:#00a8c8">var</span> <span style="color:#111">udis</span> <span style="color:#111">=</span> <span style="color:#111">filterParams</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">udiList</span> <span style="color:#111">=</span> <span style="color:#111">!</span><span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">IsNullOrEmpty</span><span style="color:#111">(</span><span style="color:#111">udis</span><span style="color:#111">)</span> <span style="color:#111">?</span> <span style="color:#111">udis</span><span style="color:#111">.</span><span style="color:#111">Split</span><span style="color:#111">(</span><span style="color:#d88200">&#39;,&#39;</span><span style="color:#111">)</span> <span style="color:#111">:</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">udiList</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+                <span style="color:#111">filter</span> <span style="color:#111">&amp;=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">In</span><span style="color:#111">(</span><span style="color:#111">b</span> <span style="color:#111">=&gt;</span> <span style="color:#111">b</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">udiList</span><span style="color:#111">);</span>
+
+            <span style="color:#00a8c8">return</span> <span style="color:#111">filter</span><span style="color:#111">;</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#111">DataPage</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;&gt;</span> <span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span>
+            <span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">await</span> <span style="color:#111">GetPageByFilterAsync</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">ComposeFilter</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">),</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;</span> <span style="color:#111">GetOneByUdiAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">udi</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">builder</span> <span style="color:#111">=</span> <span style="color:#111">Builders</span><span style="color:#111">&lt;</span><span style="color:#111">BeaconV1</span><span style="color:#111">&gt;.</span><span style="color:#111">Filter</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">builder</span><span style="color:#111">.</span><span style="color:#111">Eq</span><span style="color:#111">(</span><span style="color:#111">x</span> <span style="color:#111">=&gt;</span> <span style="color:#111">x</span><span style="color:#111">.</span><span style="color:#111">Udi</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">collection</span><span style="color:#111">.</span><span style="color:#111">Find</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">).</span><span style="color:#111">FirstOrDefaultAsync</span><span style="color:#111">();</span>
+
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">result</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+                <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Retrieved from {0} with udi = {1}&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">collectionName</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+            <span style="color:#00a8c8">else</span>
+                <span style="color:#ae81ff">_l</span><span style="color:#111">ogger</span><span style="color:#111">.</span><span style="color:#111">Trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Nothing found from {0} with udi = {1}&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">collectionName</span><span style="color:#111">,</span> <span style="color:#111">udi</span><span style="color:#111">);</span>
+
+            <span style="color:#00a8c8">return</span> <span style="color:#111">result</span><span style="color:#111">;</span>
+
+        <span style="color:#111">}</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+</code></pre></div>
 
 
       </main>
