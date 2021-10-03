@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="#FROM docker.pkg.github.com/nov-pocs/max-devops/go-runtime:latestFROMscratch# Set a working directoryWORKDIR/app# Copy the entire projectCOPY ./dist ./binCOPY ./config ./config# Set environment variablesENV HTTP_PORT=8080 ENV GRPC_SERVICE_PORT=8090 ENV POSTGRES_SERVICE_HOST=ENV POSTGRES_SERVICE_PORT=27017 ENV POSTGRES_USER=ENV POSTGRES_PASS=ENV POSTGRES_DB=app # Expose the portEXPOSE&#34;8080:8080&#34;EXPOSE&#34;8090:8090&#34;# Specify the command to runCMD [&#34;." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_dockerization/__code3_go/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-03T06:14:23+02:00" />
+<meta property="article:modified_time" content="2021-10-03T19:11:54+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-10-03T06:14:23+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="#FROM docker.pkg.github.com/nov-pocs/max-devops/go-runtime:latestFROMscratch# Set a working directoryWORKDIR/app# Copy the entire projectCOPY ./dist ./binCOPY ./config ./config# Set environment variablesENV HTTP_PORT=8080 ENV GRPC_SERVICE_PORT=8090 ENV POSTGRES_SERVICE_HOST=ENV POSTGRES_SERVICE_PORT=27017 ENV POSTGRES_USER=ENV POSTGRES_PASS=ENV POSTGRES_DB=app # Expose the portEXPOSE&#34;8080:8080&#34;EXPOSE&#34;8090:8090&#34;# Specify the command to runCMD [&#34;.">
+<meta itemprop="dateModified" content="2021-10-03T19:11:54+02:00" />
+<meta itemprop="wordCount" content="37">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="#FROM docker.pkg.github.com/nov-pocs/max-devops/go-runtime:latestFROMscratch# Set a working directoryWORKDIR/app# Copy the entire projectCOPY ./dist ./binCOPY ./config ./config# Set environment variablesENV HTTP_PORT=8080 ENV GRPC_SERVICE_PORT=8090 ENV POSTGRES_SERVICE_HOST=ENV POSTGRES_SERVICE_PORT=27017 ENV POSTGRES_USER=ENV POSTGRES_PASS=ENV POSTGRES_DB=app # Expose the portEXPOSE&#34;8080:8080&#34;EXPOSE&#34;8090:8090&#34;# Specify the command to runCMD [&#34;."/>
 
 
 
@@ -492,6 +492,35 @@
     <div class="container-fluid td-default td-outer">
       <main role="main" class="td-main">
         
+
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#75715e">#FROM docker.pkg.github.com/nov-pocs/max-devops/go-runtime:latest</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">FROM</span><span style="color:#d88200"> scratch</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Set a working directory</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">WORKDIR</span><span style="color:#d88200"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy the entire project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">COPY</span> ./dist ./bin<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">COPY</span> ./config ./config<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Set environment variables</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">ENV</span> <span style="color:#111">HTTP_PORT</span><span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>
+<span style="color:#00a8c8">ENV</span> <span style="color:#111">GRPC_SERVICE_PORT</span><span style="color:#f92672">=</span><span style="color:#ae81ff">8090</span>
+<span style="color:#00a8c8">ENV</span> <span style="color:#111">POSTGRES_SERVICE_HOST</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">ENV</span> <span style="color:#111">POSTGRES_SERVICE_PORT</span><span style="color:#f92672">=</span><span style="color:#ae81ff">27017</span>
+<span style="color:#00a8c8">ENV</span> <span style="color:#111">POSTGRES_USER</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">ENV</span> <span style="color:#111">POSTGRES_PASS</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">ENV</span> <span style="color:#111">POSTGRES_DB</span><span style="color:#f92672">=</span>app
+
+<span style="color:#75715e"># Expose the port</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">EXPOSE</span><span style="color:#d88200"> &#34;8080:8080&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">EXPOSE</span><span style="color:#d88200"> &#34;8090:8090&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Specify the command to run</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#00a8c8">CMD</span> <span style="color:#111">[</span><span style="color:#d88200">&#34;./bin/main&#34;</span><span style="color:#111">]</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div>
 
 
       </main>
