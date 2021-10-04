@@ -19,19 +19,22 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="src/services/operations/version1/SessionOperationsV1.cs
+using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipServices.Templates.Facade.Clients.Version1; using PipServices3.Commons.Config; using PipServices3.Commons.Convert; using PipServices3.Commons.Data; using PipServices3.Commons.Errors; using PipServices3.Commons.Refer; using PipServices3.Rpc.Services; using System; using System.Collections.Generic; using System.IO; using System.Linq; using System.Security.Claims; using System.Text; using System.Threading.Tasks; namespace PipServices.Templates.Facade.Operations.Version1 { public class SessionsOperationsV1 : RestOperations { private static ConfigParams _defaultConfig1 = ConfigParams.FromTuples( &#34;options.cookie_enabled&#34;, true, &#34;options.cookie&#34;, &#34;x-session-id&#34;, &#34;options.max_cookie_age&#34;, 365L * 24 * 60 * 60 * 1000 ); private string _cookie = &#34;x-session-id&#34;; private bool _cookieEnabled = true; private long _maxCookieAge = 365L * 24 * 60 * 60 * 1000; private ISettingsClientV1 _settingsClient; private IAccountsClientV1 _accountsClient; private ISessionsClientV1 _sessionsClient; private IPasswordsClientV1 _passwordsClient; private IRolesClientV1 _rolesClient; private IEmailSettingsClientV1 _emailSettingsClient; private ISitesClientV1 _sitesClient; private IInvitationsClientV1 _invitationsClient; public SessionsOperationsV1() { _dependencyResolver." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_facade/__code6_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-03T20:56:41+02:00" />
+<meta property="article:modified_time" content="2021-10-05T00:08:07+02:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-<meta itemprop="dateModified" content="2021-10-03T20:56:41+02:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="description" content="src/services/operations/version1/SessionOperationsV1.cs
+using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipServices.Templates.Facade.Clients.Version1; using PipServices3.Commons.Config; using PipServices3.Commons.Convert; using PipServices3.Commons.Data; using PipServices3.Commons.Errors; using PipServices3.Commons.Refer; using PipServices3.Rpc.Services; using System; using System.Collections.Generic; using System.IO; using System.Linq; using System.Security.Claims; using System.Text; using System.Threading.Tasks; namespace PipServices.Templates.Facade.Operations.Version1 { public class SessionsOperationsV1 : RestOperations { private static ConfigParams _defaultConfig1 = ConfigParams.FromTuples( &#34;options.cookie_enabled&#34;, true, &#34;options.cookie&#34;, &#34;x-session-id&#34;, &#34;options.max_cookie_age&#34;, 365L * 24 * 60 * 60 * 1000 ); private string _cookie = &#34;x-session-id&#34;; private bool _cookieEnabled = true; private long _maxCookieAge = 365L * 24 * 60 * 60 * 1000; private ISettingsClientV1 _settingsClient; private IAccountsClientV1 _accountsClient; private ISessionsClientV1 _sessionsClient; private IPasswordsClientV1 _passwordsClient; private IRolesClientV1 _rolesClient; private IEmailSettingsClientV1 _emailSettingsClient; private ISitesClientV1 _sitesClient; private IInvitationsClientV1 _invitationsClient; public SessionsOperationsV1() { _dependencyResolver.">
+<meta itemprop="dateModified" content="2021-10-05T00:08:07+02:00" />
+<meta itemprop="wordCount" content="1283">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="src/services/operations/version1/SessionOperationsV1.cs
+using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipServices.Templates.Facade.Clients.Version1; using PipServices3.Commons.Config; using PipServices3.Commons.Convert; using PipServices3.Commons.Data; using PipServices3.Commons.Errors; using PipServices3.Commons.Refer; using PipServices3.Rpc.Services; using System; using System.Collections.Generic; using System.IO; using System.Linq; using System.Security.Claims; using System.Text; using System.Threading.Tasks; namespace PipServices.Templates.Facade.Operations.Version1 { public class SessionsOperationsV1 : RestOperations { private static ConfigParams _defaultConfig1 = ConfigParams.FromTuples( &#34;options.cookie_enabled&#34;, true, &#34;options.cookie&#34;, &#34;x-session-id&#34;, &#34;options.max_cookie_age&#34;, 365L * 24 * 60 * 60 * 1000 ); private string _cookie = &#34;x-session-id&#34;; private bool _cookieEnabled = true; private long _maxCookieAge = 365L * 24 * 60 * 60 * 1000; private ISettingsClientV1 _settingsClient; private IAccountsClientV1 _accountsClient; private ISessionsClientV1 _sessionsClient; private IPasswordsClientV1 _passwordsClient; private IRolesClientV1 _rolesClient; private IEmailSettingsClientV1 _emailSettingsClient; private ISitesClientV1 _sitesClient; private IInvitationsClientV1 _invitationsClient; public SessionsOperationsV1() { _dependencyResolver."/>
 
 
 
@@ -492,6 +495,476 @@
     <div class="container-fluid td-default td-outer">
       <main role="main" class="td-main">
         
+
+<p><strong>src/services/operations/version1/SessionOperationsV1.cs</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">using</span> <span style="color:#111">Microsoft.AspNetCore.Http</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">Microsoft.AspNetCore.Routing</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices.Templates.Facade.Clients.Version1</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Config</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Convert</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Data</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Errors</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Refer</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Rpc.Services</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Collections.Generic</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.IO</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Linq</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Security.Claims</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Text</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Threading.Tasks</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">namespace</span> <span style="color:#111">PipServices.Templates.Facade.Operations.Version1</span>
+<span style="color:#111">{</span>
+	<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">SessionsOperationsV1</span> <span style="color:#111">:</span> <span style="color:#111">RestOperations</span>
+	<span style="color:#111">{</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#00a8c8">static</span> <span style="color:#111">ConfigParams</span> <span style="color:#ae81ff">_d</span><span style="color:#111">efaultConfig1</span> <span style="color:#111">=</span> <span style="color:#111">ConfigParams</span><span style="color:#111">.</span><span style="color:#111">FromTuples</span><span style="color:#111">(</span>
+			<span style="color:#d88200">&#34;options.cookie_enabled&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+			<span style="color:#d88200">&#34;options.cookie&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;x-session-id&#34;</span><span style="color:#111">,</span>
+			<span style="color:#d88200">&#34;options.max_cookie_age&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">365L</span> <span style="color:#111">*</span> <span style="color:#ae81ff">24</span> <span style="color:#111">*</span> <span style="color:#ae81ff">60</span> <span style="color:#111">*</span> <span style="color:#ae81ff">60</span> <span style="color:#111">*</span> <span style="color:#ae81ff">1000</span>
+		<span style="color:#111">);</span>
+
+		<span style="color:#00a8c8">private</span> <span style="color:#00a8c8">string</span> <span style="color:#ae81ff">_</span><span style="color:#111">cookie</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;x-session-id&#34;</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#00a8c8">bool</span> <span style="color:#ae81ff">_</span><span style="color:#111">cookieEnabled</span> <span style="color:#111">=</span> <span style="color:#00a8c8">true</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#00a8c8">long</span> <span style="color:#ae81ff">_</span><span style="color:#111">maxCookieAge</span> <span style="color:#111">=</span> <span style="color:#ae81ff">365L</span> <span style="color:#111">*</span> <span style="color:#ae81ff">24</span> <span style="color:#111">*</span> <span style="color:#ae81ff">60</span> <span style="color:#111">*</span> <span style="color:#ae81ff">60</span> <span style="color:#111">*</span> <span style="color:#ae81ff">1000</span><span style="color:#111">;</span>
+
+		<span style="color:#00a8c8">private</span> <span style="color:#111">ISettingsClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">settingsClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">IAccountsClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">accountsClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">ISessionsClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">IPasswordsClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">passwordsClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">IRolesClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">rolesClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">IEmailSettingsClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">emailSettingsClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">ISitesClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">sitesClient</span><span style="color:#111">;</span>
+		<span style="color:#00a8c8">private</span> <span style="color:#111">IInvitationsClientV1</span> <span style="color:#ae81ff">_</span><span style="color:#111">invitationsClient</span><span style="color:#111">;</span>
+
+
+		<span style="color:#00a8c8">public</span> <span style="color:#111">SessionsOperationsV1</span><span style="color:#111">()</span>
+		<span style="color:#111">{</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;settings&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-settings&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;accounts&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-accounts&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;passwords&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-passwords&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;roles&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-roles&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;emailsettings&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-emailsettings&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;sessions&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-sessions&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;sites&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-sites&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Put</span><span style="color:#111">(</span><span style="color:#d88200">&#34;invitations&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-services-invitations&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">new</span> <span style="color:#00a8c8">void</span> <span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#111">config</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">SetDefaults</span><span style="color:#111">(</span><span style="color:#ae81ff">_d</span><span style="color:#111">efaultConfig1</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
+
+			<span style="color:#ae81ff">_</span><span style="color:#111">cookieEnabled</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">GetAsBooleanWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;options.cookie_enabled&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">cookieEnabled</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">cookie</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">GetAsStringWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;options.cookie&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">cookie</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">maxCookieAge</span> <span style="color:#111">=</span> <span style="color:#111">config</span><span style="color:#111">.</span><span style="color:#111">GetAsLongWithDefault</span><span style="color:#111">(</span><span style="color:#d88200">&#34;options.max_cookie_age&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">_</span><span style="color:#111">maxCookieAge</span><span style="color:#111">);</span>
+
+			<span style="color:#00a8c8">base</span><span style="color:#111">.</span><span style="color:#111">Configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">new</span> <span style="color:#00a8c8">void</span> <span style="color:#111">SetReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">base</span><span style="color:#111">.</span><span style="color:#111">SetReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
+
+			<span style="color:#ae81ff">_</span><span style="color:#111">settingsClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">ISettingsClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;settings&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">ISessionsClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;sessions&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">accountsClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">IAccountsClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;accounts&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">passwordsClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">IPasswordsClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;passwords&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">rolesClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">IRolesClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;roles&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">emailSettingsClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">IEmailSettingsClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;emailsettings&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">sitesClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">ISitesClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;sites&#34;</span><span style="color:#111">);</span>
+			<span style="color:#ae81ff">_</span><span style="color:#111">invitationsClient</span> <span style="color:#111">=</span> <span style="color:#ae81ff">_d</span><span style="color:#111">ependencyResolver</span><span style="color:#111">.</span><span style="color:#111">GetOneRequired</span><span style="color:#111">&lt;</span><span style="color:#111">IInvitationsClientV1</span><span style="color:#111">&gt;(</span><span style="color:#d88200">&#34;invitations&#34;</span><span style="color:#111">);</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">LoadSessionAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">,</span>
+			<span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">next</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">var</span> <span style="color:#111">sessionId</span> <span style="color:#111">=</span> <span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">Headers</span><span style="color:#111">[</span><span style="color:#d88200">&#34;x-session-id&#34;</span><span style="color:#111">];</span>
+			<span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">IsNullOrWhiteSpace</span><span style="color:#111">(</span><span style="color:#111">sessionId</span><span style="color:#111">))</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">session</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">GetSessionByIdAsync</span><span style="color:#111">(</span><span style="color:#d88200">&#34;facade&#34;</span><span style="color:#111">,</span> <span style="color:#111">sessionId</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">session</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">error</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+							<span style="color:#d88200">&#34;facade&#34;</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;SESSION_NOT_FOUND&#34;</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;Session invalid or already expired.&#34;</span>
+						<span style="color:#111">).</span><span style="color:#111">WithDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#34;session_id&#34;</span><span style="color:#111">,</span> <span style="color:#111">sessionId</span><span style="color:#111">).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">440</span><span style="color:#111">);</span>
+
+					<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">error</span><span style="color:#111">);</span>
+					<span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#75715e">// Associate session user with the request
+</span><span style="color:#75715e"></span>				<span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">HttpContext</span><span style="color:#111">.</span><span style="color:#111">Items</span><span style="color:#111">[</span><span style="color:#d88200">&#34;user_id&#34;</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">UserId</span><span style="color:#111">;</span>
+				<span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">HttpContext</span><span style="color:#111">.</span><span style="color:#111">Items</span><span style="color:#111">[</span><span style="color:#d88200">&#34;user_name&#34;</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">UserName</span><span style="color:#111">;</span>
+				<span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">HttpContext</span><span style="color:#111">.</span><span style="color:#111">Items</span><span style="color:#111">[</span><span style="color:#d88200">&#34;user&#34;</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">User</span><span style="color:#111">;</span>
+				<span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">HttpContext</span><span style="color:#111">.</span><span style="color:#111">Items</span><span style="color:#111">[</span><span style="color:#d88200">&#34;session_id&#34;</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">;</span>
+
+				<span style="color:#75715e">// Set IsAuthenticated and add roles to claims
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">sessionUser</span> <span style="color:#111">=</span> <span style="color:#111">(</span><span style="color:#111">SessionUserV1</span><span style="color:#111">)</span><span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">User</span><span style="color:#111">;</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">roles</span> <span style="color:#111">=</span> <span style="color:#111">sessionUser</span><span style="color:#111">.</span><span style="color:#111">Roles</span> <span style="color:#111">??</span> <span style="color:#00a8c8">new</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;();</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">claims</span> <span style="color:#111">=</span> <span style="color:#111">roles</span><span style="color:#111">.</span><span style="color:#111">Select</span><span style="color:#111">(</span><span style="color:#111">r</span> <span style="color:#111">=&gt;</span> <span style="color:#00a8c8">new</span> <span style="color:#111">Claim</span><span style="color:#111">(</span><span style="color:#111">ClaimTypes</span><span style="color:#111">.</span><span style="color:#111">Role</span><span style="color:#111">,</span> <span style="color:#111">r</span><span style="color:#111">)).</span><span style="color:#111">ToList</span><span style="color:#111">();</span>
+
+				<span style="color:#75715e">// Set user id as claim for OwnerAuthorizer
+</span><span style="color:#75715e"></span>				<span style="color:#111">claims</span><span style="color:#111">.</span><span style="color:#111">Add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">Claim</span><span style="color:#111">(</span><span style="color:#d88200">&#34;http://schemas.microsoft.com/identity/claims/objectidentifier&#34;</span><span style="color:#111">,</span> <span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">UserId</span><span style="color:#111">));</span>
+
+				<span style="color:#111">user</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#111">ClaimsIdentity</span><span style="color:#111">(</span><span style="color:#111">claims</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Basic&#34;</span><span style="color:#111">));</span>
+			<span style="color:#111">}</span>
+
+			<span style="color:#00a8c8">await</span> <span style="color:#111">next</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">routeData</span><span style="color:#111">);</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">OpenSessionAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">AccountV1</span> <span style="color:#111">account</span><span style="color:#111">,</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;</span> <span style="color:#111">roles</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#75715e">// Retrieve sites for user
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">siteIds</span> <span style="color:#111">=</span> <span style="color:#111">roles</span>
+					<span style="color:#111">.</span><span style="color:#111">Where</span><span style="color:#111">(</span><span style="color:#111">r</span> <span style="color:#111">=&gt;</span> <span style="color:#111">r</span><span style="color:#111">.</span><span style="color:#111">IndexOf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;:&#34;</span><span style="color:#111">)</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+					<span style="color:#111">.</span><span style="color:#111">Select</span><span style="color:#111">(</span><span style="color:#111">r</span> <span style="color:#111">=&gt;</span> <span style="color:#111">r</span><span style="color:#111">.</span><span style="color:#111">Substring</span><span style="color:#111">(</span><span style="color:#ae81ff">0</span><span style="color:#111">,</span> <span style="color:#111">r</span><span style="color:#111">.</span><span style="color:#111">IndexOf</span><span style="color:#111">(</span><span style="color:#d88200">&#34;:&#34;</span><span style="color:#111">)))</span>
+					<span style="color:#111">.</span><span style="color:#111">ToList</span><span style="color:#111">();</span>
+
+				<span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#111">SiteV1</span><span style="color:#111">&gt;</span> <span style="color:#111">sites</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#111">SiteV1</span><span style="color:#111">&gt;();</span>
+
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">siteIds</span><span style="color:#111">.</span><span style="color:#111">Count</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">FilterParams</span><span style="color:#111">.</span><span style="color:#111">FromTuples</span><span style="color:#111">(</span><span style="color:#d88200">&#34;ids&#34;</span><span style="color:#111">,</span> <span style="color:#111">siteIds</span><span style="color:#111">);</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sitesClient</span><span style="color:#111">.</span><span style="color:#111">GetSitesAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+
+					<span style="color:#111">sites</span> <span style="color:#111">=</span> <span style="color:#111">page</span><span style="color:#111">.</span><span style="color:#111">Data</span><span style="color:#111">;</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#111">UserPasswordInfoV1</span> <span style="color:#111">passwordInfo</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">passwordsClient</span><span style="color:#111">.</span><span style="color:#111">GetPasswordInfoAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+
+				<span style="color:#111">ConfigParams</span> <span style="color:#111">settings</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">settingsClient</span><span style="color:#111">.</span><span style="color:#111">GetSectionByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+
+				<span style="color:#75715e">// Open a new user session
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">user</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">SessionUserV1</span>
+				<span style="color:#111">{</span>
+					<span style="color:#111">Id</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span>
+					<span style="color:#111">Name</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Name</span><span style="color:#111">,</span>
+					<span style="color:#111">Login</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Login</span><span style="color:#111">,</span>
+					<span style="color:#111">CreateTime</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">CreateTime</span><span style="color:#111">,</span>
+					<span style="color:#111">TimeZone</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">TimeZone</span><span style="color:#111">,</span>
+					<span style="color:#111">Language</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Language</span><span style="color:#111">,</span>
+					<span style="color:#111">Theme</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Theme</span><span style="color:#111">,</span>
+					<span style="color:#111">Roles</span> <span style="color:#111">=</span> <span style="color:#111">roles</span><span style="color:#111">,</span>
+					<span style="color:#111">Sites</span> <span style="color:#111">=</span> <span style="color:#111">sites</span><span style="color:#111">.</span><span style="color:#111">Select</span><span style="color:#111">(</span><span style="color:#111">s</span> <span style="color:#111">=&gt;</span> <span style="color:#00a8c8">new</span> <span style="color:#111">SessionSiteV1</span> <span style="color:#111">{</span> <span style="color:#111">Id</span> <span style="color:#111">=</span> <span style="color:#111">s</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">Name</span> <span style="color:#111">=</span> <span style="color:#111">s</span><span style="color:#111">.</span><span style="color:#111">Name</span> <span style="color:#111">}).</span><span style="color:#111">ToList</span><span style="color:#111">&lt;</span><span style="color:#111">ISessionSite</span><span style="color:#111">&gt;(),</span>
+					<span style="color:#75715e">//Settings: settings,
+</span><span style="color:#75715e"></span>					<span style="color:#111">ChangePwdTime</span> <span style="color:#111">=</span> <span style="color:#111">passwordInfo</span><span style="color:#111">?.</span><span style="color:#111">ChangeTime</span><span style="color:#111">,</span>
+					<span style="color:#111">CustomHdr</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">CustomHdr</span><span style="color:#111">,</span>
+					<span style="color:#111">CustomDat</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">CustomDat</span>
+				<span style="color:#111">};</span>
+
+				<span style="color:#00a8c8">string</span> <span style="color:#111">address</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>  <span style="color:#75715e">// HttpRequestDetector.detectAddress(req);
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">string</span> <span style="color:#111">client</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>  <span style="color:#75715e">// HttpRequestDetector.detectBrowser(req);
+</span><span style="color:#75715e"></span>									   <span style="color:#75715e">//string platform = HttpRequestDetector.detectPlatform(req);
+</span><span style="color:#75715e"></span>
+				<span style="color:#111">SessionV1</span> <span style="color:#111">session</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">OpenSessionAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Name</span><span style="color:#111">,</span> <span style="color:#111">address</span><span style="color:#111">,</span> <span style="color:#111">client</span><span style="color:#111">,</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">session</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">SignupAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#75715e">// Validate password first
+</span><span style="color:#75715e"></span>				<span style="color:#75715e">// Todo: complete implementation after validate password is added
+</span><span style="color:#75715e"></span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">parameters</span> <span style="color:#111">=</span> <span style="color:#111">GetParameters</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">signupData</span> <span style="color:#111">=</span> <span style="color:#111">JsonConverter</span><span style="color:#111">.</span><span style="color:#111">FromJson</span><span style="color:#111">&lt;</span><span style="color:#111">SignupData</span><span style="color:#111">&gt;(</span><span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">RequestBody</span><span style="color:#111">);</span>
+
+				<span style="color:#75715e">// Create account
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">newAccount</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">AccountV1</span>
+				<span style="color:#111">{</span>
+					<span style="color:#111">Name</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Name</span><span style="color:#111">,</span>
+					<span style="color:#111">Login</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Login</span> <span style="color:#111">??</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Email</span><span style="color:#111">,</span> <span style="color:#75715e">// Use email by default
+</span><span style="color:#75715e"></span>					<span style="color:#111">Language</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Language</span><span style="color:#111">,</span>
+					<span style="color:#111">Theme</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Theme</span><span style="color:#111">,</span>
+					<span style="color:#111">TimeZone</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">TimeZone</span>
+				<span style="color:#111">};</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">account</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">accountsClient</span><span style="color:#111">.</span><span style="color:#111">CreateAccountAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">newAccount</span><span style="color:#111">);</span>
+
+				<span style="color:#75715e">// Create password for the account
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">password</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Password</span><span style="color:#111">;</span>
+
+				<span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">passwordsClient</span><span style="color:#111">.</span><span style="color:#111">SetPasswordAsync</span><span style="color:#111">(</span>
+					<span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">password</span><span style="color:#111">);</span>
+
+				<span style="color:#75715e">// Activate all pending invitations
+</span><span style="color:#75715e"></span>				<span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;</span> <span style="color:#111">roles</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;();</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">email</span> <span style="color:#111">=</span> <span style="color:#111">signupData</span><span style="color:#111">.</span><span style="color:#111">Email</span><span style="color:#111">;</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">invitations</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">invitationsClient</span><span style="color:#111">.</span><span style="color:#111">ActivateInvitationsAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">email</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">invited</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span><span style="color:#111">;</span>
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">invitations</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#75715e">// Calculate user roles from activated invitations
+</span><span style="color:#75715e"></span>					<span style="color:#00a8c8">foreach</span> <span style="color:#111">(</span><span style="color:#00a8c8">var</span> <span style="color:#111">invitation</span> <span style="color:#00a8c8">in</span> <span style="color:#111">invitations</span><span style="color:#111">)</span>
+					<span style="color:#111">{</span>
+						<span style="color:#75715e">// Was user invited with the same email?
+</span><span style="color:#75715e"></span>						<span style="color:#111">invited</span> <span style="color:#111">=</span> <span style="color:#111">invited</span> <span style="color:#111">||</span> <span style="color:#111">email</span> <span style="color:#111">==</span> <span style="color:#111">invitation</span><span style="color:#111">.</span><span style="color:#111">InviteeEmail</span><span style="color:#111">;</span>
+
+						<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">invitation</span><span style="color:#111">.</span><span style="color:#111">SiteId</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+						<span style="color:#111">{</span>
+							<span style="color:#111">invitation</span><span style="color:#111">.</span><span style="color:#111">Role</span> <span style="color:#111">=</span> <span style="color:#111">invitation</span><span style="color:#111">.</span><span style="color:#111">Role</span> <span style="color:#111">??</span> <span style="color:#d88200">&#34;user&#34;</span><span style="color:#111">;</span>
+							<span style="color:#00a8c8">var</span> <span style="color:#111">role</span> <span style="color:#111">=</span> <span style="color:#111">invitation</span><span style="color:#111">.</span><span style="color:#111">SiteId</span> <span style="color:#111">+</span> <span style="color:#d88200">&#39;:&#39;</span> <span style="color:#111">+</span> <span style="color:#111">invitation</span><span style="color:#111">.</span><span style="color:#111">Role</span><span style="color:#111">;</span>
+							<span style="color:#111">roles</span><span style="color:#111">.</span><span style="color:#111">Add</span><span style="color:#111">(</span><span style="color:#111">role</span><span style="color:#111">);</span>
+						<span style="color:#111">}</span>
+					<span style="color:#111">}</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#75715e">// Create email settings for the account
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">newEmailSettings</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">EmailSettingsV1</span>
+				<span style="color:#111">{</span>
+					<span style="color:#111">Id</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span>
+                    <span style="color:#111">Name</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Name</span><span style="color:#111">,</span>
+                    <span style="color:#111">Email</span> <span style="color:#111">=</span> <span style="color:#111">email</span><span style="color:#111">,</span>
+                    <span style="color:#111">Language</span> <span style="color:#111">=</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Language</span>
+				<span style="color:#111">};</span>
+
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#ae81ff">_</span><span style="color:#111">emailSettingsClient</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">invited</span><span style="color:#111">)</span>
+					<span style="color:#111">{</span>
+						<span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">emailSettingsClient</span><span style="color:#111">.</span><span style="color:#111">SetVerifiedSettingsAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">newEmailSettings</span><span style="color:#111">);</span>
+					<span style="color:#111">}</span>
+					<span style="color:#00a8c8">else</span>
+					<span style="color:#111">{</span>
+						<span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">emailSettingsClient</span><span style="color:#111">.</span><span style="color:#111">SetSettingsAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">newEmailSettings</span><span style="color:#111">);</span>
+					<span style="color:#111">}</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#00a8c8">await</span> <span style="color:#111">OpenSessionAsync</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">,</span> <span style="color:#111">roles</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">SignupValidateAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">var</span> <span style="color:#111">parameters</span> <span style="color:#111">=</span> <span style="color:#111">GetParameters</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+
+			<span style="color:#00a8c8">var</span> <span style="color:#111">login</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;login&#34;</span><span style="color:#111">);</span>
+
+			<span style="color:#111">Exception</span> <span style="color:#111">err</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+			<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">login</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">try</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">account</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">accountsClient</span><span style="color:#111">.</span><span style="color:#111">GetAccountByIdOrLoginAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">login</span><span style="color:#111">);</span>
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">account</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+					<span style="color:#111">{</span>
+						<span style="color:#111">err</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BadRequestException</span><span style="color:#111">(</span>
+							<span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;LOGIN_ALREADY_USED&#34;</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;Login &#34;</span> <span style="color:#111">+</span> <span style="color:#111">login</span> <span style="color:#111">+</span> <span style="color:#d88200">&#34; already being used&#34;</span>
+						<span style="color:#111">).</span><span style="color:#111">WithDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#34;login&#34;</span><span style="color:#111">,</span> <span style="color:#111">login</span><span style="color:#111">);</span>
+					<span style="color:#111">}</span>
+				<span style="color:#111">}</span>
+				<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#111">err</span> <span style="color:#111">=</span> <span style="color:#111">ex</span><span style="color:#111">;</span>
+				<span style="color:#111">}</span>
+			<span style="color:#111">}</span>
+
+			<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">err</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">err</span><span style="color:#111">);</span>
+			<span style="color:#00a8c8">else</span> <span style="color:#00a8c8">await</span> <span style="color:#111">SendEmptyResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">);</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">SigninAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">var</span> <span style="color:#111">parameters</span> <span style="color:#111">=</span> <span style="color:#111">GetParameters</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+
+			<span style="color:#00a8c8">var</span> <span style="color:#111">login</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;login&#34;</span><span style="color:#111">);</span>
+			<span style="color:#00a8c8">var</span> <span style="color:#111">password</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;password&#34;</span><span style="color:#111">);</span>
+
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#75715e">// Find user account
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">account</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">accountsClient</span><span style="color:#111">.</span><span style="color:#111">GetAccountByIdOrLoginAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">login</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">account</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BadRequestException</span><span style="color:#111">(</span>
+							<span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;WRONG_LOGIN&#34;</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;Account &#34;</span> <span style="color:#111">+</span> <span style="color:#111">login</span> <span style="color:#111">+</span> <span style="color:#d88200">&#34; was not found&#34;</span>
+						<span style="color:#111">).</span><span style="color:#111">WithDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#34;login&#34;</span><span style="color:#111">,</span> <span style="color:#111">login</span><span style="color:#111">));</span>
+
+					<span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#75715e">// Authenticate user
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">false</span><span style="color:#111">;</span>
+
+				<span style="color:#00a8c8">try</span>
+				<span style="color:#111">{</span>
+					<span style="color:#111">result</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">passwordsClient</span><span style="color:#111">.</span><span style="color:#111">AuthenticateAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">,</span> <span style="color:#111">password</span><span style="color:#111">);</span>
+				<span style="color:#111">}</span>
+				<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#111">ex</span><span style="color:#111">.</span><span style="color:#111">Message</span><span style="color:#111">.</span><span style="color:#111">Contains</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Invalid password&#34;</span><span style="color:#111">))</span>
+						<span style="color:#00a8c8">throw</span><span style="color:#111">;</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#111">result</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BadRequestException</span><span style="color:#111">(</span>
+							<span style="color:#00a8c8">null</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;WRONG_PASSWORD&#34;</span><span style="color:#111">,</span>
+							<span style="color:#d88200">&#34;Wrong password for account &#34;</span> <span style="color:#111">+</span> <span style="color:#111">login</span>
+						<span style="color:#111">).</span><span style="color:#111">WithDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#34;login&#34;</span><span style="color:#111">,</span> <span style="color:#111">login</span><span style="color:#111">));</span>
+
+					<span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#75715e">// Retrieve user roles
+</span><span style="color:#75715e"></span>				<span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;</span> <span style="color:#111">roles</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">List</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;();</span>
+
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#ae81ff">_</span><span style="color:#111">rolesClient</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">data</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">rolesClient</span><span style="color:#111">.</span><span style="color:#111">GetRolesByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">);</span>
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">data</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+					<span style="color:#111">{</span>
+						<span style="color:#111">roles</span><span style="color:#111">.</span><span style="color:#111">AddRange</span><span style="color:#111">(</span><span style="color:#111">data</span><span style="color:#111">);</span>
+					<span style="color:#111">}</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#00a8c8">await</span> <span style="color:#111">OpenSessionAsync</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">account</span><span style="color:#111">,</span> <span style="color:#111">roles</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">SignoutAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#75715e">// Cleanup cookie with session id
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">// if (_cookieEnabled)
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">//     response.ClearCookie(_cookie);
+</span><span style="color:#75715e"></span>			<span style="color:#00a8c8">var</span> <span style="color:#111">sessionId</span> <span style="color:#111">=</span> <span style="color:#111">GetContextItem</span><span style="color:#111">&lt;</span><span style="color:#00a8c8">string</span><span style="color:#111">&gt;(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;session_id&#34;</span><span style="color:#111">);</span>
+
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">sessionId</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">CloseSessionAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">sessionId</span><span style="color:#111">);</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendEmptyResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">GetSessionsAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">GetFilterParams</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">paging</span> <span style="color:#111">=</span> <span style="color:#111">GetPagingParams</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">GetSessionsAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">page</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">RestoreSessionAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">parameters</span> <span style="color:#111">=</span> <span style="color:#111">GetParameters</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">sessionId</span> <span style="color:#111">=</span> <span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;session_id&#34;</span><span style="color:#111">);</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">session</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">GetSessionByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">sessionId</span><span style="color:#111">);</span>
+
+				<span style="color:#75715e">// If session closed then return null
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">session</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#111">&amp;&amp;</span> <span style="color:#111">!</span><span style="color:#111">session</span><span style="color:#111">.</span><span style="color:#111">Active</span><span style="color:#111">)</span>
+					<span style="color:#111">session</span> <span style="color:#111">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">session</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#00a8c8">await</span> <span style="color:#111">SendEmptyResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">else</span> <span style="color:#00a8c8">await</span> <span style="color:#111">SendResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">session</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">GetUserSessionsAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">filter</span> <span style="color:#111">=</span> <span style="color:#111">GetFilterParams</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">paging</span> <span style="color:#111">=</span> <span style="color:#111">GetPagingParams</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">parameters</span> <span style="color:#111">=</span> <span style="color:#111">GetParameters</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">userId</span> <span style="color:#111">=</span> 
+					<span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;user_id&#34;</span><span style="color:#111">)</span> <span style="color:#111">??</span> 
+					<span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;account_id&#34;</span><span style="color:#111">);</span>
+
+				<span style="color:#111">filter</span><span style="color:#111">.</span><span style="color:#111">SetAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#34;user_id&#34;</span><span style="color:#111">,</span> <span style="color:#111">userId</span><span style="color:#111">);</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">page</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">GetSessionsAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">page</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">GetCurrentSessionAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#75715e">// parse headers first, and if nothing in headers get cookie
+</span><span style="color:#75715e"></span>				<span style="color:#00a8c8">var</span> <span style="color:#111">sessionId</span> <span style="color:#111">=</span> <span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">Headers</span><span style="color:#111">[</span><span style="color:#d88200">&#34;x-session-id&#34;</span><span style="color:#111">];</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">session</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">GetSessionByIdAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">sessionId</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">session</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+
+		<span style="color:#00a8c8">public</span> <span style="color:#00a8c8">async</span> <span style="color:#111">Task</span> <span style="color:#111">CloseSessionAsync</span><span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">)</span>
+		<span style="color:#111">{</span>
+			<span style="color:#00a8c8">try</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">parameters</span> <span style="color:#111">=</span> <span style="color:#111">GetParameters</span><span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">var</span> <span style="color:#111">sessionId</span> <span style="color:#111">=</span>
+					<span style="color:#111">parameters</span><span style="color:#111">.</span><span style="color:#111">GetAsNullableString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;session_id&#34;</span><span style="color:#111">);</span>
+
+				<span style="color:#00a8c8">var</span> <span style="color:#111">session</span> <span style="color:#111">=</span> <span style="color:#00a8c8">await</span> <span style="color:#ae81ff">_</span><span style="color:#111">sessionsClient</span><span style="color:#111">.</span><span style="color:#111">CloseSessionAsync</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#111">sessionId</span><span style="color:#111">);</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendResultAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">session</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+			<span style="color:#00a8c8">catch</span> <span style="color:#111">(</span><span style="color:#111">Exception</span> <span style="color:#111">ex</span><span style="color:#111">)</span>
+			<span style="color:#111">{</span>
+				<span style="color:#00a8c8">await</span> <span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ex</span><span style="color:#111">);</span>
+			<span style="color:#111">}</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+</code></pre></div>
 
 
       </main>
