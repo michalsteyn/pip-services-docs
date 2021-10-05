@@ -23,12 +23,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_facade/step4/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-09-22T03:04:36+03:00" />
+<meta property="article:modified_time" content="2021-10-05T01:35:53+02:00" />
 
 <meta itemprop="name" content="Step 5. Authorization">
 <meta itemprop="description" content="Once we’ve established who our user is, we need to implement some way of controlling what operations our user can perform, based on the rights he/she has been assigned. In this tutorial, we will be taking a look at how to install access limitations that are based on user roles. The roles themselves are stored in the Roles microservice and are loaded into a UserSession by the loadSession interceptor we discussed in the previous step.">
-<meta itemprop="dateModified" content="2021-09-22T03:04:36+03:00" />
-<meta itemprop="wordCount" content="566">
+<meta itemprop="dateModified" content="2021-10-05T01:35:53+02:00" />
+<meta itemprop="wordCount" content="1545">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 5. Authorization"/>
 <meta name="twitter:description" content="Once we’ve established who our user is, we need to implement some way of controlling what operations our user can perform, based on the rights he/she has been assigned. In this tutorial, we will be taking a look at how to install access limitations that are based on user roles. The roles themselves are stored in the Roles microservice and are loaded into a UserSession by the loadSession interceptor we discussed in the previous step."/>
@@ -276946,6 +276946,352 @@
 	       
 	<p>Once we’ve established who our user is, we need to implement some way of controlling what operations our user can perform, based on the rights he/she has been assigned. In this tutorial, we will be taking a look at how to install access limitations that are based on user roles. The roles themselves are stored in the Roles microservice and are loaded into a UserSession by the loadSession interceptor we discussed in the previous step.</p>
 <p>Our Authorizer class was made to provide flexible access management. We will be using this class to limit access to certain operations in our facade’s RESTful services. This class’s implementation can be found in the <strong>Authorize.py</strong> file, located in the folder <strong>services/version1</strong>. Its code is as follows:</p>
+<div class="content-tab-selector">
+	<div class="btn-group tab-selector-btn-group" role="group" aria-label="Language selector">
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+	</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+<p><strong>/src/services/version1/Authorize.ts</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">let</span> <span style="color:#75af00">_</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">require</span><span style="color:#111">(</span><span style="color:#d88200">&#39;lodash&#39;</span><span style="color:#111">);</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">UnauthorizedException</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">HttpResponseSender</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">BasicAuthManager</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">RoleAuthManager</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">OwnerAuthManager</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">AuthorizerV1</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">basicAuth</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">BasicAuthManager</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">roleAuth</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">RoleAuthManager</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">ownerAuth</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">OwnerAuthManager</span><span style="color:#111">();</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">anybody</span><span style="color:#111">()</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">basicAuth</span><span style="color:#111">.</span><span style="color:#75af00">anybody</span><span style="color:#111">();</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">signed</span><span style="color:#111">()</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">basicAuth</span><span style="color:#111">.</span><span style="color:#75af00">signed</span><span style="color:#111">();</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">owner</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">ownerAuth</span><span style="color:#111">.</span><span style="color:#75af00">owner</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+        
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">ownerOrAdmin</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">ownerAuth</span><span style="color:#111">.</span><span style="color:#75af00">ownerOrAdmin</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">siteRoles</span><span style="color:#111">(</span><span style="color:#75af00">roles</span>: <span style="color:#00a8c8">string</span><span style="color:#111">[],</span> <span style="color:#75af00">idParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">(</span><span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+            <span style="color:#00a8c8">let</span> <span style="color:#75af00">user</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">user</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">user</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                <span style="color:#75af00">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#75af00">sendError</span><span style="color:#111">(</span>
+                    <span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">,</span>
+                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">UnauthorizedException</span><span style="color:#111">(</span>
+                        <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_SIGNED&#39;</span><span style="color:#111">,</span>
+                        <span style="color:#d88200">&#39;User must be signed in to perform this operation&#39;</span>
+                    <span style="color:#111">).</span><span style="color:#75af00">withStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">)</span>
+                <span style="color:#111">);</span>
+            <span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
+                <span style="color:#00a8c8">let</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">params</span><span style="color:#111">[</span><span style="color:#75af00">idParam</span><span style="color:#111">];</span>
+                <span style="color:#00a8c8">let</span> <span style="color:#75af00">authorized</span> <span style="color:#f92672">=</span> <span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">includes</span><span style="color:#111">(</span><span style="color:#75af00">user</span><span style="color:#111">.</span><span style="color:#75af00">roles</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">);</span>
+                
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">siteId</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#75af00">authorized</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">for</span> <span style="color:#111">(</span><span style="color:#00a8c8">let</span> <span style="color:#75af00">role</span> <span style="color:#00a8c8">of</span> <span style="color:#75af00">roles</span><span style="color:#111">)</span>
+                        <span style="color:#75af00">authorized</span> <span style="color:#f92672">=</span> <span style="color:#75af00">authorized</span> <span style="color:#f92672">||</span> <span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">includes</span><span style="color:#111">(</span><span style="color:#75af00">user</span><span style="color:#111">.</span><span style="color:#75af00">roles</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">role</span><span style="color:#111">);</span>
+                <span style="color:#111">}</span>
+
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#75af00">authorized</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                    <span style="color:#75af00">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#75af00">sendError</span><span style="color:#111">(</span>
+                        <span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">,</span>
+                        <span style="color:#00a8c8">new</span> <span style="color:#75af00">UnauthorizedException</span><span style="color:#111">(</span>
+                            <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_IN_SITE_ROLE&#39;</span><span style="color:#111">,</span>
+                            <span style="color:#d88200">&#39;User must be site:&#39;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">roles</span><span style="color:#111">.</span><span style="color:#75af00">join</span><span style="color:#111">(</span><span style="color:#d88200">&#39; or site:&#39;</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39; to perform this operation&#39;</span>
+                        <span style="color:#111">).</span><span style="color:#75af00">withDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#39;roles&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">roles</span><span style="color:#111">).</span><span style="color:#75af00">withStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">)</span>
+                    <span style="color:#111">);</span>
+                <span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
+                    <span style="color:#75af00">next</span><span style="color:#111">();</span>
+                <span style="color:#111">}</span>
+            <span style="color:#111">}</span>
+        <span style="color:#111">};</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">admin</span><span style="color:#111">()</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">roleAuth</span><span style="color:#111">.</span><span style="color:#75af00">userInRole</span><span style="color:#111">(</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">siteAdmin</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">siteRoles</span><span style="color:#111">([</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">],</span> <span style="color:#75af00">idParam</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">siteManager</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">siteRoles</span><span style="color:#111">([</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;manager&#39;</span><span style="color:#111">],</span> <span style="color:#75af00">idParam</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">siteUser</span><span style="color:#111">(</span><span style="color:#75af00">idParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">siteRoles</span><span style="color:#111">([</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;manager&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;user&#39;</span><span style="color:#111">],</span> <span style="color:#75af00">idParam</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
+
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">siteAdminOrOwner</span><span style="color:#111">(</span><span style="color:#75af00">userIdParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;user_id&#39;</span><span style="color:#111">,</span> <span style="color:#75af00">siteIdParam</span>: <span style="color:#00a8c8">string</span> <span style="color:#f92672">=</span> <span style="color:#d88200">&#39;site_id&#39;</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#111">(</span><span style="color:#75af00">req</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">res</span>: <span style="color:#00a8c8">any</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#f92672">:</span> <span style="color:#111">()</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#00a8c8">void</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">return</span> <span style="color:#111">(</span><span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">next</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span>
+            <span style="color:#00a8c8">let</span> <span style="color:#75af00">user</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">user</span><span style="color:#111">;</span>
+            <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">user</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                <span style="color:#75af00">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#75af00">sendError</span><span style="color:#111">(</span>
+                    <span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">,</span>
+                    <span style="color:#00a8c8">new</span> <span style="color:#75af00">UnauthorizedException</span><span style="color:#111">(</span>
+                        <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_SIGNED&#39;</span><span style="color:#111">,</span>
+                        <span style="color:#d88200">&#39;User must be signed in to perform this operation&#39;</span>
+                    <span style="color:#111">).</span><span style="color:#75af00">withStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">)</span>
+                <span style="color:#111">);</span>
+            <span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
+                <span style="color:#00a8c8">let</span> <span style="color:#75af00">userId</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">params</span><span style="color:#111">[</span><span style="color:#75af00">userIdParam</span><span style="color:#111">]</span> <span style="color:#f92672">||</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">param</span><span style="color:#111">(</span><span style="color:#75af00">userIdParam</span><span style="color:#111">);</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">userId</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">userId</span> <span style="color:#f92672">==</span> <span style="color:#75af00">user</span><span style="color:#111">.</span><span style="color:#75af00">user_id</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                    <span style="color:#75af00">next</span><span style="color:#111">();</span>
+                <span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">let</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">=</span> <span style="color:#75af00">req</span><span style="color:#111">.</span><span style="color:#75af00">params</span><span style="color:#111">[</span><span style="color:#75af00">siteIdParam</span><span style="color:#111">];</span>
+                    <span style="color:#00a8c8">let</span> <span style="color:#75af00">authorized</span> <span style="color:#f92672">=</span> <span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">includes</span><span style="color:#111">(</span><span style="color:#75af00">user</span><span style="color:#111">.</span><span style="color:#75af00">roles</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">)</span>
+                        <span style="color:#f92672">||</span> <span style="color:#75af00">_</span><span style="color:#111">.</span><span style="color:#75af00">includes</span><span style="color:#111">(</span><span style="color:#75af00">user</span><span style="color:#111">.</span><span style="color:#75af00">roles</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;:admin&#39;</span><span style="color:#111">);</span>
+                    
+                    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#75af00">authorized</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+                        <span style="color:#75af00">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#75af00">sendError</span><span style="color:#111">(</span>
+                            <span style="color:#75af00">req</span><span style="color:#111">,</span> <span style="color:#75af00">res</span><span style="color:#111">,</span>
+                            <span style="color:#00a8c8">new</span> <span style="color:#75af00">UnauthorizedException</span><span style="color:#111">(</span>
+                                <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;NOT_IN_SITE_ROLE&#39;</span><span style="color:#111">,</span>
+                                <span style="color:#d88200">&#39;User must be site:admin to perform this operation&#39;</span>
+                            <span style="color:#111">).</span><span style="color:#75af00">withDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#39;roles&#39;</span><span style="color:#111">,</span> <span style="color:#111">[</span><span style="color:#d88200">&#39;admin&#39;</span><span style="color:#111">]).</span><span style="color:#75af00">withStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">)</span>
+                        <span style="color:#111">);</span>
+                    <span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
+                        <span style="color:#75af00">next</span><span style="color:#111">();</span>
+                    <span style="color:#111">}</span>
+                <span style="color:#111">}</span>
+            <span style="color:#111">}</span>
+        <span style="color:#111">};</span>
+    <span style="color:#111">}</span>
+
+<span style="color:#111">}</span>
+</code></pre></div>  
+</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+<p><strong>/src/service/services/version1/Authorize.cs</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#00a8c8">using</span> <span style="color:#111">Microsoft.AspNetCore.Http</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">Microsoft.AspNetCore.Routing</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Refer</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Rpc.Auth</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Rpc.Services</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Security.Claims</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Threading.Tasks</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices.Templates.Facade.Build</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices.Templates.Facade.Operations.Version1</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Collections.Generic</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">PipServices3.Commons.Errors</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">System.Linq</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">using</span> <span style="color:#111">Microsoft.Extensions.Primitives</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">namespace</span> <span style="color:#111">PipServices.Templates.Facade.Services.Version1</span>
+<span style="color:#111">{</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">AuthorizerV1</span> <span style="color:#111">:</span> <span style="color:#111">IReferenceable</span>
+    <span style="color:#111">{</span>
+        <span style="color:#00a8c8">private</span> <span style="color:#111">BasicAuthorizer</span> <span style="color:#ae81ff">_</span><span style="color:#111">basicAuth</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">BasicAuthorizer</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">private</span> <span style="color:#111">RoleAuthorizer</span> <span style="color:#ae81ff">_</span><span style="color:#111">roleAuth</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">RoleAuthorizer</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">private</span> <span style="color:#111">OwnerAuthorizer</span> <span style="color:#ae81ff">_</span><span style="color:#111">ownerAuth</span> <span style="color:#111">=</span> <span style="color:#00a8c8">new</span> <span style="color:#111">OwnerAuthorizer</span><span style="color:#111">();</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">void</span> <span style="color:#111">SetReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">Anybody</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">_</span><span style="color:#111">basicAuth</span><span style="color:#111">.</span><span style="color:#111">Anybody</span><span style="color:#111">();</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">Signed</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+			<span style="color:#00a8c8">return</span> <span style="color:#ae81ff">_</span><span style="color:#111">basicAuth</span><span style="color:#111">.</span><span style="color:#111">Signed</span><span style="color:#111">();</span>
+		<span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">Owner</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">idParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;user_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">_</span><span style="color:#111">ownerAuth</span><span style="color:#111">.</span><span style="color:#111">Owner</span><span style="color:#111">(</span><span style="color:#111">idParam</span><span style="color:#111">);</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">OwnerOrAdmin</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">idParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;user_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">routeData</span><span style="color:#111">,</span> <span style="color:#111">next</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+            <span style="color:#111">{</span>
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">user</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span> <span style="color:#111">||</span> <span style="color:#111">!</span><span style="color:#111">user</span><span style="color:#111">.</span><span style="color:#111">Identity</span><span style="color:#111">.</span><span style="color:#111">IsAuthenticated</span><span style="color:#111">)</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">await</span> <span style="color:#111">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span>
+                        <span style="color:#111">response</span><span style="color:#111">,</span>
+                        <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+                            <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;NOT_SIGNED&#34;</span><span style="color:#111">,</span>
+                            <span style="color:#d88200">&#34;User must be signed in to perform this operation&#34;</span>
+                        <span style="color:#111">).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">)</span>
+                    <span style="color:#111">);</span>
+                <span style="color:#111">}</span>
+                <span style="color:#00a8c8">else</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">identity</span> <span style="color:#111">=</span> <span style="color:#111">user</span><span style="color:#111">.</span><span style="color:#111">Identity</span> <span style="color:#00a8c8">as</span> <span style="color:#111">ClaimsIdentity</span><span style="color:#111">;</span>
+                    <span style="color:#00a8c8">var</span> <span style="color:#111">userIdClaim</span> <span style="color:#111">=</span> <span style="color:#111">identity</span><span style="color:#111">?.</span><span style="color:#111">Claims</span><span style="color:#111">.</span><span style="color:#111">FirstOrDefault</span><span style="color:#111">(</span><span style="color:#111">c</span> <span style="color:#111">=&gt;</span>
+                        <span style="color:#111">c</span><span style="color:#111">.</span><span style="color:#111">Type</span> <span style="color:#111">==</span> <span style="color:#d88200">&#34;http://schemas.microsoft.com/identity/claims/objectidentifier&#34;</span><span style="color:#111">);</span>
+
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">Query</span><span style="color:#111">.</span><span style="color:#111">TryGetValue</span><span style="color:#111">(</span><span style="color:#111">idParam</span><span style="color:#111">,</span> <span style="color:#00a8c8">out</span> <span style="color:#111">StringValues</span> <span style="color:#111">userId</span><span style="color:#111">))</span>
+					<span style="color:#111">{</span>
+						<span style="color:#111">userId</span> <span style="color:#111">=</span> <span style="color:#111">routeData</span><span style="color:#111">.</span><span style="color:#111">Values</span><span style="color:#111">.</span><span style="color:#111">TryGetValue</span><span style="color:#111">(</span><span style="color:#111">idParam</span><span style="color:#111">,</span> <span style="color:#00a8c8">out</span> <span style="color:#00a8c8">object</span> <span style="color:#111">idValue</span><span style="color:#111">)</span> 
+                            <span style="color:#111">?</span> <span style="color:#00a8c8">new</span> <span style="color:#111">StringValues</span><span style="color:#111">(</span><span style="color:#111">idValue</span><span style="color:#111">.</span><span style="color:#111">ToString</span><span style="color:#111">())</span>
+                            <span style="color:#111">:</span> <span style="color:#00a8c8">new</span> <span style="color:#111">StringValues</span><span style="color:#111">();</span>
+					<span style="color:#111">}</span>
+
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">userIdClaim</span><span style="color:#111">?.</span><span style="color:#111">Value</span> <span style="color:#111">!=</span> <span style="color:#111">userId</span><span style="color:#111">.</span><span style="color:#111">ToString</span><span style="color:#111">())</span>
+                    <span style="color:#111">{</span>
+                        <span style="color:#00a8c8">await</span> <span style="color:#111">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span>
+                            <span style="color:#111">response</span><span style="color:#111">,</span>
+                            <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+                                <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;FORBIDDEN&#34;</span><span style="color:#111">,</span>
+                                <span style="color:#d88200">&#34;Only data owner can perform this operation&#34;</span>
+                            <span style="color:#111">).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">)</span>
+                        <span style="color:#111">);</span>
+                    <span style="color:#111">}</span>
+                    <span style="color:#00a8c8">else</span>
+                    <span style="color:#111">{</span>
+                        <span style="color:#00a8c8">await</span> <span style="color:#111">next</span><span style="color:#111">();</span>
+                    <span style="color:#111">}</span>
+                <span style="color:#111">}</span>
+            <span style="color:#111">};</span>
+
+            <span style="color:#75715e">//return _ownerAuth.OwnerOrAdmin(idParam);
+</span><span style="color:#75715e"></span>        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">SiteRoles</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span><span style="color:#111">[]</span> <span style="color:#111">roles</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">idParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">next</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+            <span style="color:#111">{</span>
+                <span style="color:#00a8c8">var</span> <span style="color:#111">sessionUser</span> <span style="color:#111">=</span> <span style="color:#111">HttpRequestHelper</span><span style="color:#111">.</span><span style="color:#111">GetContextItem</span><span style="color:#111">&lt;</span><span style="color:#111">SessionUserV1</span><span style="color:#111">&gt;(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;user&#34;</span><span style="color:#111">);</span>
+
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">sessionUser</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">await</span> <span style="color:#111">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+                        <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;NOT_SIGNED&#34;</span><span style="color:#111">,</span>
+                        <span style="color:#d88200">&#34;User must be signed in to perform this operation&#34;</span><span style="color:#111">,</span>
+                        <span style="color:#00a8c8">null</span>
+                    <span style="color:#111">).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">));</span>
+
+                    <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+                <span style="color:#111">}</span>
+
+                <span style="color:#00a8c8">var</span> <span style="color:#111">siteId</span> <span style="color:#111">=</span> <span style="color:#111">routeData</span><span style="color:#111">.</span><span style="color:#111">Values</span><span style="color:#111">[</span><span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">];</span>
+                <span style="color:#00a8c8">var</span> <span style="color:#111">authorized</span> <span style="color:#111">=</span> <span style="color:#111">sessionUser</span><span style="color:#111">.</span><span style="color:#111">Roles</span><span style="color:#111">.</span><span style="color:#111">Contains</span><span style="color:#111">(</span><span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">);</span>
+
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">siteId</span> <span style="color:#111">!=</span> <span style="color:#00a8c8">null</span> <span style="color:#111">&amp;&amp;</span> <span style="color:#111">!</span><span style="color:#111">authorized</span><span style="color:#111">)</span>
+                <span style="color:#111">{</span>
+					<span style="color:#00a8c8">foreach</span> <span style="color:#111">(</span><span style="color:#00a8c8">var</span> <span style="color:#111">role</span> <span style="color:#00a8c8">in</span> <span style="color:#111">roles</span><span style="color:#111">)</span>
+					<span style="color:#111">{</span>
+                        <span style="color:#111">authorized</span> <span style="color:#111">=</span> <span style="color:#111">authorized</span> <span style="color:#111">||</span> <span style="color:#111">sessionUser</span><span style="color:#111">.</span><span style="color:#111">Roles</span><span style="color:#111">.</span><span style="color:#111">Contains</span><span style="color:#111">(</span><span style="color:#111">siteId</span> <span style="color:#111">+</span> <span style="color:#d88200">&#34;:&#34;</span> <span style="color:#111">+</span> <span style="color:#111">role</span><span style="color:#111">);</span>
+                    <span style="color:#111">}</span>
+                <span style="color:#111">}</span>
+
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#111">authorized</span><span style="color:#111">)</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">await</span> <span style="color:#111">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+                            <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;NOT_IN_SITE_ROLE&#34;</span><span style="color:#111">,</span>
+                            <span style="color:#d88200">&#34;User must be site:&#34;</span> <span style="color:#111">+</span> <span style="color:#00a8c8">string</span><span style="color:#111">.</span><span style="color:#111">Join</span><span style="color:#111">(</span><span style="color:#d88200">&#34; or site:&#34;</span><span style="color:#111">,</span> <span style="color:#111">roles</span><span style="color:#111">)</span> <span style="color:#111">+</span> <span style="color:#d88200">&#34; to perform this operation&#34;</span>
+                        <span style="color:#111">).</span><span style="color:#111">WithDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#34;roles&#34;</span><span style="color:#111">,</span> <span style="color:#111">roles</span><span style="color:#111">).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">));</span>
+
+                    <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+                <span style="color:#111">}</span>
+
+                <span style="color:#00a8c8">await</span> <span style="color:#111">next</span><span style="color:#111">();</span>
+            <span style="color:#111">};</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">Admin</span><span style="color:#111">()</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#ae81ff">_</span><span style="color:#111">roleAuth</span><span style="color:#111">.</span><span style="color:#111">UserInRole</span><span style="color:#111">(</span><span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">);</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">SiteAdmin</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">idParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">SiteRoles</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span><span style="color:#111">[]</span> <span style="color:#111">{</span> <span style="color:#d88200">&#34;admin&#34;</span> <span style="color:#111">},</span> <span style="color:#111">idParam</span><span style="color:#111">);</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">SiteManager</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">idParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">SiteRoles</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span><span style="color:#111">[]</span> <span style="color:#111">{</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;manager&#34;</span> <span style="color:#111">},</span> <span style="color:#111">idParam</span><span style="color:#111">);</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">SiteUser</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">idParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#111">SiteRoles</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span><span style="color:#111">[]</span> <span style="color:#111">{</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;manager&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;user&#34;</span> <span style="color:#111">},</span> <span style="color:#111">idParam</span><span style="color:#111">);</span>
+        <span style="color:#111">}</span>
+
+        <span style="color:#00a8c8">public</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">HttpRequest</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;,</span> <span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">SiteAdminOrOwner</span><span style="color:#111">(</span><span style="color:#00a8c8">string</span> <span style="color:#111">userIdParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;user_id&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">string</span> <span style="color:#111">siteIdParam</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">)</span>
+        <span style="color:#111">{</span>
+            <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">async</span> <span style="color:#111">(</span><span style="color:#111">HttpRequest</span> <span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#111">HttpResponse</span> <span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#111">ClaimsPrincipal</span> <span style="color:#111">user</span><span style="color:#111">,</span> <span style="color:#111">RouteData</span> <span style="color:#111">routeData</span><span style="color:#111">,</span> <span style="color:#111">Func</span><span style="color:#111">&lt;</span><span style="color:#111">Task</span><span style="color:#111">&gt;</span> <span style="color:#111">next</span><span style="color:#111">)</span> <span style="color:#111">=&gt;</span>
+            <span style="color:#111">{</span>
+                <span style="color:#00a8c8">var</span> <span style="color:#111">sessionUser</span> <span style="color:#111">=</span> <span style="color:#111">HttpRequestHelper</span><span style="color:#111">.</span><span style="color:#111">GetContextItem</span><span style="color:#111">&lt;</span><span style="color:#111">SessionUserV1</span><span style="color:#111">&gt;(</span><span style="color:#111">request</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;user&#34;</span><span style="color:#111">);</span>
+
+                <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">sessionUser</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span>
+                <span style="color:#111">{</span>
+                    <span style="color:#00a8c8">await</span> <span style="color:#111">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+                        <span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;NOT_SIGNED&#34;</span><span style="color:#111">,</span>
+                        <span style="color:#d88200">&#34;User must be signed in to perform this operation&#34;</span><span style="color:#111">,</span>
+                        <span style="color:#00a8c8">null</span>
+                    <span style="color:#111">).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">401</span><span style="color:#111">));</span>
+
+                    <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+                <span style="color:#111">}</span>
+
+                <span style="color:#00a8c8">var</span> <span style="color:#111">userId</span> <span style="color:#111">=</span> <span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">Query</span><span style="color:#111">[</span><span style="color:#111">userIdParam</span><span style="color:#111">].</span><span style="color:#111">ToString</span><span style="color:#111">();</span>
+
+				<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">userId</span> <span style="color:#111">==</span> <span style="color:#00a8c8">null</span> <span style="color:#111">||</span> <span style="color:#111">userId</span> <span style="color:#111">!=</span> <span style="color:#111">sessionUser</span><span style="color:#111">.</span><span style="color:#111">Id</span><span style="color:#111">)</span>
+				<span style="color:#111">{</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">siteId</span> <span style="color:#111">=</span> <span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">Query</span><span style="color:#111">[</span><span style="color:#111">siteIdParam</span><span style="color:#111">].</span><span style="color:#111">ToString</span><span style="color:#111">();</span>
+					<span style="color:#00a8c8">var</span> <span style="color:#111">authorized</span> <span style="color:#111">=</span> <span style="color:#111">sessionUser</span><span style="color:#111">.</span><span style="color:#111">Roles</span><span style="color:#111">.</span><span style="color:#111">Contains</span><span style="color:#111">(</span><span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">)</span>
+                        <span style="color:#111">||</span> <span style="color:#111">sessionUser</span><span style="color:#111">.</span><span style="color:#111">Roles</span><span style="color:#111">.</span><span style="color:#111">Contains</span><span style="color:#111">(</span><span style="color:#111">siteId</span> <span style="color:#111">+</span> <span style="color:#d88200">&#34;admin&#34;</span><span style="color:#111">);</span>
+
+					<span style="color:#00a8c8">if</span> <span style="color:#111">(!</span><span style="color:#111">authorized</span><span style="color:#111">)</span>
+					<span style="color:#111">{</span>
+						<span style="color:#00a8c8">await</span> <span style="color:#111">HttpResponseSender</span><span style="color:#111">.</span><span style="color:#111">SendErrorAsync</span><span style="color:#111">(</span><span style="color:#111">response</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#111">UnauthorizedException</span><span style="color:#111">(</span>
+								<span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;NOT_IN_SITE_ROLE&#34;</span><span style="color:#111">,</span>
+								<span style="color:#d88200">&#34;User must be site:admin to perform this operation&#34;</span>
+							<span style="color:#111">).</span><span style="color:#111">WithDetails</span><span style="color:#111">(</span><span style="color:#d88200">&#34;roles&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span><span style="color:#111">[]</span> <span style="color:#111">{</span> <span style="color:#d88200">&#34;admin&#34;</span> <span style="color:#111">}).</span><span style="color:#111">WithStatus</span><span style="color:#111">(</span><span style="color:#ae81ff">403</span><span style="color:#111">));</span>
+
+						<span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+					<span style="color:#111">}</span>
+				<span style="color:#111">}</span>
+
+				<span style="color:#00a8c8">await</span> <span style="color:#111">next</span><span style="color:#111">();</span>
+            <span style="color:#111">};</span>
+        <span style="color:#111">}</span>
+    <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+</code></pre></div>    
+</div>
+<div class="content-tab-section">
+  Not available  
+</div>
+<div class="content-tab-section">
+  Not available   
+</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
 <p><strong>/pip_facades_sample_python/services/version1/Authorize.py</strong></p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
 <span style="color:#f92672">from</span> <span style="color:#111">typing</span> <span style="color:#f92672">import</span> <span style="color:#111">List</span>
@@ -277043,7 +277389,13 @@
 
         <span style="color:#00a8c8">return</span> <span style="color:#111">inner</span>
 
-</code></pre></div><p>Let’s take a closer look at each of these methods:</p>
+</code></pre></div>
+</div>
+<div class="content-tab-section">
+  Not available  
+</div>
+</div>
+Let’s take a closer look at each of these methods:
 <ul>
 <li>anybody - allows everyone access, even unauthorized users.</li>
 <li>signed - access is granted only to authorized users.</li>

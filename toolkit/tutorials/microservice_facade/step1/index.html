@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_facade/step1/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-09-22T03:04:36+03:00" />
+<meta property="article:modified_time" content="2021-10-05T01:30:33+02:00" />
 
 <meta itemprop="name" content="Step 2. Creating the Project’s Structure">
 <meta itemprop="description" content="In this tutorial, we will be using a demo project to develop a small facade for a system that consists of a few microservices:
  Beacons - business logic microservice that performs the main operations of the system. Accounts - microservice for managing user accounts Passwords - microservice for managing user passwords Roles - microservice for managing user roles Sessions - microservice for processing user sessions  The Beacons microservice was demonstrated in the Data Microservice tutorial.">
-<meta itemprop="dateModified" content="2021-09-22T03:04:36+03:00" />
-<meta itemprop="wordCount" content="256">
+<meta itemprop="dateModified" content="2021-10-05T01:30:33+02:00" />
+<meta itemprop="wordCount" content="510">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 2. Creating the Project’s Structure"/>
 <meta name="twitter:description" content="In this tutorial, we will be using a demo project to develop a small facade for a system that consists of a few microservices:
@@ -276984,7 +276984,131 @@
     └───/version1
 /requirements.txt
 /setup.py
-</code></pre><p>Create a requirements.txt file at the root of the project with the following content to configure dependencies and project parameters:</p>
+</code></pre><div class="content-tab-selector">
+	<div class="btn-group tab-selector-btn-group" role="group" aria-label="Language selector">
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+	</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+Create a /package.json file at the root of the project with the following content to configure dependencies and project parameters:
+<p><strong>/package.json</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+  <span style="color:#f92672">&#34;name&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;pip-data-microservice-node&#34;</span><span style="color:#111">,</span>
+  <span style="color:#f92672">&#34;version&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;1.0.0&#34;</span><span style="color:#111">,</span>
+  <span style="color:#f92672">&#34;main&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;./obj/src/index.js&#34;</span><span style="color:#111">,</span>
+  <span style="color:#f92672">&#34;typings&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;./obj/src/index.d.ts&#34;</span><span style="color:#111">,</span>
+  <span style="color:#f92672">&#34;scripts&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+    <span style="color:#f92672">&#34;test&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;mocha -t 5000 -R spec -u tdd --recursive ./obj/test&#34;</span>
+  <span style="color:#111">},</span>
+  <span style="color:#f92672">&#34;dependencies&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+    <span style="color:#f92672">&#34;pip-services3-commons-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^3.0.6&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;pip-services3-components-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^3.0.7&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;pip-services3-container-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;3.0.*&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;pip-services3-data-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^3.1.0&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;pip-services3-mongodb-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^3.3.0&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;pip-services3-rpc-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^3.2.4&#34;</span>
+  <span style="color:#111">},</span>
+  <span style="color:#f92672">&#34;devDependencies&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+    <span style="color:#f92672">&#34;@types/async&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^2.0.49&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;@types/chai&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^4.1.3&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;@types/lodash&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^4.14.109&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;@types/mocha&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^5.2.1&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;@types/node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^10.3.0&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;chai&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^4.1.2&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;mocha&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^5.2.0&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;restify&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;^4.3.0&#34;</span><span style="color:#111">,</span>
+    <span style="color:#f92672">&#34;pip-data-microservice-node&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;git+https://github.com/pip-services-samples/pip-services-beacons-node.git&#34;</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+</code></pre></div>  
+</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+Create a **Service.csproj**, **Client.csproj** and **Process.csproj** files at the **/src/service**, **/src/client** and **/src/process** folders with the following content to configure dependencies and project parameters:
+<p><strong>/src/service/service.csproj</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#75af00">Sdk=</span><span style="color:#d88200">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+        <span style="color:#f92672">&lt;TargetFramework&gt;</span>netstandard2.0<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
+        <span style="color:#f92672">&lt;AssemblyName&gt;</span>PipServices.Templates.Facade.Service<span style="color:#f92672">&lt;/AssemblyName&gt;</span>
+        <span style="color:#f92672">&lt;RootNamespace&gt;</span>PipServices.Templates.Facade<span style="color:#f92672">&lt;/RootNamespace&gt;</span>
+        <span style="color:#f92672">&lt;Version&gt;</span>1.0.1<span style="color:#f92672">&lt;/Version&gt;</span>
+        <span style="color:#f92672">&lt;Authors&gt;</span>Sergey Seroukhov, Denis Kuznetsov<span style="color:#f92672">&lt;/Authors&gt;</span>
+        <span style="color:#f92672">&lt;Copyright&gt;</span>Conceptual Vision Consulting LLC. 2017-2020<span style="color:#f92672">&lt;/Copyright&gt;</span>
+        <span style="color:#f92672">&lt;Description&gt;</span>PipServices.Templates facade<span style="color:#f92672">&lt;/Description&gt;</span>
+      <span style="color:#f92672">&lt;Company&gt;</span>Conceptual Vision Consulting LLC.<span style="color:#f92672">&lt;/Company&gt;</span>
+      <span style="color:#f92672">&lt;Product&gt;</span>PipServices.Templates.Facade<span style="color:#f92672">&lt;/Product&gt;</span>
+    <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+
+    <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+        <span style="color:#f92672">&lt;Compile</span> <span style="color:#75af00">Remove=</span><span style="color:#d88200">&#34;Data.cs&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+    <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+      <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#75af00">Include=</span><span style="color:#d88200">&#34;PipServices3.Commons&#34;</span> <span style="color:#75af00">Version=</span><span style="color:#d88200">&#34;3.1.2&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#75af00">Include=</span><span style="color:#d88200">&#34;PipServices3.Container&#34;</span> <span style="color:#75af00">Version=</span><span style="color:#d88200">&#34;3.1.1&#34;</span> <span style="color:#f92672">/&gt;</span>
+      <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#75af00">Include=</span><span style="color:#d88200">&#34;PipServices3.Rpc&#34;</span> <span style="color:#75af00">Version=</span><span style="color:#d88200">&#34;3.3.9&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+    <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+      <span style="color:#f92672">&lt;ProjectReference</span> <span style="color:#75af00">Include=</span><span style="color:#d88200">&#34;..\Client\Client.csproj&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+<span style="color:#f92672">&lt;/Project&gt;</span>
+</code></pre></div><p><strong>/src/client/client.csproj</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#75af00">Sdk=</span><span style="color:#d88200">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+        <span style="color:#f92672">&lt;TargetFramework&gt;</span>netstandard2.0<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
+        <span style="color:#f92672">&lt;AssemblyName&gt;</span>PipServices.Templates.Facade.Client<span style="color:#f92672">&lt;/AssemblyName&gt;</span>
+        <span style="color:#f92672">&lt;RootNamespace&gt;</span>PipServices.Templates.Facade<span style="color:#f92672">&lt;/RootNamespace&gt;</span>
+        <span style="color:#f92672">&lt;Version&gt;</span>1.0.0<span style="color:#f92672">&lt;/Version&gt;</span>
+    <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+
+    <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+      <span style="color:#f92672">&lt;PackageReference</span> <span style="color:#75af00">Include=</span><span style="color:#d88200">&#34;PipServices3.Commons&#34;</span> <span style="color:#75af00">Version=</span><span style="color:#d88200">&#34;3.1.2&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+
+<span style="color:#f92672">&lt;/Project&gt;</span>
+
+</code></pre></div><p><strong>/src/process/process.csproj</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Project</span> <span style="color:#75af00">Sdk=</span><span style="color:#d88200">&#34;Microsoft.NET.Sdk&#34;</span><span style="color:#f92672">&gt;</span>
+
+    <span style="color:#f92672">&lt;PropertyGroup&gt;</span>
+        <span style="color:#f92672">&lt;TargetFramework&gt;</span>netcoreapp2.1<span style="color:#f92672">&lt;/TargetFramework&gt;</span>
+        <span style="color:#f92672">&lt;OutputType&gt;</span>Exe<span style="color:#f92672">&lt;/OutputType&gt;</span>
+        <span style="color:#f92672">&lt;AssemblyName&gt;</span>run<span style="color:#f92672">&lt;/AssemblyName&gt;</span>
+    <span style="color:#f92672">&lt;/PropertyGroup&gt;</span>
+
+    <span style="color:#f92672">&lt;ItemGroup&gt;</span>
+      <span style="color:#f92672">&lt;ProjectReference</span> <span style="color:#75af00">Include=</span><span style="color:#d88200">&#34;..\Service\Service.csproj&#34;</span> <span style="color:#f92672">/&gt;</span>
+    <span style="color:#f92672">&lt;/ItemGroup&gt;</span>
+
+<span style="color:#f92672">&lt;/Project&gt;</span>
+
+</code></pre></div>    
+</div>
+<div class="content-tab-section">
+  Not available  
+</div>
+<div class="content-tab-section">
+  Not available   
+</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+<p>Create a requirements.txt file at the root of the project with the following content to configure dependencies and project parameters:</p>
 <p><strong>/requirements.txt</strong></p>
 <pre><code>iso8601
 PyYAML
@@ -277000,9 +277124,79 @@ pip-services3-commons
 pip-services3-components
 pip-services3-container
 pip-services3-rpc
-</code></pre><p>Install all necessary modules using the command:</p>
+</code></pre>
+</div>
+<div class="content-tab-section">
+  Not available  
+</div>
+</div>
+Install all necessary modules using the command:
+<div class="content-tab-selector">
+	<div class="btn-group tab-selector-btn-group" role="group" aria-label="Language selector">
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Node</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">.NET</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Golang</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Dart</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Python</button>
+	  <button type="button" class="btn btn-outline-secondary lang-select-btn">Java</button>
+	</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install
+</code></pre></div><p>Create a TypeScript compiler configuration file with the following lines:</p>
+<p><strong>/tsconfig.json</strong></p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#111">{</span>
+    <span style="color:#f92672">&#34;compilerOptions&#34;</span><span style="color:#111">:</span> <span style="color:#111">{</span>
+	<span style="color:#f92672">&#34;declaration&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+        <span style="color:#f92672">&#34;module&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;commonjs&#34;</span><span style="color:#111">,</span>
+        <span style="color:#f92672">&#34;target&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;es6&#34;</span><span style="color:#111">,</span>
+        <span style="color:#f92672">&#34;noImplicitAny&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">false</span><span style="color:#111">,</span>
+        <span style="color:#f92672">&#34;outDir&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;obj&#34;</span><span style="color:#111">,</span>
+        <span style="color:#f92672">&#34;rootDir&#34;</span><span style="color:#111">:</span> <span style="color:#d88200">&#34;.&#34;</span><span style="color:#111">,</span>
+        <span style="color:#f92672">&#34;sourceMap&#34;</span><span style="color:#111">:</span> <span style="color:#00a8c8">true</span><span style="color:#111">,</span>
+	<span style="color:#f92672">&#34;types&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span><span style="color:#d88200">&#34;node&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mocha&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;chai&#34;</span><span style="color:#111">]</span>
+     <span style="color:#111">},</span>
+    <span style="color:#f92672">&#34;exclude&#34;</span><span style="color:#111">:</span> <span style="color:#111">[</span>
+        <span style="color:#d88200">&#34;node_modules&#34;</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#34;lib&#34;</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#34;dist&#34;</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#34;obj&#34;</span><span style="color:#111">,</span>
+        <span style="color:#d88200">&#34;temp&#34;</span>
+    <span style="color:#111">]</span>
+<span style="color:#111">}</span>
+
+</code></pre></div>  
+</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">dotnet restore
+</code></pre></div>    
+</div>
+<div class="content-tab-section">
+  Not available  
+</div>
+<div class="content-tab-section">
+  Not available   
+</div>
+<div class="content-tab-section">
+  
+
+
+<nil>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pip install -r requirements.txt
-</code></pre></div><p>Now our project is ready for development. Continue on to <a href="../step2">Step 3 - Business operations</a> to start implementing the facade itself.</p>
+</code></pre></div>
+</div>
+<div class="content-tab-section">
+  Not available  
+</div>
+</div>
+<p>Now our project is ready for development. Continue on to <a href="../step2">Step 3 - Business operations</a> to start implementing the facade itself.</p>
 <span class="hide-title-link">
 <h3 id="step-3-designing-a-direct-clientstep2"><a href="../step2">Step 3. Designing a Direct Client</a></h3>
 </span>
