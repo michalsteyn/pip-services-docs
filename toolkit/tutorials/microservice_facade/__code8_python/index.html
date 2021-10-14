@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_facade/__code8_python/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-15T00:54:18+03:00" />
+<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/pip_facades_sample_python/services/version1/FacadeServiceV1.py
 # -*- coding: utf-8 -*- from pip_services3_commons.config import ConfigParams from pip_services3_commons.refer import IReferences from pip_services3_rpc.services.AboutOperations import AboutOperations from pip_services3_rpc.services.RestService import RestService from pip_facades_sample_python.operations.version1.BeaconsOperationsV1 import BeaconsOperationsV1 from pip_facades_sample_python.operations.version1.InvitationsOperationsV1 import InvitationsOperationsV1 from pip_facades_sample_python.operations.version1.SessionsOperationsV1 import SessionsOperationsV1 from pip_facades_sample_python.operations.version1.SitesOperationsV1 import SitesOperationsV1 from pip_facades_sample_python.services.version1.AuthorizerV1 import AuthorizerV1 class FacadeServiceV1(RestService): def __init__(self): super(FacadeServiceV1, self).__init__() self._base_route = &#39;api/v1&#39; self.__about_operations = AboutOperations() self.__session_operations = SessionsOperationsV1() self.__sites_operations = SitesOperationsV1() self.__invitations_operations = InvitationsOperationsV1() self.__beacons_operations = BeaconsOperationsV1() def configure(self, config: ConfigParams): super().">
-<meta itemprop="dateModified" content="2021-10-15T00:54:18+03:00" />
+<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
 <meta itemprop="wordCount" content="365">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -42,8 +42,8 @@
 
 
 
-<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
-<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
+<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
 
 
 
@@ -735,10 +735,6 @@
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
-
-
 
 
 
@@ -773,6 +769,8 @@
   }
 
   delHiddenLgSearch();
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -791,6 +789,7 @@
 
     transformData: function(hits) {
       
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -810,7 +809,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[3].toLowerCase();
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

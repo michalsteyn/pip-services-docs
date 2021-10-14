@@ -24,7 +24,7 @@
         
         
         &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;,
-&lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;../itiming_callback&#34;&gt;ITimingCallback&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
 &lt;p&gt;The CachedCounters class allows you to create performace counters that measure and store those values in memory.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
@@ -57,7 +57,7 @@
 &lt;h4 id=&#34;_updated&#34;&gt;_updated&lt;/h4&gt;
 &lt;p&gt;A boolean value that indicates whether the counter has been updated or not.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;_updated&lt;/strong&gt;: bool = false&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;_updated&lt;/strong&gt;: bool&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;_lastdumptime&#34;&gt;_lastDumpTime&lt;/h4&gt;
 &lt;p&gt;Time of the last dump.&lt;/p&gt;
@@ -78,14 +78,14 @@
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
-[&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; object which has to be called at
+[&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - callback object to end counter_timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; - callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;clear&#34;&gt;clear&lt;/h4&gt;
 &lt;p&gt;Clears (resets) a counter specified by its name.&lt;/p&gt;
@@ -118,10 +118,10 @@ It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; obj
 &lt;p&gt;Ends measurement of execution elapsed time and updates a specified counter.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;void endTiming(String? name, int elapsed)&lt;/p&gt;
+&lt;p&gt;void endTiming(String name, int elapsed)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String? - counter&amp;rsquo;s name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter&amp;rsquo;s name&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;elapsed&lt;/strong&gt;: int - execution elapsed time in milliseconds to update the counter.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;get&#34;&gt;get&lt;/h4&gt;
@@ -129,7 +129,7 @@ It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; obj
 It counter does not exist or its type doesn&amp;rsquo;t match the specified type
 it creates a new one.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt; get(String? name, &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt; type)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt; get(String name, &lt;a href=&#34;../counter_type&#34;&gt;CounterType&lt;/a&gt; type)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - name of counter to retrieve.&lt;/li&gt;
@@ -247,7 +247,7 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
         
         
         &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;, &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;,
-&lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;../itiming_callback&#34;&gt;ITimingCallback&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
 &lt;p&gt;The CompositeCounters allows you to aggregate all counters from different component references into a single one.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Important points&lt;/strong&gt;&lt;/p&gt;
@@ -261,10 +261,10 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
 &lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
 &lt;p&gt;Creates a new instance of the counters.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;CompositeCounters([&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences?&lt;/a&gt; references])&lt;/p&gt;
+&lt;p&gt;CompositeCounters([&lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; references])&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences?&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;references&lt;/strong&gt;: &lt;a href=&#34;../../../commons/refer/ireferences&#34;&gt;IReferences&lt;/a&gt; - references to locate the component dependencies.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
 &lt;span class=&#34;hide-title-link&#34;&gt;
@@ -277,31 +277,31 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
-[&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; object which has to be called at
+[&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - callback object to end counter_timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; - callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
 &lt;p&gt;Ends measurement of execution elapsed time and updates specified counter.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;void endTiming(String? name, int elapsed)&lt;/p&gt;
+&lt;p&gt;void endTiming(String name, int elapsed)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String? - counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;elapsed&lt;/strong&gt;: int - execution elapsed time in milliseconds to update the counter.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
 &lt;p&gt;Increments counter by given value.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;void increment(String? name, int value)&lt;/p&gt;
+&lt;p&gt;void increment(String name, int value)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name of Increment type.&lt;/li&gt;
@@ -375,11 +375,11 @@ Usually this method is used by externally calculated  metrics.&lt;/p&gt;
 
     &lt;span style=&#34;color:#00a8c8&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;myMethod&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
        &lt;span style=&#34;color:#111&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;mycomponent.mymethod.calls&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counter_timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;mycomponent.mymethod.exec_time&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;mycomponent.mymethod.exec_time&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
         &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
             &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#111&#34;&gt;counter_timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+            &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
         &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
@@ -422,32 +422,32 @@ Usually this method is used by externally calculated  metrics.&lt;/p&gt;
 &lt;h4 id=&#34;last&#34;&gt;last&lt;/h4&gt;
 &lt;p&gt;Last recorded value&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;last&lt;/strong&gt;: int?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;last&lt;/strong&gt;: int&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;count&#34;&gt;count&lt;/h4&gt;
 &lt;p&gt;Total count&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;count&lt;/strong&gt;: int?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;count&lt;/strong&gt;: int&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;min&#34;&gt;min&lt;/h4&gt;
 &lt;p&gt;Minimum value&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;min&lt;/strong&gt;: int?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;min&lt;/strong&gt;: int&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;max&#34;&gt;max&lt;/h4&gt;
 &lt;p&gt;Maximum value&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;max&lt;/strong&gt;: int?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;max&lt;/strong&gt;: int&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;average&#34;&gt;average&lt;/h4&gt;
 &lt;p&gt;Average value&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;average&lt;/strong&gt;: int?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;average&lt;/strong&gt;: int&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;time&#34;&gt;time&lt;/h4&gt;
 &lt;p&gt;Recorded timestamp&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;time&lt;/strong&gt;: DateTime?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;time&lt;/strong&gt;: DateTime&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;name&#34;&gt;name&lt;/h4&gt;
 &lt;p&gt;Counter&amp;rsquo;s unique name&lt;/p&gt;
@@ -461,43 +461,6 @@ Usually this method is used by externally calculated  metrics.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/span&gt;
 
-      </description>
-    </item>
-    
-    <item>
-      <title>Dart: CounterTiming</title>
-      <link>/dart/components/count/counter_timing/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/dart/components/count/counter_timing/</guid>
-      <description>
-        
-        
-        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The CounterTiming class allows you to create callback objects that are returned by &lt;a href=&#34;../icounters/#begintiming&#34;&gt;ICounters.beginTiming&lt;/a&gt; to end the counter_timing of execution blocks and update the associated counters.&lt;/p&gt;
-&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
-&lt;p&gt;Creates a new instance of the counter_timing callback object.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;CounterTiming([String? counter, &lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback?&lt;/a&gt; callback])&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;counter&lt;/strong&gt;: string - associated counter name&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;callback&lt;/strong&gt;: &lt;a href=&#34;../icounter_timing_callback&#34;&gt;ICounterTimingCallback?&lt;/a&gt; - callback that shall be called when end_timing is called.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
-&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
-&lt;p&gt;Ends the counter_timing of an execution block, calculates the elapsed time and updates the associated counter.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;void endTiming()&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counter_timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;counter_timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
-&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -580,14 +543,14 @@ Usually this method is used by externally calculated  metrics.&lt;/p&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
-&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - callback object to end counter_timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; - callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
 &lt;p&gt;Increments counter by a given value.&lt;/p&gt;
@@ -647,25 +610,25 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
     </item>
     
     <item>
-      <title>Dart: ICounterTimingCallback</title>
-      <link>/dart/components/count/icounter_timing_callback/</link>
+      <title>Dart: ITimingCallback</title>
+      <link>/dart/components/count/itiming_callback/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/dart/components/count/icounter_timing_callback/</guid>
+      <guid>/dart/components/count/itiming_callback/</guid>
       <description>
         
         
         &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
-&lt;p&gt;The ICounterTimingCallback interface defines the method used for a callback to end the measurement of the execution elapsed time.&lt;/p&gt;
+&lt;p&gt;The ITimingCallback interface defines the method used for a callback to end the measurement of the execution elapsed time.&lt;/p&gt;
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
 &lt;p&gt;Ends measurement of execution elapsed time and updates a specified counter.
-See also &lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt;&lt;/p&gt;
+See also &lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.endTiming&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;void endTiming(String? name, int elapsed)&lt;/p&gt;
+&lt;p&gt;void endTiming(String name, int elapsed)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String? - counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;elapsed&lt;/strong&gt;: int - execution elapsed time in milliseconds to update the counter.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -705,10 +668,10 @@ See also &lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endT
 &lt;p&gt;Saves the current counters measurements.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;void save(List&amp;lt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;&amp;gt;? counters)&lt;/p&gt;
+&lt;p&gt;void save(List&amp;lt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;&amp;gt; counters)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;counters&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;&amp;gt;? - current counters measurements to be saved.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;counters&lt;/strong&gt;: List&amp;lt;&lt;a href=&#34;../counter&#34;&gt;Counter&lt;/a&gt;&amp;gt; - current counters measurements to be saved.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;setreferences&#34;&gt;setReferences&lt;/h4&gt;
 &lt;p&gt;Sets references to dependent components.&lt;/p&gt;
@@ -726,12 +689,12 @@ See also &lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endT
 &lt;span style=&#34;color:#111&#34;&gt;]));&lt;/span&gt;
 
 &lt;span style=&#34;color:#111&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.calls&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
-&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counter_timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mycomponent.mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
 
 &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#111&#34;&gt;counter_timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
 &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
 
 &lt;span style=&#34;color:#111&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;dump&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
@@ -770,15 +733,15 @@ See also &lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endT
 &lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
 &lt;h4 id=&#34;begintiming&#34;&gt;beginTiming&lt;/h4&gt;
 &lt;p&gt;Begins measurement of execution time interval.
-It returns a &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; object which has to be called at
-&lt;a href=&#34;../counter_timing/#endtiming&#34;&gt;CounterTiming.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
+It returns a &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; object which has to be called at
+&lt;a href=&#34;../timing/#endtiming&#34;&gt;Timing.endTiming&lt;/a&gt; to end the measurement and update the counter.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;@override&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; beginTiming(String name)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;name&lt;/strong&gt;: String - counter name of Interval type.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../counter_timing&#34;&gt;CounterTiming&lt;/a&gt; - callback object to end counter_timing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: &lt;a href=&#34;../timing&#34;&gt;Timing&lt;/a&gt; - callback object to end timing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;increment&#34;&gt;increment&lt;/h4&gt;
 &lt;p&gt;Increments counter by a given value.&lt;/p&gt;
@@ -844,6 +807,43 @@ Usually this method is used by metrics calculated externally.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;../icounters&#34;&gt;ICounters&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+      </description>
+    </item>
+    
+    <item>
+      <title>Dart: Timing</title>
+      <link>/dart/components/count/timing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/dart/components/count/timing/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;The Timing class allows you to create callback objects that are returned by &lt;a href=&#34;../icounters/#begintiming&#34;&gt;ICounters.beginTiming&lt;/a&gt; to end the timing of execution blocks and update the associated counters.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the timing callback object.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Timing([String counter, ITimingCallback callback])&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;counter&lt;/strong&gt;: string - associated counter name&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;callback&lt;/strong&gt;: &lt;a href=&#34;../itiming_callback&#34;&gt;ITimingCallback&lt;/a&gt; - callback that shall be called when end_timing is called.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;endtiming&#34;&gt;endTiming&lt;/h4&gt;
+&lt;p&gt;Ends the timing of an execution block, calculates the elapsed time and updates the associated counter.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;void endTiming()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-dart&#34; data-lang=&#34;dart&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;mymethod.exec_time&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     

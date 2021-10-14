@@ -24,12 +24,12 @@ from typing import Optional, List, Any from pip_services3_commons.data import Pa
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/client_library/__code2_python/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-15T00:54:18+03:00" />
+<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/src/version1/IBeaconClientV1.py
 from typing import Optional, List, Any from pip_services3_commons.data import PagingParams, DataPage, FilterParams from src.data.version1 import BeaconV1 class IBeaconsClientV1: def get_beacons_by_filter(self, correlation_id: Optional[str], filter: FilterParams, paging: PagingParams) -&gt; DataPage: raise NotImplementedError(&#39;Method from interface definition&#39;) def get_beacon_by_id(self, correlation_id: Optional[str], id: str) -&gt; dict: raise NotImplementedError(&#39;Method from interface definition&#39;) def get_beacon_by_udi(self, correlation_id: Optional[str], udi: str) -&gt; dict: raise NotImplementedError(&#39;Method from interface definition&#39;) def calculate_position(self, correlation_id: Optional[str], site_id: str, udis: List[str]) -&gt; Any: raise NotImplementedError(&#39;Method from interface definition&#39;) def create_beacon(self, correlation_id: Optional[str], entity: BeaconV1) -&gt; dict: raise NotImplementedError(&#39;Method from interface definition&#39;) def update_beacon(self, correlation_id: Optional[str], entity: BeaconV1) -&gt; dict: raise NotImplementedError(&#39;Method from interface definition&#39;) def delete_beacon_by_id(self, correlation_id: Optional[str], id: str) -&gt; dict: raise NotImplementedError(&#39;Method from interface definition&#39;) ">
-<meta itemprop="dateModified" content="2021-10-15T00:54:18+03:00" />
+<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
 <meta itemprop="wordCount" content="114">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -42,8 +42,8 @@ from typing import Optional, List, Any from pip_services3_commons.data import Pa
 
 
 
-<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
-<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
+<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
 
 
 
@@ -627,10 +627,6 @@ from typing import Optional, List, Any from pip_services3_commons.data import Pa
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
-
-
 
 
 
@@ -665,6 +661,8 @@ from typing import Optional, List, Any from pip_services3_commons.data import Pa
   }
 
   delHiddenLgSearch();
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -683,6 +681,7 @@ from typing import Optional, List, Any from pip_services3_commons.data import Pa
 
     transformData: function(hits) {
       
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -702,7 +701,7 @@ from typing import Optional, List, Any from pip_services3_commons.data import Pa
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[3].toLowerCase();
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

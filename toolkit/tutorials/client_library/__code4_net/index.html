@@ -24,12 +24,12 @@ public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public Beacons
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/client_library/__code4_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-15T00:54:18+03:00" />
+<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/src/version1/BeaconsHttpClientV1.cs
 public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public BeaconsHttpClientV1(object config = null) { _baseRoute = &#34;v1/beacons&#34;; if (config != null) Configure(ConfigParams.FromValue(config)); } public async Task&lt;CenterObjectV1&gt; CalculatePositionAsync(string correlationId, string siteId, string[] udis) { var methodName = &#34;beacons.calculate_position&#34;; try { using (Instrument(correlationId, methodName)) { return await ExecuteAsync&lt;CenterObjectV1&gt;(correlationId, HttpMethod.Post, &#34;/calculate_position&#34;, new { site_id = siteId, udis = udis }); } } catch (Exception ex) { InstrumentError(correlationId, methodName, ex); throw ex; } } public async Task&lt;BeaconV1&gt; CreateBeaconAsync(string correlationId, BeaconV1 beacon) { var methodName = &#34;beacons.">
-<meta itemprop="dateModified" content="2021-10-15T00:54:18+03:00" />
+<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
 <meta itemprop="wordCount" content="315">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -42,8 +42,8 @@ public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public Beacons
 
 
 
-<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
-<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
+<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
 
 
 
@@ -743,10 +743,6 @@ public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public Beacons
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
-
-
 
 
 
@@ -781,6 +777,8 @@ public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public Beacons
   }
 
   delHiddenLgSearch();
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -799,6 +797,7 @@ public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public Beacons
 
     transformData: function(hits) {
       
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -818,7 +817,7 @@ public class BeaconsHttpClientV1 : RestClient, IBeaconsClientV1 { public Beacons
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[3].toLowerCase();
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

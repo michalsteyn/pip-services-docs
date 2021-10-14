@@ -24,12 +24,12 @@ using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipSe
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_facade/__code7_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-15T00:54:18+03:00" />
+<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/src/service/services/version1/Authorize.cs
 using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipServices3.Commons.Refer; using PipServices3.Rpc.Auth; using PipServices3.Rpc.Services; using System; using System.Security.Claims; using System.Threading.Tasks; using PipServices.Templates.Facade.Build; using PipServices.Templates.Facade.Operations.Version1; using System.Collections.Generic; using PipServices3.Commons.Errors; using System.Linq; using Microsoft.Extensions.Primitives; namespace PipServices.Templates.Facade.Services.Version1 { public class AuthorizerV1 : IReferenceable { private BasicAuthorizer _basicAuth = new BasicAuthorizer(); private RoleAuthorizer _roleAuth = new RoleAuthorizer(); private OwnerAuthorizer _ownerAuth = new OwnerAuthorizer(); public void SetReferences(IReferences references) { } public Func&lt;HttpRequest, HttpResponse, ClaimsPrincipal, RouteData, Func&lt;Task&gt;, Task&gt; Anybody() { return _basicAuth.">
-<meta itemprop="dateModified" content="2021-10-15T00:54:18+03:00" />
+<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
 <meta itemprop="wordCount" content="523">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -42,8 +42,8 @@ using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipSe
 
 
 
-<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
-<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
+<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
 
 
 
@@ -789,10 +789,6 @@ using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipSe
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
-
-
 
 
 
@@ -827,6 +823,8 @@ using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipSe
   }
 
   delHiddenLgSearch();
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -845,6 +843,7 @@ using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipSe
 
     transformData: function(hits) {
       
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -864,7 +863,7 @@ using Microsoft.AspNetCore.Http; using Microsoft.AspNetCore.Routing; using PipSe
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[3].toLowerCase();
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

@@ -24,12 +24,12 @@ from pip_services3_commons.refer import Descriptor from pip_services3_components
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code18_python/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-15T00:54:18+03:00" />
+<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/src/build/BeaconsServiceFactory.py
 from pip_services3_commons.refer import Descriptor from pip_services3_components.build import Factory from ..logic.BeaconsController import BeaconsController from ..persistence.BeaconsFilePersistence import BeaconsFilePersistence from ..persistence.BeaconsMemoryPersistence import BeaconsMemoryPersistence from ..persistence.BeaconsMongoDbPersistence import BeaconsMongoDbPersistence from ..services.version1.BeaconsHttpServiceV1 import BeaconsHttpServiceV1 class BeaconsServiceFactory(Factory): MemoryPersistenceDescriptor = Descriptor(&#39;beacons&#39;, &#39;persistence&#39;, &#39;memory&#39;, &#39;*&#39;, &#39;1.0&#39;) FilePersistenceDescriptor = Descriptor(&#39;beacons&#39;, &#39;persistence&#39;, &#39;file&#39;, &#39;*&#39;, &#39;1.0&#39;) MongoDbPersistenceDescriptor = Descriptor(&#39;beacons&#39;, &#39;persistence&#39;, &#39;mongodb&#39;, &#39;*&#39;, &#39;1.0&#39;) ControllerDescriptor = Descriptor(&#39;beacons&#39;, &#39;controller&#39;, &#39;default&#39;, &#39;*&#39;, &#39;1.0&#39;) HttpServiceV1Descriptor = Descriptor(&#39;beacons&#39;, &#39;service&#39;, &#39;http&#39;, &#39;*&#39;, &#39;1.0&#39;) def __init__(self): super(BeaconsServiceFactory, self).__init__() self.">
-<meta itemprop="dateModified" content="2021-10-15T00:54:18+03:00" />
+<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
 <meta itemprop="wordCount" content="80">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -42,8 +42,8 @@ from pip_services3_commons.refer import Descriptor from pip_services3_components
 
 
 
-<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
-<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
+<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
 
 
 
@@ -623,10 +623,6 @@ from pip_services3_commons.refer import Descriptor from pip_services3_components
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
-
-
 
 
 
@@ -661,6 +657,8 @@ from pip_services3_commons.refer import Descriptor from pip_services3_components
   }
 
   delHiddenLgSearch();
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -679,6 +677,7 @@ from pip_services3_commons.refer import Descriptor from pip_services3_components
 
     transformData: function(hits) {
       
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -698,7 +697,7 @@ from pip_services3_commons.refer import Descriptor from pip_services3_components
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[3].toLowerCase();
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

@@ -24,12 +24,12 @@ namespace Beacons.Persistence { public class BeaconsMemoryPersistence : Identifi
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code8_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-15T00:54:18+03:00" />
+<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="src/interface/persistence/BeaconsMemoryPersistence.cs
 namespace Beacons.Persistence { public class BeaconsMemoryPersistence : IdentifiableMemoryPersistence&lt;BeaconV1, string&gt;, IBeaconsPersistence { public BeaconsMemoryPersistence() { _maxPageSize = 1000; } private List&lt;Func&lt;BeaconV1, bool&gt;&gt; ComposeFilter(FilterParams filter) { filter = filter ?? new FilterParams(); var id = filter.GetAsNullableString(&#34;id&#34;); var siteId = filter.GetAsNullableString(&#34;site_id&#34;); var label = filter.GetAsNullableString(&#34;label&#34;); var udi = filter.GetAsNullableString(&#34;udi&#34;); var udis = filter.GetAsNullableString(&#34;udis&#34;); var udiList = udis != null ? udis.Split(&#39;,&#39;) : null; return new List&lt;Func&lt;BeaconV1, bool&gt;&gt;() { (item) =&gt; { if (id !">
-<meta itemprop="dateModified" content="2021-10-15T00:54:18+03:00" />
+<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
 <meta itemprop="wordCount" content="186">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -42,8 +42,8 @@ namespace Beacons.Persistence { public class BeaconsMemoryPersistence : Identifi
 
 
 
-<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
-<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
+<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
 
 
 
@@ -658,10 +658,6 @@ namespace Beacons.Persistence { public class BeaconsMemoryPersistence : Identifi
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
-
-
 
 
 
@@ -696,6 +692,8 @@ namespace Beacons.Persistence { public class BeaconsMemoryPersistence : Identifi
   }
 
   delHiddenLgSearch();
+  
+  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -714,6 +712,7 @@ namespace Beacons.Persistence { public class BeaconsMemoryPersistence : Identifi
 
     transformData: function(hits) {
       
+      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -733,7 +732,7 @@ namespace Beacons.Persistence { public class BeaconsMemoryPersistence : Identifi
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[3].toLowerCase();
+          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {
