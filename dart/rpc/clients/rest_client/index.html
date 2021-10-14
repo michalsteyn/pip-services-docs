@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/rpc/clients/rest_client/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="RestClient">
 <meta itemprop="description" content="Abstract client that calls remote endpoints using the HTTP/REST protocol.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="688">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RestClient"/>
@@ -285656,11 +285656,11 @@
 <h4 id="addcorrelationid">addCorrelationId</h4>
 <p>Adds a correlation id (correlationId) to the invocation parameter map.</p>
 <blockquote>
-<p>Map&lt;String, String&gt; addCorrelationId(Map&lt;String, String&gt; params, String correlationId)</p>
+<p>Map&lt;String, String&gt; addCorrelationId(Map&lt;String, String&gt; params, String? correlationId)</p>
 </blockquote>
 <ul>
 <li><strong>params</strong>: Map&lt;String, String&gt; - invocation parameters.</li>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>returns</strong>: Map&lt;String, String&gt; - invocation parameters with added correlation id.</li>
 </ul>
 <h4 id="addfilterparams">addFilterParams</h4>
@@ -285687,12 +285687,12 @@ to the invocation parameter map.</p>
 <h4 id="call">call</h4>
 <p>Calls a remote method via HTTP/REST protocol.</p>
 <blockquote>
-<p>Future call(String method, String route, String correlationId, Map&lt;String, String&gt; params, [data])</p>
+<p>Future call(String method, String route, String? correlationId, Map&lt;String, String&gt; params, [data])</p>
 </blockquote>
 <ul>
 <li><strong>method</strong>: String - HTTP method: &ldquo;get&rdquo;, &ldquo;head&rdquo;, &ldquo;post&rdquo;, &ldquo;put&rdquo;, &ldquo;delete&rdquo;</li>
 <li><strong>route</strong>: String - command route. Base route will be added to this route</li>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>params</strong>: Map&lt;String, String&gt; - (optional) query parameters.</li>
 <li><strong>data</strong>: dynamic - (optional) body object.</li>
 <li><strong>returns</strong>: Future - that receives result object</li>
@@ -285701,10 +285701,10 @@ to the invocation parameter map.</p>
 <p>Closes a component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
 <p>Configures a component by passing configuration parameters.</p>
@@ -285719,10 +285719,10 @@ to the invocation parameter map.</p>
 <p>Adds instrumentation to log calls and measures call time.
 It returns a Timing object that is used to end the time measurement.</p>
 <blockquote>
-<p>Timing instrument(String correlationId, String name)</p>
+<p>Timing instrument(String? correlationId, String name)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>name</strong>: String - method name.</li>
 <li><strong>returns</strong>: <a href="../../../components/count/timing/">Timing</a> - InstrumentTiming object used to end the time measurement.</li>
 </ul>
@@ -285739,10 +285739,10 @@ It returns a Timing object that is used to end the time measurement.</p>
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 </ul>
 <h4 id="setreferences">setReferences</h4>
 <p>Sets references to dependent components.</p>
@@ -285756,7 +285756,7 @@ It returns a Timing object that is used to end the time measurement.</p>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyRestClient</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">RestClient</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IMyClient</span> <span style="color:#111">{</span>
    <span style="color:#111">...</span>
-    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
        <span style="color:#00a8c8">var</span> <span style="color:#111">timing</span> <span style="color:#f92672">=</span> <span style="color:#111">instrument</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;myclient.get_data&#39;</span><span style="color:#111">);</span>
       <span style="color:#00a8c8">try</span><span style="color:#111">{</span>
         <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">call</span><span style="color:#111">(</span><span style="color:#d88200">&#39;get&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;/get_data&#39;</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">{</span> <span style="color:#111">id:</span> <span style="color:#111">id</span> <span style="color:#111">},</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
@@ -285933,8 +285933,6 @@ It returns a Timing object that is used to end the time measurement.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285953,7 +285951,6 @@ It returns a Timing object that is used to end the time measurement.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285973,7 +285970,7 @@ It returns a Timing object that is used to end the time measurement.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

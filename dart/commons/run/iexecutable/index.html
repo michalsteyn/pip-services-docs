@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/run/iexecutable/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="IExecutable">
 <meta itemprop="description" content="Interface that allows you to create a component that can be called to execute work.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="110">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IExecutable"/>
@@ -285555,17 +285555,17 @@
 <h4 id="execute">execute</h4>
 <p>Executes a component with arguments and receives the execution result.</p>
 <blockquote>
-<p>Future&lt;dynamic&gt; execute(String correlationId, <a href="../parameters">Parameters</a> args)</p>
+<p>Future&lt;dynamic&gt; execute(String? correlationId, <a href="../parameters">Parameters</a> args)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>args</strong>: <a href="../parameters">Parameters</a> - execution arguments.</li>
 <li><strong>returns</strong>: Future&lt;dynamic&gt; - execution result.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">EchoComponent</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IExecutable</span> <span style="color:#111">{</span>
     <span style="color:#111">...</span>
-    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">dynamic</span><span style="color:#f92672">&gt;</span> <span style="color:#111">execute</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">args</span><span style="color:#111">)</span>  <span style="color:#111">{</span>
+    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">dynamic</span><span style="color:#f92672">&gt;</span> <span style="color:#111">execute</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">args</span><span style="color:#111">)</span>  <span style="color:#111">{</span>
        <span style="color:#00a8c8">return</span> <span style="color:#111">Future</span><span style="color:#111">.</span><span style="color:#111">delayed</span><span style="color:#111">(</span><span style="color:#111">Duration</span><span style="color:#111">(),</span> <span style="color:#111">(){</span>
            <span style="color:#00a8c8">return</span> <span style="color:#111">args</span><span style="color:#111">.</span><span style="color:#111">getAsObject</span><span style="color:#111">(</span><span style="color:#d88200">&#39;message&#39;</span><span style="color:#111">);</span>
        <span style="color:#111">})</span>
@@ -285737,8 +285737,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285757,7 +285755,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285777,7 +285774,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

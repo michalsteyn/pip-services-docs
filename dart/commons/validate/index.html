@@ -285787,8 +285787,6 @@ If using strict mode, warnings will also raise validation exceptions.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285807,7 +285805,6 @@ If using strict mode, warnings will also raise validation exceptions.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285827,7 +285824,7 @@ If using strict mode, warnings will also raise validation exceptions.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/components/connect/memory_discovery/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="MemoryDiscovery">
 <meta itemprop="description" content="Discovery service that keeps connections in memory.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="277">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MemoryDiscovery"/>
@@ -285586,10 +285586,10 @@ Each section represents an individual Connection params</p>
 <p>Registers connection parameters into the discovery service.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; register(String correlationId, String key, <a href="../connection_params">ConnectionParams</a> connection)</p>
+<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; register(String? correlationId, String key, <a href="../connection_params">ConnectionParams</a> connection)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>key</strong>: String - key to uniquely identify the connection parameters.</li>
 <li><strong>connection</strong>: <a href="../connection_params">ConnectionParams</a> - connection to be registered.</li>
 <li><strong>returns</strong>: <a href="../connection_params">ConnectionParams</a> - registered connection parameters.</li>
@@ -285598,10 +285598,10 @@ Each section represents an individual Connection params</p>
 <p>Resolves all connection parameters by their key.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future&lt;List&lt;<a href="../connection_params">ConnectionParams</a>&gt;&gt; resolveAll(String correlationId, String key)</p>
+<p>Future&lt;List&lt;<a href="../connection_params">ConnectionParams</a>&gt;&gt; resolveAll(String? correlationId, String key)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>key</strong>: String - key to uniquely identify the connections.</li>
 <li><strong>returns</strong>: Future&lt;List&lt;<a href="../connection_params">ConnectionParams</a>&gt;&gt; - list with resolved connections.</li>
 </ul>
@@ -285609,10 +285609,10 @@ Each section represents an individual Connection params</p>
 <p>Resolves a single connection parameters by its key.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; resolveOne(String correlationId, String key)</p>
+<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; resolveOne(String? correlationId, String key)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>key</strong>: String - key to uniquely identify the connection.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; - resolved connection.</li>
 </ul>
@@ -285782,8 +285782,6 @@ Each section represents an individual Connection params</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285802,7 +285800,6 @@ Each section represents an individual Connection params</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285822,7 +285819,7 @@ Each section represents an individual Connection params</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

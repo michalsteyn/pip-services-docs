@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/components/connect/composite_connection_resolver/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="CompositeConnectionResolver">
 <meta itemprop="description" content="Helper class that resolves connection and credential parameters, validates them and generates connection options.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="522">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CompositeConnectionResolver"/>
@@ -285623,7 +285623,7 @@
 <p><a href="../../../commons/config/config_params">ConfigParams</a> compose(correlationId: String, List&lt;<a href="../connection_params">ConnectionParams</a>&gt; connections, <a href="../../auth/credential_params">CredentialParams</a> credential, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>connections</strong>: List&lt;<a href="../connection_params">ConnectionParams</a>&gt; - connection parameters</li>
 <li><strong>credential</strong>: <a href="../../auth/credential_params">CredentialParams</a> - credential parameters</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - optional parameters</li>
@@ -285695,10 +285695,10 @@ This method can be overriden in child classes.</p>
 <h4 id="resolve">resolve</h4>
 <p>Resolves connection options from connection and credential parameters.</p>
 <blockquote>
-<p>Future&lt;<a href="../../../commons/config/config_params">ConfigParams</a>&gt; resolve(String correlationId)</p>
+<p>Future&lt;<a href="../../../commons/config/config_params">ConfigParams</a>&gt; resolve(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../../../commons/config/config_params">ConfigParams</a>&gt; - resolved options or error</li>
 </ul>
 <h4 id="setreferences">setReferences</h4>
@@ -285715,20 +285715,20 @@ This method can be overriden in child classes.</p>
 Throws error if validation failed.
 This method can be overriden in child classes.</p>
 <blockquote>
-<p>void validateConnection(String correlationId, <a href="../connection_params">ConnectionParams</a> connection)</p>
+<p>void validateConnection(String? correlationId, <a href="../connection_params">ConnectionParams</a> connection)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>connection</strong>: <a href="../connection_params">ConnectionParams</a> - connection parameters to be validated</li>
 </ul>
 <h4 id="validatecredential">validateCredential</h4>
 <p>Validates credential parameters.
 This method can be overriden in child classes.</p>
 <blockquote>
-<p>void validateCredential(String correlationId, <a href="../../auth/credential_params">CredentialParams</a> credential)</p>
+<p>void validateCredential(String? correlationId, <a href="../../auth/credential_params">CredentialParams</a> credential)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>credential</strong>: <a href="../../auth/credential_params">CredentialParams</a> - credential parameters to be validated</li>
 </ul>
 
@@ -285876,8 +285876,6 @@ This method can be overriden in child classes.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285896,7 +285894,6 @@ This method can be overriden in child classes.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285916,7 +285913,7 @@ This method can be overriden in child classes.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

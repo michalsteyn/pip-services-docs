@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/convert/json_converter/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="JsonConverter">
 <meta itemprop="description" content="The JsonConverter class allows you to convert arbitrary values (e.g. a JSON object) from and to JSON (JavaScript Object Notation) strings.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="307">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="281">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="JsonConverter"/>
 <meta name="twitter:description" content="The JsonConverter class allows you to convert arbitrary values (e.g. a JSON object) from and to JSON (JavaScript Object Notation) strings.
@@ -285554,32 +285554,31 @@
 <h4 id="fromjson">fromJson</h4>
 <p>Converts a JSON string into a value of the type specified by a TypeCode.</p>
 <blockquote>
-<p><code>public static</code> fromJson&lt;T&gt;(type: <a href="../type_code">TypeCode</a>, value: String): T</p>
+<p><code>static</code> T? fromJson&lt;T&gt;(type: <a href="../type_code">TypeCode?</a>, value: String)</p>
 </blockquote>
 <ul>
-<li><strong>type</strong>: <a href="../type_code">TypeCode</a> - TypeCode for the data type into which &lsquo;value&rsquo; is to be converted.</li>
+<li><strong>type</strong>: <a href="../type_code">TypeCode?</a> - TypeCode for the data type into which &lsquo;value&rsquo; is to be converted.</li>
 <li><strong>value</strong>: String - JSON string to convert.</li>
-<li><strong>returns</strong>: T - converted object value or null when value is null.</li>
+<li><strong>returns</strong>: T? - converted object value or null when value is null.</li>
 </ul>
 <h4 id="tojson">toJson</h4>
-<p>Converts a JSON string into a value of type specified by a TypeCode.</p>
+<p>Converts value into JSON string.</p>
 <blockquote>
-<p><code>static</code> T fromJson&lt;T&gt;(<a href="../type_code">TypeCode</a> type, String value)</p>
+<p><code>static</code> String? toJson(value)</p>
 </blockquote>
 <ul>
-<li><strong>type</strong>: <a href="../type_code">TypeCode</a> - TypeCode for the data type into which &lsquo;value&rsquo; is to be converted.</li>
-<li><strong>value</strong>: String - value to convert.</li>
-<li><strong>returns</strong>: T - JSON string or null when value is null.</li>
+<li><strong>value</strong>: dynamic - the value to convert.</li>
+<li><strong>returns</strong>: String? - JSON string or null when value is null.</li>
 </ul>
 <h4 id="tomap">toMap</h4>
 <p>Converts JSON string into a map object or returns an empty map when the conversion is not possible.
 See <a href="../long_converter/#tonullablelong">LongConverter.toNullableLong</a></p>
 <blockquote>
-<p><code>static</code> Map&lt;String, dynamic&gt; toMap(String value)</p>
+<p><code>static</code> Map&lt;String, dynamic&gt;? toMap(String? value)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: String - JSON string to convert.</li>
-<li><strong>returns</strong>: Map&lt;String, dynamic&gt; - Map object value or empty object when the conversion is not supported.</li>
+<li><strong>value</strong>: String? - JSON string to convert.</li>
+<li><strong>returns</strong>: Map&lt;String, dynamic&gt;? - Map object value or empty object when the conversion is not supported.</li>
 </ul>
 <h4 id="tomapwithdefault">toMapWithDefault</h4>
 <p>Converts a JSON string into a map object or returns a default value when the conversion is not possible.</p>
@@ -285595,11 +285594,11 @@ See <a href="../long_converter/#tonullablelong">LongConverter.toNullableLong</a>
 <p>Converts a JSON string into a map object or returns null when the conversion is not possible.<br>
 See <a href="../map_converter/#tonullablemap">MapConverter.toNullableMap</a></p>
 <blockquote>
-<p><code>static</code> Map&lt;String, dynamic&gt; toNullableMap(String value)</p>
+<p><code>static</code> Map&lt;String, dynamic&gt;? toNullableMap(String? value)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: String - JSON string to convert.</li>
-<li><strong>returns</strong>: Map&lt;String, dynamic&gt; - Map object or null when the conversion is not supported.</li>
+<li><strong>value</strong>: String? - JSON string to convert.</li>
+<li><strong>returns</strong>: Map&lt;String, dynamic&gt;? - Map object or null when the conversion is not supported.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">value1</span> <span style="color:#f92672">=</span> <span style="color:#111">JsonConverter</span><span style="color:#111">.</span><span style="color:#111">fromJson</span><span style="color:#111">(</span><span style="color:#d88200">&#39;{</span><span style="color:#8045ff">\&#39;</span><span style="color:#d88200">key</span><span style="color:#8045ff">\&#39;</span><span style="color:#d88200">:123}&#39;</span><span style="color:#111">);</span> <span style="color:#75715e">// Result: { &#39;key&#39;: 123 }
@@ -285750,8 +285749,6 @@ See <a href="../map_converter/#tonullablemap">MapConverter.toNullableMap</a></p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285770,7 +285767,6 @@ See <a href="../map_converter/#tonullablemap">MapConverter.toNullableMap</a></p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285790,7 +285786,7 @@ See <a href="../map_converter/#tonullablemap">MapConverter.toNullableMap</a></p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

@@ -24,12 +24,12 @@ namespace Beacons.Logic { public class BeaconsController : IBeaconsController, I
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code13_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/src/interface/logic/BeaconsController.cs
 namespace Beacons.Logic { public class BeaconsController : IBeaconsController, IConfigurable, IReferenceable, ICommandable { private IBeaconsPersistence _persistence; private BeaconsCommandSet _commandSet; public BeaconsController() {} public void Configure(ConfigParams config) {} public void SetReferences(IReferences references) { _persistence = references.GetOneRequired&lt;IBeaconsPersistence&gt;( new Descriptor(&#34;beacons&#34;, &#34;persistence&#34;, &#34;*&#34;, &#34;*&#34;, &#34;1.0&#34;) ); } public CommandSet GetCommandSet() { if (_commandSet == null) _commandSet = new BeaconsCommandSet(this); return _commandSet; } public async Task&lt;DataPage&lt;BeaconV1&gt;&gt; GetBeaconsAsync(string correlationId, FilterParams filter, PagingParams paging) { return await _persistence.">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="263">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -737,8 +737,6 @@ namespace Beacons.Logic { public class BeaconsController : IBeaconsController, I
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -757,7 +755,6 @@ namespace Beacons.Logic { public class BeaconsController : IBeaconsController, I
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -777,7 +774,7 @@ namespace Beacons.Logic { public class BeaconsController : IBeaconsController, I
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

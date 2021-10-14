@@ -25,13 +25,13 @@ It is used by [FilePersistence](../file_persistence), but can be useful on its o
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/data/persistence/json_file_persister/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="JsonFilePersister&lt;T&gt;">
 <meta itemprop="description" content="Persistence component that loads and saves data from/to a flat file.
 It is used by [FilePersistence](../file_persistence), but can be useful on its own.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="221">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="JsonFilePersister&lt;T&gt;"/>
@@ -285604,7 +285604,7 @@ It is used by <a href="../file_persistence">FilePersistence</a>, but can be usef
 <p>Future&lt;List&lt;T&gt;&gt; load(String correlation_id)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>returns</strong>: Future&lt;List&lt;T&gt;&gt; - loaded items</li>
 </ul>
 <h4 id="save">save</h4>
@@ -285614,7 +285614,7 @@ It is used by <a href="../file_persistence">FilePersistence</a>, but can be usef
 <p>Future save(String correlation_id, List&lt;T&gt; items)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>items</strong>: List&lt;T&gt; - list if data items to save</li>
 </ul>
 <h3 id="examples">Examples</h3>
@@ -285771,8 +285771,6 @@ It is used by <a href="../file_persistence">FilePersistence</a>, but can be usef
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285791,7 +285789,6 @@ It is used by <a href="../file_persistence">FilePersistence</a>, but can be usef
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285811,7 +285808,7 @@ It is used by <a href="../file_persistence">FilePersistence</a>, but can be usef
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

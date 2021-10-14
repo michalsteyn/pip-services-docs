@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/errors/error_description/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ErrorDescription">
 <meta itemprop="description" content="Class used to pass information about errors between microservices implemented in different languages. On the receiving side [ErrorDescription]() is used to recreate the exception object close to its original type without missing additional details.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="179">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ErrorDescription"/>
@@ -285576,47 +285576,47 @@
 <h4 id="type">type</h4>
 <p>Data type of the original error.</p>
 <blockquote>
-<p><strong>type</strong>: String</p>
+<p><strong>type</strong>: String?</p>
 </blockquote>
 <h4 id="category">category</h4>
 <p>Standard error category.</p>
 <blockquote>
-<p><strong>category</strong>: String</p>
+<p><strong>category</strong>: String?</p>
 </blockquote>
 <h4 id="status">status</h4>
 <p>HTTP status code associated with this error type.</p>
 <blockquote>
-<p><strong>status</strong>: int</p>
+<p><strong>status</strong>: int?</p>
 </blockquote>
 <h4 id="code">code</h4>
 <p>Unique error code.</p>
 <blockquote>
-<p><strong>code</strong>: String</p>
+<p><strong>code</strong>: String?</p>
 </blockquote>
 <h4 id="message">message</h4>
 <p>A human-readable error description (usually written in English).</p>
 <blockquote>
-<p><strong>message</strong>: String</p>
+<p><strong>message</strong>: String?</p>
 </blockquote>
 <h4 id="details">details</h4>
 <p>A map with additional details that can be used to restore error description in other languages.</p>
 <blockquote>
-<p><strong>details</strong>: <a href="../../data/string_value_map">StringValueMap</a></p>
+<p><strong>details</strong>: <a href="../../data/string_value_map">StringValueMap?</a></p>
 </blockquote>
 <h4 id="correlation_id">correlation_id</h4>
 <p>Unique transaction id used to trace execution through a call chain</p>
 <blockquote>
-<p><strong>correlation_id</strong>: String</p>
+<p><strong>correlation_id</strong>: String?</p>
 </blockquote>
 <h4 id="cause">cause</h4>
 <p>Original error wrapped by this exception.</p>
 <blockquote>
-<p><strong>cause</strong>: String</p>
+<p><strong>cause</strong>: String?</p>
 </blockquote>
 <h4 id="stack_trace">stack_trace</h4>
 <p>Stack trace of the exception.</p>
 <blockquote>
-<p><strong>stack_trace</strong>: String</p>
+<p><strong>stack_trace</strong>: String?</p>
 </blockquote>
 </span>
 <h3 id="instance-methods">Instance methods</h3>
@@ -285790,8 +285790,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285810,7 +285808,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285830,7 +285827,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

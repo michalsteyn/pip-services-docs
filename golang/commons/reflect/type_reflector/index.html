@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/golang/commons/reflect/type_reflector/" /><meta property="article:section" content="golang" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="TypeReflector">
 <meta itemprop="description" content="Helper class that allows you to examine the type of an object, and create instancies of objects based on their type.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="327">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="394">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TypeReflector"/>
 <meta name="twitter:description" content="Helper class that allows you to examine the type of an object, and create instancies of objects based on their type.
@@ -289455,6 +289455,7 @@
             <li><a href="#description">Description</a></li>
             <li><a href="#methods">Methods</a>
               <ul>
+                <li><a href="#createinstance">CreateInstance</a></li>
                 <li><a href="#createinstancebytype">CreateInstanceByType</a></li>
                 <li><a href="#createinstancebydescriptor">CreateInstanceByDescriptor</a></li>
                 <li><a href="#createinstancebytype-1">CreateInstanceByType</a></li>
@@ -289572,6 +289573,20 @@
 <li>Because all languages have different casing and case sensitivity rules, the TypeReflector class treats all type names as case insensitive.</li>
 </ul>
 <h3 id="methods">Methods</h3>
+<h4 id="createinstance">CreateInstance</h4>
+<p>Creates an instance of an object type specified by its name
+and library where it is defined.</p>
+<p>See <a href="#gettype">GetType</a>
+See <a href="#createinstancebytype">CreateInstanceByType</a></p>
+<blockquote>
+<p>func (c *TTypeReflector) CreateInstance(name string, pkg string, args &hellip;interface{}) (interface{}, error)</p>
+</blockquote>
+<ul>
+<li><strong>name</strong>: string - an object type name.</li>
+<li><strong>pkg</strong>: string - a library (module) where object type is defined.</li>
+<li><strong>args</strong>: interface{} - arguments for the object constructor.</li>
+<li><strong>returns</strong>: (interface{}, error) - the created object instance.</li>
+</ul>
 <h4 id="createinstancebytype">CreateInstanceByType</h4>
 <p>Creates an instance of an object type.</p>
 <blockquote>
@@ -289783,8 +289798,6 @@ See <a href="../../convert/type_converter/#totypecode">TypeConverter.ToTypeCode<
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -289803,7 +289816,6 @@ See <a href="../../convert/type_converter/#totypecode">TypeConverter.ToTypeCode<
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -289823,7 +289835,7 @@ See <a href="../../convert/type_converter/#totypecode">TypeConverter.ToTypeCode<
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

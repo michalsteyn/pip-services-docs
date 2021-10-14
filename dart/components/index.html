@@ -274879,7 +274879,7 @@ They will pass through calls to loggers and counters that are set in references.
     <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_counters</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">refs</span><span style="color:#111">);</span>
   <span style="color:#111">}</span>
   
-  <span style="color:#111">myMethod</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">dynamic</span> <span style="color:#111">param1</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#111">myMethod</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">dynamic</span> <span style="color:#111">param1</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">try</span><span style="color:#111">{</span>
       <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">trace</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Executed method mycomponent.mymethod&#34;</span><span style="color:#111">);</span>
       <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_counters</span><span style="color:#111">.</span><span style="color:#111">increment</span><span style="color:#111">(</span><span style="color:#d88200">&#34;mycomponent.mymethod.exec_count&#34;</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">);</span>
@@ -274922,7 +274922,7 @@ to retrieve configuration from discovery services and credential stores respecti
   
   <span style="color:#111">...</span>
   
-  <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span><span style="color:#111">{</span>
+  <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span><span style="color:#111">{</span>
 
       <span style="color:#111">ConnectionParams</span> <span style="color:#111">connection</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_connectionResolver</span><span style="color:#111">.</span><span style="color:#111">resolve</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">);</span>
       
@@ -274959,7 +274959,7 @@ Here we assume that references are passed externally.</p>
     <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_lock</span> <span style="color:#f92672">=</span> <span style="color:#111">refs</span><span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#f92672">&lt;</span><span style="color:#111">ILock</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;lock&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">));</span>
   <span style="color:#111">}</span>
   
-  <span style="color:#111">myMethod</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">dynamic</span> <span style="color:#111">param1</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+  <span style="color:#111">myMethod</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">dynamic</span> <span style="color:#111">param1</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
     <span style="color:#75715e">// First check cache for result
 </span><span style="color:#75715e"></span>    <span style="color:#00a8c8">dynamic</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_cache</span><span style="color:#111">.</span><span style="color:#111">retrieve</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mykey&#34;</span><span style="color:#111">)</span>
       
@@ -275164,8 +275164,6 @@ component factories similar to the example below.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -275184,7 +275182,6 @@ component factories similar to the example below.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -275204,7 +275201,7 @@ component factories similar to the example below.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

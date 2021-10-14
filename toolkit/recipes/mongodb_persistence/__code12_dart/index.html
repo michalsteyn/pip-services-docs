@@ -23,11 +23,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/mongodb_persistence/__code12_dart/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="@override Future&lt;BeaconV1&gt; getOneByUdi(String correlationId, String udi) async { var filter = {&#39;udi&#39;: udi}; var query = mngquery.SelectorBuilder(); var selector = &lt;String, dynamic&gt;{}; if (filter != null &amp;&amp; filter.isNotEmpty) { selector[r&#39;$query&#39;] = filter; } query.raw(selector); var item = await collection.findOne(filter); if (item == null) { logger.trace(correlationId, &#39;Nothing found from %s with id = %s&#39;, [collectionName, udi]); return null; } logger.trace( correlationId, &#39;Retrieved from %s with id = %s&#39;, [collectionName, udi]); return convertToPublic(item); } ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="72">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -658,8 +658,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -678,7 +676,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -698,7 +695,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

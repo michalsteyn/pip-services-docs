@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/reflect/type_reflector/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="TypeReflector">
 <meta itemprop="description" content="Helper class that allows you to examine the type of an object, and create instancies of objects based on their type.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="342">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="406">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TypeReflector"/>
 <meta name="twitter:description" content="Helper class that allows you to examine the type of an object, and create instancies of objects based on their type.
@@ -285437,6 +285437,7 @@
             <li><a href="#description">Description</a></li>
             <li><a href="#static-methods">Static methods</a>
               <ul>
+                <li><a href="#createinstance">createInstance</a></li>
                 <li><a href="#createinstancebytype">createInstanceByType</a></li>
                 <li><a href="#createinstancebydescriptor">createInstanceByDescriptor</a></li>
                 <li><a href="#createinstancebytype-1">createInstanceByType</a></li>
@@ -285554,14 +285555,28 @@
 <li>Because all languages have different casing and case sensitivity rules, the TypeReflector class treats all type names as case insensitive.</li>
 </ul>
 <h3 id="static-methods">Static methods</h3>
+<h4 id="createinstance">createInstance</h4>
+<p>Creates an instance of an object type specified by its name
+and library where it is defined.</p>
+<p>See <a href="#gettype">getType</a>
+See <a href="#createinstancebytype">createInstanceByType</a></p>
+<blockquote>
+<p><code>static</code> dynamic createInstance(String name, String library, List args) {</p>
+</blockquote>
+<ul>
+<li><strong>name</strong>: String - an object type name.</li>
+<li><strong>library</strong>: String - a library (module) where object type is defined.</li>
+<li><strong>args</strong>: List - arguments for the object constructor.</li>
+<li><strong>returns</strong>: dynamic - the created object instance.</li>
+</ul>
 <h4 id="createinstancebytype">createInstanceByType</h4>
 <p>Creates an instance of an object type.</p>
 <blockquote>
-<p><code>static</code> dynamic createInstanceByType(Type type, List args)</p>
+<p><code>static</code> dynamic createInstanceByType(Type? type, List? args)</p>
 </blockquote>
 <ul>
-<li><strong>type</strong>: Type - object type (factory function) to create.</li>
-<li><strong>args</strong>: List - arguments for the object constructor.</li>
+<li><strong>type</strong>: Type? - object type (factory function) to create.</li>
+<li><strong>args</strong>: List? - arguments for the object constructor.</li>
 <li><strong>returns</strong>: dynamic - created object&rsquo;s instance.</li>
 </ul>
 <h4 id="createinstancebydescriptor">createInstanceByDescriptor</h4>
@@ -285587,21 +285602,21 @@
 <h4 id="gettype">getType</h4>
 <p>Gets an object&rsquo;s type by its name and library where it is defined.</p>
 <blockquote>
-<p><code>static</code> Type getType(String name, [String library])</p>
+<p><code>static</code> Type? getType(String name, [String library])</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: String - object type name.</li>
 <li><strong>library</strong>: String - library where the type is defined.</li>
-<li><strong>returns</strong>: Type - object type or null is the type wasn&rsquo;t found.</li>
+<li><strong>returns</strong>: Type? - object type or null is the type wasn&rsquo;t found.</li>
 </ul>
 <h4 id="gettypebydescriptor">getTypeByDescriptor</h4>
 <p>Gets an object&rsquo;s type by type descriptor.</p>
 <blockquote>
-<p><code>static</code> Type getTypeByDescriptor(<a href="../type_descriptor">TypeDescriptor</a> descriptor)</p>
+<p><code>static</code> Type? getTypeByDescriptor(<a href="../type_descriptor">TypeDescriptor</a> descriptor)</p>
 </blockquote>
 <ul>
 <li><strong>descriptor</strong>: <a href="../type_descriptor">TypeDescriptor</a> - type descriptor that points to an object type.</li>
-<li><strong>returns</strong>: Type - object type or null is the type wasn&rsquo;t found.</li>
+<li><strong>returns</strong>: Type? - object type or null is the type wasn&rsquo;t found.</li>
 </ul>
 <h4 id="isprimitive">isPrimitive</h4>
 <p>Checks if a value has a primitive type.</p>
@@ -285774,8 +285789,6 @@ See <a href="../../convert/type_converter/#totypecode">TypeConverter.toTypeCode<
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285794,7 +285807,6 @@ See <a href="../../convert/type_converter/#totypecode">TypeConverter.toTypeCode<
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285814,7 +285826,7 @@ See <a href="../../convert/type_converter/#totypecode">TypeConverter.toTypeCode<
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

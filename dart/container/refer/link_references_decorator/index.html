@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/container/refer/link_references_decorator/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="LinkReferencesDecorator">
 <meta itemprop="description" content="References decorator that automatically sets references to newly added components that implement the [IReferenceable](../../../commons/refer/ireferenceable) interface, and unsets references from removed components that implement [IUnreferenceable](../../../commons/refer/iunreferenceable) interface.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="251">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LinkReferencesDecorator"/>
@@ -285563,10 +285563,10 @@
 <p>Closes the component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="isopen">isOpen</h4>
 <p>Checks if the component is open.</p>
@@ -285581,10 +285581,10 @@
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="put">put</h4>
 <p>Puts a new reference into the reference map.</p>
@@ -285763,8 +285763,6 @@ When all references shall be removed, use <strong>removeAll</strong> method inst
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285783,7 +285781,6 @@ When all references shall be removed, use <strong>removeAll</strong> method inst
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285803,7 +285800,7 @@ When all references shall be removed, use <strong>removeAll</strong> method inst
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

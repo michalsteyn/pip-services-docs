@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/grpc/clients/grpc_client/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="GrpcClient">
 <meta itemprop="description" content="Abstract client that calls remote endpoints using the gRPC protocol.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="494">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GrpcClient"/>
@@ -285622,11 +285622,11 @@
 <h4 id="call">call</h4>
 <p>Calls a remote method via gRPC protocol.</p>
 <blockquote>
-<p>grpc.ResponseFuture&lt;R&gt;call&lt;Q extends GeneratedMessage, R extends GeneratedMessage&gt;(String method, String correlationId, Q request, {grpc.CallOptions options})</p>
+<p>grpc.ResponseFuture&lt;R&gt;call&lt;Q extends GeneratedMessage, R extends GeneratedMessage&gt;(String method, String? correlationId, Q request, {grpc.CallOptions options})</p>
 </blockquote>
 <ul>
 <li><strong>method</strong>: String - name of the calling method</li>
-<li><strong>correlationId</strong>: String - current client</li>
+<li><strong>correlationId</strong>: String? - current client</li>
 <li><strong>request</strong>: Q - (optional) request object.</li>
 <li><strong>options</strong>: grpc.CallOptions - (optional) call options</li>
 <li><strong>returns</strong>: grpc.ResponseFuture&lt;R&gt; - (optional) Future that receives result object or error.</li>
@@ -285635,10 +285635,10 @@
 <p>Closes the component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
 <p>Configures the component by passing its configuration parameters.</p>
@@ -285653,20 +285653,20 @@
 <p>Adds instrumentation to log calls and measure call time.
 It returns a CounterTiming object that is used to end the time measurement.</p>
 <blockquote>
-<p><a href="../../../components/count/timing">Timing</a> instrument(String correlationId, String name)</p>
+<p><a href="../../../components/count/timing">Timing</a> instrument(String? correlationId, String name)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>name</strong>: String - method name.</li>
 <li><strong>returns</strong>: <a href="../../../components/count/timing">Timing</a> - CounterTiming object used to end the time measurement.</li>
 </ul>
 <h4 id="instrumenterror">instrumentError</h4>
 <p>Adds instrumentation to error handling.</p>
 <blockquote>
-<p>void instrumentError(String correlationId, String name, err, [bool reerror = false])</p>
+<p>void instrumentError(String? correlationId, String name, err, [bool reerror = false])</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>name</strong>: String - method name.</li>
 <li><strong>err</strong>: dynamic - occured error</li>
 <li><strong>reerror</strong>: bool - if true - throw error</li>
@@ -285684,10 +285684,10 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="setreferences">setReferences</h4>
 <p>Sets references to dependent components.</p>
@@ -285701,7 +285701,7 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyGrpcClient</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">GrpcClient</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IMyClient</span> <span style="color:#111">{</span>
    <span style="color:#111">...</span>
-   <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">string</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+   <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">string</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
        <span style="color:#00a8c8">var</span> <span style="color:#111">timing</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">instrument</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;myclient.get_data&#39;</span><span style="color:#111">);</span>
        <span style="color:#00a8c8">var</span> <span style="color:#111">request</span> <span style="color:#f92672">=</span> <span style="color:#111">MyDataRequest</span><span style="color:#111">();</span>
        <span style="color:#111">request</span><span style="color:#111">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">id</span><span style="color:#111">;</span>
@@ -285867,8 +285867,6 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285887,7 +285885,6 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285907,7 +285904,7 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

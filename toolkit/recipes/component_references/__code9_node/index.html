@@ -23,11 +23,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/component_references/__code9_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="class SimpleController implements IConfigurable, IReferenceable, IUnreferenceable { private _depedencyResolver = DependencyResolver.fromTuples( &#34;worker&#34;, new Descriptor(&#34;*&#34;,&#34;worker&#34;,&#34;*&#34;,&#34;*&#34;,&#34;1.0&#34;) ); public configure(config) { this._dependencyResolver.configure(config); } public setReferences(references) { this._dependencyResolver.setReferences(references); this._worker = this._dependencyResolver.getOneRequired(&#34;worker&#34;); } public unsetReferences() { this._dependencyResolver = new DependencyResolver(); } ... } let references = References.fromTuples( new Descriptor(&#34;sample&#34;, &#34;worker&#34;, &#34;worker1&#34;, &#34;111&#34;, &#34;1.0&#34;), new Worker1(), new Descriptor(&#34;sample&#34;, &#34;worker&#34;, &#34;worker2&#34;, &#34;222&#34;, &#34;1.0&#34;), new Worker2() ); let config = ConfigParams.fromTuples( &#34;dependencies.worker&#34;, &#34;*:worker:worker1:111:1.0&#34; ); let controller = new SimpleController(); controller.">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="78">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -668,8 +668,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -688,7 +686,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -708,7 +705,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

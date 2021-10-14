@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/components/connect/connection_resolver/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ConnectionResolver">
 <meta itemprop="description" content="Helper class used to retrieve component connections.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="405">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ConnectionResolver"/>
@@ -285617,10 +285617,10 @@ If you need fully fleshed connection use <strong>resolve</strong> method instead
 <p>Registers the given connection in all referenced discovery services.
 This method can be used for dynamic service discovery.</p>
 <blockquote>
-<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; register(String correlationId, <a href="../connection_params">ConnectionParams</a> connection)</p>
+<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; register(String? correlationId, <a href="../connection_params">ConnectionParams</a> connection)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>connection</strong>: Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; - connection to register.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; - Future that receives registered connection or throws error.</li>
 </ul>
@@ -285628,20 +285628,20 @@ This method can be used for dynamic service discovery.</p>
 <p>Resolves a single component connection. If connections are configured to be retrieved
 from Discovery service it finds a <a href="../idiscovery">IDiscovery</a> and resolves the connection there.</p>
 <blockquote>
-<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; resolve(String correlationId)</p>
+<p>Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; resolve(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../connection_params">ConnectionParams</a>&gt; - resolved connection parameters or null if nothing was found.</li>
 </ul>
 <h4 id="resolveall">resolveAll</h4>
 <p>Resolves all the component&rsquo;s connections. If the connections are configured to be retrieved
 from Discovery service it finds a <a href="../idiscovery">IDiscovery</a> and resolves the connection there.</p>
 <blockquote>
-<p>Future&lt;List&lt;<a href="../connection_params">ConnectionParams</a>&gt;&gt; resolveAll(String correlationId)</p>
+<p>Future&lt;List&lt;<a href="../connection_params">ConnectionParams</a>&gt;&gt; resolveAll(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>returns</strong>: Future&lt;List&lt;<a href="../connection_params">ConnectionParams</a>&gt;&gt; - list of resolved connections.</li>
 </ul>
 <h4 id="setreferences">setReferences</h4>
@@ -285817,8 +285817,6 @@ from Discovery service it finds a <a href="../idiscovery">IDiscovery</a> and res
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285837,7 +285835,6 @@ from Discovery service it finds a <a href="../idiscovery">IDiscovery</a> and res
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285857,7 +285854,7 @@ from Discovery service it finds a <a href="../idiscovery">IDiscovery</a> and res
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

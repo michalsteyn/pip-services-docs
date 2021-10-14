@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/data/tags_processor/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="TagsProcessor">
 <meta itemprop="description" content="Helper class used to extract and process search tags from objects.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="340">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TagsProcessor"/>
@@ -285606,11 +285606,11 @@ When tags are compressed, they can be matched in search queries.</p>
 <h4 id="equaltags">equalTags</h4>
 <p>Compares two tags using their compressed form.</p>
 <blockquote>
-<p><code>static</code> bool equalTags(String tag1, String tag2)</p>
+<p><code>static</code> bool equalTags(String? tag1, String? tag2)</p>
 </blockquote>
 <ul>
-<li><strong>tag1</strong>: String - first tag.</li>
-<li><strong>tag2</strong>: String - second tag.</li>
+<li><strong>tag1</strong>: String? - first tag.</li>
+<li><strong>tag2</strong>: String? - second tag.</li>
 <li><strong>returns</strong>: bool - true if the tags are equal and false otherwise.</li>
 </ul>
 <h4 id="extracthashtags">extractHashTags</h4>
@@ -285805,8 +285805,6 @@ When tags are normalized, they are presented in similar shape and form.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285825,7 +285823,6 @@ When tags are normalized, they are presented in similar shape and form.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285845,7 +285842,7 @@ When tags are normalized, they are presented in similar shape and form.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

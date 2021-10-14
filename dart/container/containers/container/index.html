@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/container/containers/container/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="Container">
 <meta itemprop="description" content="Inversion of control (IoC) container that creates components and manages their lifecycle.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="506">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Container"/>
@@ -285645,10 +285645,10 @@ added to the container by their locators (descriptors).</p>
 <p>Closes the component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
 <p>Configures the component by passing its configuration parameters.</p>
@@ -285672,18 +285672,18 @@ added to the container by their locators (descriptors).</p>
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="readconfigfromfile">readConfigFromFile</h4>
 <p>Reads the container&rsquo;s configuration from a JSON or YAML file and parameterizes it with the given values.</p>
 <blockquote>
-<p>void readConfigFromFile(String correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p>void readConfigFromFile(String? correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>path</strong>: String - path to the configuration file</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters or null to skip parameterization.</li>
 </ul>
@@ -285883,8 +285883,6 @@ added to the container by their locators (descriptors).</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285903,7 +285901,6 @@ added to the container by their locators (descriptors).</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285923,7 +285920,7 @@ added to the container by their locators (descriptors).</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

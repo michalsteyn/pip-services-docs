@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/validate/validation_exception/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ValidationException">
 <meta itemprop="description" content="Errors in schema validation.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="255">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ValidationException"/>
@@ -285579,18 +285579,18 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of validation exception and assigns its values.</p>
 <blockquote>
-<p>ValidationException(String correlationId, [String message, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results])</p>
+<p>ValidationException(String? correlationId, [String? message, List&lt;<a href="../validation_result">ValidationResult</a>&gt;? results])</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) unique transaction id used to trace execution through the call chain.</li>
-<li><strong>message</strong>: String - (optional) human-readable description of the error.</li>
-<li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - (optional) list of validation results.</li>
+<li><strong>correlationId</strong>: String? - (optional) unique transaction id used to trace execution through the call chain.</li>
+<li><strong>message</strong>: String? - (optional) human-readable description of the error.</li>
+<li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt;? - (optional) list of validation results.</li>
 </ul>
 <h3 id="static-methods">Static methods</h3>
 <h4 id="composemessage">composeMessage</h4>
 <p>Composes human readable error message based on validation results.</p>
 <blockquote>
-<p><code>static</code> String composeMessage(List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
+<p><code>static</code> String composeMessage(List&lt;<a href="../validation_result">ValidationResult</a>&gt;? results)</p>
 </blockquote>
 <ul>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - list of validation results.</li>
@@ -285600,22 +285600,22 @@
 <p>Creates a new ValidationException based on errors in validation results.
 If validation results have no errors, then null is returned.</p>
 <blockquote>
-<p><code>static</code> <a href="">ValidationException</a> fromResults(String correlationId, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results, bool strict)</p>
+<p><code>static</code> <a href="">ValidationException?</a> fromResults(String? correlationId, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results, bool strict)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; -  list of validation results that may contain errors.</li>
 <li><strong>strict</strong>: bool - true to treat warnings as errors.</li>
-<li><strong>returns</strong>: <a href="">ValidationException</a> - newly created ValidationException or null if no errors were found.</li>
+<li><strong>returns</strong>: <a href="">ValidationException?</a> - newly created ValidationException or null if no errors were found.</li>
 </ul>
 <h4 id="throwexceptionifneeded">throwExceptionIfNeeded</h4>
 <p>Throws ValidationException based on errors in validation results.
 If validation results have no errors, then no exception is thrown.</p>
 <blockquote>
-<p><code>static</code> void throwExceptionIfNeeded(String correlationId, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results, bool strict)</p>
+<p><code>static</code> void throwExceptionIfNeeded(String? correlationId, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results, bool strict)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - list of validation results that may contain errors.</li>
 <li><strong>strict</strong>: bool - true to treat warnings as errors.</li>
 </ul>
@@ -285773,8 +285773,6 @@ If validation results have no errors, then no exception is thrown.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285793,7 +285791,6 @@ If validation results have no errors, then no exception is thrown.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285813,7 +285810,7 @@ If validation results have no errors, then no exception is thrown.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

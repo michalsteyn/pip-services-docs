@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/validate/schema/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="Schema">
 <meta itemprop="description" content="Basic schema used to validate values against a set of validation rules.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="558">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Schema"/>
@@ -285589,20 +285589,20 @@
 <p>Creates a new instance of validation schema and sets its values.</p>
 <p>See <a href="../ivalidation_rule">IValidationRule</a></p>
 <blockquote>
-<p>Schema([bool req, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; rules])</p>
+<p>Schema([bool? req, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; rules])</p>
 </blockquote>
 <ul>
-<li><strong>required</strong>: bool - (optional) true to always require non-null values.</li>
+<li><strong>required</strong>: bool? - (optional) true to always require non-null values.</li>
 <li><strong>rules</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; - (optional) list with validation rules.</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="getrules">getRules</h4>
 <p>Gets validation rules to check values against.</p>
 <blockquote>
-<p>List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; getRules()</p>
+<p>List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt;? getRules()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; - list with validation rules.</li>
+<li><strong>returns</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt;? - list with validation rules.</li>
 </ul>
 <h4 id="isrequired">isRequired</h4>
 <p>Gets a flag that always requires non-null values.
@@ -285640,10 +285640,10 @@ to chain additional calls.</p>
 The type can be defined as a Schema, type, a type name or <a href="../../convert/type_code">TypeCode</a>
 When type is a Schema, it executes validation recursively against that Schema.</p>
 <blockquote>
-<p>void performTypeValidation(String path, dynamic type, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
+<p>void performTypeValidation(String? path, dynamic type, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
 </blockquote>
 <ul>
-<li><strong>path</strong>: String - dot notation path to the value.</li>
+<li><strong>path</strong>: String? - dot notation path to the value.</li>
 <li><strong>type</strong>: dynamic - type to match the value type</li>
 <li><strong>value</strong>: dynamic - value to be validated.</li>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - list with validation results.</li>
@@ -285687,22 +285687,22 @@ When type is a Schema, it executes validation recursively against that Schema.</
 <h4 id="validateandreturnexception">validateAndReturnException</h4>
 <p>Validates the given value and returns a <a href="../validation_exception">ValidationException</a> if errors were found.</p>
 <blockquote>
-<p><a href="../validation_exception">ValidationException</a> validateAndReturnException(String correlationId, dynamic value, [bool strict = false])</p>
+<p><a href="../validation_exception">ValidationException?</a> validateAndReturnException(String? correlationId, dynamic value, [bool strict = false])</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>value</strong>: dynamic -  value to be validated.</li>
 <li><strong>strict</strong>: bool - true to treat warnings as errors.</li>
-<li><strong>returns</strong>: <a href="../validation_exception">ValidationException</a> - validation exception.</li>
+<li><strong>returns</strong>: <a href="../validation_exception">ValidationException?</a> - validation exception.</li>
 </ul>
 <h4 id="validateandthrowexception">validateAndThrowException</h4>
 <p>Validates the given value and throws a <a href="../validation_exception">ValidationException</a> if errors were found.</p>
 <p>See <a href="../validation_exception/#throwexceptionifneeded">ValidationException.throwExceptionIfNeeded</a></p>
 <blockquote>
-<p>void validateAndThrowException(String correlationId, dynamic value, [bool strict = false])</p>
+<p>void validateAndThrowException(String? correlationId, dynamic value, [bool strict = false])</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>value</strong>: dynamic - value to be validated.</li>
 <li><strong>strict</strong>: bool - true to treat warnings as errors.</li>
 </ul>
@@ -285877,8 +285877,6 @@ to chain additional calls.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285897,7 +285895,6 @@ to chain additional calls.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285917,7 +285914,7 @@ to chain additional calls.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

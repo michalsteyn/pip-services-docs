@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/run/closer/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="Closer">
 <meta itemprop="description" content="Helper class that allows you to close one or multiple components at the same time.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="129">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="140">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Closer"/>
 <meta name="twitter:description" content="Helper class that allows you to close one or multiple components at the same time.
@@ -285555,21 +285555,22 @@
 <p>To be closed, components must implement the <a href="../iclosable">IClosable</a> interface.
 If they don&rsquo;t, the call to this method has no effect.</p>
 <blockquote>
-<p><code>static</code> Future close(String correlationId, List components)</p>
+<p><code>static</code> Future close(String? correlationId, List? components)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id  used to trace execution through the call chain.</li>
-<li><strong>components</strong>: List - list of components that are to be closed.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id  used to trace execution through the call chain.</li>
+<li><strong>components</strong>: List? - list of components that are to be closed.</li>
+<li><strong>returns</strong>: Future - that receives error or null no errors occured.</li>
 </ul>
 <h4 id="closeone">closeOne</h4>
 <p>Closes a specific component.
 To be closed, components must implement the <a href="../iclosable">IClosable</a> interface.
 If they don&rsquo;t, the call to this method has no effect.</p>
 <blockquote>
-<p><code>static</code> Future closeOne(String correlationId, component)</p>
+<p><code>static</code> Future closeOne(String? correlationId, component)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>component</strong>: dynamic - component that is to be closed.</li>
 </ul>
 <h3 id="see-also">See also</h3>
@@ -285723,8 +285724,6 @@ If they don&rsquo;t, the call to this method has no effect.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285743,7 +285742,6 @@ If they don&rsquo;t, the call to this method has no effect.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285763,7 +285761,7 @@ If they don&rsquo;t, the call to this method has no effect.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

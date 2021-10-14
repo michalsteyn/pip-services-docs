@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/run/iclosable/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="IClosable">
 <meta itemprop="description" content="Interface that allows you to create a component with a method that closes it and frees used resources.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="87">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IClosable"/>
@@ -285554,16 +285554,16 @@
 <h4 id="close">close</h4>
 <p>Closes a component and frees used resources.</p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyConnector</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">ICloseable</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">dynamic</span> <span style="color:#111">_client</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
     <span style="color:#111">...</span> <span style="color:#75715e">// The _client can be lazy created
-</span><span style="color:#75715e"></span>    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">){</span>
+</span><span style="color:#75715e"></span>    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">){</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">_client</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#111">_client</span><span style="color:#111">.</span><span style="color:#111">close</span><span style="color:#111">();</span>
             <span style="color:#111">_client</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
@@ -285726,8 +285726,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285746,7 +285744,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285766,7 +285763,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

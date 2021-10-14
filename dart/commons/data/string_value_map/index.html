@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/data/string_value_map/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="StringValueMap">
 <meta itemprop="description" content="Cross-language implementation of a map (dictionary) where all keys and values are strings.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="2271">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="2333">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="StringValueMap"/>
 <meta name="twitter:description" content="Cross-language implementation of a map (dictionary) where all keys and values are strings.
@@ -285466,6 +285466,7 @@
                 <li><a href="#clear">clear</a></li>
                 <li><a href="#clone">clone</a></li>
                 <li><a href="#get">get</a></li>
+                <li><a href="#getvalue">getValue</a></li>
                 <li><a href="#getasarray">getAsArray</a></li>
                 <li><a href="#getasarraywithdefault">getAsArrayWithDefault</a></li>
                 <li><a href="#getasboolean">getAsBoolean</a></li>
@@ -285485,6 +285486,7 @@
                 <li><a href="#getasnullablearray">getAsNullableArray</a></li>
                 <li><a href="#getasnullableboolean">getAsNullableBoolean</a></li>
                 <li><a href="#getasnullabledatetime">getAsNullableDateTime</a></li>
+                <li><a href="#getasnullableduration">getAsNullableDuration</a></li>
                 <li><a href="#getasnullabledouble">getAsNullableDouble</a></li>
                 <li><a href="#getasnullablefloat">getAsNullableFloat</a></li>
                 <li><a href="#getasnullableinteger">getAsNullableInteger</a></li>
@@ -285667,11 +285669,19 @@
 <h4 id="get">get</h4>
 <p>Gets a map element specified by its key.</p>
 <blockquote>
-<p>String get(String key)</p>
+<p>String? get(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: String - value of the map element.</li>
+<li><strong>returns</strong>: String? - value of the map element.</li>
+</ul>
+<h4 id="getvalue">getValue</h4>
+<p>Gets an map with values.</p>
+<blockquote>
+<p>Map&lt;String, String?&gt; getValue()</p>
+</blockquote>
+<ul>
+<li><strong>returns</strong>: Map&lt;String, String?&gt; - the value of the map elements.</li>
 </ul>
 <h4 id="getasarray">getAsArray</h4>
 <p>Converts a map&rsquo;s element into an AnyValueArray object or returns an empty AnyValueArray object if the conversion is not possible.<br>
@@ -285838,17 +285848,17 @@ See <a href="../../convert/long_converter/#tolongwithdefault">LongConverter.toLo
 <p>Converts a map&rsquo;s element into an AnyValueArray or returns null if the conversion is not possible.<br>
 See <a href="../any_value_map">AnyValueMap</a>, <a href="../any_value_map/#fromvalue">AnyValueMap.fromValue</a></p>
 <blockquote>
-<p><a href="../any_value_map">AnyValueMap</a> getAsNullableArray(String key)</p>
+<p><a href="../any_value_map">AnyValueMap?</a> getAsNullableArray(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: <a href="../any_value_map">AnyValueMap</a> - AnyValueMap value of the element or given default value if the conversion is not supported.</li>
+<li><strong>returns</strong>: <a href="../any_value_map">AnyValueMap?</a> - AnyValueMap value of the element or given default value if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullableboolean">getAsNullableBoolean</h4>
 <p>Converts a map&rsquo;s element into a boolean or returns null if the conversion is not possible.<br>
 See <a href="../../convert/boolean_converter/#tonullableboolean">BooleanConverter.toNullableBoolean</a></p>
 <blockquote>
-<p>bool getAsNullableBoolean(String key)</p>
+<p>bool? getAsNullableBoolean(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
@@ -285858,91 +285868,101 @@ See <a href="../../convert/boolean_converter/#tonullableboolean">BooleanConverte
 <p>Converts a map&rsquo;s element into a Date or returns null if the conversion is not possible.<br>
 See <a href="../../convert/date_time_converter/#tonullabledatetime">DateTimeConverter.toNullableDateTime</a></p>
 <blockquote>
-<p>DateTime getAsNullableDateTime(String key)</p>
+<p>DateTime? getAsNullableDateTime(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: DateTime - Date value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: DateTime? - Date value of the element or null if the conversion is not supported.</li>
+</ul>
+<h4 id="getasnullableduration">getAsNullableDuration</h4>
+<p>Converts map element into a Duration or returns null if conversion is not possible.</p>
+<p>See <a href="../../convert/duration_converter/#tonullableduration">DurationConverter.toNullableDuration</a></p>
+<blockquote>
+<p>Duration? getAsNullableDuration(String key)</p>
+</blockquote>
+<ul>
+<li><strong>key</strong>: Strimg - a key of element to get.</li>
+<li><strong>returns</strong>: Duration? - value of the element or null if conversion is not supported.</li>
 </ul>
 <h4 id="getasnullabledouble">getAsNullableDouble</h4>
 <p>Converts a map&rsquo;s element into a double or returns null if the conversion is not possible.<br>
 See <a href="../../convert/double_converter/#tonullabledouble">DoubleConverter.toNullableDouble</a></p>
 <blockquote>
-<p>double getAsNullableDouble(String key)</p>
+<p>double? getAsNullableDouble(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: double - double value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: double? - double value of the element or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullablefloat">getAsNullableFloat</h4>
 <p>Converts a map&rsquo;s element into a float or returns null if the conversion is not possible.<br>
 See <a href="../../convert/float_converter/#tonullablefloat">FloatConverter.toNullableFloat</a></p>
 <blockquote>
-<p>double getAsNullableFloat(String key)</p>
+<p>double? getAsNullableFloat(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: double - float value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: double? - float value of the element or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullableinteger">getAsNullableInteger</h4>
 <p>Converts a map&rsquo;s element into an integer or returns null if the conversion is not possible.<br>
 See <a href="../../convert/integer_converter/#tonullableinteger">IntegerConverter.toNullableInteger</a></p>
 <blockquote>
-<p>int getAsNullableInteger(String key)</p>
+<p>int? getAsNullableInteger(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: int - integer value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: int? - integer value of the element or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullablelong">getAsNullableLong</h4>
 <p>Converts a map&rsquo;s element into a long or returns null if the conversion is not possible.<br>
 See <a href="../..convert/long_converter/#tonullablelong">LongConverter.toNullableLong</a></p>
 <blockquote>
-<p>int getAsNullableLong(String key)</p>
+<p>int? getAsNullableLong(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: int - long value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: int? - long value of the element or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullablemap">getAsNullableMap</h4>
 <p>Converts a map&rsquo;s element into an AnyValueMap object or returns null if the conversion is not possible.</p>
 <blockquote>
-<p><a href="../any_value_map">AnyValueMap</a> getAsNullableMap(String key)</p>
+<p><a href="../any_value_map">AnyValueMap?</a> getAsNullableMap(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: <a href="../any_value_map">AnyValueMap</a> - AnyValueMap value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: <a href="../any_value_map">AnyValueMap?</a> - AnyValueMap value of the element or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullablestring">getAsNullableString</h4>
 <p>Converts a map&rsquo;s element into a string or returns null if the conversion is not possible.<br>
 See <a href="../../convert/string_converter/#tonullablestring">StringConverter.toNullableString</a></p>
 <blockquote>
-<p>String getAsNullableString(String key)</p>
+<p>String? getAsNullableString(String key)</p>
 </blockquote>
 <ul>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: String - string value of the element or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: String? - string value of the element or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasnullabletype">getAsNullableType</h4>
 <p>Converts a map&rsquo;s element into a value defined by a specified typecode.
 If conversion is not possible, it returns null. <br>
 See <a href="../../convert/type_converter/#tonullabletype">TypeConverter.toNullableType</a></p>
 <blockquote>
-<p>T getAsNullableType&lt;T&gt;(<a href="../../convert/type_code">TypeCode</a> type, String key)</p>
+<p>T? getAsNullableType&lt;T&gt;(<a href="../../convert/type_code">TypeCode</a> type, String key)</p>
 </blockquote>
 <ul>
 <li><strong>type</strong>: <a href="../../convert/type_code">TypeCode</a> - TypeCode that defines the type of the result.</li>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: T - element value defined by the typecode or null if the conversion is not supported.</li>
+<li><strong>returns</strong>: T? - element value defined by the typecode or null if the conversion is not supported.</li>
 </ul>
 <h4 id="getasobject">getAsObject</h4>
 <p>Gets the value stored in map element without any conversions.
 When the element&rsquo;s key is not defined, it returns the entire map value.</p>
 <blockquote>
-<p>dynamic getAsObject([String key])</p>
+<p>dynamic getAsObject([String? key])</p>
 </blockquote>
 <ul>
-<li><strong>key</strong>: String - (optional) key of the element to get.</li>
+<li><strong>key</strong>: String? - (optional) key of the element to get.</li>
 <li><strong>returns</strong>: dynamic - element value or value of the map when the index is not defined.</li>
 </ul>
 <h4 id="getasstring">getAsString</h4>
@@ -285968,12 +285988,12 @@ When the element&rsquo;s key is not defined, it returns the entire map value.</p
 <p>Converts a map&rsquo;s element into a value defined by a specified typecode.
 If conversion is not possible it returns the default value for the specified type.</p>
 <blockquote>
-<p>T getAsType&lt;T&gt;(<a href="../../convert/type_code">TypeCode</a> type, String key)</p>
+<p>T? getAsType&lt;T&gt;(<a href="../../convert/type_code">TypeCode</a> type, String key)</p>
 </blockquote>
 <ul>
 <li><strong>type</strong>: <a href="../../convert/type_code">TypeCode</a> - TypeCode that defines the type of the result.</li>
 <li><strong>key</strong>: String - key of the element to get.</li>
-<li><strong>returns</strong>: T - element value defined by the typecode or default if the conversion is not supported.</li>
+<li><strong>returns</strong>: T? - element value defined by the typecode or default if the conversion is not supported.</li>
 </ul>
 <h4 id="getastypewithdefault">getAsTypeWithDefault</h4>
 <p>Converts a map&rsquo;s element into a value defined by a specified typecode.
@@ -286019,10 +286039,10 @@ See <a href="../any_value">AnyValue</a>, <a href="../any_value/#constructors">An
 <p>Removes a map&rsquo;s element specified by its key.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>String remove(Object key)</p>
+<p>String remove(Object? key)</p>
 </blockquote>
 <ul>
-<li><strong>key</strong>: Object - key of the element to remove.</li>
+<li><strong>key</strong>: Object? - key of the element to remove.</li>
 <li><strong>returns</strong>: String - Returns the value associated with <em>key</em> before it was removed.</li>
 </ul>
 <h4 id="setasobject">setAsObject</h4>
@@ -286053,19 +286073,19 @@ The result is a semicolon-separated list of key-value pairs as
 <p>Creates a new AnyValueMap by merging two or more maps.
 Maps defined later in the list override values from previously defined maps.</p>
 <blockquote>
-<p><code>static</code> <a href="../string_value_map">StringValueMap</a> fromMaps(List maps)</p>
+<p><code>static</code> <a href="../string_value_map">StringValueMap</a> fromMaps(List? maps)</p>
 </blockquote>
 <ul>
-<li><strong>maps</strong>: List - array of maps to be merged</li>
+<li><strong>maps</strong>: List? - array of maps to be merged</li>
 <li><strong>returns</strong>: <a href="../string_value_map">StringValueMap</a> - newly created StringValueMap.</li>
 </ul>
 <h4 id="fromstring">fromString</h4>
 <p>Parses semicolon-separated key-value pairs and returns them as a <a href="../string_value_map">StringValueMap</a>.</p>
 <blockquote>
-<p><code>static</code> <a href="../string_value_map">StringValueMap</a> fromString(String line)</p>
+<p><code>static</code> <a href="../string_value_map">StringValueMap</a> fromString(String? line)</p>
 </blockquote>
 <ul>
-<li><strong>line</strong>: String - semicolon-separated key-value list to initialize StringValueMap.</li>
+<li><strong>line</strong>: String? - semicolon-separated key-value list to initialize StringValueMap.</li>
 <li><strong>returns</strong>: <a href="../string_value_map">StringValueMap</a> - newly created StringValueMap.</li>
 </ul>
 <h4 id="fromtuples">fromTuples</h4>
@@ -286081,7 +286101,7 @@ Maps defined later in the list override values from previously defined maps.</p>
 <p>Creates a new StringValueMap object from a list of key-value pairs called tuples.
 The method is similar to <a href="#fromtuples">fromTuples</a> but tuples are passed as array instead of parameters.</p>
 <blockquote>
-<p><code>static</code> <a href="../string_value_map">StringValueMap</a> fromTuplesArray(List tuples)</p>
+<p><code>static</code> <a href="../string_value_map">StringValueMap</a> fromTuplesArray(List? tuples)</p>
 </blockquote>
 <ul>
 <li><strong>tuples</strong>: List - list of values where odd elements are keys and the following even elements are values.</li>
@@ -286282,8 +286302,6 @@ The method is similar to <a href="#fromtuples">fromTuples</a> but tuples are pas
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -286302,7 +286320,6 @@ The method is similar to <a href="#fromtuples">fromTuples</a> but tuples are pas
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -286322,7 +286339,7 @@ The method is similar to <a href="#fromtuples">fromTuples</a> but tuples are pas
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

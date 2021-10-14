@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/reflect/recursive_object_writer/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="RecursiveObjectWriter">
 <meta itemprop="description" content="Helper class that allows you to dynamically set the properties of an object recursively using &#34;dot&#34; notation.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="278">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RecursiveObjectWriter"/>
@@ -285570,11 +285570,11 @@ map key-pairs or array elements with their indexes.</p>
 <p>If some properties do not exist or introspection fails,
 they are just silently skipped and no errors thrown.</p>
 <blockquote>
-<p><code>static</code> void setProperties(obj, Map&lt;String, dynamic&gt; values)</p>
+<p><code>static</code> void setProperties(obj, Map&lt;String, dynamic&gt;? values)</p>
 </blockquote>
 <ul>
 <li><strong>obj</strong>: dynamic - object to write properties to.</li>
-<li><strong>values</strong>: Map&lt;String, dynamic&gt; - map containing property names and their values.</li>
+<li><strong>values</strong>: Map&lt;String, dynamic&gt;? - map containing property names and their values.</li>
 </ul>
 <h4 id="setproperty">setProperty</h4>
 <p>Recursively sets the value of an object&rsquo;s and its subobjects' property specified by its name.</p>
@@ -285584,11 +285584,11 @@ map key or array index.</p>
 <p>If the property does not exist or introspection fails,
 this method doesn&rsquo;t do anything and doesn&rsquo;t throw any errors.</p>
 <blockquote>
-<p><code>static</code> void setProperty(obj, String name, value)</p>
+<p><code>static</code> void setProperty(obj, String? name, value)</p>
 </blockquote>
 <ul>
 <li><strong>obj</strong>: dynamic - object to write property to.</li>
-<li><strong>name</strong>: String - name of the property to set.</li>
+<li><strong>name</strong>: String? - name of the property to set.</li>
 <li><strong>value</strong>: dynamic - new value for the property to set.</li>
 </ul>
 <h3 id="see-also">See also</h3>
@@ -285745,8 +285745,6 @@ this method doesn&rsquo;t do anything and doesn&rsquo;t throw any errors.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285765,7 +285763,6 @@ this method doesn&rsquo;t do anything and doesn&rsquo;t throw any errors.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285785,7 +285782,7 @@ this method doesn&rsquo;t do anything and doesn&rsquo;t throw any errors.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

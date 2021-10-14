@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/redis/cache/redis_cache/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="RedisCache">
 <meta itemprop="description" content="Distributed cache that stores values in Redis in-memory database.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="431">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RedisCache"/>
@@ -285593,10 +285593,10 @@
 <p>Closes a component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
 <p>Configures a component by passing its configuration parameters.</p>
@@ -285620,19 +285620,19 @@
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="remove">remove</h4>
 <p>Removes a value from the cache by its key.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future&lt;dynamic&gt; remove(String correlationId, String key)</p>
+<p>Future&lt;dynamic&gt; remove(String? correlationId, String key)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>key</strong>: String - unique value key.</li>
 <li><strong>returns</strong>: Future&lt;dynamic&gt; - removed value.</li>
 </ul>
@@ -285641,10 +285641,10 @@
 If the value is missing in the cache or expired, it returns null.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future&lt;dynamic&gt; retrieve(String correlationId, String key)</p>
+<p>Future&lt;dynamic&gt; retrieve(String? correlationId, String key)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>key</strong>: String - unique value key.</li>
 <li><strong>returns</strong>: Future&lt;dynamic&gt; - retrieved cached value or <em>null</em> if nothing was found.</li>
 </ul>
@@ -285660,10 +285660,10 @@ If the value is missing in the cache or expired, it returns null.</p>
 <h4 id="store">store</h4>
 <p>Stores a value in the cache with an expiration time.</p>
 <blockquote>
-<p>Future&lt;dynamic&gt; store(String correlationId, String key, value, int timeout)</p>
+<p>Future&lt;dynamic&gt; store(String? correlationId, String key, value, int timeout)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>key</strong>: String - unique value key.</li>
 <li><strong>value</strong>: dynamic - value to store.</li>
 <li><strong>timeout</strong>: int - expiration timeout in milliseconds.</li>
@@ -285827,8 +285827,6 @@ If the value is missing in the cache or expired, it returns null.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285847,7 +285845,6 @@ If the value is missing in the cache or expired, it returns null.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285867,7 +285864,7 @@ If the value is missing in the cache or expired, it returns null.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

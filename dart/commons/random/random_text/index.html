@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/random/random_text/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="RandomText">
 <meta itemprop="description" content="Random generator for various text types such as names, addresses or phone numbers.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="371">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RandomText"/>
@@ -285604,21 +285604,21 @@ The phone number has the format: (XXX) XXX-YYYY</p>
 <p>Generates a random phrase which consists of few words separated by spaces.
 The first word is capitalized, others are not.</p>
 <blockquote>
-<p><code>static</code> String phrase(int minLength, [int maxLength])</p>
+<p><code>static</code> String phrase(int minLength, [int? maxLength])</p>
 </blockquote>
 <ul>
 <li><strong>minLength</strong>: int - (optional) minimum string length.</li>
-<li><strong>maxLength</strong>: int -  maximum string length.</li>
+<li><strong>maxLength</strong>: int? -  maximum string length.</li>
 <li><strong>returns</strong>: String -  random phrase.</li>
 </ul>
 <h4 id="text">text</h4>
 <p>Generates a random text, consisting of first names, last names, colors, stuffs, adjectives, verbs, and punctuation marks.</p>
 <blockquote>
-<p><code>static</code> String text(int minLength, [int maxLength])</p>
+<p><code>static</code> String text(int minLength, [int? maxLength])</p>
 </blockquote>
 <ul>
 <li><strong>minLength</strong>: int - minimum amount of words to generate. The text will contain &lsquo;minSize&rsquo; words if &lsquo;maxSize&rsquo; is omitted.</li>
-<li><strong>maxLength</strong>: int -  (optional) maximum amount of words to generate.</li>
+<li><strong>maxLength</strong>: int? -  (optional) maximum amount of words to generate.</li>
 <li><strong>returns</strong>: String -  random text.</li>
 </ul>
 <h4 id="verb">verb</h4>
@@ -285641,11 +285641,11 @@ The result value is capitalized.</p>
 <h4 id="words">words</h4>
 <p>Generates a random word from available first names, last names, colors, stuffs, adjectives, or verbs.</p>
 <blockquote>
-<p><code>static</code> String words(int min, [int max])</p>
+<p><code>static</code> String words(int min, [int? max])</p>
 </blockquote>
 <ul>
 <li><strong>min</strong>: int - (optional) minimum number of words.</li>
-<li><strong>max</strong>: int - maximum number of words.</li>
+<li><strong>max</strong>: int? - maximum number of words.</li>
 <li><strong>returns</strong>: String - random text.</li>
 </ul>
 <h3 id="examples">Examples</h3>
@@ -285798,8 +285798,6 @@ The result value is capitalized.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285818,7 +285816,6 @@ The result value is capitalized.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285838,7 +285835,7 @@ The result value is capitalized.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

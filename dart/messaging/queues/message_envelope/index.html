@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/messaging/queues/message_envelope/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="MessageEnvelope">
 <meta itemprop="description" content="Allows adding additional information to messages. 
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="285">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MessageEnvelope"/>
@@ -285553,10 +285553,10 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new <a href="">MessageEnvelope</a>, which adds a correlation id, message id, and a type to the data being sent/received.</p>
 <blockquote>
-<p>MessageEnvelope(String correlationId, String messageType, message)</p>
+<p>MessageEnvelope(String? correlationId, String messageType, message)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>messageType</strong>: String - string value that defines the message&rsquo;s type.</li>
 <li><strong>message</strong>: dynamic - data being sent/received.</li>
 </ul>
@@ -285565,7 +285565,7 @@
 <h4 id="correlationid">correlationId</h4>
 <p>Unique business transaction id that is used to trace calls across components.</p>
 <blockquote>
-<p><strong>correlationId</strong>: String</p>
+<p><strong>correlationId</strong>: String?</p>
 </blockquote>
 <h4 id="message">message</h4>
 <p>Stored message.</p>
@@ -285777,8 +285777,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285797,7 +285795,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285817,7 +285814,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

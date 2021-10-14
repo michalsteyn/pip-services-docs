@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/components/log/composite_logger/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="CompositeLogger">
 <meta itemprop="description" content="Aggregates all loggers from component references under a single component.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="175">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CompositeLogger"/>
@@ -285580,11 +285580,11 @@
 <h4 id="write">write</h4>
 <p>Writes a log message to the logger destination.</p>
 <blockquote>
-<p>void write(<a href="../log_level">LogLevel</a> level, String correlationId, Exception error, String message)</p>
+<p>void write(<a href="../log_level">LogLevel</a> level, String? correlationId, Exception error, String message)</p>
 </blockquote>
 <ul>
 <li><strong>level</strong>: <a href="../log_level">LogLevel</a> - log level.</li>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>error</strong>: Exception - error object associated with this message.</li>
 <li><strong>message</strong>: String - human-readable message to log.</li>
 </ul>
@@ -285599,7 +285599,7 @@
        <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
        <span style="color:#111">...</span>
    <span style="color:#111">}</span>
-   <span style="color:#111">myMethod</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+   <span style="color:#111">myMethod</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
        <span style="color:#111">_logger</span><span style="color:#111">.</span><span style="color:#111">debug</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Called method mycomponent.mymethod&#39;</span><span style="color:#111">);</span>
        <span style="color:#111">...</span>
    <span style="color:#111">}</span>
@@ -285756,8 +285756,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285776,7 +285774,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285796,7 +285793,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

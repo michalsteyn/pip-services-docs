@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/commands/command_set/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="CommandSet">
 <meta itemprop="description" content="Contains a set of commands and events supported by a [commandable](../icommandable) object. The CommandSet supports command interceptors and command call chains.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="593">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CommandSet"/>
@@ -285635,10 +285635,10 @@ See <a href="../ievent_listener">IEventListener</a></p>
 <p>Executes a <a href="../icommand">command</a> specificed by its name.<br>
 See <a href="../icommand">ICommand</a>, <a href="../../run/parameters">Parameters</a></p>
 <blockquote>
-<p>Future&lt;\dynamic&gt; execute(String correlationId, String commandName, <a href="../../run/parameters">Parameters</a> args)</p>
+<p>Future&lt;\dynamic&gt; execute(String? correlationId, String commandName, <a href="../../run/parameters">Parameters</a> args)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>commandName</strong>: String - name of the command that is to be executed.</li>
 <li><strong>args</strong>: <a href="../../run/parameters">Parameters</a> - parameters (arguments) to pass to the command for execution.</li>
 <li><strong>returns</strong>: Future&lt;\dynamic&gt; - execution result</li>
@@ -285647,20 +285647,20 @@ See <a href="../icommand">ICommand</a>, <a href="../../run/parameters">Parameter
 <p>Searches for a command by its name.<br>
 See <a href="../icommand">ICommand</a></p>
 <blockquote>
-<p><a href="../icommand">ICommand</a> findCommand(String commandName)</p>
+<p><a href="../icommand">ICommand?</a> findCommand(String commandName)</p>
 </blockquote>
 <ul>
 <li><strong>commandName</strong>: <a href="../icommand">ICommand</a> - name of the command to search for.</li>
-<li><strong>returns</strong>: <a href="../icommand">ICommand</a> - command, whose name matches the provided name.</li>
+<li><strong>returns</strong>: <a href="../icommand">ICommand?</a> - command, whose name matches the provided name.</li>
 </ul>
 <h4 id="findevent">findEvent</h4>
 <p>Searches for an event by its name in this command set.</p>
 <blockquote>
-<p><a href="../ievent">IEvent</a> findEvent(String eventName)</p>
+<p><a href="../ievent">IEvent?</a> findEvent(String eventName)</p>
 </blockquote>
 <ul>
 <li><strong>eventName</strong>: String - name of the event to search for.</li>
-<li><strong>returns</strong>: <a href="../ievent">IEvent</a> - event, whose name matches the provided name.</li>
+<li><strong>returns</strong>: <a href="../ievent">IEvent?</a> - event, whose name matches the provided name.</li>
 </ul>
 <h4 id="getcommands">getCommands</h4>
 <p>Gets all commands registered in this command set.<br>
@@ -285684,10 +285684,10 @@ See <a href="../ievent">IEvent</a></p>
 <p>Fires an event specified by its name and notifies all registered
 <a href="../ievent_listener">listeners</a></p>
 <blockquote>
-<p>void notify(String correlationId, String eventName, <a href="../../run/parameters">Parameters</a> args)</p>
+<p>void notify(String? correlationId, String eventName, <a href="../../run/parameters">Parameters</a> args)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>eventName</strong>: String - name of the event that is to be fired.</li>
 <li><strong>args</strong>: <a href="../../run/parameters">Parameters</a> - event arguments (parameters).</li>
 </ul>
@@ -285725,7 +285725,7 @@ It returns a validation error if the command is not found.</p>
         <span style="color:#00a8c8">return</span>  <span style="color:#111">Command</span><span style="color:#111">(</span>
           <span style="color:#d88200">&#39;get_mydata&#39;</span><span style="color:#111">,</span>
           <span style="color:#00a8c8">null</span><span style="color:#111">,</span>
-          <span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">args</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+          <span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">Parameters</span> <span style="color:#111">args</span><span style="color:#111">)</span> <span style="color:#111">{</span>
               <span style="color:#00a8c8">var</span> <span style="color:#111">param</span> <span style="color:#f92672">=</span> <span style="color:#111">args</span><span style="color:#111">.</span><span style="color:#111">getAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#39;param&#39;</span><span style="color:#111">);</span>
               <span style="color:#00a8c8">return</span> <span style="color:#111">_controller</span><span style="color:#111">.</span><span style="color:#111">getMyData</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">param</span><span style="color:#111">);</span>
           <span style="color:#111">}</span>
@@ -285890,8 +285890,6 @@ It returns a validation error if the command is not found.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285910,7 +285908,6 @@ It returns a validation error if the command is not found.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285930,7 +285927,7 @@ It returns a validation error if the command is not found.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

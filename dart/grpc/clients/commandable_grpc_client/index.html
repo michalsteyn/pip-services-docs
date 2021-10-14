@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/grpc/clients/commandable_grpc_client/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="CommandableGrpcClient">
 <meta itemprop="description" content="Abstract client that calls a commandable gRPC service.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="291">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CommandableGrpcClient"/>
@@ -285585,18 +285585,18 @@
 The call is made via Invoke method and all parameters are sent in args object.
 The complete route to remote method is defined as serviceName + &lsquo;.&rsquo; + name.</p>
 <blockquote>
-<p>Future callCommand(String name, String correlationId, params)</p>
+<p>Future callCommand(String name, String? correlationId, params)</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: String - name of the command to call.</li>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>params</strong>: dynamic - command parameters.</li>
 <li><strong>returns</strong>: Future - feature that receives the result</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCommandableGrpcClient</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">CommandableGrpcClient</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IMyClient</span> <span style="color:#111">{</span>
    <span style="color:#111">...</span>
-    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
        <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span>
            <span style="color:#d88200">&#39;get_data&#39;</span><span style="color:#111">,</span>
            <span style="color:#111">correlationId</span><span style="color:#111">,</span>
@@ -285763,8 +285763,6 @@ The complete route to remote method is defined as serviceName + &lsquo;.&rsquo; 
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285783,7 +285781,6 @@ The complete route to remote method is defined as serviceName + &lsquo;.&rsquo; 
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285803,7 +285800,7 @@ The complete route to remote method is defined as serviceName + &lsquo;.&rsquo; 
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

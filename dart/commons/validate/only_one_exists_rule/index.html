@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/validate/only_one_exists_rule/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="OnlyOneExistsRule">
 <meta itemprop="description" content="Validation rule that checks that only one property of a list of properties exists in an object.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="144">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="146">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="OnlyOneExistsRule"/>
 <meta name="twitter:description" content="Validation rule that checks that only one property of a list of properties exists in an object.
@@ -285582,10 +285582,10 @@
 <p>Validates a given value against this rule.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>void performValidation(String path, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
+<p>void validate(String? path, <a href="../schema">Schema</a> schema, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
 </blockquote>
 <ul>
-<li><strong>path</strong>: String - dot notation path to the value.</li>
+<li><strong>path</strong>: String? - dot notation path to the value.</li>
 <li><strong>schema</strong>: <a href="../schema">Schema</a> - schema this rule is called from</li>
 <li><strong>value</strong>: dynamic - value to be validated.</li>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - list with validation results.</li>
@@ -285749,8 +285749,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285769,7 +285767,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285789,7 +285786,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

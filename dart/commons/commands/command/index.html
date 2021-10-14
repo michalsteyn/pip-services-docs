@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/commands/command/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="Command">
 <meta itemprop="description" content="The Command class allows calling a method or a function.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="226">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="227">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Command"/>
 <meta name="twitter:description" content="The Command class allows calling a method or a function.
@@ -285549,12 +285549,12 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new command object and assigns it&rsquo;s parameters.</p>
 <blockquote>
-<p>Command(String name, <a href="../../validate/schema">Schema</a> schema, func)</p>
+<p>Command(String name, <a href="../../validate/schema">Schema</a>? schema, <a href="../../run/iexecutable">IExecutable</a> func)</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: String - command name.</li>
-<li><strong>schema</strong>: <a href="../../validate/schema">Schema</a> - schema to validate command arguments.</li>
-<li><strong>func</strong>:  dynamyc - function to be executed by this command.</li>
+<li><strong>schema</strong>: <a href="../../validate/schema">Schema</a>? - schema to validate command arguments.</li>
+<li><strong>func</strong>:  <a href="../../run/iexecutable">IExecutable</a> - function to be executed by this command.</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="execute">Execute</h4>
@@ -285562,10 +285562,10 @@
 <p>Raise <a href="../../errors/application_exception">ApplicationException</a> when execution fails for whatever reason.<br>
 See <a href="../../run/parameters">Parameters</a></p>
 <blockquote>
-<p>Future&lt;dynamic&gt; execute(String correlationId, <a href="../../run/parameters">Parameters</a> args)</p>
+<p>Future&lt;dynamic&gt; execute(String? correlationId, <a href="../../run/parameters">Parameters</a> args)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String?? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>args</strong>: <a href="../../run/parameters">Parameters</a> - parameters (arguments) to pass to this command for execution.</li>
 <li><strong>returns</strong>: Future&lt;dynamic&gt; - execution result</li>
 </ul>
@@ -285760,8 +285760,6 @@ See <a href="../../run/parameters">Parameters</a></p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285780,7 +285778,6 @@ See <a href="../../run/parameters">Parameters</a></p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285800,7 +285797,7 @@ See <a href="../../run/parameters">Parameters</a></p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

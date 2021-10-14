@@ -274874,17 +274874,17 @@ This module contains generic interfaces for data access components as well as ab
 
 </code></pre></div><p>Our persistence component shall implement the following interface with a basic set of CRUD operations.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">abstract</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">IMyPersistence</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">void</span> <span style="color:#111">getPageByFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">void</span> <span style="color:#111">getPageByFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">);</span>
     
-    <span style="color:#111">getOneById</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">);</span>
+    <span style="color:#111">getOneById</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">);</span>
     
-    <span style="color:#111">getOneByKey</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">key</span><span style="color:#111">;</span>
+    <span style="color:#111">getOneByKey</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">key</span><span style="color:#111">;</span>
     
-    <span style="color:#111">create</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">MyObject</span> <span style="color:#111">item</span><span style="color:#111">);</span>
+    <span style="color:#111">create</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">MyObject</span> <span style="color:#111">item</span><span style="color:#111">);</span>
     
-    <span style="color:#111">update</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">MyObject</span> <span style="color:#111">item</span><span style="color:#111">);</span>
+    <span style="color:#111">update</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">MyObject</span> <span style="color:#111">item</span><span style="color:#111">);</span>
     
-    <span style="color:#111">deleteById</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">);</span>
+    <span style="color:#111">deleteById</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">);</span>
 <span style="color:#111">}</span>
 </code></pre></div><p>To implement in-memory persistence component you shall inherit <code>IdentifiableMemoryPersistence</code>.
 Most CRUD operations will come from the base class. You only need to override <code>getPageByFilter</code> method with a custom filter function.
@@ -274915,11 +274915,11 @@ And implement a <code>getOneByKey</code> custom persistence method that doesn&rs
     <span style="color:#111">};</span>
   <span style="color:#111">}</span>
   
-  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">DataPage</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">getPageByFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">){</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">DataPage</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;&gt;</span> <span style="color:#111">getPageByFilter</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">FilterParams</span> <span style="color:#111">filter</span><span style="color:#111">,</span> <span style="color:#111">PagingParams</span> <span style="color:#111">paging</span><span style="color:#111">){</span>
     <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">super</span><span style="color:#111">.</span><span style="color:#111">getPageByFilterEx</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">composeFilter</span><span style="color:#111">(</span><span style="color:#111">filter</span><span style="color:#111">),</span> <span style="color:#111">paging</span><span style="color:#111">,</span> <span style="color:#00a8c8">null</span><span style="color:#111">);</span>
   <span style="color:#111">}</span>  
   
-  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getOneByKey</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">key</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#00a8c8">String</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getOneByKey</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">key</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     
     <span style="color:#00a8c8">final</span> <span style="color:#111">item</span> <span style="color:#f92672">=</span>
       <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_items</span><span style="color:#111">.</span><span style="color:#111">firstWhere</span><span style="color:#111">((</span><span style="color:#111">item</span><span style="color:#111">)</span> <span style="color:#f92672">=&gt;</span>
@@ -275108,8 +275108,6 @@ And implement a <code>getOneByKey</code> custom persistence method that doesn&rs
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -275128,7 +275126,6 @@ And implement a <code>getOneByKey</code> custom persistence method that doesn&rs
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -275148,7 +275145,7 @@ And implement a <code>getOneByKey</code> custom persistence method that doesn&rs
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

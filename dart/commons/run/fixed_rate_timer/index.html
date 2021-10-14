@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/run/fixed_rate_timer/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="FixedRateTimer">
 <meta itemprop="description" content="Timer that is triggered in equal time intervals.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="399">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="FixedRateTimer"/>
@@ -285569,12 +285569,12 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates new instance of the timer and sets its values.</p>
 <blockquote>
-<p>FixedRateTimer([dynamic taskOrCallback, int interval, int delay])</p>
+<p>FixedRateTimer([dynamic taskOrCallback, int? interval, int? delay])</p>
 </blockquote>
 <ul>
 <li><strong>taskOrCallback</strong>: dynamic - (optional) Notifiable object or callback function to call when timer is triggered.</li>
-<li><strong>interval</strong>: int - (optional) interval to trigger timer in milliseconds.</li>
-<li><strong>delay</strong>: int - (optional) delay before the first triggering in milliseconds.</li>
+<li><strong>interval</strong>: int? - (optional) interval to trigger timer in milliseconds.</li>
+<li><strong>delay</strong>: int? - (optional) delay before the first triggering in milliseconds.</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="close">close</h4>
@@ -285583,42 +285583,42 @@
 but besides that it is identical to <a href="#stop">stop()</a>.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="getcallback">getCallback</h4>
 <p>Gets the callback function that is called when this timer is triggered.</p>
 <blockquote>
-<p>Function() getCallback()</p>
+<p>Function()? getCallback()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: Function() - callback function or null if it is not set.</li>
+<li><strong>returns</strong>: Function()? - callback function or null if it is not set.</li>
 </ul>
 <h4 id="getdelay">getDelay</h4>
 <p>Gets an initial delay before the timer is triggered for the first time.</p>
 <blockquote>
-<p>int getDelay()</p>
+<p>int? getDelay()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: int - delay in milliseconds.</li>
+<li><strong>returns</strong>: int? - delay in milliseconds.</li>
 </ul>
 <h4 id="getinterval">getInterval</h4>
 <p>Gets a periodic timer triggering interval.</p>
 <blockquote>
-<p>int getInterval()</p>
+<p>int? getInterval()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: int - interval in milliseconds</li>
+<li><strong>returns</strong>: int? - interval in milliseconds</li>
 </ul>
 <h4 id="gettask">getTask</h4>
 <p>Gets the INotifiable object that receives notifications from this timer.</p>
 <blockquote>
-<p><a href="../inotifiable">INotifiable</a> getTask()</p>
+<p><a href="../inotifiable">INotifiable?</a> getTask()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: <a href="../inotifiable">INotifiable</a> - INotifiable object or null if it is not set.</li>
+<li><strong>returns</strong>: <a href="../inotifiable">INotifiable?</a> - INotifiable object or null if it is not set.</li>
 </ul>
 <h4 id="settask">setTask</h4>
 <p>Sets a new INotifiable object to receive notifications from this timer.</p>
@@ -285647,18 +285647,18 @@ but besides that it is identical to <a href="#stop">stop()</a>.</p>
 <h4 id="setdelay">setDelay</h4>
 <p>Sets an initial delay before the timer is triggered for the first time.</p>
 <blockquote>
-<p>void setDelay(int value)</p>
+<p>void setDelay(int? value)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: int - delay in milliseconds.</li>
+<li><strong>value</strong>: int? - delay in milliseconds.</li>
 </ul>
 <h4 id="setinterval">setInterval</h4>
 <p>Sets a periodic timer triggering interval.</p>
 <blockquote>
-<p>void setInterval(int value)</p>
+<p>void setInterval(int? value)</p>
 </blockquote>
 <ul>
-<li><strong>value</strong>: int - interval in milliseconds.</li>
+<li><strong>value</strong>: int? - interval in milliseconds.</li>
 </ul>
 <h4 id="start">start</h4>
 <p>Starts the timer.</p>
@@ -285676,12 +285676,12 @@ After that, it is triggered after interval until it is stopped.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
     <span style="color:#111">FixedRateTimer</span> <span style="color:#111">timer</span>  <span style="color:#f92672">=</span> <span style="color:#111">FixedRateTimer</span><span style="color:#111">(()</span> <span style="color:#111">{</span> <span style="color:#111">cleanup</span> <span style="color:#111">},</span> <span style="color:#ae81ff">60000</span><span style="color:#111">);</span>
     <span style="color:#111">...</span>
-    <span style="color:#111">Future</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#111">...</span>
         <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">start</span><span style="color:#111">();</span>
         <span style="color:#111">...</span>
     <span style="color:#111">}</span>
-    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#111">...</span>
         <span style="color:#111">timer</span><span style="color:#111">.</span><span style="color:#111">stop</span><span style="color:#111">();</span>
         <span style="color:#111">...</span>
@@ -285843,8 +285843,6 @@ After that, it is triggered after interval until it is stopped.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285863,7 +285861,6 @@ After that, it is triggered after interval until it is stopped.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285883,7 +285880,7 @@ After that, it is triggered after interval until it is stopped.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

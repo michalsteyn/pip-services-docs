@@ -23,11 +23,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/component_references/__code9_net/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="class SimpleController : IReferenceable, IUnreferenceable, IConfigurable { protected Worker worker; protected DependencyResolver depedencyResolver = DependencyResolver.FromTuples( &#34;worker&#34;, new Descriptor(&#34;*&#34;, &#34;worker&#34;, &#34;*&#34;, &#34;*&#34;, &#34;1.0&#34;) ); public void Configure(ConfigParams config) { depedencyResolver.Configure(config); } public void SetReferences(IReferences references) { depedencyResolver.SetReferences(references); worker = references.GetOneRequired&lt;Worker&gt;(new Descriptor(&#34;*&#34;, &#34;worker&#34;, &#34;worker1&#34;, &#34;*&#34;, &#34;1.0&#34;)); } public void UnsetReferences() { depedencyResolver = null; } ... } var references = References.FromTuples( new Descriptor(&#34;sample&#34;, &#34;worker&#34;, &#34;worker1&#34;, &#34;111&#34;, &#34;1.0&#34;), new Worker1(), new Descriptor(&#34;sample&#34;, &#34;worker&#34;, &#34;worker2&#34;, &#34;222&#34;, &#34;1.">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="94">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -674,8 +674,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -694,7 +692,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -714,7 +711,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

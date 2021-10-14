@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/reflect/recursive_object_reader/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="RecursiveObjectReader">
 <meta itemprop="description" content="Helper class that allows you to examine the properties of an object (property instrospection) and to dynamically read them recursively using &#34;dot&#34; notation.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="300">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="RecursiveObjectReader"/>
@@ -285571,7 +285571,7 @@ map key-pairs or array elements with their indexes.</p>
 The property name correspondently must be an object&rsquo;s property,
 map key or array index.</p>
 <blockquote>
-<p><code>static</code> dynamic getProperty(obj, String name)</p>
+<p><code>static</code> dynamic getProperty(obj, String? name)</p>
 </blockquote>
 <ul>
 <li><strong>obj</strong>: dynamic - object to read the property from.</li>
@@ -285592,11 +285592,11 @@ map keys or array indexes.</p>
 </ul>
 <h4 id="hasproperty">hasProperty</h4>
 <blockquote>
-<p><code>static</code> bool hasProperty(obj, String name)</p>
+<p><code>static</code> bool hasProperty(obj, String? name)</p>
 </blockquote>
 <ul>
 <li><strong>obj</strong>: dynamic - object to introspect.</li>
-<li><strong>name</strong>: String - name of the property to check.</li>
+<li><strong>name</strong>: String? - name of the property to check.</li>
 <li><strong>returns</strong>: bool - true if the object has the property and false if it doesn&rsquo;t.</li>
 </ul>
 <h3 id="see-also">See also</h3>
@@ -285753,8 +285753,6 @@ map keys or array indexes.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285773,7 +285771,6 @@ map keys or array indexes.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285793,7 +285790,7 @@ map keys or array indexes.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

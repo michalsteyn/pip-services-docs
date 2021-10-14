@@ -24,12 +24,12 @@ package test_persistence import ( &#34;testing&#34; persist &#34;github.com/pip-
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code11_go/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/test/persistence/BeaconsMemoryPersistence_test.go
 package test_persistence import ( &#34;testing&#34; persist &#34;github.com/pip-services-samples/service-beacons-go/persistence&#34; cconf &#34;github.com/pip-services3-go/pip-services3-commons-go/config&#34; ) type BeaconsMemoryPersistenceTest struct { persistence *persist.BeaconsMemoryPersistence fixture *BeaconsPersistenceFixture } func newBeaconsMemoryPersistenceTest() *BeaconsMemoryPersistenceTest { persistence := persist.NewBeaconsMemoryPersistence() persistence.Configure(cconf.NewEmptyConfigParams()) fixture := NewBeaconsPersistenceFixture(persistence) return &amp;BeaconsMemoryPersistenceTest{ persistence: persistence, fixture: fixture, } } func (c *BeaconsMemoryPersistenceTest) setup(t *testing.T) { err := c.persistence.Open(&#34;&#34;) if err != nil { t.Error(&#34;Failed to open persistence&#34;, err) } err = c.persistence.Clear(&#34;&#34;) if err != nil { t.Error(&#34;Failed to clear persistence&#34;, err) } } func (c *BeaconsMemoryPersistenceTest) teardown(t *testing.">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="121">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -695,8 +695,6 @@ package test_persistence import ( &#34;testing&#34; persist &#34;github.com/pip-
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -715,7 +713,6 @@ package test_persistence import ( &#34;testing&#34; persist &#34;github.com/pip-
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -735,7 +732,7 @@ package test_persistence import ( &#34;testing&#34; persist &#34;github.com/pip-
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

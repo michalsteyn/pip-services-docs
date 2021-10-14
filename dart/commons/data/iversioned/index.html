@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/data/iversioned/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="IVersioned">
 <meta itemprop="description" content="Interface used to define data objects that can be versioned.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="117">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="119">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IVersioned"/>
 <meta name="twitter:description" content="Interface used to define data objects that can be versioned.
@@ -285573,7 +285573,7 @@
 <h4 id="version">version</h4>
 <p>Object&rsquo;s version.</p>
 <blockquote>
-<p><strong>version</strong>: String</p>
+<p><code>abstract</code> <strong>version</strong>: String</p>
 </blockquote>
 </span>
 <h3 id="examples">Examples</h3>
@@ -285581,10 +285581,11 @@
      <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">;</span>
     <span style="color:#00a8c8">String</span>  <span style="color:#111">field1</span><span style="color:#111">;</span>
     <span style="color:#00a8c8">int</span> <span style="color:#111">field2</span><span style="color:#111">;</span>
+    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
     <span style="color:#00a8c8">String</span> <span style="color:#111">version</span><span style="color:#111">;</span>
     <span style="color:#111">...</span>
 <span style="color:#111">}</span>
- <span style="color:#00a8c8">void</span> <span style="color:#111">updateData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">MyData</span> <span style="color:#111">item</span> <span style="color:#111">)</span> <span style="color:#111">{</span>
+ <span style="color:#00a8c8">void</span> <span style="color:#111">updateData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">MyData</span> <span style="color:#111">item</span> <span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#111">...</span>
     <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">item</span><span style="color:#111">.</span><span style="color:#111">version</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">oldItem</span><span style="color:#111">.</span><span style="color:#111">version</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">throw</span>  <span style="color:#111">ConcurrencyException</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;VERSION_CONFLICT&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;The change has older version stored value&#39;</span><span style="color:#111">);</span>
@@ -285736,8 +285737,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285756,7 +285755,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285776,7 +285774,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/validate/object_schema/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ObjectSchema">
 <meta itemprop="description" content="Schema to validate user defined objects.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="440">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ObjectSchema"/>
@@ -285579,11 +285579,11 @@
 <p>Creates a new validation schema and sets its values.
 See <a href="../ivalidation_rule">IValidationRule</a></p>
 <blockquote>
-<p>ObjectSchema([bool allowUndefined, bool req, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; rules])</p>
+<p>ObjectSchema([bool? allowUndefined, bool? req, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt;? rules])</p>
 </blockquote>
 <ul>
 <li><strong>allowUndefined</strong>: bool - true to allow properties undefined in the schema.</li>
-<li><strong>required</strong>: bool - (optional) true to always require non-null values.</li>
+<li><strong>req</strong>: bool - (optional) true to always require non-null values.</li>
 <li><strong>rules</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; - (optional) list with validation rules.</li>
 </ul>
 <h3 id="properties">Properties</h3>
@@ -285627,10 +285627,10 @@ to chain additional calls.</p>
 <p>Validates a given value against the schema and configured validation rules.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>void performValidation(String path, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
+<p>void performValidation(String? path, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
 </blockquote>
 <ul>
-<li><strong>path</strong>: String - dot notation path to the value.</li>
+<li><strong>path</strong>: String? - dot notation path to the value.</li>
 <li><strong>value</strong>: dynamic - value to be validated.</li>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - list with validation results.</li>
 </ul>
@@ -285646,12 +285646,12 @@ to chain additional calls.</p>
 <h4 id="withoptionalproperty">withOptionalProperty</h4>
 <p>Adds a validation schema for an optional object property.</p>
 <blockquote>
-<p><a href="">ObjectSchema</a> withOptionalProperty(String name, [dynamic type, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; rules])</p>
+<p><a href="">ObjectSchema</a> withOptionalProperty(String name, [dynamic type, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt;? rules])</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: String - property name.</li>
 <li><strong>type</strong>: dynamic - (optional) property schema or type.</li>
-<li><strong>rules</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; - (optional) list of property validation rules.</li>
+<li><strong>rules</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt;? - (optional) list of property validation rules.</li>
 <li><strong>returns</strong>: <a href="">ObjectSchema</a> - returns Schema with added optional property</li>
 </ul>
 <h4 id="withproperty">withProperty</h4>
@@ -285833,8 +285833,6 @@ to chain additional calls.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285853,7 +285851,6 @@ to chain additional calls.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285873,7 +285870,7 @@ to chain additional calls.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

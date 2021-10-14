@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/rpc/clients/commandable_http_client/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="CommandableHttpClient">
 <meta itemprop="description" content="Commandable services are generated automatically for [ICommandable](../../../commons/commands/icommandable)
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="304">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CommandableHttpClient"/>
@@ -285574,7 +285574,7 @@
 <h4 id="callcommand">callCommand</h4>
 <p>Calls a remote method via the HTTP commadable protocol. The call is made via a POST operation and all parameters are sent in the body object. The complete route to the remote method is defined as baseRoute + &ldquo;/&rdquo; + name.</p>
 <blockquote>
-<p>Future callCommand(String name, String correlationId, params)</p>
+<p>Future callCommand(String name, String? correlationId, params)</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: String - name of the command to call.</li>
@@ -285585,7 +285585,7 @@
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyCommandableHttpClient</span> <span style="color:#00a8c8">extends</span> <span style="color:#111">CommandableHttpClient</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IMyClient</span> <span style="color:#111">{</span>
    <span style="color:#111">...</span>
-   <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+   <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
        <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">callCommand</span><span style="color:#111">(</span>
            <span style="color:#d88200">&#34;get_data&#34;</span><span style="color:#111">,</span>
            <span style="color:#111">correlationId</span><span style="color:#111">,</span>
@@ -285750,8 +285750,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285770,7 +285768,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285790,7 +285787,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

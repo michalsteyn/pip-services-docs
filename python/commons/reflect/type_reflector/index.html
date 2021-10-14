@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/commons/reflect/type_reflector/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="TypeReflector">
 <meta itemprop="description" content="Helper class that allows you to examine the type of an object, and create instancies of objects based on their type.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="309">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="373">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TypeReflector"/>
 <meta name="twitter:description" content="Helper class that allows you to examine the type of an object, and create instancies of objects based on their type.
@@ -288995,6 +288995,7 @@
             <li><a href="#description">Description</a></li>
             <li><a href="#static-methods">Static methods</a>
               <ul>
+                <li><a href="#create_instance">create_instance</a></li>
                 <li><a href="#create_instance_by_type">create_instance_by_type</a></li>
                 <li><a href="#create_instance_by_descriptor">create_instance_by_descriptor</a></li>
                 <li><a href="#get_type">get_type</a></li>
@@ -289111,6 +289112,20 @@
 <li>Because all languages have different casing and case sensitivity rules, the TypeReflector class treats all type names as case insensitive.</li>
 </ul>
 <h3 id="static-methods">Static methods</h3>
+<h4 id="create_instance">create_instance</h4>
+<p>Creates an instance of an object type specified by its name
+and library where it is defined.</p>
+<p>See <a href="#get_type">get_type</a>
+See <a href="#create_instance_by_type">create_instance_by_type</a></p>
+<blockquote>
+<p><code>static</code> create_instance(name: str, library: str, *args: Any) -&gt; Any:</p>
+</blockquote>
+<ul>
+<li><strong>name</strong>: str - an object type name.</li>
+<li><strong>library</strong>: str - a library (module) where object type is defined.</li>
+<li><strong>args</strong>: Any - arguments for the object constructor.</li>
+<li><strong>returns</strong>: Any - the created object instance.</li>
+</ul>
 <h4 id="create_instance_by_type">create_instance_by_type</h4>
 <p>Creates an instance of an object type.</p>
 <blockquote>
@@ -289321,8 +289336,6 @@ See <a href="../../convert/type_converter/#to_type_code">TypeConverter.to_type_c
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -289341,7 +289354,6 @@ See <a href="../../convert/type_converter/#to_type_code">TypeConverter.to_type_c
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -289361,7 +289373,7 @@ See <a href="../../convert/type_converter/#to_type_code">TypeConverter.to_type_c
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

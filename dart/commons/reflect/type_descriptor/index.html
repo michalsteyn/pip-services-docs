@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/reflect/type_descriptor/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="TypeDescriptor">
 <meta itemprop="description" content="The TypeDescriptor class stores a reference to a type represented by the type name and library (module) where the type is defined.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="253">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="TypeDescriptor"/>
@@ -285553,11 +285553,11 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of the type descriptor and sets its values.</p>
 <blockquote>
-<p>TypeDescriptor(String name, String library)</p>
+<p>TypeDescriptor(String name, String? library)</p>
 </blockquote>
 <ul>
 <li><strong>name</strong>: String - name of the object type.</li>
-<li><strong>library</strong>: String - library or module where this object type is implemented.</li>
+<li><strong>library</strong>: String? - library or module where this object type is implemented.</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
 <h4 id="equals">equals</h4>
@@ -285574,10 +285574,10 @@ Otherwise this method returns false.</p>
 <h4 id="getlibrary">getLibrary</h4>
 <p>Gets the name of the library or module where the object type is defined.</p>
 <blockquote>
-<p>String getLibrary()</p>
+<p>String? getLibrary()</p>
 </blockquote>
 <ul>
-<li><strong>returns</strong>: String - name of the library or module.</li>
+<li><strong>returns</strong>: String? - name of the library or module.</li>
 </ul>
 <h4 id="getname">getName</h4>
 <p>Gets the name of the object type.</p>
@@ -285603,11 +285603,11 @@ The result has format <em>name[,library]</em></p>
 The string must have the format <em>name[,library]</em>.<br>
 Throws a <a href="../../errors/config_exception">ConfigException</a> if the descriptor string is of a wrong format.</p>
 <blockquote>
-<p><code>static</code> <a href="">TypeDescriptor</a> fromString(String value)</p>
+<p><code>static</code> <a href="">TypeDescriptor?</a> fromString(String value)</p>
 </blockquote>
 <ul>
 <li><strong>value</strong>: String - string to parse.</li>
-<li><strong>returns</strong>: <a href="">TypeDescriptor</a> - newly created Descriptor.</li>
+<li><strong>returns</strong>: <a href="">TypeDescriptor?</a> - newly created Descriptor.</li>
 </ul>
 
 	
@@ -285754,8 +285754,6 @@ Throws a <a href="../../errors/config_exception">ConfigException</a> if the desc
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285774,7 +285772,6 @@ Throws a <a href="../../errors/config_exception">ConfigException</a> if the desc
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285794,7 +285791,7 @@ Throws a <a href="../../errors/config_exception">ConfigException</a> if the desc
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

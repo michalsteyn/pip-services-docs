@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/validate/array_schema/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ArraySchema">
 <meta itemprop="description" content="Schema to validate arrays.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="187">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ArraySchema"/>
@@ -285570,11 +285570,11 @@
 <p>Creates a new validation rule and sets its values.</p>
 <p>See <a href="../../convert/type_code">TypeCode</a></p>
 <blockquote>
-<p>ArraySchema([dynamic valueType, bool req, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; rules])</p>
+<p>ArraySchema([dynamic valueType, bool? req, List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; rules])</p>
 </blockquote>
 <ul>
 <li><strong>valueType</strong>: dynamic - type of array elements. Null means that elements may have any type.</li>
-<li><strong>required</strong>: bool - (optional) true to always require non-null values.</li>
+<li><strong>required</strong>: bool? - (optional) true to always require non-null values.</li>
 <li><strong>rules</strong>: List&lt;<a href="../ivalidation_rule">IValidationRule</a>&gt; - (optional) list with validation rules.</li>
 </ul>
 <h3 id="instance-methods">Instance methods</h3>
@@ -285591,10 +285591,10 @@ Null means that elements may have any type.</p>
 <p>Validates a given value against the schema and configured validation rules.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>void performValidation(String path, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
+<p>void performValidation(String? path, dynamic value, List&lt;<a href="../validation_result">ValidationResult</a>&gt; results)</p>
 </blockquote>
 <ul>
-<li><strong>path</strong>: String - dot notation path to the value.</li>
+<li><strong>path</strong>: String? - dot notation path to the value.</li>
 <li><strong>value</strong>: dynamic - value to be validated.</li>
 <li><strong>results</strong>: List&lt;<a href="../validation_result">ValidationResult</a>&gt; - list with validation results.</li>
 </ul>
@@ -285759,8 +285759,6 @@ Null means that elements may have any type.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285779,7 +285777,6 @@ Null means that elements may have any type.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285799,7 +285796,7 @@ Null means that elements may have any type.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

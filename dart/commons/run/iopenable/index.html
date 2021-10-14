@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/run/iopenable/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="IOpenable">
 <meta itemprop="description" content="Interface that allows you to create components with explicit opening and closing.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="134">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="IOpenable"/>
@@ -285568,10 +285568,10 @@
 <h4 id="open">open</h4>
 <p>Opens the component.</p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h3 id="examples">Examples</h3>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyPersistence</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IOpenable</span> <span style="color:#111">{</span>
@@ -285580,14 +285580,14 @@
     <span style="color:#00a8c8">bool</span> <span style="color:#111">isOpen</span><span style="color:#111">()</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">return</span> <span style="color:#111">_client</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
-    <span style="color:#111">Future</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span> <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">isOpen</span><span style="color:#111">())</span> <span style="color:#111">{</span>
             <span style="color:#00a8c8">return</span> <span style="color:#111">Future</span><span style="color:#111">(</span><span style="color:#111">Duration</span><span style="color:#111">(),</span> <span style="color:#111">(){</span>
              <span style="color:#111">})</span>
         <span style="color:#111">}</span>
         <span style="color:#111">...</span>
     <span style="color:#111">}</span>
-    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span> <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#111">_client</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span>
             <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">_client</span><span style="color:#111">.</span><span style="color:#111">close</span><span style="color:#111">();</span>
             <span style="color:#111">_client</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
@@ -285750,8 +285750,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285770,7 +285768,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285790,7 +285787,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

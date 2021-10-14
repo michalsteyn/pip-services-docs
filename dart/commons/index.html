@@ -274883,14 +274883,14 @@ can be opened and closed using the patterns from this module.</p>
     <span style="color:#00a8c8">return</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_opened</span><span style="color:#111">;</span>
   <span style="color:#111">}</span>
 
-  <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#111">open</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">return</span> <span style="color:#111">Future</span><span style="color:#111">(()</span> <span style="color:#111">{</span>
       <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_opened</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">true</span><span style="color:#111">;</span>
       <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;MyComponentA has been opened.&#34;</span><span style="color:#111">);</span>
     <span style="color:#111">});</span>
   <span style="color:#111">}</span>
 
-  <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+  <span style="color:#111">close</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#00a8c8">return</span> <span style="color:#111">Future</span><span style="color:#111">(()</span> <span style="color:#111">{</span>
       <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_opened</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">true</span><span style="color:#111">;</span>
       <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#34;MyComponentA has been closed.&#34;</span><span style="color:#111">);</span>
@@ -275071,8 +275071,6 @@ can be opened and closed using the patterns from this module.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -275091,7 +275089,6 @@ can be opened and closed using the patterns from this module.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -275111,7 +275108,7 @@ can be opened and closed using the patterns from this module.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

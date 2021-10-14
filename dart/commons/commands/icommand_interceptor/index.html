@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/commands/icommand_interceptor/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ICommandInterceptor">
 <meta itemprop="description" content="An interface for stackable command interceptors, which can extend and modify the command call chain.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="241">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ICommandInterceptor"/>
@@ -285564,10 +285564,10 @@ Otherwise, it shall just delegate the call to the wrapped command.</p>
 <p>The interceptor can use this method to intercept and alter the command execution.
 Otherwise, it shall just delete the call to the wrapped command.</p>
 <blockquote>
-<p>Future&lt;dynamic&gt; execute(String correlationId, <a href="../icommand">ICommand</a> command, <a href="../../run/parameters">Parameters</a> args)</p>
+<p>Future&lt;dynamic&gt; execute(String? correlationId, <a href="../icommand">ICommand</a> command, <a href="../../run/parameters">Parameters</a> args)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id to used trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id to used trace execution through the call chain.</li>
 <li><strong>command</strong>: <a href="../icommand">ICommand</a> - next command in the call chain that is to be executed.</li>
 <li><strong>args</strong>: <a href="../../run/parameters">Parameters</a> - parameters (arguments) to pass to the command for execution.</li>
 <li><strong>returns</strong>: Future&lt;dynamic&gt; - execution result.</li>
@@ -285738,8 +285738,6 @@ Otherwise, it shall just delegate the call to the wrapped command.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285758,7 +285756,6 @@ Otherwise, it shall just delegate the call to the wrapped command.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285778,7 +285775,7 @@ Otherwise, it shall just delegate the call to the wrapped command.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

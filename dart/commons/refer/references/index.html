@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/commons/refer/references/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="References">
 <meta itemprop="description" content="An implementation of [IReferences](../ireferences) that allows you to store and locate component references.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="536">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="References"/>
@@ -285565,10 +285565,10 @@
 <h3 id="constructors">Constructors</h3>
 <p>Creates a new instance of References and initializes it with references.</p>
 <blockquote>
-<p>References([List tuples])</p>
+<p>References([List? tuples])</p>
 </blockquote>
 <ul>
-<li><strong>tuples</strong>: List - (optional) list of values where odd elements are locators and the following even elements are component references.</li>
+<li><strong>tuples</strong>: List? - (optional) list of values where odd elements are locators and the following even elements are component references.</li>
 </ul>
 <h3 id="fields">Fields</h3>
 <span class="hide-title-link">
@@ -285613,11 +285613,11 @@ Throws a <a href="../reference_exception">ReferenceException</a> when required i
 <p>Gets an optional component reference that matches a specified locator.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>T getOneOptional&lt;T&gt;(locator)</p>
+<p>T? getOneOptional&lt;T&gt;(locator)</p>
 </blockquote>
 <ul>
 <li><strong>locator</strong>: dynamic - locator to find references by.</li>
-<li><strong>returns</strong>: T - matching component reference or null if nothing was found.</li>
+<li><strong>returns</strong>: T? - matching component reference or null if nothing was found.</li>
 </ul>
 <h4 id="getonerequired">getOneRequired</h4>
 <p>Gets a required component reference that matches specified locator.<br>
@@ -285862,8 +285862,6 @@ When all references shall be removed, use <a href="#removeall">removeAll</a> met
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285882,7 +285880,6 @@ When all references shall be removed, use <a href="#removeall">removeAll</a> met
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285902,7 +285899,7 @@ When all references shall be removed, use <a href="#removeall">removeAll</a> met
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

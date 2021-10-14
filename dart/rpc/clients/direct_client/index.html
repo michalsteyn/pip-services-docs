@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/rpc/clients/direct_client/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="DirectClient&lt;T&gt;">
 <meta itemprop="description" content="Abstract client that calls a controller directly in the same memory space.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="387">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="DirectClient&lt;T&gt;"/>
@@ -285602,7 +285602,7 @@
 <p>Closes a component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through a call chain.</li>
@@ -285618,10 +285618,10 @@ void configure(<a href="../../../commons/config/config_params">ConfigParams</a> 
 <p>Adds instrumentation to log calls and measures call time.
 It returns a Timing object that is used to end the time measurement.</p>
 <blockquote>
-<p><a href="../../../components/timing">Timing</a> instrument(String correlationId, String name)</p>
+<p><a href="../../../components/timing">Timing</a> instrument(String? correlationId, String name)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>name</strong>: String - method name.</li>
 <li><strong>returns</strong>: <a href="../../../components/timing">Timing</a> - InstrumentTiming object used to end the time measurement.</li>
 </ul>
@@ -285638,7 +285638,7 @@ It returns a Timing object that is used to end the time measurement.</p>
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
 <li><strong>correlationId</strong>: string - (optional) transaction id used to trace execution through a call chain.</li>
@@ -285659,7 +285659,7 @@ It returns a Timing object that is used to end the time measurement.</p>
           <span style="color:#d88200">&#34;mygroup&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;controller&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">));</span>
     <span style="color:#111">}</span>
     <span style="color:#111">...</span>
-    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
+    <span style="color:#111">Future</span><span style="color:#f92672">&lt;</span><span style="color:#111">MyData</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">async</span> <span style="color:#111">{</span>
       <span style="color:#00a8c8">var</span> <span style="color:#111">timing</span> <span style="color:#f92672">=</span> <span style="color:#111">instrument</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;myclient.get_data&#39;</span><span style="color:#111">);</span>
       <span style="color:#00a8c8">try</span> <span style="color:#111">{</span>
       <span style="color:#00a8c8">var</span> <span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">getData</span><span style="color:#111">(</span><span style="color:#111">correlationId</span><span style="color:#111">,</span> <span style="color:#111">id</span><span style="color:#111">)</span>
@@ -285825,8 +285825,6 @@ It returns a Timing object that is used to end the time measurement.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285845,7 +285843,6 @@ It returns a Timing object that is used to end the time measurement.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285865,7 +285862,7 @@ It returns a Timing object that is used to end the time measurement.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

@@ -24,13 +24,13 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/python/commons/refer/descriptor/" /><meta property="article:section" content="python" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="Descriptor">
 <meta itemprop="description" content="Component locator based on group, type, kind, name and version of the component.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
-<meta itemprop="wordCount" content="512">
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
+<meta itemprop="wordCount" content="527">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Descriptor"/>
 <meta name="twitter:description" content="Component locator based on group, type, kind, name and version of the component.
@@ -289001,6 +289001,7 @@
                 <li><a href="#get_group">get_group</a></li>
                 <li><a href="#get_kind">get_kind</a></li>
                 <li><a href="#get_name">get_name</a></li>
+                <li><a href="#get_type">get_type</a></li>
                 <li><a href="#get_version">get_version</a></li>
                 <li><a href="#is_complete">is_complete</a></li>
                 <li><a href="#match">match</a></li>
@@ -289186,6 +289187,14 @@ No exceptions are made.</p>
 </blockquote>
 <ul>
 <li><strong>returns</strong>: str - the unique component&rsquo;s name.</li>
+</ul>
+<h4 id="get_type">get_type</h4>
+<p>Gets the component&rsquo;s logical type.</p>
+<blockquote>
+<p>get_type(): str</p>
+</blockquote>
+<ul>
+<li><strong>returns</strong>: str - the component&rsquo;s logical type.</li>
 </ul>
 <h4 id="get_version">get_version</h4>
 <p>Gets the component&rsquo;s implementation version.</p>
@@ -289386,8 +289395,6 @@ Throws a <a href="../../errors/config_exception">ConfigException</a> if the desc
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -289406,7 +289413,6 @@ Throws a <a href="../../errors/config_exception">ConfigException</a> if the desc
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -289426,7 +289432,7 @@ Throws a <a href="../../errors/config_exception">ConfigException</a> if the desc
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

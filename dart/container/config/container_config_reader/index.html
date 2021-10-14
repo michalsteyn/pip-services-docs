@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/container/config/container_config_reader/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="ContainerConfigReader">
 <meta itemprop="description" content="Helper class that reads a container&#39;s configuration from a JSON or YAML file.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="198">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ContainerConfigReader"/>
@@ -285542,10 +285542,10 @@
 <p>Reads a container&rsquo;s configuration from JSON or YAML file.
 The type of the file is determined by the file extension.</p>
 <blockquote>
-<p><code>static</code> Future&lt;<a href="../container_config">ContainerConfig</a>&gt; readFromFile(String correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p><code>static</code> Future&lt;<a href="../container_config">ContainerConfig</a>&gt; readFromFile(String? correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>path</strong>: String - path to the component&rsquo;s configuration file.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters or null to skip parameterization.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../container_config">ContainerConfig</a>&gt; - read container configuration</li>
@@ -285553,10 +285553,10 @@ The type of the file is determined by the file extension.</p>
 <h4 id="readfromjsonfile">readFromJsonFile</h4>
 <p>Reads a container&rsquo;s configuration from a JSON file.</p>
 <blockquote>
-<p><code>static</code> Future&lt;<a href="../container_config">ContainerConfig</a>&gt; readFromJsonFile(String correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p><code>static</code> Future&lt;<a href="../container_config">ContainerConfig</a>&gt; readFromJsonFile(String? correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>path</strong>: String - path to the component&rsquo;s configuration file.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters or null to skip parameterization.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../container_config">ContainerConfig</a>&gt; - read container configuration</li>
@@ -285564,10 +285564,10 @@ The type of the file is determined by the file extension.</p>
 <h4 id="readfromyamlfile">readFromYamlFile</h4>
 <p>Reads container configuration from a YAML file.</p>
 <blockquote>
-<p><code>static</code> Future&lt;<a href="../container_config">ContainerConfig</a>&gt; readFromYamlFile(String correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p><code>static</code> Future&lt;<a href="../container_config">ContainerConfig</a>&gt; readFromYamlFile(String? correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>path</strong>: String - path to the component&rsquo;s configuration file.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - configuration parameters or null to skip parameterization.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../container_config">ContainerConfig</a>&gt; - read container configuration</li>
@@ -285717,8 +285717,6 @@ The type of the file is determined by the file extension.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285737,7 +285735,6 @@ The type of the file is determined by the file extension.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285757,7 +285754,7 @@ The type of the file is determined by the file extension.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

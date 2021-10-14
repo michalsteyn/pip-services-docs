@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/components/config/yaml_config_reader/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="YamlConfigReader">
 <meta itemprop="description" content="Config reader that reads configuration from YAML file.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="311">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="YamlConfigReader"/>
@@ -285570,20 +285570,20 @@
 <p>Reads a configuration and parameterizes it with given values.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future&lt;<a href="../../../commons/config/config_params">ConfigParams</a>&gt; readConfig(String correlationId, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p>Future&lt;<a href="../../../commons/config/config_params">ConfigParams</a>&gt; readConfig(String? correlationId, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id to trace execution through a call chain.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - values of the configuration parameters or null to skip parameterization.</li>
 <li><strong>returns</strong>: Future&lt;<a href="../../../commons/config/config_params">ConfigParams</a>&gt; - ConfigParams configuration.</li>
 </ul>
 <h4 id="readobject">readObject</h4>
 <p>Reads a configuration file, parameterizes its content and converts it into a YAML object.</p>
 <blockquote>
-<p>dynamic readObject(String correlationId, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p>dynamic readObject(String? correlationId, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through a call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through a call chain.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - values of the configuration parameters.</li>
 <li><strong>returns</strong>: dynamic - YAML object with a configuration.</li>
 </ul>
@@ -285591,10 +285591,10 @@
 <h4 id="readconfig_">readConfig_</h4>
 <p>Reads a configuration from a file, parameterizes it with given values and returns a new ConfigParams object.</p>
 <blockquote>
-<p><code>static</code> <a href="../../../commons/config/config_params">ConfigParams</a> readConfig_(String correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p><code>static</code> <a href="../../../commons/config/config_params">ConfigParams</a> readConfig_(String? correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>path</strong>: String - path to the configuration file.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - values of the configuration parameters.</li>
 <li><strong>returns</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - ConfigParams configuration.</li>
@@ -285602,10 +285602,10 @@
 <h4 id="readobject_">readObject_</h4>
 <p>Reads a configuration file, parameterizes its content and converts it into a YAML object.</p>
 <blockquote>
-<p><code>static</code> dynamic readObject_(String correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
+<p><code>static</code> dynamic readObject_(String? correlationId, String path, <a href="../../../commons/config/config_params">ConfigParams</a> parameters)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace the execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace the execution through the call chain.</li>
 <li><strong>path</strong>: String - path to the configuration file.</li>
 <li><strong>parameters</strong>: <a href="../../../commons/config/config_params">ConfigParams</a> - values of the configuration parameters.</li>
 <li><strong>returns</strong>: dynamic - YAML object containing a configuration.</li>
@@ -285771,8 +285771,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285791,7 +285789,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285811,7 +285808,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

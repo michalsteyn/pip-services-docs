@@ -23,11 +23,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/memory_persistence/__code2_go/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="// extends IdentifiableMemoryPersistence type MyMemoryPersistence struct { cpersist.IdentifiableMemoryPersistence } func NewMyMemoryPersistence() *MyMemoryPersistence { proto := reflect.TypeOf(Dummy{}) return &amp;MyMemoryPersistence{*cpersist.NewIdentifiableMemoryPersistence(proto)} } func composeFilter(filter *cdata.FilterParams) func(item interface{}) bool { if filter == nil { filter = *cdata.NewFilterParams(make(map[string]string)) } id := filter.GetAsNullableString(&#34;id&#34;) temp_ids := filter.GetAsNullableString(&#34;ids&#34;) var ids *[]string if temp_ids != nil { *ids = strings.Split(*temp_ids, &#34;,&#34;) } key := filter.GetAsNullableString(&#34;key&#34;) return func(item interface{}) bool { dummy, ok := item.(Dummy) if *id != &#34;&#34; &amp;&amp; ok &amp;&amp; dummy.">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="237">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -711,8 +711,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -731,7 +729,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -751,7 +748,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {

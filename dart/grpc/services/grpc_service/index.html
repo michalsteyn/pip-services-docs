@@ -24,12 +24,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/dart/grpc/services/grpc_service/" /><meta property="article:section" content="dart" />
 
-<meta property="article:modified_time" content="2021-10-14T16:01:20+02:00" />
+<meta property="article:modified_time" content="2021-10-14T18:36:34+03:00" />
 
 <meta itemprop="name" content="GrpcService">
 <meta itemprop="description" content="Abstract service that receives remote calls via the gRPC protocol.
 ">
-<meta itemprop="dateModified" content="2021-10-14T16:01:20+02:00" />
+<meta itemprop="dateModified" content="2021-10-14T18:36:34+03:00" />
 <meta itemprop="wordCount" content="479">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GrpcService"/>
@@ -285607,10 +285607,10 @@
 <p>Closes the component and frees used resources.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future close(String correlationId)</p>
+<p>Future close(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="configure">configure</h4>
 <p>Configures a component by passing configuration parameters.</p>
@@ -285634,10 +285634,10 @@
 <p>Adds instrumentation to log calls and measures call time.
 It returns a CounterTiming object that is used to end the time measurement.</p>
 <blockquote>
-<p><a href="../../../components/count/timing">Timing</a> instrument(String correlationId, String name)</p>
+<p><a href="../../../components/count/timing">Timing</a> instrument(String? correlationId, String name)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 <li><strong>name</strong>: String - method name.</li>
 <li><strong>returns</strong>: <a href="../../../components/count/timing">Timing</a> - Timing object to end the time measurement.</li>
 </ul>
@@ -285645,10 +285645,10 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
 <p>Opens the component.</p>
 <p><code>@override</code></p>
 <blockquote>
-<p>Future open(String correlationId)</p>
+<p>Future open(String? correlationId)</p>
 </blockquote>
 <ul>
-<li><strong>correlationId</strong>: String - (optional) transaction id used to trace execution through the call chain.</li>
+<li><strong>correlationId</strong>: String? - (optional) transaction id used to trace execution through the call chain.</li>
 </ul>
 <h4 id="register">register</h4>
 <p>Registers all service routes in the HTTP endpoint.</p>
@@ -285869,8 +285869,6 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -285889,7 +285887,6 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -285909,7 +285906,7 @@ It returns a CounterTiming object that is used to end the time measurement.</p>
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {
