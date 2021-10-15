@@ -23,11 +23,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/mongodb_persistence/__code4_go/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-06T15:12:40+03:00" />
+<meta property="article:modified_time" content="2021-10-15T02:24:25+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="import ( logic &#34;github.com/pip-services-samples/service-beacons-go/logic&#34; persist &#34;github.com/pip-services-samples/service-beacons-go/persistence&#34; services1 &#34;github.com/pip-services-samples/service-beacons-go/services/version1&#34; cref &#34;github.com/pip-services3-go/pip-services3-commons-go/refer&#34; cbuild &#34;github.com/pip-services3-go/pip-services3-components-go/build&#34; ) type BeaconsServiceFactory struct { cbuild.Factory } func NewBeaconsServiceFactory() *BeaconsServiceFactory { c := &amp;BeaconsServiceFactory{ Factory: *cbuild.NewFactory(), } memoryPersistenceDescriptor := cref.NewDescriptor(&#34;beacons&#34;, &#34;persistence&#34;, &#34;memory&#34;, &#34;*&#34;, &#34;1.0&#34;) filePersistenceDescriptor := cref.NewDescriptor(&#34;beacons&#34;, &#34;persistence&#34;, &#34;file&#34;, &#34;*&#34;, &#34;1.0&#34;) mongoDbPersistenceDescriptor := cref.NewDescriptor(&#34;beacons&#34;, &#34;persistence&#34;, &#34;mongodb&#34;, &#34;*&#34;, &#34;1.0&#34;) controllerDescriptor := cref.NewDescriptor(&#34;beacons&#34;, &#34;controller&#34;, &#34;default&#34;, &#34;*&#34;, &#34;1.0&#34;) httpServiceV1Descriptor := cref.NewDescriptor(&#34;beacons&#34;, &#34;service&#34;, &#34;http&#34;, &#34;*&#34;, &#34;1.0&#34;) c.RegisterType(memoryPersistenceDescriptor, persist.NewBeaconsMemoryPersistence) c.RegisterType(filePersistenceDescriptor, persist.NewBeaconsFilePersistence) c.RegisterType(mongoDbPersistenceDescriptor, persist.NewBeaconsMongoDbPersistence) c.">
-<meta itemprop="dateModified" content="2021-10-06T15:12:40+03:00" />
+<meta itemprop="dateModified" content="2021-10-15T02:24:25+03:00" />
 <meta itemprop="wordCount" content="77">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
@@ -39,8 +39,8 @@
 
 
 
-<link rel="preload" href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" as="style">
-<link href="../../../../scss/main.min.116c2447e00681f43fc0412487e595440fc1253eb98a28790ab624f26823fa47.css" rel="stylesheet" integrity="">
+<link rel="preload" href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" as="style">
+<link href="../../../../scss/main.min.7b2c97c67f781d3398597520eeb8c1381cd0d39e812844df0d3c5bc25b3238b7.css" rel="stylesheet" integrity="">
 
 
 
@@ -625,6 +625,10 @@
 <script src="../../../../js/content-tab-selector.js"></script>
 
 
+<script src="../../../../js/content-tab-selector_example1.js"></script>
+<script src="../../../../js/content-tab-selector_example2.js"></script>
+
+
 
 
 
@@ -659,8 +663,6 @@
   }
 
   delHiddenLgSearch();
-  
-  let isGitRepo = window.location.host.indexOf('github') > 0;
 
   docsearch({
     algoliaOptions: {
@@ -679,7 +681,6 @@
 
     transformData: function(hits) {
       
-      let langNamePosInUrl = isGitRepo ? 4 : 3 
 
       hits = hits.filter((item, index) => {
         
@@ -699,7 +700,7 @@
         module = module!=undefined && module != '' ? module.charAt(0).toUpperCase() + module.slice(1) : null;
 
         if (localStorage['currentMenuActiveItem'].toLowerCase() != 'home'){
-          let hitLangPage = item['url'].split('/')[langNamePosInUrl].toLowerCase();
+          let hitLangPage = item['url'].split('/')[3].toLowerCase();
           let isCorrectHit = localStorage['currentMenuActiveItem'].toLowerCase().replace('.', '/').split('/').indexOf(hitLangPage) > -1;
           
           if (module != null) {
