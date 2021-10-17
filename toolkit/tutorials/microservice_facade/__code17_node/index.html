@@ -20,21 +20,21 @@
 
 <title>Services Docs</title><meta property="og:title" content="" />
 <meta property="og:description" content="/src/container/FacadeProcess.ts
-import { IReferences } from &#39;pip-services3-commons-node&#39;; import { ProcessContainer } from &#39;pip-services3-container-node&#39;; import { DefaultRpcFactory } from &#39;pip-services3-rpc-node&#39;; import { ClientFacadeFactory } from &#39;../build/ClientFacadeFactory&#39;; import { FacadeFactory } from &#39;../build/FacadeFactory&#39;; export class FacadeProcess extends ProcessContainer { public constructor() { super(&#34;nov-facades-application&#34;, &#34;Sample facade for NOV&#34;); this._factories.add(new ClientFacadeFactory); this._factories.add(new FacadeFactory); this._factories.add(new DefaultRpcFactory); } } " />
+import { ProcessContainer } from &#39;pip-services3-container-node&#39;; import { DefaultRpcFactory } from &#39;pip-services3-rpc-node&#39;; import { DefaultMongoDbFactory } from &#39;pip-services3-mongodb-node&#39;; import { ClientFacadeFactory } from &#39;../build/ClientFacadeFactory&#39;; import { ServiceFacadeFactory } from &#39;../build/ServiceFacadeFactory&#39;; import { FacadeFactory } from &#39;../build/FacadeFactory&#39;; export class FacadeProcess extends ProcessContainer { public constructor() { super(&#34;pip-facades-example&#34;, &#34;Public facade for pip-vault 2.0&#34;); this._factories.add(new ClientFacadeFactory); this._factories.add(new ServiceFacadeFactory); this._factories.add(new FacadeFactory); this._factories.add(new DefaultRpcFactory); this._factories.add(new DefaultMongoDbFactory); } } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/microservice_facade/__code17_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-16T15:36:22+02:00" />
+<meta property="article:modified_time" content="2021-10-18T00:34:56+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/src/container/FacadeProcess.ts
-import { IReferences } from &#39;pip-services3-commons-node&#39;; import { ProcessContainer } from &#39;pip-services3-container-node&#39;; import { DefaultRpcFactory } from &#39;pip-services3-rpc-node&#39;; import { ClientFacadeFactory } from &#39;../build/ClientFacadeFactory&#39;; import { FacadeFactory } from &#39;../build/FacadeFactory&#39;; export class FacadeProcess extends ProcessContainer { public constructor() { super(&#34;nov-facades-application&#34;, &#34;Sample facade for NOV&#34;); this._factories.add(new ClientFacadeFactory); this._factories.add(new FacadeFactory); this._factories.add(new DefaultRpcFactory); } } ">
-<meta itemprop="dateModified" content="2021-10-16T15:36:22+02:00" />
-<meta itemprop="wordCount" content="53">
+import { ProcessContainer } from &#39;pip-services3-container-node&#39;; import { DefaultRpcFactory } from &#39;pip-services3-rpc-node&#39;; import { DefaultMongoDbFactory } from &#39;pip-services3-mongodb-node&#39;; import { ClientFacadeFactory } from &#39;../build/ClientFacadeFactory&#39;; import { ServiceFacadeFactory } from &#39;../build/ServiceFacadeFactory&#39;; import { FacadeFactory } from &#39;../build/FacadeFactory&#39;; export class FacadeProcess extends ProcessContainer { public constructor() { super(&#34;pip-facades-example&#34;, &#34;Public facade for pip-vault 2.0&#34;); this._factories.add(new ClientFacadeFactory); this._factories.add(new ServiceFacadeFactory); this._factories.add(new FacadeFactory); this._factories.add(new DefaultRpcFactory); this._factories.add(new DefaultMongoDbFactory); } } ">
+<meta itemprop="dateModified" content="2021-10-18T00:34:56+03:00" />
+<meta itemprop="wordCount" content="64">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
 <meta name="twitter:description" content="/src/container/FacadeProcess.ts
-import { IReferences } from &#39;pip-services3-commons-node&#39;; import { ProcessContainer } from &#39;pip-services3-container-node&#39;; import { DefaultRpcFactory } from &#39;pip-services3-rpc-node&#39;; import { ClientFacadeFactory } from &#39;../build/ClientFacadeFactory&#39;; import { FacadeFactory } from &#39;../build/FacadeFactory&#39;; export class FacadeProcess extends ProcessContainer { public constructor() { super(&#34;nov-facades-application&#34;, &#34;Sample facade for NOV&#34;); this._factories.add(new ClientFacadeFactory); this._factories.add(new FacadeFactory); this._factories.add(new DefaultRpcFactory); } } "/>
+import { ProcessContainer } from &#39;pip-services3-container-node&#39;; import { DefaultRpcFactory } from &#39;pip-services3-rpc-node&#39;; import { DefaultMongoDbFactory } from &#39;pip-services3-mongodb-node&#39;; import { ClientFacadeFactory } from &#39;../build/ClientFacadeFactory&#39;; import { ServiceFacadeFactory } from &#39;../build/ServiceFacadeFactory&#39;; import { FacadeFactory } from &#39;../build/FacadeFactory&#39;; export class FacadeProcess extends ProcessContainer { public constructor() { super(&#34;pip-facades-example&#34;, &#34;Public facade for pip-vault 2.0&#34;); this._factories.add(new ClientFacadeFactory); this._factories.add(new ServiceFacadeFactory); this._factories.add(new FacadeFactory); this._factories.add(new DefaultRpcFactory); this._factories.add(new DefaultMongoDbFactory); } } "/>
 
 
 
@@ -497,21 +497,25 @@ import { IReferences } from &#39;pip-services3-commons-node&#39;; import { Proce
         
 
 <p><strong>/src/container/FacadeProcess.ts</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IReferences</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-commons-node&#39;</span><span style="color:#111">;</span>
-<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ProcessContainer</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-container-node&#39;</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ProcessContainer</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-container-node&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DefaultRpcFactory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-rpc-node&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">DefaultMongoDbFactory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;pip-services3-mongodb-node&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ClientFacadeFactory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../build/ClientFacadeFactory&#39;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ServiceFacadeFactory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../build/ServiceFacadeFactory&#39;</span><span style="color:#111">;</span>
 <span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">FacadeFactory</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#39;../build/FacadeFactory&#39;</span><span style="color:#111">;</span>
 
 <span style="color:#00a8c8">export</span> <span style="color:#00a8c8">class</span> <span style="color:#75af00">FacadeProcess</span> <span style="color:#00a8c8">extends</span> <span style="color:#75af00">ProcessContainer</span> <span style="color:#111">{</span>
 
     <span style="color:#00a8c8">public</span> <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#34;nov-facades-application&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Sample facade for NOV&#34;</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">super</span><span style="color:#111">(</span><span style="color:#d88200">&#34;pip-facades-example&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Public facade for pip-vault 2.0&#34;</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">ClientFacadeFactory</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">ServiceFacadeFactory</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">FacadeFactory</span><span style="color:#111">);</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">DefaultRpcFactory</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_factories</span><span style="color:#111">.</span><span style="color:#75af00">add</span><span style="color:#111">(</span><span style="color:#00a8c8">new</span> <span style="color:#75af00">DefaultMongoDbFactory</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
+
 <span style="color:#111">}</span>
 
 </code></pre></div>
