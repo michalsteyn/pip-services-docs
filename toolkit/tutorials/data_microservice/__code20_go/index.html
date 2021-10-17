@@ -20,21 +20,21 @@
 
 <title>Services Docs</title><meta property="og:title" content="" />
 <meta property="og:description" content="/bin/main.go
-package containers import ( factory &#34;github.com/pip-services-samples/service-beacons-go/build&#34; cproc &#34;github.com/pip-services3-go/pip-services3-container-go/container&#34; rbuild &#34;github.com/pip-services3-go/pip-services3-rpc-go/build&#34; sbuild &#34;github.com/pip-services3-go/pip-services3-swagger-go/build&#34; ) type BeaconsProcess struct { cproc.ProcessContainer } func NewBeaconsProcess() *BeaconsProcess { c := &amp;BeaconsProcess{ ProcessContainer: *cproc.NewProcessContainer(&#34;beacons&#34;, &#34;Beacons microservice&#34;), } c.AddFactory(factory.NewBeaconsServiceFactory()) c.AddFactory(rbuild.NewDefaultRpcFactory()) c.AddFactory(sbuild.NewDefaultSwaggerFactory()) return c } " />
+package main import ( &#34;os&#34; cont &#34;github.com/pip-services-samples/service-beacons-go/containers&#34; ) func main() { proc := cont.NewBeaconsProcess() proc.SetConfigPath(&#34;./config/config.yml&#34;) proc.Run(os.Args) } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/data_microservice/__code20_go/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-18T00:34:56+03:00" />
+<meta property="article:modified_time" content="2021-10-18T01:35:03+03:00" />
 
 <meta itemprop="name" content="">
 <meta itemprop="description" content="/bin/main.go
-package containers import ( factory &#34;github.com/pip-services-samples/service-beacons-go/build&#34; cproc &#34;github.com/pip-services3-go/pip-services3-container-go/container&#34; rbuild &#34;github.com/pip-services3-go/pip-services3-rpc-go/build&#34; sbuild &#34;github.com/pip-services3-go/pip-services3-swagger-go/build&#34; ) type BeaconsProcess struct { cproc.ProcessContainer } func NewBeaconsProcess() *BeaconsProcess { c := &amp;BeaconsProcess{ ProcessContainer: *cproc.NewProcessContainer(&#34;beacons&#34;, &#34;Beacons microservice&#34;), } c.AddFactory(factory.NewBeaconsServiceFactory()) c.AddFactory(rbuild.NewDefaultRpcFactory()) c.AddFactory(sbuild.NewDefaultSwaggerFactory()) return c } ">
-<meta itemprop="dateModified" content="2021-10-18T00:34:56+03:00" />
-<meta itemprop="wordCount" content="38">
+package main import ( &#34;os&#34; cont &#34;github.com/pip-services-samples/service-beacons-go/containers&#34; ) func main() { proc := cont.NewBeaconsProcess() proc.SetConfigPath(&#34;./config/config.yml&#34;) proc.Run(os.Args) } ">
+<meta itemprop="dateModified" content="2021-10-18T01:35:03+03:00" />
+<meta itemprop="wordCount" content="18">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
 <meta name="twitter:description" content="/bin/main.go
-package containers import ( factory &#34;github.com/pip-services-samples/service-beacons-go/build&#34; cproc &#34;github.com/pip-services3-go/pip-services3-container-go/container&#34; rbuild &#34;github.com/pip-services3-go/pip-services3-rpc-go/build&#34; sbuild &#34;github.com/pip-services3-go/pip-services3-swagger-go/build&#34; ) type BeaconsProcess struct { cproc.ProcessContainer } func NewBeaconsProcess() *BeaconsProcess { c := &amp;BeaconsProcess{ ProcessContainer: *cproc.NewProcessContainer(&#34;beacons&#34;, &#34;Beacons microservice&#34;), } c.AddFactory(factory.NewBeaconsServiceFactory()) c.AddFactory(rbuild.NewDefaultRpcFactory()) c.AddFactory(sbuild.NewDefaultSwaggerFactory()) return c } "/>
+package main import ( &#34;os&#34; cont &#34;github.com/pip-services-samples/service-beacons-go/containers&#34; ) func main() { proc := cont.NewBeaconsProcess() proc.SetConfigPath(&#34;./config/config.yml&#34;) proc.Run(os.Args) } "/>
 
 
 
@@ -497,29 +497,18 @@ package containers import ( factory &#34;github.com/pip-services-samples/service
         
 
 <p><strong>/bin/main.go</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">containers</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 
 <span style="color:#f92672">import</span> <span style="color:#111">(</span>
-	<span style="color:#75af00">factory</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/build&#34;</span>
-	<span style="color:#75af00">cproc</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-container-go/container&#34;</span>
-	<span style="color:#75af00">rbuild</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-rpc-go/build&#34;</span>
-	<span style="color:#75af00">sbuild</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-swagger-go/build&#34;</span>
+	<span style="color:#d88200">&#34;os&#34;</span>
+
+	<span style="color:#75af00">cont</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/containers&#34;</span>
 <span style="color:#111">)</span>
 
-<span style="color:#00a8c8">type</span> <span style="color:#75af00">BeaconsProcess</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
-	<span style="color:#75af00">cproc</span><span style="color:#111">.</span><span style="color:#75af00">ProcessContainer</span>
-<span style="color:#111">}</span>
-
-<span style="color:#00a8c8">func</span> <span style="color:#75af00">NewBeaconsProcess</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsProcess</span> <span style="color:#111">{</span>
-	<span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">BeaconsProcess</span><span style="color:#111">{</span>
-		<span style="color:#75af00">ProcessContainer</span><span style="color:#111">:</span> <span style="color:#f92672">*</span><span style="color:#75af00">cproc</span><span style="color:#111">.</span><span style="color:#75af00">NewProcessContainer</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Beacons microservice&#34;</span><span style="color:#111">),</span>
-	<span style="color:#111">}</span>
-
-	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">AddFactory</span><span style="color:#111">(</span><span style="color:#75af00">factory</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsServiceFactory</span><span style="color:#111">())</span>
-	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">AddFactory</span><span style="color:#111">(</span><span style="color:#75af00">rbuild</span><span style="color:#111">.</span><span style="color:#75af00">NewDefaultRpcFactory</span><span style="color:#111">())</span>
-	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">AddFactory</span><span style="color:#111">(</span><span style="color:#75af00">sbuild</span><span style="color:#111">.</span><span style="color:#75af00">NewDefaultSwaggerFactory</span><span style="color:#111">())</span>
-
-	<span style="color:#00a8c8">return</span> <span style="color:#75af00">c</span>
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">proc</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cont</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsProcess</span><span style="color:#111">()</span>
+	<span style="color:#75af00">proc</span><span style="color:#111">.</span><span style="color:#75af00">SetConfigPath</span><span style="color:#111">(</span><span style="color:#d88200">&#34;./config/config.yml&#34;</span><span style="color:#111">)</span>
+	<span style="color:#75af00">proc</span><span style="color:#111">.</span><span style="color:#75af00">Run</span><span style="color:#111">(</span><span style="color:#75af00">os</span><span style="color:#111">.</span><span style="color:#75af00">Args</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
 
 </code></pre></div>
@@ -620,10 +609,6 @@ package containers import ( factory &#34;github.com/pip-services-samples/service
 <script src="../../../../js/drafts.js"></script>
 
 <script src="../../../../js/content-tab-selector.js"></script>
-
-
-<script src="../../../../js/content-tab-selector_example1.js"></script>
-<script src="../../../../js/content-tab-selector_example2.js"></script>
 
 
 
