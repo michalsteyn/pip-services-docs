@@ -23,12 +23,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/client_library/step5/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-18T01:35:03+03:00" />
+<meta property="article:modified_time" content="2021-10-18T20:37:09+03:00" />
 
 <meta itemprop="name" content="Step 6. Testing the Client with a Remote Microservice">
 <meta itemprop="description" content="Node .NET Golang Dart Python Java  In the previous steps, we were looking at the development of clients and at the clients themselves. However, both the client and the microservice were implemented in the same language, which allowed us to run components of the microservice from right inside the tests. In a multi-language environment, there are times when you need to create clients in a language that is different from the one that was used to write the microservice.">
-<meta itemprop="dateModified" content="2021-10-18T01:35:03+03:00" />
-<meta itemprop="wordCount" content="1213">
+<meta itemprop="dateModified" content="2021-10-18T20:37:09+03:00" />
+<meta itemprop="wordCount" content="1455">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 6. Testing the Client with a Remote Microservice"/>
 <meta name="twitter:description" content="Node .NET Golang Dart Python Java  In the previous steps, we were looking at the development of clients and at the clients themselves. However, both the client and the microservice were implemented in the same language, which allowed us to run components of the microservice from right inside the tests. In a multi-language environment, there are times when you need to create clients in a language that is different from the one that was used to write the microservice."/>
@@ -32748,6 +32748,261 @@
     
       
       <ul class="pl-0 md-3 ul-4 container">
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
         
           
             
@@ -289676,7 +289931,126 @@ The image parameter contains the name of the Docker image being hosted on Docker
 <div class="content-tab-section">
     
         
-  Not available  
+  
+
+
+<nil>
+<p><strong>/test/version1/BeaconsHttpClientV1_test.go</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">test_clients1</span>
+
+<span style="color:#f92672">import</span> <span style="color:#111">(</span>
+	<span style="color:#d88200">&#34;testing&#34;</span>
+
+	<span style="color:#75af00">clients1</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/client-beacons-go/clients/version1&#34;</span>
+	<span style="color:#75af00">logic</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/logic&#34;</span>
+	<span style="color:#75af00">persist</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/persistence&#34;</span>
+	<span style="color:#75af00">services1</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/services/version1&#34;</span>
+	<span style="color:#75af00">cconf</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/config&#34;</span>
+	<span style="color:#75af00">cref</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/refer&#34;</span>
+<span style="color:#111">)</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">beaconsCommandableHttpClientV1Test</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">persistence</span> <span style="color:#f92672">*</span><span style="color:#75af00">persist</span><span style="color:#111">.</span><span style="color:#75af00">BeaconsMemoryPersistence</span>
+	<span style="color:#75af00">controller</span>  <span style="color:#f92672">*</span><span style="color:#75af00">logic</span><span style="color:#111">.</span><span style="color:#75af00">BeaconsController</span>
+	<span style="color:#75af00">service</span>     <span style="color:#f92672">*</span><span style="color:#75af00">services1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconsHttpServiceV1</span>
+	<span style="color:#75af00">client</span>      <span style="color:#f92672">*</span><span style="color:#75af00">clients1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconsHttpClientV1</span>
+	<span style="color:#75af00">fixture</span>     <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsClientV1Fixture</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">newBeaconsHttpClientV1Test</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">beaconsCommandableHttpClientV1Test</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">persistence</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">persist</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsMemoryPersistence</span><span style="color:#111">()</span>
+	<span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">NewEmptyConfigParams</span><span style="color:#111">())</span>
+
+	<span style="color:#75af00">controller</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">logic</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsController</span><span style="color:#111">()</span>
+	<span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">NewEmptyConfigParams</span><span style="color:#111">())</span>
+
+	<span style="color:#75af00">httpConfig</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cconf</span><span style="color:#111">.</span><span style="color:#75af00">NewConfigParamsFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;connection.protocol&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;http&#34;</span><span style="color:#111">,</span>
+		<span style="color:#d88200">&#34;connection.port&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;3000&#34;</span><span style="color:#111">,</span>
+		<span style="color:#d88200">&#34;connection.host&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;localhost&#34;</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">service</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">services1</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsHttpServiceV1</span><span style="color:#111">()</span>
+	<span style="color:#75af00">service</span><span style="color:#111">.</span><span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">httpConfig</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">client</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">clients1</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsHttpClientV1</span><span style="color:#111">()</span>
+	<span style="color:#75af00">client</span><span style="color:#111">.</span><span style="color:#75af00">Configure</span><span style="color:#111">(</span><span style="color:#75af00">httpConfig</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">references</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cref</span><span style="color:#111">.</span><span style="color:#75af00">NewReferencesFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#75af00">cref</span><span style="color:#111">.</span><span style="color:#75af00">NewDescriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;persistence&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;memory&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;default&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#75af00">persistence</span><span style="color:#111">,</span>
+		<span style="color:#75af00">cref</span><span style="color:#111">.</span><span style="color:#75af00">NewDescriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;controller&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;default&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;default&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#75af00">controller</span><span style="color:#111">,</span>
+		<span style="color:#75af00">cref</span><span style="color:#111">.</span><span style="color:#75af00">NewDescriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;service&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;http&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;default&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#75af00">service</span><span style="color:#111">,</span>
+		<span style="color:#75af00">cref</span><span style="color:#111">.</span><span style="color:#75af00">NewDescriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;beacons&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;client&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;http&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;default&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#75af00">client</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+	<span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">SetReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">)</span>
+	<span style="color:#75af00">service</span><span style="color:#111">.</span><span style="color:#75af00">SetReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">)</span>
+	<span style="color:#75af00">client</span><span style="color:#111">.</span><span style="color:#75af00">SetReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">fixture</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">NewBeaconsClientV1Fixture</span><span style="color:#111">(</span><span style="color:#75af00">client</span><span style="color:#111">)</span>
+
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">beaconsCommandableHttpClientV1Test</span><span style="color:#111">{</span>
+		<span style="color:#75af00">persistence</span><span style="color:#111">:</span> <span style="color:#75af00">persistence</span><span style="color:#111">,</span>
+		<span style="color:#75af00">controller</span><span style="color:#111">:</span>  <span style="color:#75af00">controller</span><span style="color:#111">,</span>
+		<span style="color:#75af00">service</span><span style="color:#111">:</span>     <span style="color:#75af00">service</span><span style="color:#111">,</span>
+		<span style="color:#75af00">client</span><span style="color:#111">:</span>      <span style="color:#75af00">client</span><span style="color:#111">,</span>
+		<span style="color:#75af00">fixture</span><span style="color:#111">:</span>     <span style="color:#75af00">fixture</span><span style="color:#111">,</span>
+	<span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">beaconsCommandableHttpClientV1Test</span><span style="color:#111">)</span> <span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">Open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to open persistence&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">err</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">service</span><span style="color:#111">.</span><span style="color:#75af00">Open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to open service&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">err</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">client</span><span style="color:#111">.</span><span style="color:#75af00">Open</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to open client&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">err</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">Clear</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to clear persistence&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">beaconsCommandableHttpClientV1Test</span><span style="color:#111">)</span> <span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">client</span><span style="color:#111">.</span><span style="color:#75af00">Close</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to close client&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">err</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">service</span><span style="color:#111">.</span><span style="color:#75af00">Close</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to close service&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">err</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">persistence</span><span style="color:#111">.</span><span style="color:#75af00">Close</span><span style="color:#111">(</span><span style="color:#d88200">&#34;&#34;</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Error</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Failed to close persistence&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">err</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">TestBeaconsHttpClientV1</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">newBeaconsHttpClientV1Test</span><span style="color:#111">()</span>
+
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Run</span><span style="color:#111">(</span><span style="color:#d88200">&#34;CRUD Operations&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">TestCrudOperations</span><span style="color:#111">)</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Run</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Calculate Positions&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">TestCalculatePosition</span><span style="color:#111">)</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+</code></pre></div> 
 
     
 </div>
@@ -289885,7 +290259,13 @@ Before we can start testing, we need to get our containerized microservice up an
 <div class="content-tab-section">
     
         
-  Not available  
+  
+
+
+<nil>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go <span style="color:#111">test</span> -v ./test/...
+
+</code></pre></div> 
 
     
 </div>

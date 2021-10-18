@@ -24,13 +24,13 @@ Then, creates a new class for the Commandable REST client and an implementation 
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/client_library/step3/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-18T01:35:03+03:00" />
+<meta property="article:modified_time" content="2021-10-18T20:37:09+03:00" />
 
 <meta itemprop="name" content="Step 4. Designing an HTTP Client">
 <meta itemprop="description" content="Node .NET Golang Dart Python Java  The standard way of communicating with a microservice is via the HTTP protocol. It allows calling microservices that work on a separate server, or in their own container. Our example microservice uses a simplified version of the HTTP protocol that is automatically generated using the Commandable pattern.
 Then, creates a new class for the Commandable REST client and an implementation for each of the microservice’s methods.">
-<meta itemprop="dateModified" content="2021-10-18T01:35:03+03:00" />
-<meta itemprop="wordCount" content="1188">
+<meta itemprop="dateModified" content="2021-10-18T20:37:09+03:00" />
+<meta itemprop="wordCount" content="1525">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 4. Designing an HTTP Client"/>
 <meta name="twitter:description" content="Node .NET Golang Dart Python Java  The standard way of communicating with a microservice is via the HTTP protocol. It allows calling microservices that work on a separate server, or in their own container. Our example microservice uses a simplified version of the HTTP protocol that is automatically generated using the Commandable pattern.
@@ -32751,6 +32751,261 @@ Then, creates a new class for the Commandable REST client and an implementation 
     
       
       <ul class="pl-0 md-3 ul-4 container">
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
         
           
             
@@ -289763,7 +290018,147 @@ Then, creates a new class for the Commandable REST client and an implementation 
 <div class="content-tab-section">
     
         
-  Not available  
+  
+
+
+<nil>
+<p><strong>/version1/BeaconsHttpClientV1.ts</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">clients1</span>
+
+<span style="color:#f92672">import</span> <span style="color:#111">(</span>
+	<span style="color:#d88200">&#34;reflect&#34;</span>
+
+	<span style="color:#75af00">data1</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/data/version1&#34;</span>
+	<span style="color:#75af00">cdata</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/data&#34;</span>
+	<span style="color:#75af00">cclients</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-rpc-go/clients&#34;</span>
+<span style="color:#111">)</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">BeaconsHttpClientV1</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+	<span style="color:#f92672">*</span><span style="color:#75af00">cclients</span><span style="color:#111">.</span><span style="color:#75af00">CommandableHttpClient</span>
+	<span style="color:#75af00">beaconV1DataPageType</span> <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">Type</span>
+	<span style="color:#75af00">beaconV1Type</span>         <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">Type</span>
+	<span style="color:#75af00">geoPointV1Type</span>       <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">Type</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">NewBeaconsHttpClientV1</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">{</span>
+		<span style="color:#75af00">CommandableHttpClient</span><span style="color:#111">:</span> <span style="color:#75af00">cclients</span><span style="color:#111">.</span><span style="color:#75af00">NewCommandableHttpClient</span><span style="color:#111">(</span><span style="color:#d88200">&#34;v1/beacons&#34;</span><span style="color:#111">),</span>
+		<span style="color:#75af00">beaconV1DataPageType</span><span style="color:#111">:</span>  <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">TypeOf</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1DataPage</span><span style="color:#111">{}),</span>
+		<span style="color:#75af00">beaconV1Type</span><span style="color:#111">:</span>          <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">TypeOf</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">{}),</span>
+		<span style="color:#75af00">geoPointV1Type</span><span style="color:#111">:</span>        <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">TypeOf</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">GeoPointV1</span><span style="color:#111">{}),</span>
+	<span style="color:#111">}</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">c</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">GetBeacons</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span> <span style="color:#f92672">*</span><span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">FilterParams</span><span style="color:#111">,</span>
+	<span style="color:#75af00">paging</span> <span style="color:#f92672">*</span><span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">PagingParams</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1DataPage</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;filter&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span><span style="color:#111">,</span>
+		<span style="color:#d88200">&#34;paging&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">beaconV1DataPageType</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;get_beacons&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1DataPage</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">GetBeaconById</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;beacon_id&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">beaconV1Type</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;get_beacon_by_id&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">GetBeaconByUdi</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">beaconV1Type</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;get_beacon_by_udi&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">CalculatePosition</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udis</span> <span style="color:#111">[]</span><span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">GeoPointV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span><span style="color:#111">,</span>
+		<span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udis</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">geoPointV1Type</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;calculate_position&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">GeoPointV1</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">CreateBeacon</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;beacon&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">beaconV1Type</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;create_beacon&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">UpdateBeacon</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;beacon&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">beaconV1Type</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;update_beacon&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsHttpClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">DeleteBeaconById</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">params</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewAnyValueMapFromTuples</span><span style="color:#111">(</span>
+		<span style="color:#d88200">&#34;beacon_id&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span><span style="color:#111">,</span>
+	<span style="color:#111">)</span>
+
+	<span style="color:#75af00">res</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">CallCommand</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">beaconV1Type</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;delete_beacon_by_id&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">params</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">res</span><span style="color:#111">.(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+</code></pre></div>   
 
     
 </div>

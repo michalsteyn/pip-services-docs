@@ -23,12 +23,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/tutorials/client_library/step4/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-18T01:35:03+03:00" />
+<meta property="article:modified_time" content="2021-10-18T20:37:09+03:00" />
 
 <meta itemprop="name" content="Step 5. Implementing a Mock Client">
 <meta itemprop="description" content="Node .NET Golang Dart Python Java  Complex systems usually experience difficulties when it comes to writing unit tests for a logic that calls external services. These tests are supposed to run quickly and without any additional infrastructure. The standard approach to solving this problem is to replace the calls to external services with a local approximation (a.k.a. a mock). However, writing mocks takes time and doesn’t always guarantee functionality that matches the real service.">
-<meta itemprop="dateModified" content="2021-10-18T01:35:03+03:00" />
-<meta itemprop="wordCount" content="2907">
+<meta itemprop="dateModified" content="2021-10-18T20:37:09+03:00" />
+<meta itemprop="wordCount" content="3650">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Step 5. Implementing a Mock Client"/>
 <meta name="twitter:description" content="Node .NET Golang Dart Python Java  Complex systems usually experience difficulties when it comes to writing unit tests for a logic that calls external services. These tests are supposed to run quickly and without any additional infrastructure. The standard approach to solving this problem is to replace the calls to external services with a local approximation (a.k.a. a mock). However, writing mocks takes time and doesn’t always guarantee functionality that matches the real service."/>
@@ -32748,6 +32748,261 @@
     
       
       <ul class="pl-0 md-3 ul-4 container">
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+        
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
         
           
             
@@ -289835,7 +290090,236 @@
 <div class="content-tab-section">
     
         
-  Not available  
+  
+
+
+<nil>
+<p><strong>/version1/BeaconsMemoryClientV1.go</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">clients1</span>
+
+<span style="color:#f92672">import</span> <span style="color:#111">(</span>
+	<span style="color:#d88200">&#34;reflect&#34;</span>
+	<span style="color:#d88200">&#34;strings&#34;</span>
+
+	<span style="color:#75af00">data1</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/service-beacons-go/data/version1&#34;</span>
+	<span style="color:#75af00">cdata</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/data&#34;</span>
+	<span style="color:#75af00">mdata</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-data-go/persistence&#34;</span>
+<span style="color:#111">)</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">BeaconsMemoryClientV1</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">maxPageSize</span> <span style="color:#00a8c8">int</span>
+	<span style="color:#75af00">items</span>       <span style="color:#111">[]</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span>
+	<span style="color:#75af00">proto</span>       <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">Type</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">NewBeaconsMemoryClientV1</span><span style="color:#111">(</span><span style="color:#75af00">items</span> <span style="color:#111">[]</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">{</span>
+		<span style="color:#75af00">maxPageSize</span><span style="color:#111">:</span> <span style="color:#ae81ff">100</span><span style="color:#111">,</span>
+		<span style="color:#75af00">items</span><span style="color:#111">:</span>       <span style="color:#111">make</span><span style="color:#111">([]</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">),</span>
+		<span style="color:#75af00">proto</span><span style="color:#111">:</span>       <span style="color:#75af00">reflect</span><span style="color:#111">.</span><span style="color:#75af00">TypeOf</span><span style="color:#111">(</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">{}),</span>
+	<span style="color:#111">}</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">=</span> <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">,</span> <span style="color:#75af00">items</span><span style="color:#f92672">...</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">c</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span> <span style="color:#f92672">*</span><span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">FilterParams</span><span style="color:#111">)</span> <span style="color:#00a8c8">func</span><span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#00a8c8">bool</span> <span style="color:#111">{</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">filter</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">filter</span> <span style="color:#111">=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewEmptyFilterParams</span><span style="color:#111">()</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">id</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;id&#34;</span><span style="color:#111">)</span>
+	<span style="color:#75af00">siteId</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">)</span>
+	<span style="color:#75af00">label</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;label&#34;</span><span style="color:#111">)</span>
+	<span style="color:#75af00">udi</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udi&#34;</span><span style="color:#111">)</span>
+	<span style="color:#75af00">udis</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">filter</span><span style="color:#111">.</span><span style="color:#75af00">GetAsString</span><span style="color:#111">(</span><span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">)</span>
+
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">udiValues</span> <span style="color:#111">[]</span><span style="color:#00a8c8">string</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">udis</span> <span style="color:#f92672">!=</span> <span style="color:#d88200">&#34;&#34;</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">udiValues</span> <span style="color:#111">=</span> <span style="color:#75af00">strings</span><span style="color:#111">.</span><span style="color:#75af00">Split</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;,&#34;</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">func</span><span style="color:#111">(</span><span style="color:#75af00">item</span> <span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#00a8c8">bool</span> <span style="color:#111">{</span>
+
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">id</span> <span style="color:#f92672">!=</span> <span style="color:#d88200">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">Id</span> <span style="color:#f92672">!=</span> <span style="color:#75af00">id</span> <span style="color:#111">{</span>
+			<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span>
+		<span style="color:#111">}</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">siteId</span> <span style="color:#f92672">!=</span> <span style="color:#d88200">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">SiteId</span> <span style="color:#f92672">!=</span> <span style="color:#75af00">siteId</span> <span style="color:#111">{</span>
+			<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span>
+		<span style="color:#111">}</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">label</span> <span style="color:#f92672">!=</span> <span style="color:#d88200">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">Label</span> <span style="color:#f92672">!=</span> <span style="color:#75af00">label</span> <span style="color:#111">{</span>
+			<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span>
+		<span style="color:#111">}</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">udi</span> <span style="color:#f92672">!=</span> <span style="color:#d88200">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">Udi</span> <span style="color:#f92672">!=</span> <span style="color:#75af00">udi</span> <span style="color:#111">{</span>
+			<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span>
+		<span style="color:#111">}</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#75af00">udiValues</span><span style="color:#111">)</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#75af00">strings</span><span style="color:#111">.</span><span style="color:#75af00">Index</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">.</span><span style="color:#75af00">Udi</span><span style="color:#111">)</span> <span style="color:#111">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
+			<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">false</span>
+		<span style="color:#111">}</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">true</span>
+	<span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">GetBeacons</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">filter</span> <span style="color:#f92672">*</span><span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">FilterParams</span><span style="color:#111">,</span> <span style="color:#75af00">paging</span> <span style="color:#f92672">*</span><span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">PagingParams</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">page</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1DataPage</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">filterBeacons</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">composeFilter</span><span style="color:#111">(</span><span style="color:#75af00">filter</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">beacons</span> <span style="color:#f92672">:=</span> <span style="color:#111">make</span><span style="color:#111">([]</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#ae81ff">0</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">for</span> <span style="color:#75af00">_</span><span style="color:#111">,</span> <span style="color:#75af00">v</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">filterBeacons</span><span style="color:#111">(</span><span style="color:#75af00">v</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+			<span style="color:#75af00">item</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">v</span>
+			<span style="color:#75af00">beacons</span> <span style="color:#111">=</span> <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">beacons</span><span style="color:#111">,</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">item</span><span style="color:#111">)</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75715e">// Extract a page
+</span><span style="color:#75715e"></span>	<span style="color:#00a8c8">if</span> <span style="color:#75af00">paging</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">paging</span> <span style="color:#111">=</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewEmptyPagingParams</span><span style="color:#111">()</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">skip</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">paging</span><span style="color:#111">.</span><span style="color:#75af00">GetSkip</span><span style="color:#111">(</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">)</span>
+	<span style="color:#75af00">take</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">paging</span><span style="color:#111">.</span><span style="color:#75af00">GetTake</span><span style="color:#111">((</span><span style="color:#00a8c8">int64</span><span style="color:#111">)(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">maxPageSize</span><span style="color:#111">))</span>
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">total</span> <span style="color:#00a8c8">int64</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">paging</span><span style="color:#111">.</span><span style="color:#75af00">Total</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">total</span> <span style="color:#111">=</span> <span style="color:#111">(</span><span style="color:#00a8c8">int64</span><span style="color:#111">)(</span><span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#75af00">beacons</span><span style="color:#111">))</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">skip</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">beacons</span> <span style="color:#111">=</span> <span style="color:#75af00">beacons</span><span style="color:#111">[</span><span style="color:#75af00">skip</span><span style="color:#111">:]</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#00a8c8">int64</span><span style="color:#111">)(</span><span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#75af00">beacons</span><span style="color:#111">))</span> <span style="color:#f92672">&gt;=</span> <span style="color:#75af00">take</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">beacons</span> <span style="color:#111">=</span> <span style="color:#75af00">beacons</span><span style="color:#111">[:</span><span style="color:#75af00">take</span><span style="color:#111">]</span>
+	<span style="color:#111">}</span>
+	<span style="color:#75af00">page</span> <span style="color:#111">=</span> <span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconV1DataPage</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#75af00">total</span><span style="color:#111">,</span> <span style="color:#75af00">beacons</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">page</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">GetBeaconById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">beacon</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">item</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span>
+	<span style="color:#00a8c8">for</span> <span style="color:#75af00">_</span><span style="color:#111">,</span> <span style="color:#75af00">v</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">v</span><span style="color:#111">.</span><span style="color:#75af00">Id</span> <span style="color:#f92672">==</span> <span style="color:#75af00">beaconId</span> <span style="color:#111">{</span>
+			<span style="color:#75af00">item</span> <span style="color:#111">=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">v</span>
+			<span style="color:#00a8c8">break</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">GetBeaconByUdi</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udi</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">beacon</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">item</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span>
+	<span style="color:#00a8c8">for</span> <span style="color:#75af00">_</span><span style="color:#111">,</span> <span style="color:#75af00">v</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">v</span><span style="color:#111">.</span><span style="color:#75af00">Udi</span> <span style="color:#f92672">==</span> <span style="color:#75af00">udi</span> <span style="color:#111">{</span>
+			<span style="color:#75af00">item</span> <span style="color:#111">=</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">v</span>
+			<span style="color:#00a8c8">break</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">CalculatePosition</span><span style="color:#111">(</span>
+	<span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">udis</span> <span style="color:#111">[]</span><span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">GeoPointV1</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">udis</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">nil</span> <span style="color:#f92672">||</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#75af00">udis</span><span style="color:#111">)</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">page</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">GetBeacons</span><span style="color:#111">(</span>
+		<span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewFilterParamsFromTuples</span><span style="color:#111">(</span>
+			<span style="color:#d88200">&#34;site_id&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">siteId</span><span style="color:#111">,</span>
+			<span style="color:#d88200">&#34;udis&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">udis</span><span style="color:#111">),</span>
+		<span style="color:#75af00">cdata</span><span style="color:#111">.</span><span style="color:#75af00">NewEmptyPagingParams</span><span style="color:#111">())</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">err</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">nil</span> <span style="color:#f92672">||</span> <span style="color:#75af00">page</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#75af00">err</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">lat</span> <span style="color:#00a8c8">float32</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">lng</span> <span style="color:#00a8c8">float32</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">count</span> <span style="color:#111">=</span> <span style="color:#ae81ff">0</span>
+
+	<span style="color:#00a8c8">for</span> <span style="color:#75af00">_</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">page</span><span style="color:#111">.</span><span style="color:#75af00">Data</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">Center</span><span style="color:#111">.</span><span style="color:#75af00">Type</span> <span style="color:#f92672">==</span> <span style="color:#d88200">&#34;Point&#34;</span> <span style="color:#111">{</span>
+			<span style="color:#75af00">lng</span> <span style="color:#f92672">+=</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">Center</span><span style="color:#111">.</span><span style="color:#75af00">Coordinates</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span>
+			<span style="color:#75af00">lat</span> <span style="color:#f92672">+=</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">Center</span><span style="color:#111">.</span><span style="color:#75af00">Coordinates</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span>
+			<span style="color:#75af00">count</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">pos</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">GeoPointV1</span><span style="color:#111">{</span>
+		<span style="color:#75af00">Type</span><span style="color:#111">:</span>        <span style="color:#d88200">&#34;Point&#34;</span><span style="color:#111">,</span>
+		<span style="color:#75af00">Coordinates</span><span style="color:#111">:</span> <span style="color:#111">make</span><span style="color:#111">([][]</span><span style="color:#00a8c8">float32</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#111">),</span>
+	<span style="color:#111">}</span>
+	<span style="color:#75af00">pos</span><span style="color:#111">.</span><span style="color:#75af00">Coordinates</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#111">make</span><span style="color:#111">([]</span><span style="color:#00a8c8">float32</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">)</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">count</span> <span style="color:#111">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">pos</span><span style="color:#111">.</span><span style="color:#75af00">Type</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;Point&#34;</span>
+		<span style="color:#75af00">pos</span><span style="color:#111">.</span><span style="color:#75af00">Coordinates</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#75af00">lng</span> <span style="color:#f92672">/</span> <span style="color:#111">(</span><span style="color:#00a8c8">float32</span><span style="color:#111">)(</span><span style="color:#75af00">count</span><span style="color:#111">)</span>
+		<span style="color:#75af00">pos</span><span style="color:#111">.</span><span style="color:#75af00">Coordinates</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">][</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#75af00">lat</span> <span style="color:#f92672">/</span> <span style="color:#111">(</span><span style="color:#00a8c8">float32</span><span style="color:#111">)(</span><span style="color:#75af00">count</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">pos</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">CreateBeacon</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">res</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">==</span> <span style="color:#00a8c8">nil</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">newItem</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">mdata</span><span style="color:#111">.</span><span style="color:#75af00">CloneObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">proto</span><span style="color:#111">)</span>
+	<span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">newItem</span><span style="color:#111">.(</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#75af00">mdata</span><span style="color:#111">.</span><span style="color:#75af00">GenerateObjectId</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#75af00">newItem</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">=</span> <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">,</span> <span style="color:#75af00">item</span><span style="color:#111">)</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">UpdateBeacon</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beacon</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">res</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">index</span> <span style="color:#111">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+	<span style="color:#00a8c8">for</span> <span style="color:#75af00">i</span><span style="color:#111">,</span> <span style="color:#75af00">v</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">v</span><span style="color:#111">.</span><span style="color:#75af00">Id</span> <span style="color:#f92672">==</span> <span style="color:#75af00">beacon</span><span style="color:#111">.</span><span style="color:#75af00">Id</span> <span style="color:#111">{</span>
+			<span style="color:#75af00">index</span> <span style="color:#111">=</span> <span style="color:#75af00">i</span>
+			<span style="color:#00a8c8">break</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">index</span> <span style="color:#111">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#75af00">newItem</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">mdata</span><span style="color:#111">.</span><span style="color:#75af00">CloneObject</span><span style="color:#111">(</span><span style="color:#75af00">beacon</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">proto</span><span style="color:#111">)</span>
+	<span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#75af00">_</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">newItem</span><span style="color:#111">.(</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">)</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">[</span><span style="color:#75af00">index</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#75af00">item</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsMemoryClientV1</span><span style="color:#111">)</span> <span style="color:#75af00">DeleteBeaconById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">beaconId</span> <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#75af00">res</span> <span style="color:#f92672">*</span><span style="color:#75af00">data1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">,</span> <span style="color:#75af00">err</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">index</span> <span style="color:#111">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+	<span style="color:#00a8c8">for</span> <span style="color:#75af00">i</span><span style="color:#111">,</span> <span style="color:#75af00">v</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">if</span> <span style="color:#75af00">v</span><span style="color:#111">.</span><span style="color:#75af00">Id</span> <span style="color:#f92672">==</span> <span style="color:#75af00">beaconId</span> <span style="color:#111">{</span>
+			<span style="color:#75af00">index</span> <span style="color:#111">=</span> <span style="color:#75af00">i</span>
+			<span style="color:#00a8c8">break</span>
+		<span style="color:#111">}</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">index</span> <span style="color:#111">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#111">{</span>
+		<span style="color:#00a8c8">return</span> <span style="color:#00a8c8">nil</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+	<span style="color:#111">}</span>
+
+	<span style="color:#00a8c8">var</span> <span style="color:#75af00">item</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">[</span><span style="color:#75af00">index</span><span style="color:#111">]</span>
+
+	<span style="color:#00a8c8">if</span> <span style="color:#75af00">index</span> <span style="color:#f92672">==</span> <span style="color:#111">len</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">=</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">[:</span><span style="color:#75af00">index</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span>
+	<span style="color:#111">}</span> <span style="color:#00a8c8">else</span> <span style="color:#111">{</span>
+		<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span> <span style="color:#111">=</span> <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">[:</span><span style="color:#75af00">index</span><span style="color:#111">],</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">items</span><span style="color:#111">[</span><span style="color:#75af00">index</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#111">:]</span><span style="color:#f92672">...</span><span style="color:#111">)</span>
+	<span style="color:#111">}</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">item</span><span style="color:#111">,</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+</code></pre></div> 
 
     
 </div>
@@ -290255,7 +290739,52 @@
 <div class="content-tab-section">
     
         
-  Not available  
+  
+
+
+<nil>
+<p><strong>/test/version1/BeaconsMemoryClientV1_test.go</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">test_clients1</span>
+
+<span style="color:#f92672">import</span> <span style="color:#111">(</span>
+	<span style="color:#d88200">&#34;testing&#34;</span>
+
+	<span style="color:#75af00">clients1</span> <span style="color:#d88200">&#34;github.com/pip-services-samples/client-beacons-go/clients/version1&#34;</span>
+<span style="color:#111">)</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">beaconsMemoryClientV1Test</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">client</span>  <span style="color:#f92672">*</span><span style="color:#75af00">clients1</span><span style="color:#111">.</span><span style="color:#75af00">BeaconsMemoryClientV1</span>
+	<span style="color:#75af00">fixture</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconsClientV1Fixture</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">newBeaconsMemoryClientV1Test</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">beaconsMemoryClientV1Test</span> <span style="color:#111">{</span>
+
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">beaconsMemoryClientV1Test</span><span style="color:#111">{}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">beaconsMemoryClientV1Test</span><span style="color:#111">)</span> <span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">client</span> <span style="color:#111">=</span> <span style="color:#75af00">clients1</span><span style="color:#111">.</span><span style="color:#75af00">NewBeaconsMemoryClientV1</span><span style="color:#111">(</span><span style="color:#00a8c8">nil</span><span style="color:#111">)</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">fixture</span> <span style="color:#111">=</span> <span style="color:#75af00">NewBeaconsClientV1Fixture</span><span style="color:#111">(</span><span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">client</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">c</span> <span style="color:#f92672">*</span><span style="color:#75af00">beaconsMemoryClientV1Test</span><span style="color:#111">)</span> <span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">client</span> <span style="color:#111">=</span> <span style="color:#00a8c8">nil</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">fixture</span> <span style="color:#111">=</span> <span style="color:#00a8c8">nil</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">TestBeaconsMemoryClientV1</span><span style="color:#111">(</span><span style="color:#75af00">t</span> <span style="color:#f92672">*</span><span style="color:#75af00">testing</span><span style="color:#111">.</span><span style="color:#75af00">T</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+	<span style="color:#75af00">c</span> <span style="color:#f92672">:=</span> <span style="color:#75af00">newBeaconsMemoryClientV1Test</span><span style="color:#111">()</span>
+
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+	<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Run</span><span style="color:#111">(</span><span style="color:#d88200">&#34;CRUD Operations&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">TestCrudOperations</span><span style="color:#111">)</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">setup</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+	<span style="color:#75af00">t</span><span style="color:#111">.</span><span style="color:#75af00">Run</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Calculate Positions&#34;</span><span style="color:#111">,</span> <span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">fixture</span><span style="color:#111">.</span><span style="color:#75af00">TestCalculatePosition</span><span style="color:#111">)</span>
+	<span style="color:#75af00">c</span><span style="color:#111">.</span><span style="color:#75af00">teardown</span><span style="color:#111">(</span><span style="color:#75af00">t</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+</code></pre></div> 
 
     
 </div>
@@ -290451,7 +290980,41 @@
 <div class="content-tab-section">
     
         
-  Not available  
+  
+
+
+<nil>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">data1</span>
+
+<span style="color:#f92672">import</span> <span style="color:#111">(</span>
+	<span style="color:#75af00">rand</span> <span style="color:#d88200">&#34;github.com/pip-services3-go/pip-services3-commons-go/random&#34;</span>
+<span style="color:#111">)</span>
+
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">RandomBeaconV1</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">NextBeaconType</span><span style="color:#111">()</span> <span style="color:#00a8c8">string</span> <span style="color:#111">{</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">rand</span><span style="color:#111">.</span><span style="color:#75af00">RandomArray</span><span style="color:#111">.</span><span style="color:#75af00">Pick</span><span style="color:#111">([]</span><span style="color:#00a8c8">string</span><span style="color:#111">{</span><span style="color:#75af00">AltBeacon</span><span style="color:#111">,</span> <span style="color:#75af00">EddyStoneUdi</span><span style="color:#111">,</span> <span style="color:#75af00">Unknown</span><span style="color:#111">,</span> <span style="color:#75af00">IBeacon</span><span style="color:#111">}).(</span><span style="color:#00a8c8">string</span><span style="color:#111">)</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">NextBeaconCenter</span><span style="color:#111">()</span> <span style="color:#75af00">GeoPointV1</span> <span style="color:#111">{</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#75af00">GeoPointV1</span><span style="color:#111">{</span>
+		<span style="color:#75af00">Type</span><span style="color:#111">:</span>        <span style="color:#d88200">&#34;Point&#34;</span><span style="color:#111">,</span>
+		<span style="color:#75af00">Coordinates</span><span style="color:#111">:</span> <span style="color:#111">[][]</span><span style="color:#00a8c8">float32</span><span style="color:#111">{{</span><span style="color:#75af00">rand</span><span style="color:#111">.</span><span style="color:#75af00">RandomFloat</span><span style="color:#111">.</span><span style="color:#75af00">NextFloat</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">1000</span><span style="color:#111">),</span> <span style="color:#75af00">rand</span><span style="color:#111">.</span><span style="color:#75af00">RandomFloat</span><span style="color:#111">.</span><span style="color:#75af00">NextFloat</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">1000</span><span style="color:#111">)}},</span>
+	<span style="color:#111">}</span>
+<span style="color:#111">}</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">NextBeacon</span><span style="color:#111">()</span> <span style="color:#f92672">*</span><span style="color:#75af00">BeaconV1</span> <span style="color:#111">{</span>
+	<span style="color:#00a8c8">return</span> <span style="color:#f92672">&amp;</span><span style="color:#75af00">BeaconV1</span><span style="color:#111">{</span>
+		<span style="color:#75af00">Type</span><span style="color:#111">:</span>   <span style="color:#75af00">NextBeaconType</span><span style="color:#111">(),</span>
+		<span style="color:#75af00">Radius</span><span style="color:#111">:</span> <span style="color:#75af00">rand</span><span style="color:#111">.</span><span style="color:#75af00">RandomFloat</span><span style="color:#111">.</span><span style="color:#75af00">NextFloat</span><span style="color:#111">(</span><span style="color:#ae81ff">1</span><span style="color:#111">,</span> <span style="color:#ae81ff">1000</span><span style="color:#111">),</span>
+		<span style="color:#75af00">Udi</span><span style="color:#111">:</span>    <span style="color:#75af00">rand</span><span style="color:#111">.</span><span style="color:#75af00">RandomArray</span><span style="color:#111">.</span><span style="color:#75af00">Pick</span><span style="color:#111">([]</span><span style="color:#00a8c8">string</span><span style="color:#111">{</span><span style="color:#d88200">&#34;00001&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;00002&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;00003&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;00004&#34;</span><span style="color:#111">}).(</span><span style="color:#00a8c8">string</span><span style="color:#111">),</span>
+		<span style="color:#75af00">Center</span><span style="color:#111">:</span> <span style="color:#75af00">NextBeaconCenter</span><span style="color:#111">(),</span>
+	<span style="color:#111">}</span>
+
+<span style="color:#111">}</span>
+
+</code></pre></div> 
 
     
 </div>
