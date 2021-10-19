@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="class Descriptor { Descriptor(String group, String type, String kind, String name, String version) String getGroup() String getType() String getKind() String getName() String getVersion() bool match(Descriptor descriptor) bool exactMatch(Descriptor descriptor) bool isComplete() bool equals(value) @override String toString() static Descriptor fromString(String value) } " />
+<meta property="og:description" content="class Descriptor { String? _group; String? _type; String? _kind; String? _name; String? _version; Descriptor(String? group, String? type, String? kind, String? name, String? version) String? getGroup() String? getType() String? getKind() String? getName() String? getVersion() bool match(Descriptor descriptor) bool _exactMatchField(String? field1, String? field2) bool exactMatch(Descriptor descriptor) bool isComplete() bool equals(value) @override String toString() static Descriptor? fromString(String? value) } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/recipes/component_references/__code6_dart/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-19T01:11:31+03:00" />
+<meta property="article:modified_time" content="2021-10-19T02:32:00+03:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="class Descriptor { Descriptor(String group, String type, String kind, String name, String version) String getGroup() String getType() String getKind() String getName() String getVersion() bool match(Descriptor descriptor) bool exactMatch(Descriptor descriptor) bool isComplete() bool equals(value) @override String toString() static Descriptor fromString(String value) } ">
-<meta itemprop="dateModified" content="2021-10-19T01:11:31+03:00" />
-<meta itemprop="wordCount" content="41">
+<meta itemprop="description" content="class Descriptor { String? _group; String? _type; String? _kind; String? _name; String? _version; Descriptor(String? group, String? type, String? kind, String? name, String? version) String? getGroup() String? getType() String? getKind() String? getName() String? getVersion() bool match(Descriptor descriptor) bool _exactMatchField(String? field1, String? field2) bool exactMatch(Descriptor descriptor) bool isComplete() bool equals(value) @override String toString() static Descriptor? fromString(String? value) } ">
+<meta itemprop="dateModified" content="2021-10-19T02:32:00+03:00" />
+<meta itemprop="wordCount" content="56">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="class Descriptor { Descriptor(String group, String type, String kind, String name, String version) String getGroup() String getType() String getKind() String getName() String getVersion() bool match(Descriptor descriptor) bool exactMatch(Descriptor descriptor) bool isComplete() bool equals(value) @override String toString() static Descriptor fromString(String value) } "/>
+<meta name="twitter:description" content="class Descriptor { String? _group; String? _type; String? _kind; String? _name; String? _version; Descriptor(String? group, String? type, String? kind, String? name, String? version) String? getGroup() String? getType() String? getKind() String? getName() String? getVersion() bool match(Descriptor descriptor) bool _exactMatchField(String? field1, String? field2) bool exactMatch(Descriptor descriptor) bool isComplete() bool equals(value) @override String toString() static Descriptor? fromString(String? value) } "/>
 
 
 
@@ -494,20 +494,27 @@
         
 
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Descriptor</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_group</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_type</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_kind</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_name</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_version</span><span style="color:#111">;</span>
 
-  <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">group</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">type</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">kind</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">version</span><span style="color:#111">)</span> 
+  <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">group</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">type</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">kind</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">version</span><span style="color:#111">)</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getGroup</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getGroup</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getType</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getType</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getKind</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getKind</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getName</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getName</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getVersion</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getVersion</span><span style="color:#111">()</span>
 
   <span style="color:#00a8c8">bool</span> <span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#111">Descriptor</span> <span style="color:#111">descriptor</span><span style="color:#111">)</span>
+
+  <span style="color:#00a8c8">bool</span> <span style="color:#111">_exactMatchField</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">field1</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">field2</span><span style="color:#111">)</span>
 
   <span style="color:#00a8c8">bool</span> <span style="color:#111">exactMatch</span><span style="color:#111">(</span><span style="color:#111">Descriptor</span> <span style="color:#111">descriptor</span><span style="color:#111">)</span>
 
@@ -518,9 +525,8 @@
   <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
   <span style="color:#00a8c8">String</span> <span style="color:#111">toString</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">static</span> <span style="color:#111">Descriptor</span> <span style="color:#111">fromString</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">value</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">static</span> <span style="color:#111">Descriptor</span><span style="color:#f92672">?</span> <span style="color:#111">fromString</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">value</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
-
 
 </code></pre></div>
 

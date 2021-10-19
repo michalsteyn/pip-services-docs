@@ -296170,7 +296170,7 @@
 
   <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getRequired</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#111">locator</span><span style="color:#111">);</span>
 
-  <span style="color:#111">T</span> <span style="color:#111">getOneOptional</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#111">locator</span><span style="color:#111">);</span>
+  <span style="color:#111">T</span><span style="color:#f92672">?</span> <span style="color:#111">getOneOptional</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#111">locator</span><span style="color:#111">);</span>
 
   <span style="color:#111">T</span> <span style="color:#111">getOneRequired</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#111">locator</span><span style="color:#111">);</span>
 
@@ -296345,6 +296345,8 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Worker1</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_defaultName</span>: <span style="color:#00a8c8">string</span><span style="color:#111">;</span>
+
     <span style="color:#00a8c8">constructor</span><span style="color:#111">(</span><span style="color:#75af00">name</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_defaultName</span> <span style="color:#f92672">=</span> <span style="color:#75af00">name</span> <span style="color:#f92672">||</span> <span style="color:#d88200">&#34;Default name1&#34;</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
@@ -296355,6 +296357,8 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 <span style="color:#111">}</span>
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Worker2</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_defaultName</span>: <span style="color:#00a8c8">string</span><span style="color:#111">;</span>
+    
     <span style="color:#00a8c8">constructor</span><span style="color:#111">(</span><span style="color:#75af00">name</span><span style="color:#111">)</span> <span style="color:#111">{</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_defaultName</span> <span style="color:#f92672">=</span> <span style="color:#75af00">name</span> <span style="color:#f92672">||</span> <span style="color:#d88200">&#34;Default name2&#34;</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
@@ -296363,8 +296367,6 @@ The <strong>put</strong> method is used to add a component and its locator/key t
         <span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Write to ${this._defaultName}.${level} message: ${message}&#39;</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
 <span style="color:#111">}</span>
-
-
 </code></pre></div>  
 
     
@@ -296470,23 +296472,23 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Worker1</span> <span style="color:#111">{</span>
-    <span style="color:#111">Worker1</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_defaultName</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span> <span style="color:#f92672">||</span> <span style="color:#d88200">&#34;Default name1&#34;</span><span style="color:#111">;</span>
-    <span style="color:#111">}</span>
+  <span style="color:#00a8c8">String</span> <span style="color:#111">_defaultName</span><span style="color:#111">;</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#00a8c8">do</span><span style="color:#111">(</span><span style="color:#111">level</span><span style="color:#111">,</span> <span style="color:#111">message</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Write to </span><span style="color:#d88200">${</span><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_defaultName</span><span style="color:#d88200">}</span><span style="color:#d88200">.</span><span style="color:#d88200">${</span><span style="color:#111">level</span><span style="color:#d88200">}</span><span style="color:#d88200"> message: </span><span style="color:#d88200">${</span><span style="color:#111">message</span><span style="color:#d88200">}</span><span style="color:#d88200">&#39;</span><span style="color:#111">);</span>
-    <span style="color:#111">}</span>
+  <span style="color:#111">Worker1</span><span style="color:#111">([</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">name</span><span style="color:#111">])</span> <span style="color:#f92672">:</span> <span style="color:#111">_defaultName</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span> <span style="color:#f92672">??</span> <span style="color:#d88200">&#39;Default name1&#39;</span><span style="color:#111">;</span>
+
+  <span style="color:#00a8c8">void</span> <span style="color:#111">do_</span><span style="color:#111">(</span><span style="color:#111">level</span><span style="color:#111">,</span> <span style="color:#111">message</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Write to </span><span style="color:#d88200">$</span><span style="color:#111">_defaultName</span><span style="color:#d88200">.</span><span style="color:#d88200">$</span><span style="color:#111">level</span><span style="color:#d88200"> message: </span><span style="color:#d88200">$</span><span style="color:#111">message</span><span style="color:#d88200">&#39;</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Worker2</span> <span style="color:#111">{</span>
-    <span style="color:#111">Worker2</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_defaultName</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span> <span style="color:#f92672">||</span> <span style="color:#d88200">&#34;Default name2&#34;</span><span style="color:#111">;</span>
-    <span style="color:#111">}</span>
+  <span style="color:#00a8c8">String</span> <span style="color:#111">_defaultName</span><span style="color:#111">;</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#00a8c8">do</span><span style="color:#111">(</span><span style="color:#111">level</span><span style="color:#111">,</span> <span style="color:#111">message</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Write to </span><span style="color:#d88200">${</span><span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_defaultName</span><span style="color:#d88200">}</span><span style="color:#d88200">.</span><span style="color:#d88200">${</span><span style="color:#111">level</span><span style="color:#d88200">}</span><span style="color:#d88200"> message: </span><span style="color:#d88200">${</span><span style="color:#111">message</span><span style="color:#d88200">}</span><span style="color:#d88200">&#39;</span><span style="color:#111">);</span>
-    <span style="color:#111">}</span>
+  <span style="color:#111">Worker2</span><span style="color:#111">([</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">name</span><span style="color:#111">])</span> <span style="color:#f92672">:</span> <span style="color:#111">_defaultName</span> <span style="color:#f92672">=</span> <span style="color:#111">name</span> <span style="color:#f92672">??</span> <span style="color:#d88200">&#39;Default name2&#39;</span><span style="color:#111">;</span>
+
+  <span style="color:#00a8c8">void</span> <span style="color:#111">do_</span><span style="color:#111">(</span><span style="color:#111">level</span><span style="color:#111">,</span> <span style="color:#111">message</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#d88200">&#39;Write to </span><span style="color:#d88200">$</span><span style="color:#111">_defaultName</span><span style="color:#d88200">.</span><span style="color:#d88200">$</span><span style="color:#111">level</span><span style="color:#d88200"> message: </span><span style="color:#d88200">$</span><span style="color:#111">message</span><span style="color:#d88200">&#39;</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 
 
@@ -296539,10 +296541,12 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SimpleController</span> <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IUnreferenceable</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_worker</span>: <span style="color:#00a8c8">any</span><span style="color:#111">;</span>
+    
     <span style="color:#00a8c8">constructor</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
 
     <span style="color:#00a8c8">public</span> <span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_references</span><span style="color:#111">.</span><span style="color:#75af00">getOneRequired</span><span style="color:#111">(</span><span style="color:#ae81ff">111</span><span style="color:#111">)</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_worker</span> <span style="color:#f92672">=</span> <span style="color:#75af00">references</span><span style="color:#111">.</span><span style="color:#75af00">getOneRequired</span><span style="color:#111">(</span><span style="color:#ae81ff">111</span><span style="color:#111">)</span>
     <span style="color:#111">}</span>
     <span style="color:#00a8c8">public</span> <span style="color:#75af00">unsetReferences() {</span>
         <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
@@ -296708,19 +296712,23 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SimpleController</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IUnreferenceable</span> <span style="color:#111">{</span>
-    <span style="color:#111">SimpleController</span><span style="color:#111">()</span> <span style="color:#111">{}</span>
+  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">_worker</span><span style="color:#111">;</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_references</span><span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#111">(</span><span style="color:#ae81ff">111</span><span style="color:#111">)</span>
-    <span style="color:#111">}</span>
+  <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferences</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
-    <span style="color:#111">}</span>
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#111">references</span><span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#111">(</span><span style="color:#ae81ff">111</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_worker</span><span style="color:#111">.</span><span style="color:#00a8c8">do</span><span style="color:#111">(</span><span style="color:#d88200">&#39;level&#39;</span><span style="color:#111">,</span>  <span style="color:#d88200">&#34;Hello, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#34;!&#34;</span><span style="color:#111">);</span>
-    <span style="color:#111">}</span>
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferences</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+    <span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#00a8c8">void</span> <span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">_worker</span><span style="color:#111">.</span><span style="color:#111">do_</span><span style="color:#111">(</span><span style="color:#d88200">&#39;level&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;Hello, &#39;</span> <span style="color:#f92672">+</span> <span style="color:#111">(</span><span style="color:#111">name</span><span style="color:#111">)</span> <span style="color:#f92672">+</span> <span style="color:#d88200">&#39;!&#39;</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 
 
@@ -296771,13 +296779,13 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">
 <span style="color:#00a8c8">let</span> <span style="color:#75af00">references</span> <span style="color:#f92672">=</span> <span style="color:#75af00">References</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
-    <span style="color:#ae81ff">111</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Worker1</span><span style="color:#111">(),</span>
-    <span style="color:#ae81ff">222</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Worker2</span><span style="color:#111">()</span>
+    <span style="color:#ae81ff">111</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Worker1</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">),</span>
+    <span style="color:#ae81ff">222</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Worker2</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">)</span>
 <span style="color:#111">);</span>
 
 <span style="color:#00a8c8">let</span> <span style="color:#75af00">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">SimpleController</span><span style="color:#111">();</span>
 <span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">references</span><span style="color:#111">);</span>
-<span style="color:#75af00">console</span><span style="color:#111">.</span><span style="color:#75af00">log</span><span style="color:#111">(</span><span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#34;world&#34;</span><span style="color:#111">));</span>
+<span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#34;world&#34;</span><span style="color:#111">);</span>
 <span style="color:#75af00">controller</span><span style="color:#111">.</span><span style="color:#75af00">unsetReferences</span><span style="color:#111">();</span>
 <span style="color:#75af00">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
 
@@ -296841,13 +296849,12 @@ The <strong>put</strong> method is used to add a component and its locator/key t
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">var</span> <span style="color:#111">references</span> <span style="color:#f92672">=</span> <span style="color:#111">References</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
-    <span style="color:#ae81ff">111</span><span style="color:#111">,</span> <span style="color:#111">Worker1</span><span style="color:#111">(),</span>
-    <span style="color:#ae81ff">222</span><span style="color:#111">,</span> <span style="color:#111">Worker2</span><span style="color:#111">()</span>
+    <span style="color:#111">[</span><span style="color:#ae81ff">111</span><span style="color:#111">,</span> <span style="color:#111">Worker1</span><span style="color:#111">(),</span> <span style="color:#ae81ff">222</span><span style="color:#111">,</span> <span style="color:#111">Worker2</span><span style="color:#111">()]</span>
 <span style="color:#111">);</span>
 
-<span style="color:#111">let</span> <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
+<span style="color:#111">SimpleController</span><span style="color:#f92672">?</span> <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
 <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
-<span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#34;world&#34;</span><span style="color:#111">));</span>
+<span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#39;world&#39;</span><span style="color:#111">);</span>
 <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">unsetReferences</span><span style="color:#111">();</span>
 <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
 
@@ -297122,20 +297129,27 @@ For such complex cases, the Pip.Services Toolkit includes a special locator that
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Descriptor</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_group</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_type</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_kind</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_name</span><span style="color:#111">;</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">_version</span><span style="color:#111">;</span>
 
-  <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">group</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">type</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">kind</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span> <span style="color:#111">version</span><span style="color:#111">)</span> 
+  <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">group</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">type</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">kind</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">version</span><span style="color:#111">)</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getGroup</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getGroup</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getType</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getType</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getKind</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getKind</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getName</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getName</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">String</span> <span style="color:#111">getVersion</span><span style="color:#111">()</span>
+  <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">getVersion</span><span style="color:#111">()</span>
 
   <span style="color:#00a8c8">bool</span> <span style="color:#111">match</span><span style="color:#111">(</span><span style="color:#111">Descriptor</span> <span style="color:#111">descriptor</span><span style="color:#111">)</span>
+
+  <span style="color:#00a8c8">bool</span> <span style="color:#111">_exactMatchField</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">field1</span><span style="color:#111">,</span> <span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">field2</span><span style="color:#111">)</span>
 
   <span style="color:#00a8c8">bool</span> <span style="color:#111">exactMatch</span><span style="color:#111">(</span><span style="color:#111">Descriptor</span> <span style="color:#111">descriptor</span><span style="color:#111">)</span>
 
@@ -297146,9 +297160,8 @@ For such complex cases, the Pip.Services Toolkit includes a special locator that
   <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
   <span style="color:#00a8c8">String</span> <span style="color:#111">toString</span><span style="color:#111">()</span>
 
-  <span style="color:#00a8c8">static</span> <span style="color:#111">Descriptor</span> <span style="color:#111">fromString</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">value</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">static</span> <span style="color:#111">Descriptor</span><span style="color:#f92672">?</span> <span style="color:#111">fromString</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">value</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
-
 
 </code></pre></div>    
 
@@ -297355,24 +297368,26 @@ For example, we can retrieve all of the logger currently registered in the syste
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SimpleController</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IUnreferenceable</span> <span style="color:#111">{</span>
 <span style="color:#111">...</span>
-    <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_references</span><span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#111">(</span>
-            <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker1&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">)</span>
-        <span style="color:#111">);</span>
-    <span style="color:#111">}</span>
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#111">references</span>
+        <span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#111">(</span><span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker1&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">));</span>
+  <span style="color:#111">}</span>
 <span style="color:#111">...</span>
 <span style="color:#111">}</span>
 
-<span style="color:#00a8c8">var</span> <span style="color:#111">references</span> <span style="color:#f92672">=</span> <span style="color:#111">References</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
-    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;sample&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker1&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;111&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#111">Worker1</span><span style="color:#111">(),</span>
-    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;sample&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker2&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;222&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#111">Worker2</span><span style="color:#111">()</span>
-<span style="color:#111">);</span>
+  <span style="color:#00a8c8">var</span> <span style="color:#111">references</span> <span style="color:#f92672">=</span> <span style="color:#111">References</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">([</span>
+    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;sample&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker1&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;111&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">Worker1</span><span style="color:#111">(),</span>
+    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;sample&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker2&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;222&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">Worker2</span><span style="color:#111">()</span>
+  <span style="color:#111">]);</span>
 
-<span style="color:#00a8c8">var</span> <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
-<span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
-<span style="color:#111">print</span><span style="color:#111">(</span><span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#34;world&#34;</span><span style="color:#111">));</span>
-<span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">unsetReferences</span><span style="color:#111">();</span>
-<span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
+  <span style="color:#111">SimpleController</span><span style="color:#f92672">?</span> <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
+  <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
+  <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#39;world&#39;</span><span style="color:#111">);</span>
+  <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">unsetReferences</span><span style="color:#111">();</span>
+  <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
 
 
 </code></pre></div>    
@@ -297638,7 +297653,7 @@ The <strong>DependencyResolver</strong> class:</p>
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#00a8c8">class</span> <span style="color:#75af00">DependencyResolver</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IReconfigurable</span> <span style="color:#111">{</span>
 
-  <span style="color:#111">DependencyResolver</span><span style="color:#111">([</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">,</span> <span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">])</span>
+  <span style="color:#111">DependencyResolver</span><span style="color:#111">([</span><span style="color:#111">ConfigParams</span><span style="color:#f92672">?</span> <span style="color:#111">config</span><span style="color:#111">,</span> <span style="color:#111">IReferences</span><span style="color:#f92672">?</span> <span style="color:#111">references</span><span style="color:#111">])</span> 
 
   <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
   <span style="color:#00a8c8">void</span> <span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">)</span>
@@ -297648,13 +297663,13 @@ The <strong>DependencyResolver</strong> class:</p>
 
   <span style="color:#00a8c8">void</span> <span style="color:#111">put</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">,</span> <span style="color:#111">locator</span><span style="color:#111">)</span>
 
-  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">locate</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">)</span>
+  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">locate</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span><span style="color:#f92672">?</span> <span style="color:#111">name</span><span style="color:#111">)</span>
 
   <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getOptional</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">)</span>
 
   <span style="color:#111">List</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span> <span style="color:#111">getRequired</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">)</span>
 
-  <span style="color:#111">T</span> <span style="color:#111">getOneOptional</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">)</span>
+  <span style="color:#111">T</span><span style="color:#f92672">?</span> <span style="color:#111">getOneOptional</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">)</span>
 
   <span style="color:#111">T</span> <span style="color:#111">getOneRequired</span><span style="color:#f92672">&lt;</span><span style="color:#111">T</span><span style="color:#f92672">&gt;</span><span style="color:#111">(</span><span style="color:#00a8c8">String</span> <span style="color:#111">name</span><span style="color:#111">)</span>
 
@@ -297662,6 +297677,7 @@ The <strong>DependencyResolver</strong> class:</p>
 
   <span style="color:#00a8c8">static</span> <span style="color:#111">DependencyResolver</span> <span style="color:#111">fromTuples</span><span style="color:#111">(</span><span style="color:#111">List</span> <span style="color:#111">tuples</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
+
 
 </code></pre></div>    
 
@@ -297735,6 +297751,8 @@ The <strong>DependencyResolver</strong> class:</p>
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript"><span style="color:#00a8c8">class</span> <span style="color:#75af00">SimpleController</span> <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IConfigurable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IUnreferenceable</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_worker</span>: <span style="color:#00a8c8">any</span><span style="color:#111">;</span>
+    
     <span style="color:#00a8c8">private</span> <span style="color:#75af00">_depedencyResolver</span> <span style="color:#f92672">=</span> <span style="color:#75af00">DependencyResolver</span><span style="color:#111">.</span><span style="color:#75af00">fromTuples</span><span style="color:#111">(</span>
         <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">)</span>
     <span style="color:#111">);</span>
@@ -297892,39 +297910,45 @@ The <strong>DependencyResolver</strong> class:</p>
 
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">
-<span style="color:#00a8c8">class</span> <span style="color:#75af00">SimpleController</span> <span style="color:#00a8c8">implements</span> <span style="color:#111">IConfigurable</span><span style="color:#111">,</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IUnreferenceable</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">void</span> <span style="color:#111">_depedencyResolver</span> <span style="color:#f92672">=</span> <span style="color:#111">DependencyResolver</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
-        <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;*&#34;</span><span style="color:#111">,</span><span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">)</span>
-    <span style="color:#111">);</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">SimpleController</span>
+    <span style="color:#00a8c8">implements</span> <span style="color:#111">IConfigurable</span><span style="color:#111">,</span> <span style="color:#111">IReferenceable</span><span style="color:#111">,</span> <span style="color:#111">IUnreferenceable</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">dynamic</span> <span style="color:#111">_worker</span><span style="color:#111">;</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-      <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
-    <span style="color:#111">}</span>
+  <span style="color:#00a8c8">var</span> <span style="color:#111">_dependencyResolver</span> <span style="color:#f92672">=</span> <span style="color:#111">DependencyResolver</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
+      <span style="color:#111">[</span><span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">)]);</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-      <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
-      <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#111">(</span><span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">);</span>
-    <span style="color:#111">}</span>
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
+    <span style="color:#111">_worker</span> <span style="color:#f92672">=</span> <span style="color:#111">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#111">getOneRequired</span><span style="color:#111">(</span><span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
 
-    <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferences</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-      <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#111">_dependencyResolver</span> <span style="color:#f92672">=</span> <span style="color:#111">DependencyResolver</span><span style="color:#111">();</span>
-    <span style="color:#111">}</span>
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">ConfigParams</span> <span style="color:#111">config</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#111">_dependencyResolver</span><span style="color:#111">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
+  <span style="color:#111">}</span>
+
+  <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#111">override</span>
+  <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferences</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+    <span style="color:#111">_dependencyResolver</span> <span style="color:#f92672">=</span> <span style="color:#111">DependencyResolver</span><span style="color:#111">();</span>
+  <span style="color:#111">}</span>
 <span style="color:#111">...</span>
 <span style="color:#111">}</span>
 
-<span style="color:#00a8c8">var</span> <span style="color:#111">references</span> <span style="color:#f92672">=</span> <span style="color:#111">References</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
-    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;sample&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker1&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;111&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#111">Worker1</span><span style="color:#111">(),</span>
-    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#34;sample&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;worker2&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;222&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;1.0&#34;</span><span style="color:#111">),</span> <span style="color:#111">Worker2</span><span style="color:#111">()</span>
-<span style="color:#111">);</span>
+<span style="color:#00a8c8">var</span> <span style="color:#111">references</span> <span style="color:#f92672">=</span> <span style="color:#111">References</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">([</span>
+    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;sample&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker1&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;111&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">Worker1</span><span style="color:#111">(),</span>
+    <span style="color:#111">Descriptor</span><span style="color:#111">(</span><span style="color:#d88200">&#39;sample&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;worker2&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;222&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;1.0&#39;</span><span style="color:#111">),</span>
+    <span style="color:#111">Worker2</span><span style="color:#111">()</span>
+  <span style="color:#111">]);</span>
 
 <span style="color:#00a8c8">var</span> <span style="color:#111">config</span> <span style="color:#f92672">=</span> <span style="color:#111">ConfigParams</span><span style="color:#111">.</span><span style="color:#111">fromTuples</span><span style="color:#111">(</span>
-    <span style="color:#d88200">&#34;dependencies.worker&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;*:worker:worker1:111:1.0&#34;</span>
-<span style="color:#111">);</span>
+    <span style="color:#111">[</span><span style="color:#d88200">&#39;dependencies.worker&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;*:worker:worker1:111:1.0&#39;</span><span style="color:#111">]);</span>
 
-<span style="color:#00a8c8">var</span> <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
+<span style="color:#111">SimpleController</span><span style="color:#f92672">?</span> <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#111">SimpleController</span><span style="color:#111">();</span>
 <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">configure</span><span style="color:#111">(</span><span style="color:#111">config</span><span style="color:#111">);</span>
 <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">references</span><span style="color:#111">);</span>
-<span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#34;world&#34;</span><span style="color:#111">);</span>
+<span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">greeting</span><span style="color:#111">(</span><span style="color:#d88200">&#39;world&#39;</span><span style="color:#111">);</span>
 <span style="color:#111">controller</span><span style="color:#111">.</span><span style="color:#111">unsetReferences</span><span style="color:#111">();</span>
 <span style="color:#111">controller</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">null</span><span style="color:#111">;</span>
 
@@ -298114,10 +298138,14 @@ The <strong>DependencyResolver</strong> class:</p>
 <nil>
 <div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">Referencer</span> <span style="color:#111">{</span>
-	<span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">setReferencesForOne</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">,</span> <span style="color:#111">component</span><span style="color:#111">);</span>
-	<span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">,</span> <span style="color:#111">List</span> <span style="color:#111">components</span><span style="color:#111">);</span>
-	<span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferencesForOne</span><span style="color:#111">(</span><span style="color:#111">component</span><span style="color:#111">);</span>
-	<span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferences</span><span style="color:#111">(</span><span style="color:#111">List</span> <span style="color:#111">components</span><span style="color:#111">);</span>
+
+  <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">setReferencesForOne</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">,</span> <span style="color:#111">component</span><span style="color:#111">)</span>
+
+  <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">setReferences</span><span style="color:#111">(</span><span style="color:#111">IReferences</span> <span style="color:#111">references</span><span style="color:#111">,</span> <span style="color:#111">List</span> <span style="color:#111">components</span><span style="color:#111">)</span>
+
+  <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferencesForOne</span><span style="color:#111">(</span><span style="color:#111">component</span><span style="color:#111">)</span>
+
+  <span style="color:#00a8c8">static</span> <span style="color:#00a8c8">void</span> <span style="color:#111">unsetReferences</span><span style="color:#111">(</span><span style="color:#111">List</span> <span style="color:#111">components</span><span style="color:#111">)</span>
 <span style="color:#111">}</span>
 
 </code></pre></div>    
