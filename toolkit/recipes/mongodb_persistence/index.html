@@ -241473,6 +241473,89 @@
   
           
         
+          
+            
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+
+  
+
+   
+  
+  
+  
+  
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+    
+      
+      
+      
+    
+  
+  
+  
+  
+
+    
+    
+    
+  
+
+  
+  
+
+
+   
+
+   
+
+   
+  
+
+  
+
+    
+  </li>
+  
+          
+        
       </ul>
     
   </li>
@@ -306591,8 +306674,8 @@ The most basic implementation of this component is the MongoDbPersistence class 
     
 </div>
 <h3 id="configuring-database-connections">Configuring database connections</h3>
-<p>As mentioned earlier, the <a href="../../mongodb/persistence/">MongoDbPersistence</a> contains methods for opening and closing connections. To connect to the appropriate database and collection, we need to first configure the connection with all necessary parameters. <strong>MongoDbPersistence</strong> uses the MongoDbConnection class for establishing connections.</p>
-<p>The <a href="../../mongodb/connect/mongodb_connection/">MongoDbConnection</a> class provides MongoDB connectivity using a plain driver. To reduce the number of database connections needed, a connection can be defined and then shared through multiple persistence components.</p>
+<p>As mentioned earlier, the <a href="../../../node/mongodb/persistence/">MongoDbPersistence</a> contains methods for opening and closing connections. To connect to the appropriate database and collection, we need to first configure the connection with all necessary parameters. <strong>MongoDbPersistence</strong> uses the MongoDbConnection class for establishing connections.</p>
+<p>The <a href="../../../node/mongodb/connect/mongodb_connection/">MongoDbConnection</a> class provides MongoDB connectivity using a plain driver. To reduce the number of database connections needed, a connection can be defined and then shared through multiple persistence components.</p>
 <p>By default, <strong>MongoDbPersistence</strong> tries to establish a local connection on MongoDb’s default port - 27017. If the desired MongoDb server is located elsewhere, the persistence should be configured with the corresponding host and port information. Persistence configuration can be performed in a number of ways.</p>
 <p>The example below demonstrates how the <a href="../../commons/config/config_params/">ConfigParams</a> class can be used for persistence configuration. To learn more about this class, and about microservice configuration in general, be sure to read <a href="../configuration">this</a>.</p>
 
@@ -306932,7 +307015,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
 
     
 </div>
-<p>And add the <a href="../../mongodb/build/default_mongodb_factory/">DefaultMongoDbFactory</a> to the microservice’s ProcessContainer:</p>
+<p>And add the <a href="../../../node/mongodb/build/default_mongodb_factory/">DefaultMongoDbFactory</a> to the microservice’s ProcessContainer:</p>
 
 <div class="content-tab-section">
     
@@ -307082,7 +307165,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
 <span style="color:#111">...</span>
 
 </code></pre></div><h3 id="identifiable-data-objects-and-identifiablemongodbpersistence">Identifiable data objects and IdentifiableMongoDBPersistence</h3>
-<p>The implementation we will be working with going forward is called the <a href="../../mongodb/persistence/identifiable_mongodb_persistence/">IdentifiableMongoDbPersistence</a>. It stores and processes data objects that have a unique ID field and implement the <a href="../../commons/data/iidentifiable/">IIdentifiable</a> interface defined in <a href="../../commons">the Commons module</a>.</p>
+<p>The implementation we will be working with going forward is called the <a href="../../../node/mongodb/persistence/identifiable_mongodb_persistence/">IdentifiableMongoDbPersistence</a>. It stores and processes data objects that have a unique ID field and implement the <a href="../../../node/commons/data/iidentifiable/">IIdentifiable</a> interface defined in <a href="../../../node/commons">the Commons module</a>.</p>
 
 <div class="content-tab-section">
     
@@ -307735,9 +307818,9 @@ First, add an element with the “pip-services” descriptor to the configuratio
 
     
 </div>
-<p>In most scenarios, child classes only need to override the <strong>get_page_by_filter()</strong>, <strong>get_list_by_filter()</strong>, or <strong>delete_by_filter()</strong> operations using a custom filter function (like the <strong>compose_filter</strong> function in the example above). All of the other operations can be used straight out of the box. Developers can implement custom methods by directly accessing the data objects, which are stored in the _collection property. See the <a href="../../mongodb">MongoDb module</a>’s API documentation for more details.</p>
+<p>In most scenarios, child classes only need to override the <strong>get_page_by_filter()</strong>, <strong>get_list_by_filter()</strong>, or <strong>delete_by_filter()</strong> operations using a custom filter function (like the <strong>compose_filter</strong> function in the example above). All of the other operations can be used straight out of the box. Developers can implement custom methods by directly accessing the data objects, which are stored in the _collection property. See the <a href="../../../node/mongodb">MongoDb module</a>’s API documentation for more details.</p>
 <h3 id="filtering">Filtering</h3>
-<p>Persistence components in the Pip.Services Toolkit use a number of data patterns. <strong>IdentifiableMongoDbPersistence</strong>, for example, supports Filtering. This pattern allows clients to use a <a href="../../commons/data/filter_params/">FilterParams</a> object to describe a subset of data using key-value pairs. These <strong>FilterParams</strong> can then be used for retrieving data in accordance with the specified search criteria (see the <a href="../../commons">(Commons module)</a>).</p>
+<p>Persistence components in the Pip.Services Toolkit use a number of data patterns. <strong>IdentifiableMongoDbPersistence</strong>, for example, supports Filtering. This pattern allows clients to use a <a href="../../../node/commons/data/filter_params/">FilterParams</a> object to describe a subset of data using key-value pairs. These <strong>FilterParams</strong> can then be used for retrieving data in accordance with the specified search criteria (see the <a href="../../../node/commons">Commons module</a>).</p>
 
 <div class="content-tab-section">
     
@@ -308062,7 +308145,7 @@ First, add an element with the “pip-services” descriptor to the configuratio
     
 </div>
 <h3 id="paging">Paging</h3>
-<p>Another common data pattern is Paging. It is used to retrieve large datasets in chunks, through multiple calls to the storage. A client can ask for the results to be paged by specifying a set of <a href="../../commons/data/paging_params/">PagingParams</a>, which include the starting position and the number of objects to return. Clients can also request the total number of items in the dataset using <strong>PagingParams</strong>, but this parameter is optional. A DataPage object with a subset of the data will be returned as the result.</p>
+<p>Another common data pattern is Paging. It is used to retrieve large datasets in chunks, through multiple calls to the storage. A client can ask for the results to be paged by specifying a set of <a href="../../../node/commons/data/paging_params/">PagingParams</a>, which include the starting position and the number of objects to return. Clients can also request the total number of items in the dataset using <strong>PagingParams</strong>, but this parameter is optional. A DataPage object with a subset of the data will be returned as the result.</p>
 
 <div class="content-tab-section">
     
