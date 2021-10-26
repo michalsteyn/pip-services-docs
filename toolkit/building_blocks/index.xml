@@ -118,6 +118,445 @@
 
     
 &lt;/div&gt;
+&lt;p&gt;The Pip.Service toolkit provides many different implementations of the state stores. They are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NullStateStore: Dummy state store implementation that doesn’t do anything.&lt;/li&gt;
+&lt;li&gt;MemoryStateStore: State store that keeps states in the process memory.&lt;/li&gt;
+&lt;li&gt;RedisStateStore&lt;/li&gt;
+&lt;li&gt;MemcachedStateStore&lt;/li&gt;
+&lt;li&gt;MongoDbStateStore&lt;/li&gt;
+&lt;li&gt;PostgresStateStore&lt;/li&gt;
+&lt;li&gt;MySqlStateStore&lt;/li&gt;
+&lt;li&gt;And others&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;caching&#34;&gt;Caching&lt;/h3&gt;
+&lt;p&gt;Caching is a mechanism that is primarily used to optimize requests. When a microservice processes a time-consuming request, it can save the result in a cache. On subsequent requests, the microservice first tries to get the result from the cache, and on success, returns it without running the full logic.&lt;/p&gt;
+&lt;p&gt;Another scenario could be to save the transaction state in a cache, instead of in a persistent storage. However, even though in this way the state can be lost after some time, this behavior could be acceptable in many cases.&lt;/p&gt;
+&lt;p&gt;To provide for these scenarios, the cache package in the components module contains the ICache interface that allows storing, retrieving, and deleting cached values using their unique keys. The key is just a string. To prevent conflicts, it is recommended to combine the microservice or/and collection name in the object id.&lt;/p&gt;
+&lt;p&gt;There are a few implementations of caches in the toolkit:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NullCache: Dummy cache implementation that doesn’t do anything.&lt;/li&gt;
+&lt;li&gt;MemoryCache: Cache that stores values in the process memory.&lt;/li&gt;
+&lt;li&gt;RedisCache: Distributed cache that stores values in Redis in-memory database.&lt;/li&gt;
+&lt;li&gt;MemcachedCache: Distributed cache that stores values in Memcached’s caching service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An example of using a cache is the following:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_cache&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;ICache&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;getMyObjectById&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Promise&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;MyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_cache&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;retrieve&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Retrieve the object
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_cache&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;store&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;results&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;result&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; 
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;locking&#34;&gt;Locking&lt;/h3&gt;
+&lt;p&gt;Locks provided by Pip.Services work similarly to traditional synchronization primitives available in many programming languages. The main difference is they support coordination across multiple microservices running on potentially different computing instances across the network.&lt;/p&gt;
+&lt;p&gt;In order to implement locks, the components have to implement the standard ILock interface defined in the lock package in the components module. There are two possible scenarios for this implementation.&lt;/p&gt;
+&lt;p&gt;The first scenario is to acquire a lock before running a transaction to prevent other instances to override changes or create conflicts in any other way. This is a dangerous path since distributed locks can significantly lower system throughout or/and cause deadlocks. The example below shows how this case is implemented.&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_lock&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;ILock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;processMyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Acquire lock for 10 secs
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;acquireLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+      &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt; 
+      &lt;span style=&#34;color:#75715e&#34;&gt;// Release lock
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;      &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;releasLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; 
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;p&gt;The second scenario can be used just to prevent double processing. Before executing a transaction, the component tries to acquire a lock. If a lock is not acquired, that means another instance is already processing the transaction and this instance cancels the execution. The following code provides an example of this scenario.&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_lock&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;ILock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+
+  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;processMyObject&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// Try to acquire lock for 10 secs
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#75af00&#34;&gt;If&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_lock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;tryAcquireLock&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;objectId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#75715e&#34;&gt;// Other instance already executing that transaction
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#00a8c8&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+   &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; 
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;p&gt;There are several ready to use Lock components in the toolkit. They include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NullLock: Dummy lock implementation with no real effect.&lt;/li&gt;
+&lt;li&gt;MemoryLock: Lock used to synchronize the execution of a process using shared memory.&lt;/li&gt;
+&lt;li&gt;RedisLock: Distributed lock that is implemented based on the Redis in-memory database.&lt;/li&gt;
+&lt;li&gt;MemcachedLock: Distributed lock that is implemented based on Memcached’s caching service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;p&gt;For more information about connectivity see:&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Toolkit: Configurations</title>
+      <link>/toolkit/building_blocks/configurations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/toolkit/building_blocks/configurations/</guid>
+      <description>
+        
+        
+        &lt;div class=&#34;btn-group tab-selector-btn-group&#34; role=&#34;group&#34; aria-label=&#34;Language selector&#34;&gt;
+
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn  ml-0 &#34;&gt;Node&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;.NET&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Golang&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Dart&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Python&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Java&lt;/button&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;Configurations allow to change microservice behavior, adjust to deployment environments, and set parameters to connect to infrastructure services and other microservices. For this, the Pip.Services toolkit provides a set of patterns that support design-time, deployment-time, and runtime configurations.&lt;/p&gt;
+&lt;h3 id=&#34;design-time-configuration&#34;&gt;Design-time Configuration&lt;/h3&gt;
+&lt;p&gt;This is the simplest type of configuration. It is initially defined by developers in their code and later used to set components by calling the configure method in components that implement the IConfigurable interface.&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+```ts
+let config = ConfigParams.fromTuples(
+  ‘param1’, ‘XYZ’,
+  ‘param2’, 345
+);
+component.configure(config);
+&lt;p&gt;Also, often components can have hard-coded presets. The ConfigParams class has methods that allow to easily use them as defaults:&lt;/p&gt;
+&lt;p&gt;class MyComponent implements IConfigurable {
+private _param1: string = ‘ABC’;
+private _param2: integer = 123;&lt;/p&gt;
+&lt;p&gt;public configure(config: ConfigParams) {
+this._param1 = config.getAsStringWithDefault(‘param1’. this._param1);
+this._param2 = config.getAsIntegerWithDefault(‘param2’, this._param2);
+}
+}&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt; 
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;deployment-time-configuration&#34;&gt;Deployment-time Configuration&lt;/h3&gt;
+&lt;p&gt;Deployment-time configuration parameters are set via environment variables or passed to a container via command-line arguments:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MYCOMPONENT_ENABLED&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;true&lt;/span&gt;
+&lt;span style=&#34;color:#00a8c8&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;PARAM1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;XYZ&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;node&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;bin&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;js&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;p&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;PARAM2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;345&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; 
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;p&gt;Then those parameters are automatically injected into container configurations using Mustache templates:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{{#if MYCOMPONENT_ENABLED}}
+descriptor: myservice:mycomponent:default:default:1.0
+param1: {{PARAM1}}
+param2: {{PARAM2}}
+{{/if}}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The deployment-time parameters can change the composition of the microservice by including or excluding parameters or their configuration blocks, or setting specific parameters values that are passed to already known configure methods in components that implement the IConfigurable interface.
+Runtime Configuration
+Runtime configurations are typically stored in specialized services like etcd or special microservices. The Pip.Services toolkit has a standard IConfigReader interface that can be implemented by components that retrieve configurations from various sources. In this manner, they can pull configurations by calling the readConfig method or get notified when configurations change via the addChangeListener method.&lt;/p&gt;
+&lt;p&gt;The Pip.Services toolkit offers a few standard configuration readers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MemoryConfigReader: Stores a configuration in memory.&lt;/li&gt;
+&lt;li&gt;FileConfigReader: Reads a configuration from a file.&lt;/li&gt;
+&lt;li&gt;JsonConfigReader&lt;/li&gt;
+&lt;li&gt;YamlConfigReader&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;p&gt;For more information about configurations see:&lt;/p&gt;
 
       </description>
     </item>
