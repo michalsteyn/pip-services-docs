@@ -1,0 +1,356 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – State</title>
+    <link>/golang/components/state/</link>
+    <description>Recent content in State on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/golang/components/state/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Golang: DefaultStateStoreFactory</title>
+      <link>/golang/components/state/default_state_store_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/state/default_state_store_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Extends:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewDefaultStateStoreFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;istatestoreistatestore&#34;&gt;&lt;a href=&#34;../IStateStore&#34;&gt;IStateStore&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;memorystatestorememory_state_store&#34;&gt;&lt;a href=&#34;../memory_state_store&#34;&gt;MemoryStateStore&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nullstatestorenull_state_store&#34;&gt;&lt;a href=&#34;../null_state_store&#34;&gt;NullStateStore&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: IStateStore</title>
+      <link>/golang/components/state/istate_store/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/state/istate_store/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;delete&#34;&gt;Delete&lt;/h4&gt;
+&lt;p&gt;Deletes a state from the store by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Delete(correlationId string, key string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique value key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: interface{} - removed item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load&#34;&gt;Load&lt;/h4&gt;
+&lt;p&gt;Loads state from the store using its key.
+If value is missing in the store it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Load(correlationId string, key string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: interface{} - the state value or &lt;code&gt;null&lt;/code&gt; if value wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;loadbulk&#34;&gt;LoadBulk&lt;/h4&gt;
+&lt;p&gt;Loads an array of states from the store using their keys.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LoadBulk(correlationId string, keys []string) []&lt;a href=&#34;../state_value&#34;&gt;*StateValue&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: []string - unique state keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []&lt;a href=&#34;../state_value&#34;&gt;*StateValue&lt;/a&gt; - an array with state values and their corresponding keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;Save&lt;/h4&gt;
+&lt;p&gt;Saves state into the store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Save(correlationId string, key string, value interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - a state value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: MemoryStateStore</title>
+      <link>/golang/components/state/memory_state_store/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/state/memory_state_store/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;, &lt;a href=&#34;../istate_store&#34;&gt;IStateStore&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Remember:&lt;/strong&gt; This implementation is not suitable for synchronization of distributed processes.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: default caching timeout in milliseconds (default: disabled)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the state store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewEmptyMemoryStateStore()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;Configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MemoryStateStore&lt;/a&gt;) Configure(config *cconf.ConfigParams)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;delete&#34;&gt;Delete&lt;/h4&gt;
+&lt;p&gt;Deletes a state from the store by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MemoryStateStore&lt;/a&gt;) Delete(correlationId string, key string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique value key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: interface{} - removed item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load&#34;&gt;Load&lt;/h4&gt;
+&lt;p&gt;Loads state from the store using its key.
+If value is missing in the store it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MemoryStateStore&lt;/a&gt;) Load(correlationId string, key string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: interface{} - the state value or &lt;code&gt;null&lt;/code&gt; if value wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;loadbulk&#34;&gt;LoadBulk&lt;/h4&gt;
+&lt;p&gt;Loads an array of states from the store using their keys.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MemoryStateStore&lt;/a&gt;) LoadBulk(correlationId string, keys []string) []&lt;a href=&#34;../state_value&#34;&gt;*StateValue&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: []string - unique state keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []&lt;a href=&#34;../state_value&#34;&gt;*StateValue&lt;/a&gt; - an array with state values and their corresponding keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;Save&lt;/h4&gt;
+&lt;p&gt;Saves state into the store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*MemoryStateStore&lt;/a&gt;) Save(correlationId string, key string, value interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - a state value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#75af00&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;store&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MemoryStateStore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+&lt;span style=&#34;color:#75af00&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;store&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;load&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;store&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;save&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icachecacheicache&#34;&gt;&lt;a href=&#34;../../cache/icache&#34;&gt;ICache&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: NullStateStore</title>
+      <link>/golang/components/state/null_state_store/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/state/null_state_store/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../istate_store&#34;&gt;IStateStore&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;It can be used in testing or in situations when state management is not required
+but shall be disabled.&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the state store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewEmptyNullStateStore()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;delete&#34;&gt;Delete&lt;/h4&gt;
+&lt;p&gt;Deletes a state from the store by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullStateStore&lt;/a&gt;) Delete(correlationId string, key string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique value key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: interface{} - removed item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load&#34;&gt;Load&lt;/h4&gt;
+&lt;p&gt;Loads state from the store using its key.
+If value is missing in the store it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullStateStore&lt;/a&gt;) Load(correlationId string, key string) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: interface{} - the state value or &lt;code&gt;null&lt;/code&gt; if value wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;loadbulk&#34;&gt;LoadBulk&lt;/h4&gt;
+&lt;p&gt;Loads an array of states from the store using their keys.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullStateStore&lt;/a&gt;) LoadBulk(correlationId string, keys []string) []&lt;a href=&#34;../state_value&#34;&gt;*StateValue&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: []string - unique state keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: []&lt;a href=&#34;../state_value&#34;&gt;*StateValue&lt;/a&gt; - an array with state values and their corresponding keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;Save&lt;/h4&gt;
+&lt;p&gt;Saves state into the store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*NullStateStore&lt;/a&gt;) Save(correlationId string, key string, value interface{}) interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlationId&lt;/strong&gt;: string - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - a state value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icachecacheicache&#34;&gt;&lt;a href=&#34;../../cache/icache&#34;&gt;ICache&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: StateEntry</title>
+      <link>/golang/components/state/state_entry/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/state/state_entry/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the state entry and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NewStateEntry(key string, value interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: string - a unique key to locate the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - a value to be stored.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;getkey&#34;&gt;GetKey&lt;/h4&gt;
+&lt;p&gt;Gets the key to locate the state value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*StateEntry&lt;/a&gt;) GetKey() string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: string - the value key.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getlastupdatetime&#34;&gt;GetLastUpdateTime&lt;/h4&gt;
+&lt;p&gt;Gets the last update time.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*StateEntry&lt;/a&gt;) GetLastUpdateTime() int64&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: int64 - the timestamp when the value ware stored.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;getvalue&#34;&gt;GetValue&lt;/h4&gt;
+&lt;p&gt;Gets the sstate value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*StateEntry&lt;/a&gt;) GetValue() interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: interface{} - the value object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;setvalue&#34;&gt;SetValue&lt;/h4&gt;
+&lt;p&gt;Sets a new state value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(c &lt;a href=&#34;&#34;&gt;*StateEntry&lt;/a&gt;) SetValue(value interface{})&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: interface{} - a new cached value.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Golang: StateValue</title>
+      <link>/golang/components/state/state_value/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/golang/components/state/state_value/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;key&#34;&gt;Key&lt;/h4&gt;
+&lt;p&gt;A unique state key&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Key&lt;/strong&gt;: string&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;value&#34;&gt;Value&lt;/h4&gt;
+&lt;p&gt;A unique state key&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Value&lt;/strong&gt;: interface{}&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

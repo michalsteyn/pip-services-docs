@@ -1,0 +1,351 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> – State</title>
+    <link>/python/components/state/</link>
+    <description>Recent content in State on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="/python/components/state/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Python: DefaultStateStoreFactory</title>
+      <link>/python/components/state/default_state_store_factory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/state/default_state_store_factory/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the factory.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DefaultStateStoreFactory()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;factorybuildfactory&#34;&gt;&lt;a href=&#34;../../build/factory&#34;&gt;Factory&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;istatestoreistatestore&#34;&gt;&lt;a href=&#34;../IStateStore&#34;&gt;IStateStore&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;memorystatestorememory_state_store&#34;&gt;&lt;a href=&#34;../memory_state_store&#34;&gt;MemoryStateStore&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;nullstatestorenull_state_store&#34;&gt;&lt;a href=&#34;../null_state_store&#34;&gt;NullStateStore&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: IStateStore</title>
+      <link>/python/components/state/istate_store/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/state/istate_store/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;abstract-methods&#34;&gt;Abstract methods&lt;/h3&gt;
+&lt;h4 id=&#34;delete&#34;&gt;delete&lt;/h4&gt;
+&lt;p&gt;Deletes a state from the store by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; delete(correlation_id: Optional[str], key: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique value key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Any - removed item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load&#34;&gt;load&lt;/h4&gt;
+&lt;p&gt;Loads state from the store using its key.
+If value is missing in the store it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; load(correlation_id: Optional[str], key: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Any - the state value or &lt;code&gt;null&lt;/code&gt; if value wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load_bulk&#34;&gt;load_bulk&lt;/h4&gt;
+&lt;p&gt;Loads an array of states from the store using their keys.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; load_bulk(self, correlation_id: Optional[str], keys: List[str]) -&amp;gt; List[&lt;a href=&#34;../state_value&#34;&gt;StateValue&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: List[str] - unique state keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../state_value&#34;&gt;StateValue&lt;/a&gt;] - an array with state values and their corresponding keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;save&lt;/h4&gt;
+&lt;p&gt;Saves state into the store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;abstractmethod&lt;/code&gt; save(correlation_id: Optional[str], key: str, value: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a state value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: MemoryStateStore</title>
+      <link>/python/components/state/memory_state_store/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/state/memory_state_store/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../../../commons/config/ireconfigurable&#34;&gt;IReconfigurable&lt;/a&gt;, &lt;a href=&#34;../istate_store&#34;&gt;IStateStore&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Remember:&lt;/strong&gt; This implementation is not suitable for synchronization of distributed processes.&lt;/p&gt;
+&lt;h4 id=&#34;configuration-parameters&#34;&gt;Configuration parameters&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;options&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;timeout&lt;/strong&gt;: default caching timeout in milliseconds (default: disabled)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;configure&#34;&gt;configure&lt;/h4&gt;
+&lt;p&gt;Configures component by passing configuration parameters.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;configure(config: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;config&lt;/strong&gt;: &lt;a href=&#34;../../../commons/config/config_params&#34;&gt;ConfigParams&lt;/a&gt; - configuration parameters to be set.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;delete&#34;&gt;delete&lt;/h4&gt;
+&lt;p&gt;Deletes a state from the store by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;delete(correlation_id: Optional[str], key: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique value key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Any - removed item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load&#34;&gt;load&lt;/h4&gt;
+&lt;p&gt;Loads state from the store using its key.
+If value is missing in the store it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;load(correlation_id: Optional[str], key: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Any - the state value or &lt;code&gt;null&lt;/code&gt; if value wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load_bulk&#34;&gt;load_bulk&lt;/h4&gt;
+&lt;p&gt;Loads an array of states from the store using their keys.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;load_bulk(self, correlation_id: Optional[str], keys: List[str]) -&amp;gt; List[&lt;a href=&#34;../state_value&#34;&gt;StateValue&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: List[str] - unique state keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../state_value&#34;&gt;StateValue&lt;/a&gt;] - an array with state values and their corresponding keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;save&lt;/h4&gt;
+&lt;p&gt;Saves state into the store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;save(correlation_id: Optional[str], key: str, value: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a state value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#111&#34;&gt;store&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;MemoryStateStore&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+
+&lt;span style=&#34;color:#111&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;store&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;load&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;store&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;save&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;123&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;key1&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#d88200&#34;&gt;&amp;#34;ABC&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icachecacheicache&#34;&gt;&lt;a href=&#34;../../cache/icache&#34;&gt;ICache&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: NullStateStore</title>
+      <link>/python/components/state/null_state_store/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/state/null_state_store/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;strong&gt;Implements:&lt;/strong&gt; &lt;a href=&#34;../istate_store&#34;&gt;IStateStore&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;It can be used in testing or in situations when state management is not required
+but shall be disabled.&lt;/p&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;delete&#34;&gt;delete&lt;/h4&gt;
+&lt;p&gt;Deletes a state from the store by its key.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;delete(correlation_id: Optional[str], key: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique value key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Any - removed item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load&#34;&gt;load&lt;/h4&gt;
+&lt;p&gt;Loads state from the store using its key.
+If value is missing in the store it returns null.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;load(correlation_id: Optional[str], key: str): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: Any - the state value or &lt;code&gt;null&lt;/code&gt; if value wasn&amp;rsquo;t found.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;load_bulk&#34;&gt;load_bulk&lt;/h4&gt;
+&lt;p&gt;Loads an array of states from the store using their keys.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;load_bulk(self, correlation_id: Optional[str], keys: List[str]) -&amp;gt; List[&lt;a href=&#34;../state_value&#34;&gt;StateValue&lt;/a&gt;]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;keys&lt;/strong&gt;: List[str] - unique state keys.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: List[&lt;a href=&#34;../state_value&#34;&gt;StateValue&lt;/a&gt;] - an array with state values and their corresponding keys.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;save&#34;&gt;save&lt;/h4&gt;
+&lt;p&gt;Saves state into the store.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;save(correlation_id: Optional[str], key: str, value: Any): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;correlation_id&lt;/strong&gt;: Optional[str] - (optional) transaction id to trace execution through a call chain.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique state key.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a state value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - execution duration in milliseconds.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;see-also&#34;&gt;See also&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h4 id=&#34;icachecacheicache&#34;&gt;&lt;a href=&#34;../../cache/icache&#34;&gt;ICache&lt;/a&gt;&lt;/h4&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: StateEntry</title>
+      <link>/python/components/state/state_entry/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/state/state_entry/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Creates a new instance of the state entry and assigns its values.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;StateEntry(key: str, value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;key&lt;/strong&gt;: str - a unique key to locate the value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a value to be stored.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;instance-methods&#34;&gt;Instance methods&lt;/h3&gt;
+&lt;h4 id=&#34;get_key&#34;&gt;get_key&lt;/h4&gt;
+&lt;p&gt;Gets the key to locate the state value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_key(): str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: str - the value key.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_last_update_time&#34;&gt;get_last_update_time&lt;/h4&gt;
+&lt;p&gt;Gets the last update time.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_last_update_time(): int&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;return&lt;/strong&gt;: int - the timestamp when the value ware stored.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;get_value&#34;&gt;get_value&lt;/h4&gt;
+&lt;p&gt;Gets the sstate value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;get_value(): Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;returns&lt;/strong&gt;: Any - the value object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;set_value&#34;&gt;set_value&lt;/h4&gt;
+&lt;p&gt;Sets a new state value.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;set_value(value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;value&lt;/strong&gt;: Any - a new cached value.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Python: StateValue</title>
+      <link>/python/components/state/state_value/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/python/components/state/state_value/</guid>
+      <description>
+        
+        
+        &lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;TODO: add description&lt;/p&gt;
+&lt;h3 id=&#34;constructors&#34;&gt;Constructors&lt;/h3&gt;
+&lt;p&gt;Create new instance of entry&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;StateEntry(key: str, value: Any)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;fields&#34;&gt;Fields&lt;/h3&gt;
+&lt;span class=&#34;hide-title-link&#34;&gt;
+&lt;h4 id=&#34;key&#34;&gt;key&lt;/h4&gt;
+&lt;p&gt;A unique state key&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;key&lt;/strong&gt;: str&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;value&#34;&gt;value&lt;/h4&gt;
+&lt;p&gt;A unique state key&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;value&lt;/strong&gt;: Any&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/span&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
