@@ -652,7 +652,7 @@
 &lt;/div&gt;
 &lt;p&gt;In complex use cases when the data is retrieved from multiple collections or shards, a TokenizedPagingParams object can be used, that instead of skipping and taking parameters,  sends a string token value received from previous calls via a TokenizedDataPage. The token can have encoded data that helps the server to determine the next page, but it is not recognizable by clients and used only as a pass-through value.&lt;/p&gt;
 &lt;h3 id=&#34;projections&#34;&gt;Projections&lt;/h3&gt;
-&lt;p&gt;This pattern is used less frequently, but can have a dramatic impact on performance, as it can significantly optimize the behavior of queries, by requesting only a relevant subset of data by specifying the fields that shall be included in the returned objects. An example is:&lt;/p&gt;
+&lt;p&gt;This pattern is used less frequently, but it can have a dramatic impact on performance, as it can significantly optimize the behavior of queries, by requesting only a relevant subset of data by specifying the fields that shall be included in the returned objects. An example is:&lt;/p&gt;
 
 &lt;div class=&#34;content-tab-section&#34;&gt;
     
@@ -729,6 +729,331 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
 &lt;p&gt;For more information on data handling see:&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Toolkit: Observability</title>
+      <link>/toolkit/building_blocks/observability/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/toolkit/building_blocks/observability/</guid>
+      <description>
+        
+        
+        &lt;div class=&#34;btn-group tab-selector-btn-group&#34; role=&#34;group&#34; aria-label=&#34;Language selector&#34;&gt;
+
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn  ml-0 &#34;&gt;Node&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;.NET&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Golang&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Dart&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Python&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Java&lt;/button&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;Microservices, in addition to great strengths, have a few shortcomings. One of them is the difficulty to understand what is going on in a highly distributed system. To address this issue, microservices get to collect information about their operations in the form of logs, traces, and performance metrics in specialized storages. Then, that information can be used for health monitoring, troubleshooting, security protection, and other important maintenance scenarios.&lt;/p&gt;
+&lt;h3 id=&#34;correlation-trace-ids&#34;&gt;Correlation (trace) ids&lt;/h3&gt;
+&lt;p&gt;It is not sufficient just to collect logs and traces across multiple microservices. It is critical to connect that information in a logical sequence within the transaction context. To do that Pip.Services employs correlationIds, which are rigorously used as first parameters in all business methods across all microservice components and sent over via all synchronous calls and asynchronous messages. When errors are thrown, logs or traces recorded, correlationIds are always included there.&lt;/p&gt;
+&lt;p&gt;A correlationId is any value that can uniquely identify business transactions in a system. One way to generate correlationIds is to use natural keys, like “transaction name + timestamp”. Another common way to generate correlationIds is to use string GUIDs. Although, they could be too long and lack meaning, they are unique in the universe and very easy to generate.&lt;/p&gt;
+&lt;p&gt;Logging
+There are myriads of logging libraries in all known programming languages. But Pip.Services includes its own abstractions for logging. Why? There are several reasons for that:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;To achieve consistency and symmetry across all languages, as it is the key goal for the toolkit&lt;/li&gt;
+&lt;li&gt;To use the Pip.Services component model and easily integrate with common patterns like inversion of control or configurations&lt;/li&gt;
+&lt;li&gt;To enforce the use of correlationIds, as without them the collected information has less value for analysis&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The ILogger interface looks pretty standard. It allows logging messages at different levels: FATAL, ERROR, WARNING, INFO, DEBUG and TRACE. The interface is defined in the log package of the components module. In addition to that, Pip.Services includes a variety of loggers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NullLogger: Dummy implementation of a logger with no real effect.&lt;/li&gt;
+&lt;li&gt;ConsoleLogger: Logger that writes log messages to console.&lt;/li&gt;
+&lt;li&gt;FluentdLogger: Logger that dumps execution logs to a Fluentd service.&lt;/li&gt;
+&lt;li&gt;ElasticSearchLogger: Logger that dumps execution logs to ElasticSearch service.&lt;/li&gt;
+&lt;li&gt;CloudWatchLogger: Logger that writes log messages to AWS CloudWatch Log.&lt;/li&gt;
+&lt;li&gt;AppInsightsLogger&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is common in microservices to log simultaneously into several destinations - to console for debugging as well into a distributed logging system. To support this scenario the toolkit includes the CompositeLogger, which is used by components to collect messages and then distribute them across all loggers included in the microservice.&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Console&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;console&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;level&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;info&lt;/span&gt;
+
+&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Elastic&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;search&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;logger&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;logger&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;elasticsearch&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;connection&lt;/span&gt;:
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;host&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{{&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ELASTICSEARCH_SERVICE_HOST&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;}}&lt;/span&gt;
+  &lt;span style=&#34;color:#75af00&#34;&gt;port&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{{&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ELASTICSEARCH_SERVICE_PORT&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;}}&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_logger&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;CompositeLogger&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeLogger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;refs&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;refs&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;doSomething&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_logger&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;debug&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Did&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;something&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…”&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;performance-monitoring&#34;&gt;Performance monitoring&lt;/h3&gt;
+&lt;p&gt;While logs tell “what” the system is doing, performance metrics (or counters) tell “how” it’s being done: how much, how fast, how reliable, and so on. They represent the state of the system from a non-functional perspective and are critical to measure and analyze performance, scalability, and reliability characteristics.&lt;/p&gt;
+&lt;p&gt;The ICounters from the count package in the components module is the standard interface for all performance monitoring components. It allows to increment counters, record values of self-calculated metrics, record timestamps, calculate min/average/max statistics and measure time intervals. In addition, there are several implementations available out-of-the-box:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NullCounters: Dummy implementation of performance counters.&lt;/li&gt;
+&lt;li&gt;LogCounters: Performance counters that periodically dump counters&#39; measurements to a logger.&lt;/li&gt;
+&lt;li&gt;PrometheusCounters:  Performance counters that send their metrics to Prometheus service.&lt;/li&gt;
+&lt;li&gt;CloudWatchCounters: Performance counters that periodically dump counters to AWS Cloud Watch Metrics.&lt;/li&gt;
+&lt;li&gt;AppInsightsCounters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Similar to logs, microservices can send counters to several destinations: periodically dump them into console logs, and send them to a centralized monitoring system. CompositeCounters components can be used in microservice components to collect metrics and distribute them to all Counters included in the microservice.&lt;/p&gt;
+&lt;p&gt;The example below shows how to collect several performance metrics from processing incoming messages:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Log&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+
+&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Prometheus&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;counters&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;counters&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;prometheus&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+
+&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Metrics&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;used&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;by&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;prometheus&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;collect&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;metrics&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;metrics&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;service&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;prometheus&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;CompositeCounters&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeCounters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;refs&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;refs&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;onMessage&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;message&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;MessageEnvelope&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;beginTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;msg_time&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+      &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;msg_count&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+      &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+      &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;msg_errors&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+      &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;traces&#34;&gt;Traces&lt;/h3&gt;
+&lt;p&gt;The most common observability scenario consists of monitoring the invocation of microservice operations. This can be done via a combination of logs and counters: logs will record what operations are executed and errors when they happen, and counters will calculate how often operations were called and what’s their execution time and error rate. However, some monitoring systems like Datadog or Splank have started offering APIs to collect traces separately, enabling rich visualizations and analytics around them.&lt;/p&gt;
+&lt;p&gt;The Pip.Services toolkit includes the ITraces interface for tracing components defined in the trace package in the components module. There are a few ready-to-use tracing components available in the toolkit:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NullTracer: Dummy implementation of tracer that doesn’t do anything.&lt;/li&gt;
+&lt;li&gt;LogTracer: Tracer that dumps recorded traces to a logger.&lt;/li&gt;
+&lt;li&gt;DataDogTracer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Just like logs and metrics, a tracer can be sent to multiple destinations using the CompositeTracer component.&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;Log&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;tracer&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;log&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+
+&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;DataDog&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;traces&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;descriptor&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;pip&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;services&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;tracer&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;datadog&lt;/span&gt;:&lt;span style=&#34;color:#00a8c8&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;
+&lt;span style=&#34;color:#75af00&#34;&gt;connection&lt;/span&gt;:
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;api_key&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{{&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;DATADOG_API_KEY&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;}}&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyComponent&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;implements&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;IReferenceable&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;_tracer&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;CompositeTracer&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;CompositeTracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;refs&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;IReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_counters&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;setReferences&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;refs&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+  &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;doSomething&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;: &lt;span style=&#34;color:#00a8c8&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;_tracer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;beginTrace&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;correlationId&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;mycomponent&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;do_something&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;”&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+      &lt;span style=&#34;color:#111&#34;&gt;...&lt;/span&gt;
+      &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endTiming&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;catch&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+      &lt;span style=&#34;color:#75af00&#34;&gt;timing&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;endFailure&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ex&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;p&gt;For more information about observability see:&lt;/p&gt;
 
       </description>
     </item>
