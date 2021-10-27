@@ -301,6 +301,439 @@
     </item>
     
     <item>
+      <title>Toolkit: Data Handling</title>
+      <link>/toolkit/building_blocks/data_handling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/toolkit/building_blocks/data_handling/</guid>
+      <description>
+        
+        
+        &lt;div class=&#34;btn-group tab-selector-btn-group&#34; role=&#34;group&#34; aria-label=&#34;Language selector&#34;&gt;
+
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn  ml-0 &#34;&gt;Node&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;.NET&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Golang&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Dart&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Python&lt;/button&gt;
+
+    &lt;button type=&#34;button&#34; class=&#34;btn lang-select-btn &#34;&gt;Java&lt;/button&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;Almost any microservice has to receive, store, retrieve and process data. Thus, data structures and data handling patterns are extremely important. Pip.Services offers great support in this area. Since programming languages define and process data differently, the toolkit provides a thin abstraction layer to bring consistency and symmetry across all implementations.&lt;/p&gt;
+&lt;h3 id=&#34;data-objects&#34;&gt;Data Objects&lt;/h3&gt;
+&lt;p&gt;Very often data objects processed by microservices have unique Ids of some sort. For those types of objects, the Pip.Services toolkit has the IIdentifiable&lt;K&gt; interface that requires that an object has an id field of the specified type (K). This interface is used quite often in persistent components.&lt;/p&gt;
+&lt;p&gt;A special version of this interface is called IstringIdentifiable, which requires an id of string type. This is the most common pattern that uses the IdGenerator helper class that generates string GUIDs for object ids. It is not the most efficient way to generate ids as it uses 32 string characters for a single value. But, it can be generated on the fly without calling special ID generators, it is unique in the universe and can be stored in any persistence storage. Unless a microservice uses low-bandwidth communication or stores millions of objects, this approach works fine in most cases.&lt;/p&gt;
+&lt;p&gt;Other data object patterns supported by Pip.Services include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inamed: Interface for data objects that have human-readable names&lt;/li&gt;
+&lt;li&gt;Iversioned: Interface used to define data objects that can be versioned&lt;/li&gt;
+&lt;li&gt;ITrackable: Interface for data objects that can track their changes, including logical deletion.&lt;/li&gt;
+&lt;li&gt;IChangeable: Interface for data objects that need to store the last modified date and time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;converters&#34;&gt;Converters&lt;/h3&gt;
+&lt;p&gt;Data comes into microservices in different shapes and forms. So, the first order of business is to convert the data into specific types to enable its correct processing. All programming languages offer conversion functions, but they look and work differently. The Pip.Services toolkit has its own library of data conversion functions that not only work identically in different languages, but also enable the so-called “soft conversions”. In this manner, it supports conversions that are not normally considered, like converting long values into Unix timestamps.&lt;/p&gt;
+&lt;p&gt;Here is the list of converters defined in the convert package available in the commons module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;StringConverter: Converts arbitrary values into strings.&lt;/li&gt;
+&lt;li&gt;BooleanConverter: Converts different values into Booleans using extended conversion rules.&lt;/li&gt;
+&lt;li&gt;IntegerConverter: Converts arbitrary values into integers using extended conversion rules.&lt;/li&gt;
+&lt;li&gt;LongConverter: Converts arbitrary values into longs using extended conversion rules.&lt;/li&gt;
+&lt;li&gt;FloatConverter: Converts arbitrary values into floats using extended conversion rules.&lt;/li&gt;
+&lt;li&gt;DoubleConverter: Converts arbitrary values into doubles using extended conversion rules.&lt;/li&gt;
+&lt;li&gt;TimeSpanConverter: Converts objects to TimeSpans&lt;/li&gt;
+&lt;li&gt;DateTimeConverter: Converts arbitrary values into Date values using extended conversion rules.&lt;/li&gt;
+&lt;li&gt;And more.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;dynamic-data-types&#34;&gt;Dynamic Data Types&lt;/h3&gt;
+&lt;p&gt;Most programming languages have ways to define data using static types. However, defining dynamic data is quite different. To bring consistency and symmetry, Pip.Services defines a few basic types for dynamic data in the data package available in the commons module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AnyValue: Dynamic value or object.&lt;/li&gt;
+&lt;li&gt;AnyValueMap: Dynamic map (hashtable).&lt;/li&gt;
+&lt;li&gt;AnyValueArray: Dynamic array of values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally, the Pip.Services toolkit abstracts reflection mechanisms in the reflect package available in the commons module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TypeReflector: Reflects on object types.&lt;/li&gt;
+&lt;li&gt;MethodReflector: Reflects and invokes object methods.&lt;/li&gt;
+&lt;li&gt;PropertyReflector: Reflects, reads and writes object properties.&lt;/li&gt;
+&lt;li&gt;ObjectReader: Reads object data.&lt;/li&gt;
+&lt;li&gt;RecursiveObjectReader: Reads nested objects using dot notation.&lt;/li&gt;
+&lt;li&gt;ObjectWriter: Writes object data.&lt;/li&gt;
+&lt;li&gt;RecursiveObjectWriter: Writes nested objects using dot notation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;validation&#34;&gt;Validation&lt;/h3&gt;
+&lt;p&gt;When data comes to a microservice, it can be corrupted or incomplete. If logic starts processing bad data right away, it may fail in many different ways that will be difficult to comprehend and troubleshoot. So, a good practice is to validate data before using it.&lt;/p&gt;
+&lt;p&gt;There is a big variety of data validation frameworks. Some of them are part of the standard language libraries, while others are external. However, since it is a critical part of data handling, Pip.Services provides its own validation package in the commons module, which has symmetric implementation across all supported languages.&lt;/p&gt;
+&lt;p&gt;A simple object validator check that checks properties for proper values may look the following way:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MyObjectSchema&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;extends&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ObjectSchema&lt;/span&gt; &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#00a8c8&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;constructor&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;super&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;();&lt;/span&gt;
+
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;withRequiredProperty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;prop1&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;Integer&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;withOptionalProperty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;prop2&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;TypeCode&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#00a8c8&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;withOptionalProperty&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d88200&#34;&gt;&amp;#39;prop3&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;MySubObjectSchema&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;());&lt;/span&gt;
+    &lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;p&gt;In addition to that validation, a validation schema may contain more complex conditions using standard or custom validation rules. There is a large number of validation rules including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AtLeastOneExistsRule: Checks that at least one of the object properties exists.&lt;/li&gt;
+&lt;li&gt;IncludedRule: Checks that a list contains only specified values.&lt;/li&gt;
+&lt;li&gt;ExcludedRule: Checks that one or more values are excluded from the list of constants.&lt;/li&gt;
+&lt;li&gt;OnlyOneExistsRule: Checks that only one property of a list of properties exists in an object.&lt;/li&gt;
+&lt;li&gt;ValueComparisonRule: Compares a value to a constant.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To enable even more complex validation scenarios using a basic set of rules, there are a few rules that enable logical connections:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NotRule: Negates another rule.&lt;/li&gt;
+&lt;li&gt;OrRule: Checks combinations of rules created with OR logical operations.&lt;/li&gt;
+&lt;li&gt;AndRole: Checks combinations of rules created with AND logical operations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;filtering&#34;&gt;Filtering&lt;/h3&gt;
+&lt;p&gt;When it comes to query data, the implementations may fall into two extremes. On one end developers can implement specific query methods. Their number can quickly grow, which makes microservice interfaces bloated and hard to support. On the other end, there are complex query languages like GraphQL that are highly flexible but may not be well supported by different persistent storages.&lt;/p&gt;
+&lt;p&gt;Pip.Services offers a simple yet effective filtering pattern that is universal and very simple to implement. It uses a FilterParams object that contains a set of key-value pairs used to filter the data. An example of its usage is:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;filter&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;FilterParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromTupes&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;key1&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;ABC&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;key2&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;123&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;values&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getMyObjects&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
+&lt;p&gt;Sorting is another common pattern that is often used in combination with filters. It uses the SortParams object in the following way:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;sorting&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;SortParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;fromTuples&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;
+  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;key1&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt;
+  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;key2&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;false&lt;/span&gt;
+&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;values&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getMyObjects&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;sorting&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;h3 id=&#34;paging&#34;&gt;Paging&lt;/h3&gt;
+&lt;p&gt;Data collections containing thousands, hundreds of thousands or even millions of querying results in a single call may not work properly, as the size of responses is often limited to a few megabytes. A common pattern is to split data into pages and retrieve them sequentially by sending PagingParams that contain some objects to skip and a number of objects to take (return). An optional total parameter may direct the service to return the total number of objects in the result DataPage. The code may look the following way:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;paging&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;PagingParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;page&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getMyObjects&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;sorting&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;paging&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;p&gt;In complex use cases when the data is retrieved from multiple collections or shards, a TokenizedPagingParams object can be used, that instead of skipping and taking parameters,  sends a string token value received from previous calls via a TokenizedDataPage. The token can have encoded data that helps the server to determine the next page, but it is not recognizable by clients and used only as a pass-through value.&lt;/p&gt;
+&lt;h3 id=&#34;projections&#34;&gt;Projections&lt;/h3&gt;
+&lt;p&gt;This pattern is used less frequently, but can have a dramatic impact on performance, as it can significantly optimize the behavior of queries, by requesting only a relevant subset of data by specifying the fields that shall be included in the returned objects. An example is:&lt;/p&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  
+
+
+
+    
+
+
+
+&lt;nil&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-ts&#34; data-lang=&#34;ts&#34;&gt;&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;projection&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;ProjectionParams&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;field1&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;‘&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;field2&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;’&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;span style=&#34;color:#00a8c8&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;page&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00a8c8&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;client&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;getMyObjects&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#75af00&#34;&gt;filter&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;sorting&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;paging&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#75af00&#34;&gt;projection&lt;/span&gt;&lt;span style=&#34;color:#111&#34;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available
+
+    
+&lt;/div&gt;
+
+&lt;div class=&#34;content-tab-section&#34;&gt;
+    
+        
+  Not available  
+
+    
+&lt;/div&gt;
+&lt;p&gt;The returned objects may be of the same type as the original data, with null fields excluded by the projection, or it may consist of dynamic data types containing only the requested fields.&lt;/p&gt;
+&lt;h3 id=&#34;random-data&#34;&gt;Random Data&lt;/h3&gt;
+&lt;p&gt;In some function test scenarios, and especially in non-functional tests, developers get to create random, yet realistic data sets. To support that, Pip.Services includes a random package in the commons module that contains the following helper classes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RandomString: Random generator for string values.&lt;/li&gt;
+&lt;li&gt;RandomText: Random generator for various text types such as names, addresses or phone numbers.&lt;/li&gt;
+&lt;li&gt;RandomBoolean: Random generator for Boolean values.&lt;/li&gt;
+&lt;li&gt;RandomInteger: Random generator for integer values.&lt;/li&gt;
+&lt;li&gt;RandomFloat: Random generator for float values.&lt;/li&gt;
+&lt;li&gt;RandomDouble: Random generator for double values.&lt;/li&gt;
+&lt;li&gt;RandomDateTime: Random generator for DateTime time values.&lt;/li&gt;
+&lt;li&gt;RandomArray: Random generator for array objects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;p&gt;For more information on data handling see:&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
       <title>Toolkit: Configurations</title>
       <link>/toolkit/building_blocks/configurations/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
