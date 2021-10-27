@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="# In-memory credential store descriptor: “pip-services:credential-store:memory:default:1.0” mongo: username: admin password: pass123 # MongoDb persistence component descriptor: “myservice:mypersistance:mongodb:default:1.0” connection: ... credential: discovery_key: mongo class MyPersistence implements IConfigurable, IReferenceable { private _connectionResolver = new ConnectionResolver(); private _host: string; private _port: number; public configure(config: ConfigParams) { this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { this._connectionResolver.setReferences(refs); let connection = this._connectionResolver.resolve(null); this._host = connection.getHost(); this._port = connection.getPortWithDefault(27017); } } " />
+<meta property="og:description" content="# In-memory credential store descriptor: &quot;pip-services:credential-store:memory:default:1.0&quot; mongo: username: admin password: pass123 # MongoDb persistence component descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot; connection: ... credential: discovery_key: mongo import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { ConnectionResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { private _connectionResolver = new ConnectionResolver(); private _host: string; private _port: number; public configure(config: ConfigParams) { this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { this._connectionResolver.setReferences(refs); let connection = this._connectionResolver.resolve(null); this._host = connection." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/building_blocks/connectivity/__code4_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-27T18:13:35+03:00" />
+<meta property="article:modified_time" content="2021-10-27T18:41:23+03:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="# In-memory credential store descriptor: “pip-services:credential-store:memory:default:1.0” mongo: username: admin password: pass123 # MongoDb persistence component descriptor: “myservice:mypersistance:mongodb:default:1.0” connection: ... credential: discovery_key: mongo class MyPersistence implements IConfigurable, IReferenceable { private _connectionResolver = new ConnectionResolver(); private _host: string; private _port: number; public configure(config: ConfigParams) { this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { this._connectionResolver.setReferences(refs); let connection = this._connectionResolver.resolve(null); this._host = connection.getHost(); this._port = connection.getPortWithDefault(27017); } } ">
-<meta itemprop="dateModified" content="2021-10-27T18:13:35+03:00" />
-<meta itemprop="wordCount" content="62">
+<meta itemprop="description" content="# In-memory credential store descriptor: &quot;pip-services:credential-store:memory:default:1.0&quot; mongo: username: admin password: pass123 # MongoDb persistence component descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot; connection: ... credential: discovery_key: mongo import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { ConnectionResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { private _connectionResolver = new ConnectionResolver(); private _host: string; private _port: number; public configure(config: ConfigParams) { this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { this._connectionResolver.setReferences(refs); let connection = this._connectionResolver.resolve(null); this._host = connection.">
+<meta itemprop="dateModified" content="2021-10-27T18:41:23+03:00" />
+<meta itemprop="wordCount" content="77">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="# In-memory credential store descriptor: “pip-services:credential-store:memory:default:1.0” mongo: username: admin password: pass123 # MongoDb persistence component descriptor: “myservice:mypersistance:mongodb:default:1.0” connection: ... credential: discovery_key: mongo class MyPersistence implements IConfigurable, IReferenceable { private _connectionResolver = new ConnectionResolver(); private _host: string; private _port: number; public configure(config: ConfigParams) { this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { this._connectionResolver.setReferences(refs); let connection = this._connectionResolver.resolve(null); this._host = connection.getHost(); this._port = connection.getPortWithDefault(27017); } } "/>
+<meta name="twitter:description" content="# In-memory credential store descriptor: &quot;pip-services:credential-store:memory:default:1.0&quot; mongo: username: admin password: pass123 # MongoDb persistence component descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot; connection: ... credential: discovery_key: mongo import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { ConnectionResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { private _connectionResolver = new ConnectionResolver(); private _host: string; private _port: number; public configure(config: ConfigParams) { this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { this._connectionResolver.setReferences(refs); let connection = this._connectionResolver.resolve(null); this._host = connection."/>
 
 
 
@@ -493,35 +493,42 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#75af00">In</span><span style="color:#f92672">-</span><span style="color:#75af00">memory</span> <span style="color:#75af00">credential</span> <span style="color:#75af00">store</span>
-<span style="color:#75af00">descriptor</span><span style="color:#f92672">:</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">pip</span><span style="color:#f92672">-</span><span style="color:#75af00">services</span>:<span style="color:#00a8c8">credential</span><span style="color:#f92672">-</span><span style="color:#75af00">store</span>:<span style="color:#00a8c8">memory</span><span style="color:#f92672">:</span><span style="color:#00a8c8">default</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1.0</span><span style="color:#960050;background-color:#1e0010">”</span>
-<span style="color:#75af00">mongo</span>:
-  <span style="color:#00a8c8">username</span><span style="color:#f92672">:</span> <span style="color:#75af00">admin</span>
-  <span style="color:#75af00">password</span>: <span style="color:#00a8c8">pass123</span>
+<pre tabindex="0"><code># In-memory credential store
+descriptor: &quot;pip-services:credential-store:memory:default:1.0&quot;
+mongo:
+  username: admin
+  password: pass123
 
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#75af00">MongoDb</span> <span style="color:#75af00">persistence</span> <span style="color:#75af00">component</span>
-<span style="color:#75af00">descriptor</span><span style="color:#f92672">:</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">myservice</span>:<span style="color:#00a8c8">mypersistance</span><span style="color:#f92672">:</span><span style="color:#75af00">mongodb</span>:<span style="color:#00a8c8">default</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1.0</span><span style="color:#960050;background-color:#1e0010">”</span>
-<span style="color:#75af00">connection</span>:
-  <span style="color:#00a8c8">...</span>
-<span style="color:#75af00">credential</span>:
-  <span style="color:#00a8c8">discovery_key</span><span style="color:#f92672">:</span> <span style="color:#75af00">mongo</span>
+# MongoDb persistence component
+descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot;
+connection:
+  ...
+credential:
+  discovery_key: mongo
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> 
+  <span style="color:#75af00">ConfigParams</span><span style="color:#111">,</span> <span style="color:#75af00">IConfigurable</span><span style="color:#111">,</span> 
+  <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferences</span> 
+<span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-commons-nodex&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ConnectionResolver</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
+
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyPersistence</span> <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IConfigurable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferenceable</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">private</span> <span style="color:#75af00">_connectionResolver</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">ConnectionResolver</span><span style="color:#111">();</span>
-  <span style="color:#00a8c8">private</span> <span style="color:#75af00">_host</span>: <span style="color:#00a8c8">string</span><span style="color:#111">;</span>
-  <span style="color:#00a8c8">private</span> <span style="color:#75af00">_port</span>: <span style="color:#00a8c8">number</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_connectionResolver</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">ConnectionResolver</span><span style="color:#111">();</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_host</span>: <span style="color:#00a8c8">string</span><span style="color:#111">;</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_port</span>: <span style="color:#00a8c8">number</span><span style="color:#111">;</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span>: <span style="color:#00a8c8">ConfigParams</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_connectionResolver</span><span style="color:#111">.</span><span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">);</span>
-  <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span>: <span style="color:#00a8c8">ConfigParams</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_connectionResolver</span><span style="color:#111">.</span><span style="color:#75af00">configure</span><span style="color:#111">(</span><span style="color:#75af00">config</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">refs</span>: <span style="color:#00a8c8">IReferences</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_connectionResolver</span><span style="color:#111">.</span><span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">refs</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">refs</span>: <span style="color:#00a8c8">IReferences</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_connectionResolver</span><span style="color:#111">.</span><span style="color:#75af00">setReferences</span><span style="color:#111">(</span><span style="color:#75af00">refs</span><span style="color:#111">);</span>
 
-    <span style="color:#00a8c8">let</span> <span style="color:#75af00">connection</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_connectionResolver</span><span style="color:#111">.</span><span style="color:#75af00">resolve</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">);</span>
-    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_host</span> <span style="color:#f92672">=</span> <span style="color:#75af00">connection</span><span style="color:#111">.</span><span style="color:#75af00">getHost</span><span style="color:#111">();</span>
-    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_port</span> <span style="color:#f92672">=</span> <span style="color:#75af00">connection</span><span style="color:#111">.</span><span style="color:#75af00">getPortWithDefault</span><span style="color:#111">(</span><span style="color:#ae81ff">27017</span><span style="color:#111">);</span>
-  <span style="color:#111">}</span>
+        <span style="color:#00a8c8">let</span> <span style="color:#75af00">connection</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_connectionResolver</span><span style="color:#111">.</span><span style="color:#75af00">resolve</span><span style="color:#111">(</span><span style="color:#00a8c8">null</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_host</span> <span style="color:#f92672">=</span> <span style="color:#75af00">connection</span><span style="color:#111">.</span><span style="color:#75af00">getHost</span><span style="color:#111">();</span>
+        <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_port</span> <span style="color:#f92672">=</span> <span style="color:#75af00">connection</span><span style="color:#111">.</span><span style="color:#75af00">getPortWithDefault</span><span style="color:#111">(</span><span style="color:#ae81ff">27017</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
 <span style="color:#111">}</span>
 
 </code></pre></div>

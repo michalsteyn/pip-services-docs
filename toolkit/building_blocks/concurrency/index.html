@@ -310470,22 +310470,22 @@
 
 
 <nil>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
-  <span style="color:#00a8c8">private</span> <span style="color:#75af00">_store</span>: <span style="color:#00a8c8">IStateStore</span><span style="color:#111">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IStateStore</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
 
-  <span style="color:#111">...</span>
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
+    <span style="color:#00a8c8">private</span> <span style="color:#75af00">_store</span>: <span style="color:#00a8c8">IStateStore</span><span style="color:#111">;</span>
 
-  <span style="color:#00a8c8">public</span> <span style="color:#75af00">doSomething</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">objectId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#75715e">// Get state from the store or create a new one if the state wasn’t found
-</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">let</span> <span style="color:#75af00">state</span>: <span style="color:#00a8c8">MyState</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_store</span><span style="color:#111">.</span><span style="color:#75af00">load</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">);</span>
-    <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">state</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#75af00">state</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">MyState</span><span style="color:#111">();</span> <span style="color:#111">}</span>
+    <span style="color:#111">...</span>
 
-    <span style="color:#960050;background-color:#1e0010">…</span>
-    
-    <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_store</span><span style="color:#111">.</span><span style="color:#75af00">save</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#75af00">state</span><span style="color:#111">);</span>
-  <span style="color:#111">}</span>
+    <span style="color:#00a8c8">public</span> <span style="color:#75af00">doSomething</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">objectId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+        <span style="color:#75715e">// Get state from the store or create a new one if the state wasn’t found
+</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">let</span> <span style="color:#75af00">state</span>: <span style="color:#00a8c8">MyState</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_store</span><span style="color:#111">.</span><span style="color:#75af00">load</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">);</span>
+        <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">state</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#75af00">state</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">new</span> <span style="color:#75af00">MyState</span><span style="color:#111">();</span> <span style="color:#111">}</span>
+        <span style="color:#111">...</span>
+
+        <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_store</span><span style="color:#111">.</span><span style="color:#75af00">save</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#75af00">state</span><span style="color:#111">);</span>
+    <span style="color:#111">}</span>
 <span style="color:#111">}</span>
-
 
 </code></pre></div> 
 
@@ -310567,24 +310567,24 @@
 
 
 <nil>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ICache</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">private</span> <span style="color:#75af00">_cache</span>: <span style="color:#00a8c8">ICache</span><span style="color:#111">;</span>
 
   <span style="color:#111">...</span>
 
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">getMyObjectById</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">objectId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span><span style="color:#f92672">:</span> <span style="color:#75af00">Promise</span><span style="color:#111">&lt;</span><span style="color:#f92672">MyObject</span><span style="color:#111">&gt;</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">let</span> <span style="color:#75af00">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_cache</span><span style="color:#111">.</span><span style="color:#75af00">retrieve</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">let</span> <span style="color:#75af00">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_cache</span><span style="color:#111">.</span><span style="color:#75af00">retrieve</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">);</span>
     <span style="color:#00a8c8">if</span> <span style="color:#111">(</span><span style="color:#75af00">result</span> <span style="color:#f92672">!=</span> <span style="color:#00a8c8">null</span><span style="color:#111">)</span> <span style="color:#111">{</span> <span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">;</span> <span style="color:#111">}</span>
 
     <span style="color:#75715e">// Retrieve the object
-</span><span style="color:#75715e"></span>    <span style="color:#960050;background-color:#1e0010">…</span>
-    
-    <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_cache</span><span style="color:#111">.</span><span style="color:#75af00">store</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#75af00">results</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>    <span style="color:#111">...</span>
+
+    <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_cache</span><span style="color:#111">.</span><span style="color:#75af00">store</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#75af00">results</span><span style="color:#111">,</span> <span style="color:#ae81ff">1000</span><span style="color:#111">);</span>
     <span style="color:#00a8c8">return</span> <span style="color:#75af00">result</span><span style="color:#111">;</span>
   <span style="color:#111">}</span>
 <span style="color:#111">}</span>
-
-
 </code></pre></div> 
 
     
@@ -310646,20 +310646,23 @@
 
 
 <nil>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ILock</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">private</span> <span style="color:#75af00">_lock</span>: <span style="color:#00a8c8">ILock</span><span style="color:#111">;</span>
 
-  <span style="color:#960050;background-color:#1e0010">…</span>
+  <span style="color:#111">...</span>
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">processMyObject</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">objectId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#75715e">// Acquire lock for 10 secs
-</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_lock</span><span style="color:#111">.</span><span style="color:#75af00">acquireLock</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#ae81ff">10000</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_lock</span><span style="color:#111">.</span><span style="color:#75af00">acquireLock</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#ae81ff">10000</span><span style="color:#111">,</span> <span style="color:#ae81ff">10000</span><span style="color:#111">);</span>
     <span style="color:#00a8c8">try</span> <span style="color:#111">{</span>
       <span style="color:#111">...</span>
-    <span style="color:#111">}</span> <span style="color:#00a8c8">finally</span> <span style="color:#111">{</span> 
+    <span style="color:#111">}</span> <span style="color:#00a8c8">finally</span> <span style="color:#111">{</span>
       <span style="color:#75715e">// Release lock
-</span><span style="color:#75715e"></span>      <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_lock</span><span style="color:#111">.</span><span style="color:#75af00">releasLock</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">);</span>
+</span><span style="color:#75715e"></span>      <span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_lock</span><span style="color:#111">.</span><span style="color:#75af00">releaseLock</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">);</span>
     <span style="color:#111">}</span>
   <span style="color:#111">}</span>
+<span style="color:#111">}</span>
 </code></pre></div> 
 
     
@@ -310718,19 +310721,22 @@
 
 
 <nil>
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">ILock</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
+
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#111">{</span>
   <span style="color:#00a8c8">private</span> <span style="color:#75af00">_lock</span>: <span style="color:#00a8c8">ILock</span><span style="color:#111">;</span>
 
-  <span style="color:#960050;background-color:#1e0010">…</span>
+  <span style="color:#111">...</span>
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">processMyObject</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">objectId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">{</span>
     <span style="color:#75715e">// Try to acquire lock for 10 secs
-</span><span style="color:#75715e"></span>    <span style="color:#75af00">If</span> <span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_lock</span><span style="color:#111">.</span><span style="color:#75af00">tryAcquireLock</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">mycomponent</span><span style="color:#f92672">:</span><span style="color:#960050;background-color:#1e0010">”</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#ae81ff">10000</span><span style="color:#111">))</span> <span style="color:#111">{</span>
-        <span style="color:#75715e">// Other instance already executing that transaction
-</span><span style="color:#75715e"></span>        <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
+</span><span style="color:#75715e"></span>    <span style="color:#00a8c8">if</span><span style="color:#111">(</span><span style="color:#f92672">!</span><span style="color:#00a8c8">await</span> <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_lock</span><span style="color:#111">.</span><span style="color:#75af00">tryAcquireLock</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;mycomponent:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#75af00">objectId</span><span style="color:#111">,</span> <span style="color:#ae81ff">10000</span><span style="color:#111">))</span> <span style="color:#111">{</span>
+      <span style="color:#75715e">// Other instance already executing that transaction
+</span><span style="color:#75715e"></span>      <span style="color:#00a8c8">return</span><span style="color:#111">;</span>
     <span style="color:#111">}</span>
 
-   <span style="color:#111">...</span>
+  <span style="color:#111">...</span>
   <span style="color:#111">}</span>
+<span style="color:#111">}</span>
 </code></pre></div> 
 
     
