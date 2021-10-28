@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="# Console logger descriptor: “pip-services:logger:console:default:1.0” level: info # Elastic search logger descriptor: “pip-services:logger:elasticsearch:default:1.0” connection: host: {{ELASTICSEARCH_SERVICE_HOST}} port: {{ELASTICSEARCH_SERVICE_PORT}} class MyComponent implements IReferenceable { private _logger: CompositeLogger = new CompositeLogger(); public setReferences(refs: IReferences) { this._logger.setReferences(refs); } public doSomething(correlationId: string) { this._logger.debug(correlationId, “Did something…”); ... } } " />
+<meta property="og:description" content="import { IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CompositeLogger } from &#34;pip-services3-components-nodex&#34;; class MyComponent implements IReferenceable { private _logger: CompositeLogger = new CompositeLogger(); public setReferences(refs: IReferences) { this._logger.setReferences(refs); } public doSomething(correlationId: string) { this._logger.debug(correlationId, &#34;Did something...&#34;); ... } } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/building_blocks/observability/__code1_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-27T22:21:33+02:00" />
+<meta property="article:modified_time" content="2021-10-28T02:42:33+03:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="# Console logger descriptor: “pip-services:logger:console:default:1.0” level: info # Elastic search logger descriptor: “pip-services:logger:elasticsearch:default:1.0” connection: host: {{ELASTICSEARCH_SERVICE_HOST}} port: {{ELASTICSEARCH_SERVICE_PORT}} class MyComponent implements IReferenceable { private _logger: CompositeLogger = new CompositeLogger(); public setReferences(refs: IReferences) { this._logger.setReferences(refs); } public doSomething(correlationId: string) { this._logger.debug(correlationId, “Did something…”); ... } } ">
-<meta itemprop="dateModified" content="2021-10-27T22:21:33+02:00" />
-<meta itemprop="wordCount" content="45">
+<meta itemprop="description" content="import { IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CompositeLogger } from &#34;pip-services3-components-nodex&#34;; class MyComponent implements IReferenceable { private _logger: CompositeLogger = new CompositeLogger(); public setReferences(refs: IReferences) { this._logger.setReferences(refs); } public doSomething(correlationId: string) { this._logger.debug(correlationId, &#34;Did something...&#34;); ... } } ">
+<meta itemprop="dateModified" content="2021-10-28T02:42:33+03:00" />
+<meta itemprop="wordCount" content="40">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="# Console logger descriptor: “pip-services:logger:console:default:1.0” level: info # Elastic search logger descriptor: “pip-services:logger:elasticsearch:default:1.0” connection: host: {{ELASTICSEARCH_SERVICE_HOST}} port: {{ELASTICSEARCH_SERVICE_PORT}} class MyComponent implements IReferenceable { private _logger: CompositeLogger = new CompositeLogger(); public setReferences(refs: IReferences) { this._logger.setReferences(refs); } public doSomething(correlationId: string) { this._logger.debug(correlationId, “Did something…”); ... } } "/>
+<meta name="twitter:description" content="import { IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CompositeLogger } from &#34;pip-services3-components-nodex&#34;; class MyComponent implements IReferenceable { private _logger: CompositeLogger = new CompositeLogger(); public setReferences(refs: IReferences) { this._logger.setReferences(refs); } public doSomething(correlationId: string) { this._logger.debug(correlationId, &#34;Did something...&#34;); ... } } "/>
 
 
 
@@ -493,15 +493,8 @@
       <main role="main" class="td-main">
         
 
-<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#75af00">Console</span> <span style="color:#75af00">logger</span>
-<span style="color:#75af00">descriptor</span><span style="color:#f92672">:</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">pip</span><span style="color:#f92672">-</span><span style="color:#75af00">services</span>:<span style="color:#00a8c8">logger</span><span style="color:#f92672">:</span><span style="color:#75af00">console</span>:<span style="color:#00a8c8">default</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1.0</span><span style="color:#960050;background-color:#1e0010">”</span>
-<span style="color:#75af00">level</span>: <span style="color:#00a8c8">info</span>
-
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#75af00">Elastic</span> <span style="color:#75af00">search</span> <span style="color:#75af00">logger</span>
-<span style="color:#75af00">descriptor</span><span style="color:#f92672">:</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">pip</span><span style="color:#f92672">-</span><span style="color:#75af00">services</span>:<span style="color:#00a8c8">logger</span><span style="color:#f92672">:</span><span style="color:#75af00">elasticsearch</span>:<span style="color:#00a8c8">default</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1.0</span><span style="color:#960050;background-color:#1e0010">”</span>
-<span style="color:#75af00">connection</span>:
-  <span style="color:#00a8c8">host</span><span style="color:#f92672">:</span> <span style="color:#111">{{</span><span style="color:#75af00">ELASTICSEARCH_SERVICE_HOST</span><span style="color:#111">}}</span>
-  <span style="color:#75af00">port</span><span style="color:#f92672">:</span> <span style="color:#111">{{</span><span style="color:#75af00">ELASTICSEARCH_SERVICE_PORT</span><span style="color:#111">}}</span>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferences</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-commons-nodex&#34;</span><span style="color:#111">;</span>
+<span style="color:#00a8c8">import</span> <span style="color:#111">{</span> <span style="color:#75af00">CompositeLogger</span> <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-components-nodex&#34;</span><span style="color:#111">;</span>
 
 
 <span style="color:#00a8c8">class</span> <span style="color:#75af00">MyComponent</span> <span style="color:#00a8c8">implements</span> <span style="color:#75af00">IReferenceable</span> <span style="color:#111">{</span>
@@ -512,7 +505,7 @@
   <span style="color:#111">}</span>
 
   <span style="color:#00a8c8">public</span> <span style="color:#75af00">doSomething</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span>: <span style="color:#00a8c8">string</span><span style="color:#111">)</span> <span style="color:#111">{</span>
-    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">debug</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#960050;background-color:#1e0010">“</span><span style="color:#75af00">Did</span> <span style="color:#75af00">something</span><span style="color:#960050;background-color:#1e0010">…”</span><span style="color:#111">);</span>
+    <span style="color:#00a8c8">this</span><span style="color:#111">.</span><span style="color:#75af00">_logger</span><span style="color:#111">.</span><span style="color:#75af00">debug</span><span style="color:#111">(</span><span style="color:#75af00">correlationId</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;Did something...&#34;</span><span style="color:#111">);</span>
     <span style="color:#111">...</span>
   <span style="color:#111">}</span>
 <span style="color:#111">}</span>

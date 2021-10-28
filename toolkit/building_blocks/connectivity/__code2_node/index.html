@@ -19,19 +19,19 @@
 <link rel="icon" type="image/png" href="../../../../favicons/android-192x192.png" sizes="192x192">
 
 <title>Services Docs</title><meta property="og:title" content="" />
-<meta property="og:description" content="# In-memory discovery service descriptor: &quot;pip-services:discovery:memory:default:1.0&quot; mongo: host: mongo port: 27017 # MongoDb persistence component descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot; connection: discovery_key: mongo import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CredentialResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { ... private _credentialResolver = new CredentialResolver(); private _username: string; private _password: string; public configure(config: ConfigParams) { ... this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { ... this._credentialResolver.setReferences(refs); let credentials = this._credentialResolver.lookup(null); this." />
+<meta property="og:description" content="import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CredentialResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { ... private _credentialResolver = new CredentialResolver(); private _username: string; private _password: string; public configure(config: ConfigParams) { ... this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { ... this._credentialResolver.setReferences(refs); let credentials = this._credentialResolver.lookup(null); this._username = credentials.getUsername(); this._password = credentials.getPassword(); } } " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/toolkit/building_blocks/connectivity/__code2_node/" /><meta property="article:section" content="toolkit" />
 
-<meta property="article:modified_time" content="2021-10-27T22:21:33+02:00" />
+<meta property="article:modified_time" content="2021-10-28T02:42:33+03:00" />
 
 <meta itemprop="name" content="">
-<meta itemprop="description" content="# In-memory discovery service descriptor: &quot;pip-services:discovery:memory:default:1.0&quot; mongo: host: mongo port: 27017 # MongoDb persistence component descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot; connection: discovery_key: mongo import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CredentialResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { ... private _credentialResolver = new CredentialResolver(); private _username: string; private _password: string; public configure(config: ConfigParams) { ... this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { ... this._credentialResolver.setReferences(refs); let credentials = this._credentialResolver.lookup(null); this.">
-<meta itemprop="dateModified" content="2021-10-27T22:21:33+02:00" />
-<meta itemprop="wordCount" content="78">
+<meta itemprop="description" content="import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CredentialResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { ... private _credentialResolver = new CredentialResolver(); private _username: string; private _password: string; public configure(config: ConfigParams) { ... this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { ... this._credentialResolver.setReferences(refs); let credentials = this._credentialResolver.lookup(null); this._username = credentials.getUsername(); this._password = credentials.getPassword(); } } ">
+<meta itemprop="dateModified" content="2021-10-28T02:42:33+03:00" />
+<meta itemprop="wordCount" content="58">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="# In-memory discovery service descriptor: &quot;pip-services:discovery:memory:default:1.0&quot; mongo: host: mongo port: 27017 # MongoDb persistence component descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot; connection: discovery_key: mongo import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CredentialResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { ... private _credentialResolver = new CredentialResolver(); private _username: string; private _password: string; public configure(config: ConfigParams) { ... this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { ... this._credentialResolver.setReferences(refs); let credentials = this._credentialResolver.lookup(null); this."/>
+<meta name="twitter:description" content="import { ConfigParams, IConfigurable, IReferenceable, IReferences } from &#34;pip-services3-commons-nodex&#34;; import { CredentialResolver } from &#34;pip-services3-components-nodex&#34;; class MyPersistence implements IConfigurable, IReferenceable { ... private _credentialResolver = new CredentialResolver(); private _username: string; private _password: string; public configure(config: ConfigParams) { ... this._connectionResolver.configure(config); } public setReferences(refs: IReferences) { ... this._credentialResolver.setReferences(refs); let credentials = this._credentialResolver.lookup(null); this._username = credentials.getUsername(); this._password = credentials.getPassword(); } } "/>
 
 
 
@@ -493,17 +493,7 @@
       <main role="main" class="td-main">
         
 
-<pre tabindex="0"><code># In-memory discovery service
-descriptor: &quot;pip-services:discovery:memory:default:1.0&quot;
-mongo:
-  host: mongo
-  port: 27017
-
-# MongoDb persistence component
-descriptor: &quot;myservice:mypersistance:mongodb:default:1.0&quot;
-connection:
-  discovery_key: mongo
-</code></pre><div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> 
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#00a8c8">import</span> <span style="color:#111">{</span> 
     <span style="color:#75af00">ConfigParams</span><span style="color:#111">,</span> <span style="color:#75af00">IConfigurable</span><span style="color:#111">,</span> 
     <span style="color:#75af00">IReferenceable</span><span style="color:#111">,</span> <span style="color:#75af00">IReferences</span> 
 <span style="color:#111">}</span> <span style="color:#00a8c8">from</span> <span style="color:#d88200">&#34;pip-services3-commons-nodex&#34;</span><span style="color:#111">;</span>
